@@ -1,0 +1,61 @@
+# Last Modified: Sun May 26 16:15:12 2019
+# Copyright (C) 2019 krathalan
+
+#include <tunables/global>
+
+profile keepassxc /usr/bin/keepassxc {
+  #include <abstractions/base>
+  #include <abstractions/fonts>
+
+  # Noisy
+  deny /dev/bus/usb/ rw,
+  deny /dev/tty rw,
+  deny /etc/machine-id rw,
+  deny /etc/nsswitch.conf rw,
+  deny /etc/passwd rw,
+  deny /proc/** rw,
+  deny /run/** rw,
+  deny /sys/** rw,
+  deny /usr/share/pixmaps/ rw,
+  deny /var/** rw,
+
+  # Noisy writes (still need to read!)
+  deny /dev/dri/** w,
+  deny /usr/share/fonts/** w,
+
+  # Needed to view and edit keepass databases in Documnents/Security directory
+  owner @{HOME}/documents/security rwl,
+  owner @{HOME}/documents/security/** rwl,
+
+  # General graphics
+  /dev/dri/ r,
+  /dev/dri/** r,
+  /usr/lib/dri/** mr,
+  /usr/share/drirc.d/ r,
+  /usr/share/drirc.d/** r,
+
+  # NVIDIA graphics
+  /usr/share/nvidia/** r,
+
+  # Other
+  /tmp/** rwk,
+  /usr/bin/keepassxc mr,
+  /usr/share/gtk-2.0/gtkrc r,
+  /usr/share/icons/ r,
+  /usr/share/icons/** r,
+  /usr/share/keepassxc/** r,
+  /usr/share/mime/** r,
+  /usr/share/themes/** r,
+  /usr/share/fonts/** r,
+  owner @{HOME}/.cache/#* rw,
+  owner @{HOME}/.cache/qt* l,
+  owner @{HOME}/.cache/fontconfig/** rwk,
+  owner @{HOME}/.config/keepassxc/** rwlk,
+  owner @{HOME}/.gtkrc-2.0 r,
+  owner @{HOME}/.icons/ r,
+  owner @{HOME}/.icons/** r,
+  owner @{HOME}/.local/share/icons/ r,
+  owner @{HOME}/.local/share/icons/** r,
+  owner @{HOME}/.ICEauthority r,
+  owner @{HOME}/.Xauthority r,
+}

@@ -1,0 +1,98 @@
+# AppArmor profile for mpv program
+# Copyright (C) 2019 krathalan
+
+# Please note: you may have issues with hardware decoding. This is because the nvidia_modprobe profile in 
+# /etc/apparmor.d/ is not configured correctly. Change the profile executable at the top of the 
+# nvidia_modprobe profile file (/etc/apparmor.d/nvidia_modprobe) to /usr/bin/nvidia-modprobe.
+
+# Then rename the nvidia_modprobe file to usr.bin.nvidia-modprobe:
+# $ sudo mv /etc/apparmor.d/nvidia_modprobe /etc/apparmor.d/usr.bin.nvidia-modprobe
+# Don't forget to enforce!
+# $ sudo aa-enforce /etc/apparmor.d/*
+
+#include <tunables/global>
+
+profile mpv /usr/bin/mpv {
+  #include <abstractions/base>
+  #include <abstractions/fonts>
+
+  # Noisy
+  deny capability chown,
+  deny capability mknod,
+  deny capability syslog,
+  deny /dev/tty rw,
+  deny /proc/*/comm r,
+  deny /proc/*/cmdline r,
+  deny /proc/devices r,
+  deny /proc/*/fd r,
+  deny /proc/sys/vm/mmap_min_addr r,
+  deny /sys/bus/pci/devices/ r,
+  deny /sys/devices/system/** rw,
+  deny /usr/bin/bash rwx,
+  deny /usr/bin/xdg-screensaver rx,
+  deny /usr/share/fonts/** w,
+  deny /var/cache/fontconfig w,
+
+  # Protect sensitive files and folders
+  deny owner @{HOME}/.bash_history rw,
+  deny owner @{HOME}/.gnupg rw,
+  deny owner @{HOME}/.mozilla rw,
+  deny owner @{HOME}/.ssh rw,
+
+  # Needed to view videos in home directory
+  owner @{HOME}/ r,
+  owner @{HOME}/** r,
+
+  # Needed to view videos on other drives
+  owner /run/media/*/ r,
+  owner /run/media/*/** r,
+  
+  # Needed to download and view videos with youtube-dl
+  #include <abstractions/nameservice>
+  /usr/bin/youtube-dl rUx,
+
+  # General graphics
+  #include <abstractions/mesa>
+  #include <abstractions/video>
+  #include <abstractions/wayland>
+  /dev/dri/ r,
+  /dev/dri/** rw,
+  /usr/lib/dri/** mr,
+  /usr/share/drirc.d/ r,
+  /usr/share/drirc.d/** r,
+  /etc/vdpau_wrapper.cfg r,
+  /usr/share/glvnd/egl_vendor.d/ r,
+  /usr/share/glvnd/egl_vendor.d/** r,
+
+  # NVIDIA graphics
+  /usr/bin/nvidia-modprobe mrPx,
+  /dev/ r,
+  /dev/nvidia* rw,
+  /proc/driver/nvidia/params r,
+  /usr/share/nvidia/** r,
+  owner @{HOME}/.nv/GLCache/ r,
+  owner @{HOME}/.nv/GLCache/** rwk,
+
+  # Intel graphics
+  /etc/libva.conf r,
+  /sys/devices/** r,
+
+  # Audio
+  #include <abstractions/audio>
+  /etc/alsa/conf.d/** r,
+  /etc/asound.conf r,
+
+  # Other
+  owner @{HOME}/.cache/fontconfig/** rw,
+  owner @{HOME}/.config/mpv rw,
+  /etc/machine-id r,
+  /etc/mpv/** r,
+  /proc/modules r,
+  /tmp/** mrw,
+  /usr/bin/mpv r,
+  /usr/bin/pulseaudio rix,
+  /usr/share/X11/Xcms.txt r,
+  /usr/share/icons/** r,
+  /usr/share/fonts/** r,
+  /usr/share/X11/XErrorDB r,
+}
