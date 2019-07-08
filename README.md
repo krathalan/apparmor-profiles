@@ -23,6 +23,8 @@ This profile assumes you keep your database file in `~/documents/security`. If y
 ### Lollypop
 This profile assumes you keep your music in `~/music`. If you do not, edit the file to where you store your database. Lollypop does not need access to your whole home directory.
 
+I have not tested the profile for any web features, so they probably will not work.
+
 ### mpv
 From the top of the mpv AppArmor profile:
 
@@ -37,4 +39,11 @@ From the top of the mpv AppArmor profile:
 # $ sudo aa-enforce /etc/apparmor.d/*
 ```
 
-This AppArmor profile also allows mpv to utilize youtube-dl. Use the command line flag `--gpu-context=wayland` for Wayland support and `--hwdec=auto` for nvdec (NVIDIA) and VA-API (Intel) hardware decoding.
+This AppArmor profile also allows mpv to utilize youtube-dl. I have also verified that this AppArmor profile works when mpv is invoked by other programs (like [streamlink](https://streamlink.github.io/)).
+
+Use the command line flag `--gpu-context=wayland` for Wayland support.
+
+Use the command line flag `--hwdec=auto` for nvdec (NVIDIA) and VA-API (Intel) hardware decoding.
+
+## Contributing
+Pull requests and issues are welcome. I cannot test for hardware I do not have access to (AMD), so those PRs would be most critical.
