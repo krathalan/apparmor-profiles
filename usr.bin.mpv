@@ -21,10 +21,9 @@ profile mpv /usr/bin/mpv {
   deny capability mknod,
   deny capability syslog,
   deny /dev/tty rw,
-  deny /proc/*/comm r,
-  deny /proc/*/cmdline r,
+  deny /etc/machine-id r,
   deny /proc/devices r,
-  deny /proc/*/fd r,
+  deny /proc/modules r,
   deny /proc/sys/vm/mmap_min_addr r,
   deny /sys/bus/pci/devices/ r,
   deny /sys/devices/system/** rw,
@@ -51,31 +50,23 @@ profile mpv /usr/bin/mpv {
   #include <abstractions/nameservice>
   /usr/bin/youtube-dl rUx,
 
-  # General graphics
+  # Process information 
+  owner @{PROC}/@{pid} r,
+  owner @{PROC}/@{pid}/** r,
+
+  # Graphics
+  #include <abstractions/dri-common>
   #include <abstractions/mesa>
+  #include <abstractions/nvidia>
   #include <abstractions/video>
   #include <abstractions/wayland>
-  /dev/dri/ r,
-  /dev/dri/** rw,
-  /usr/lib/dri/** mr,
-  /usr/share/drirc.d/ r,
-  /usr/share/drirc.d/** r,
+  
+  # NVIDIA graphics
   /etc/vdpau_wrapper.cfg r,
   /usr/share/glvnd/egl_vendor.d/ r,
   /usr/share/glvnd/egl_vendor.d/** r,
-
-  # NVIDIA graphics
   /usr/bin/nvidia-modprobe mrPx,
-  /dev/ r,
-  /dev/nvidia* rw,
-  /proc/driver/nvidia/params r,
   /usr/share/nvidia/** r,
-  owner @{HOME}/.nv/GLCache/ r,
-  owner @{HOME}/.nv/GLCache/** rwk,
-
-  # Intel graphics
-  /etc/libva.conf r,
-  /sys/devices/** r,
 
   # Audio
   #include <abstractions/audio>
@@ -85,9 +76,7 @@ profile mpv /usr/bin/mpv {
   # Other
   owner @{HOME}/.cache/fontconfig/** rw,
   owner @{HOME}/.config/mpv rw,
-  /etc/machine-id r,
   /etc/mpv/** r,
-  /proc/modules r,
   /tmp/** mrw,
   /usr/bin/mpv r,
   /usr/bin/pulseaudio rix,

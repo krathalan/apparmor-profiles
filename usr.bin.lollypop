@@ -8,6 +8,7 @@ profile lollypop /usr/bin/lollypop {
   #include <abstractions/audio>
   #include <abstractions/base>
   #include <abstractions/python>
+  #include <abstractions/wayland>
 
   # Noisy
   deny /dev/ rw,
@@ -54,6 +55,8 @@ profile lollypop /usr/bin/lollypop {
   /usr/share/lollypop/** r,
   /usr/share/mime/** r,
   /usr/share/themes/** r,
+  /usr/share/X11/xkb/ r,
+  /usr/share/X11/xkb/** r,
   
   owner @{HOME}/.cache/fontconfig/** rw,
   owner @{HOME}/.cache/lollypop*/ rw,

@@ -7,55 +7,58 @@ profile keepassxc /usr/bin/keepassxc {
   #include <abstractions/base>
   #include <abstractions/fonts>
 
+  # Graphics
+  #include <abstractions/dri-common>
+  #include <abstractions/mesa>
+  #include <abstractions/nvidia>
+
   # Noisy
+  deny /dev/ r,
   deny /dev/bus/usb/ rw,
   deny /dev/tty rw,
   deny /etc/machine-id rw,
   deny /etc/nsswitch.conf rw,
   deny /etc/passwd rw,
-  deny /proc/** rw,
-  deny /run/** rw,
-  deny /sys/** rw,
+  deny /proc/sys/kernel/random/boot_id r,
+  deny /sys/** r,
+  deny /usr/bin/ r,
   deny /usr/share/pixmaps/ rw,
-  deny /var/** rw,
+  deny /var/** r,
 
   # Noisy writes (still need to read!)
-  deny /dev/dri/** w,
   deny /usr/share/fonts/** w,
+  
+  # Process information 
+  owner @{PROC}/@{pid} r,
+  owner @{PROC}/@{pid}/** r,
 
-  # Needed to view and edit keepass databases in Documnents/Security directory
-  owner @{HOME}/documents/security rwl,
-  owner @{HOME}/documents/security/** rwl,
+  # Needed to view and edit keepass databases in documents directory
+  owner @{HOME}/documents rwl,
+  owner @{HOME}/documents/** rwl,
 
-  # General graphics
-  /dev/dri/ r,
-  /dev/dri/** r,
-  /usr/lib/dri/** mr,
-  /usr/share/drirc.d/ r,
-  /usr/share/drirc.d/** r,
-
-  # NVIDIA graphics
-  /usr/share/nvidia/** r,
-
-  # Other
-  /tmp/** rwk,
-  /usr/bin/keepassxc mr,
+  # Icons, fonts, and theming
   /usr/share/gtk-2.0/gtkrc r,
   /usr/share/icons/ r,
   /usr/share/icons/** r,
-  /usr/share/keepassxc/** r,
-  /usr/share/mime/** r,
-  /usr/share/themes/** r,
   /usr/share/fonts/** r,
-  owner @{HOME}/.cache/#* rw,
-  owner @{HOME}/.cache/qt* l,
   owner @{HOME}/.cache/fontconfig/** rwk,
-  owner @{HOME}/.config/keepassxc/** rwlk,
   owner @{HOME}/.gtkrc-2.0 r,
   owner @{HOME}/.icons/ r,
   owner @{HOME}/.icons/** r,
   owner @{HOME}/.local/share/icons/ r,
   owner @{HOME}/.local/share/icons/** r,
+
+  # Other
+  /tmp/** rwk,
+  /usr/bin/keepassxc mr,
+  /usr/share/keepassxc/** r,
+  /usr/share/mime/** r,
+  /usr/share/themes/** r,
+  owner @{HOME}/.cache/#* rw,
+  owner @{HOME}/.cache/qt* l,
+  owner @{HOME}/.config/keepassxc/** rwlk,
+  owner @{HOME}/.local/share/mime r,
+  owner @{HOME}/.local/share/mime/** r,
   owner @{HOME}/.ICEauthority r,
   owner @{HOME}/.Xauthority r,
 }
