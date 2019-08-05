@@ -23,10 +23,8 @@ profile mpv /usr/bin/mpv {
   deny /dev/tty rw,
   deny /etc/machine-id r,
   deny /proc/devices r,
-  deny /proc/modules r,
   deny /proc/sys/vm/mmap_min_addr r,
   deny /sys/bus/pci/devices/ r,
-  deny /sys/devices/system/** rw,
   deny /usr/bin/bash rwx,
   deny /usr/bin/xdg-screensaver rx,
   deny /usr/share/fonts/** w,
@@ -62,10 +60,10 @@ profile mpv /usr/bin/mpv {
   #include <abstractions/wayland>
   
   # NVIDIA graphics
-  /etc/vdpau_wrapper.cfg r,
   /usr/share/glvnd/egl_vendor.d/ r,
   /usr/share/glvnd/egl_vendor.d/** r,
   /usr/bin/nvidia-modprobe mrPx,
+  /dev/nvidia* rw,
   /usr/share/nvidia/** r,
 
   # Audio
