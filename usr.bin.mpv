@@ -55,11 +55,12 @@ profile mpv /usr/bin/mpv {
   # Graphics
   #include <abstractions/dri-common>
   #include <abstractions/mesa>
-  #include <abstractions/nvidia>
   #include <abstractions/video>
   #include <abstractions/wayland>
+  /sys/devices/** r,
   
   # NVIDIA graphics
+  #include <abstractions/nvidia>
   /usr/share/glvnd/egl_vendor.d/ r,
   /usr/share/glvnd/egl_vendor.d/** r,
   /usr/bin/nvidia-modprobe mrPx,
