@@ -18,7 +18,7 @@ All profiles should work with Xorg on NVIDIA hardware and with Wayland (and prob
 
 ## Notes about each profile
 ### KeepassXC
-This profile assumes you keep your database file in `~/documents/security`. If you do not, edit the file to where you store your database. KeepassXC does not need access to your whole home directory.
+This profile assumes you keep your database file in `~/documents/`. If you do not, edit the file to where you store your database. KeepassXC does not need access to your whole home directory.
 
 ### Lollypop
 This profile assumes you keep your music in `~/music`. If you do not, edit the file to where you store your database. Lollypop does not need access to your whole home directory.
