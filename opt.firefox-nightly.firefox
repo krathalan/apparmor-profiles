@@ -42,6 +42,7 @@ profile firefox /opt/firefox-nightly/firefox* {
   /etc/ca-certificates/trust-source/blacklist/ r,
 
   # Firefox subprocesses
+  ptrace trace peer=firefox,
   /usr/bin/bash ix,
   /usr/bin/firefox r,
   /usr/lib/firefox/firefox mrix,
@@ -62,6 +63,8 @@ profile firefox /opt/firefox-nightly/firefox* {
   owner @{PROC}/@{pid}/ r,
   owner @{PROC}/@{pid}/** r,
   @{PROC}/sys/kernel/random/uuid r,
+  # Firefox needs to see this information in other firefox processes
+  /proc/*/net/if_inet6 r,
 
   # Themes and icons
   /usr/share/gtk-3.0/settings.ini r,
@@ -86,9 +89,10 @@ profile firefox /opt/firefox-nightly/firefox* {
   /opt/firefox-nightly/** mr,
   deny /opt/firefox-nightly/ w,
   deny /opt/firefox-nightly/** w,
+  deny /opt/firefox-nightly/crashreporter x,
 
   # Miscellaneous
-  owner /home/*/#* rw,
+  owner /home/*/#* mrw,
   owner /home/*/.glvnd* rw,
   owner /tmp/#* m,
   owner @{HOME}/.ICEauthority r,
@@ -139,6 +143,7 @@ profile firefox /opt/firefox-nightly/firefox* {
   deny /etc/mailcap r,
   deny /etc/machine-id r,
   deny /var/lib/dbus/machine-id r,
+  deny /var/cache/fontconfig/ w,
   
   # Silence denial logs about PulseAudio
   deny /etc/pulse/client.conf r,
