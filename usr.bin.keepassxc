@@ -1,5 +1,6 @@
-# Last Modified: Sun May 26 16:15:12 2019
-# Copyright (C) 2019 krathalan
+# AppArmor profile for keepassxc password manager
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
 
 #include <tunables/global>
 

@@ -1,5 +1,6 @@
-# AppArmor profile for mpv program
-# Copyright (C) 2019 krathalan
+# AppArmor profile for mpv media player
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
 
 # Please note: you may have issues with hardware decoding. This is because the nvidia_modprobe profile in 
 # /etc/apparmor.d/ is not configured correctly. Change the profile executable at the top of the 

@@ -1,6 +1,6 @@
-# AppArmor profile for Lollypop (https://gitlab.gnome.org/World/lollypop)
-# Homepage: 
-# Copyright 2019 (C) krathalan
+# AppArmor profile for lollypop music player
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
 
 #include <tunables/global>
 
