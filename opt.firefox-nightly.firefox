@@ -22,7 +22,7 @@ profile firefox /opt/firefox-nightly/firefox* {
   #include <abstractions/nvidia>
   #include <abstractions/video>
   #include <abstractions/wayland>
-  /sys/devices/** r,
+  /sys/devices/pci*/** r,
 
   # NVIDIA graphics
   /usr/share/glvnd/egl_vendor.d/ r,
