@@ -43,9 +43,13 @@ profile firefox /opt/firefox-nightly/firefox* {
 
   # Firefox subprocesses
   ptrace trace peer=firefox,
+  owner /dev/shm/shmfd-* rw,
+  owner /dev/shm/org.chromium.* rw,
+  owner /dev/shm/org.mozilla.ipc.* rw,
   /usr/bin/bash ix,
   /usr/bin/firefox r,
   /usr/lib/firefox/firefox mrix,
+  /proc/*/net/if_inet6 r,
 
   # Firefox profiles
   owner @{HOME}/.mozilla/ rwlk,
@@ -63,8 +67,6 @@ profile firefox /opt/firefox-nightly/firefox* {
   owner @{PROC}/@{pid}/ r,
   owner @{PROC}/@{pid}/** r,
   @{PROC}/sys/kernel/random/uuid r,
-  # Firefox needs to see this information in other firefox processes
-  /proc/*/net/if_inet6 r,
 
   # Themes and icons
   /usr/share/gtk-3.0/settings.ini r,
@@ -100,6 +102,7 @@ profile firefox /opt/firefox-nightly/firefox* {
   owner /run/user/1000/mozilla* rwlk,
 
   # System access
+  /dev/ r,
   /usr/share/ r,
   /usr/share/glib-2.0/schemas/gschemas.compiled r,
   /etc/mime.types r,
@@ -119,12 +122,6 @@ profile firefox /opt/firefox-nightly/firefox* {
   /etc/udev/udev.conf r,
   /run/udev/data/+pci:* r,
   /sys/devices/pci[0-9]*/**/uevent r,
-
-  /dev/ r,
-  /dev/shm/ r,
-  owner /{dev,run}/shm/shmfd-* rw,
-  owner /{dev,run}/shm/org.chromium.* rw,
-  owner /dev/shm/org.mozilla.ipc.* rw,
 
   # Silence denial logs about permissions we don't need
   deny capability sys_admin,
