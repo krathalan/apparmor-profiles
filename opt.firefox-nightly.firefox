@@ -9,7 +9,6 @@
 profile firefox /opt/firefox-nightly/firefox* {
   #include <abstractions/base>
   #include <abstractions/nameservice>
-  #include <abstractions/ubuntu-browsers.d/ubuntu-integration>
   #include <abstractions/gnome>
   
   # Audio
@@ -100,6 +99,7 @@ profile firefox /opt/firefox-nightly/firefox* {
   owner @{HOME}/.ICEauthority r,
   owner @{HOME}/.Xauthority r,
   owner /run/user/1000/mozilla* rwlk,
+  owner /run/user/1000/dconf/user rw,
 
   # System access
   /dev/ r,
