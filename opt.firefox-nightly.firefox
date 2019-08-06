@@ -1,0 +1,134 @@
+# AppArmor profile for firefox-nightly browser
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+# Forked from https://gitlab.com/madaidan/apparmor-profiles, provided without license
+
+#include <tunables/global>
+
+profile firefox /opt/firefox-nightly/firefox* {
+  #include <abstractions/base>
+  #include <abstractions/nameservice>
+  #include <abstractions/ubuntu-browsers.d/ubuntu-integration>
+  #include <abstractions/gnome>
+  
+  # If you want audio then enable this.
+  #include <abstractions/audio>
+  /usr/bin/jackd mrix,
+
+  # Graphics
+  #include <abstractions/dri-common>
+  #include <abstractions/mesa>
+  #include <abstractions/nvidia>
+  #include <abstractions/video>
+  #include <abstractions/wayland>
+
+  # NVIDIA graphics
+  /usr/share/glvnd/egl_vendor.d/ r,
+  /usr/share/glvnd/egl_vendor.d/** r,
+  /usr/bin/nvidia-modprobe mrPx,
+  /dev/nvidia* rw,
+  /usr/share/nvidia/** r,
+
+  network netlink raw,
+  network tcp,
+  network udp,
+
+  /dev/ r,
+  /dev/shm/ r,
+
+  # SSL certificates   
+  /etc/ca-certificates/trust-source/ r,
+  /etc/ca-certificates/trust-source/anchors/ r,
+  /etc/ca-certificates/trust-source/blacklist/ r,
+
+  # Firefox subprocesses
+  /opt/firefox-nightly/firefox-bin mrix,
+  /usr/bin/bash ix,
+  /usr/bin/firefox r,
+  /usr/lib/firefox/firefox mrix,
+
+  /usr/share/gtk-3.0/settings.ini r,
+  /usr/share/icons/ r,
+
+  /usr/share/pixmaps/ r,
+  owner /dev/shm/org.mozilla.ipc.* rw,
+  owner @{HOME}/.ICEauthority r,
+  owner @{HOME}/.Xauthority r,
+
+  # Firefox profiles
+  owner @{HOME}/.mozilla/ rwlk,
+  owner @{HOME}/.mozilla/** rwlk,
+  owner @{HOME}/.cache/mozilla/ rwlk,
+  owner @{HOME}/.cache/mozilla/** rwlk,
+
+  owner @{HOME}/Downloads/ r,
+  owner @{HOME}/Downloads/* rw,
+  owner @{HOME}/downloads/ r,
+  owner @{HOME}/downloads/** rw,
+
+  owner @{PROC}/@{pid}/ r,
+  owner @{PROC}/@{pid}/** r,
+  @{PROC}/sys/kernel/random/uuid r,
+
+  /etc/mime.types r,
+
+  /usr/share/ r,
+  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+  /usr/share/mime/ r,
+  /usr/share/themes/ r,
+  /usr/share/applications/** rk,
+  /usr/share/gnome/applications/ r,
+  /usr/share/gnome/applications/kde4/ r,
+  /usr/share/poppler/cMap/ r,
+
+  /sys/devices/system/cpu/ r,
+  /sys/devices/system/cpu/present r,
+  /sys/devices/system/node/ r,
+  /sys/devices/system/node/node[0-9]*/meminfo r,
+  deny /sys/devices/virtual/block/*/uevent r,
+
+  /etc/udev/udev.conf r,
+  /run/udev/data/+pci:* r,
+  /sys/devices/pci[0-9]*/**/uevent r,
+  owner /{dev,run}/shm/shmfd-* rw,
+
+  owner /{dev,run}/shm/org.chromium.* rw,
+
+  # KDE 4
+  owner @{HOME}/.kde/share/config/* r,
+
+  # Xfce4
+  /etc/xfce4/defaults.list r,
+  /usr/share/xfce4/applications/ r,
+
+  owner /usr/lib/firefox/fonts/** rw,
+  owner /usr/share/fonts/** rw,
+  
+  # For firefox-nightly AUR package
+  /opt/firefox-nightly/ r,
+  /opt/firefox-nightly/** mr,
+
+  # Silence denial logs about permissions we don't need
+  deny capability sys_admin,
+  deny /dev/dri/   rwklx,
+  deny @{HOME}/.cache/fontconfig/ rw,
+  deny @{HOME}/.cache/fontconfig/** rw,
+  deny @{HOME}/.config/gtk-2.0/ rw,
+  deny @{HOME}/.config/gtk-2.0/** rw,
+  deny @{PROC}/@{pid}/net/route r,
+  deny /sys/devices/system/cpu/cpufreq/policy[0-9]*/cpuinfo_max_freq r,
+  deny /sys/devices/system/cpu/*/cache/index[0-9]*/size r,
+  deny /etc/host.conf r,
+  deny /etc/hosts r,
+  deny /etc/nsswitch.conf r,
+  deny /etc/passwd r,
+  deny /etc/group r,
+  deny /etc/mailcap r,
+  deny /etc/machine-id r,
+  deny /var/lib/dbus/machine-id r,
+  
+  # Silence denial logs about PulseAudio
+  deny /etc/pulse/client.conf r,
+  deny /usr/bin/pulseaudio x,
+}
