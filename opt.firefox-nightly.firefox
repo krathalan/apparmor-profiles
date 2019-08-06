@@ -12,7 +12,7 @@ profile firefox /opt/firefox-nightly/firefox* {
   #include <abstractions/ubuntu-browsers.d/ubuntu-integration>
   #include <abstractions/gnome>
   
-  # If you want audio then enable this.
+  # Audio
   #include <abstractions/audio>
   /usr/bin/jackd mrix,
 
@@ -31,12 +31,10 @@ profile firefox /opt/firefox-nightly/firefox* {
   /dev/nvidia* rw,
   /usr/share/nvidia/** r,
 
+  # Network
   network netlink raw,
   network tcp,
   network udp,
-
-  /dev/ r,
-  /dev/shm/ r,
 
   # SSL certificates   
   /etc/ca-certificates/trust-source/ r,
@@ -44,20 +42,9 @@ profile firefox /opt/firefox-nightly/firefox* {
   /etc/ca-certificates/trust-source/blacklist/ r,
 
   # Firefox subprocesses
-  /opt/firefox-nightly/firefox-bin mrix,
   /usr/bin/bash ix,
   /usr/bin/firefox r,
   /usr/lib/firefox/firefox mrix,
-
-  # Themes and such
-  /usr/share/gtk-3.0/settings.ini r,
-  /usr/share/icons/ r,
-  @{HOME}/.config/dconf/user r,
-
-  /usr/share/pixmaps/ r,
-  owner /dev/shm/org.mozilla.ipc.* rw,
-  owner @{HOME}/.ICEauthority r,
-  owner @{HOME}/.Xauthority r,
 
   # Firefox profiles
   owner @{HOME}/.mozilla/ rwlk,
@@ -65,25 +52,59 @@ profile firefox /opt/firefox-nightly/firefox* {
   owner @{HOME}/.cache/mozilla/ rwlk,
   owner @{HOME}/.cache/mozilla/** rwlk,
 
+  # Allow access to downloads folder
   owner @{HOME}/Downloads/ r,
   owner @{HOME}/Downloads/* rw,
   owner @{HOME}/downloads/ r,
   owner @{HOME}/downloads/** rw,
-
+  
+  # Process information
   owner @{PROC}/@{pid}/ r,
   owner @{PROC}/@{pid}/** r,
   @{PROC}/sys/kernel/random/uuid r,
 
-  /etc/mime.types r,
+  # Themes and icons
+  /usr/share/gtk-3.0/settings.ini r,
+  /usr/share/icons/ r,
+  /usr/share/themes/ r,
+  owner /home/*/.config/dconf/user r,
 
+  # KDE 4
+  owner @{HOME}/.kde/share/config/* r,
+
+  # Xfce4
+  /etc/xfce4/defaults.list r,
+  /usr/share/xfce4/applications/ r,
+
+  # Fonts
+  owner /usr/lib/firefox/fonts/** rw,
+  owner /usr/share/fonts/** rw,
+  
+  # For firefox-nightly AUR package
+  /opt/firefox-nightly/firefox-bin mrix,
+  /opt/firefox-nightly/ r,
+  /opt/firefox-nightly/** mr,
+  deny /opt/firefox-nightly/ w,
+  deny /opt/firefox-nightly/** w,
+
+  # Miscellaneous
+  owner /home/*/#* rw,
+  owner /home/*/.glvnd* rw,
+  owner /tmp/#* m,
+  owner @{HOME}/.ICEauthority r,
+  owner @{HOME}/.Xauthority r,
+  owner /run/user/1000/mozilla* rwlk,
+
+  # System access
   /usr/share/ r,
   /usr/share/glib-2.0/schemas/gschemas.compiled r,
+  /etc/mime.types r,
   /usr/share/mime/ r,
-  /usr/share/themes/ r,
   /usr/share/applications/** rk,
   /usr/share/gnome/applications/ r,
   /usr/share/gnome/applications/kde4/ r,
   /usr/share/poppler/cMap/ r,
+  /usr/share/pixmaps/ r,
 
   /sys/devices/system/cpu/ r,
   /sys/devices/system/cpu/present r,
@@ -94,25 +115,12 @@ profile firefox /opt/firefox-nightly/firefox* {
   /etc/udev/udev.conf r,
   /run/udev/data/+pci:* r,
   /sys/devices/pci[0-9]*/**/uevent r,
+
+  /dev/ r,
+  /dev/shm/ r,
   owner /{dev,run}/shm/shmfd-* rw,
-
   owner /{dev,run}/shm/org.chromium.* rw,
-
-  # KDE 4
-  owner @{HOME}/.kde/share/config/* r,
-
-  # Xfce4
-  /etc/xfce4/defaults.list r,
-  /usr/share/xfce4/applications/ r,
-
-  owner /usr/lib/firefox/fonts/** rw,
-  owner /usr/share/fonts/** rw,
-  
-  # For firefox-nightly AUR package
-  /opt/firefox-nightly/ r,
-  /opt/firefox-nightly/** mr,
-  deny /opt/firefox-nightly/ w,
-  deny /opt/firefox-nightly/** w,
+  owner /dev/shm/org.mozilla.ipc.* rw,
 
   # Silence denial logs about permissions we don't need
   deny capability sys_admin,
