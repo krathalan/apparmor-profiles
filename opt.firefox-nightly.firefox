@@ -22,6 +22,7 @@ profile firefox /opt/firefox-nightly/firefox* {
   #include <abstractions/nvidia>
   #include <abstractions/video>
   #include <abstractions/wayland>
+  /sys/devices/** r,
 
   # NVIDIA graphics
   /usr/share/glvnd/egl_vendor.d/ r,
@@ -48,8 +49,10 @@ profile firefox /opt/firefox-nightly/firefox* {
   /usr/bin/firefox r,
   /usr/lib/firefox/firefox mrix,
 
+  # Themes and such
   /usr/share/gtk-3.0/settings.ini r,
   /usr/share/icons/ r,
+  @{HOME}/.config/dconf/user r,
 
   /usr/share/pixmaps/ r,
   owner /dev/shm/org.mozilla.ipc.* rw,
@@ -108,10 +111,11 @@ profile firefox /opt/firefox-nightly/firefox* {
   # For firefox-nightly AUR package
   /opt/firefox-nightly/ r,
   /opt/firefox-nightly/** mr,
+  deny /opt/firefox-nightly/ w,
+  deny /opt/firefox-nightly/** w,
 
   # Silence denial logs about permissions we don't need
   deny capability sys_admin,
-  deny /dev/dri/   rwklx,
   deny @{HOME}/.cache/fontconfig/ rw,
   deny @{HOME}/.cache/fontconfig/** rw,
   deny @{HOME}/.config/gtk-2.0/ rw,
