@@ -26,7 +26,8 @@ profile waybar /usr/bin/waybar {
   owner @{PROC}/@{pid} r,
   owner @{PROC}/@{pid}/** r,
 
-  # Icons
+  # Icons and themes
+  /usr/share/gtk-3.0/settings.ini r,
   /usr/share/icons/** r,
 
   # Miscellaneous
@@ -41,10 +42,7 @@ profile waybar /usr/bin/waybar {
 
   # Custom modules
   /usr/bin/wbm_{battery,vpn} rix,
-  # Custom battery module
   /sys/devices/** r,
-  # Custom VPN module
-  /sys/devices/virtual/net/** r,
 
   # Config files in ~/.config/waybar/ are symlinks to these files
   owner @{HOME}/documents/config/waybar-config r,
