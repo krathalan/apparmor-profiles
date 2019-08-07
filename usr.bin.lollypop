@@ -37,7 +37,6 @@ profile lollypop /usr/bin/lollypop {
 
   # Other
   /etc/fonts/** r,
-  /etc/machine-id r,
   /tmp/** mrw,
   /usr/bin/lollypop r,
   /usr/share/fonts/ r,
@@ -72,11 +71,12 @@ profile lollypop /usr/bin/lollypop {
   # Silence unneeded permissions
   deny /dev/ rw,
   deny /etc/group rw,
+  deny /etc/machine-id r,
   deny /etc/nsswitch.conf rw,
   deny /proc/** rw,
   deny /sys/** rw,
   deny /usr/bin/bash rwx,
-  deny owner /usr/share/fonts/** w,
+  deny /usr/share/fonts/** w,
   deny /usr/share/pixmaps/ rw,
   deny /var/** rw,
 }
