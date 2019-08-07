@@ -30,11 +30,16 @@ profile firefox /opt/firefox-nightly/firefox* {
   /sys/devices/pci*/** r,
 
   # NVIDIA graphics (WebRender)
+  /dev/nvidia* rw,
+  /usr/bin/nvidia-modprobe mrPx,
+  /usr/share/egl/egl_external_platform.d/ r,
+  /usr/share/egl/egl_external_platform.d/** r,
   /usr/share/glvnd/egl_vendor.d/ r,
   /usr/share/glvnd/egl_vendor.d/** r,
-  /usr/bin/nvidia-modprobe mrPx,
-  /dev/nvidia* rw,
   /usr/share/nvidia/** r,
+  owner /tmp/.gl* m,
+  owner /tmp/*/.gl* m,
+  owner /home/*/.nv/** w,
 
   # Network
   network netlink raw,
@@ -149,4 +154,8 @@ profile firefox /opt/firefox-nightly/firefox* {
   # Silence denial logs about PulseAudio
   deny /etc/pulse/client.conf r,
   deny /usr/bin/pulseaudio x,
+
+  # Silence denial about ~/.local/share/gvfs-metadata/home, this file can 
+  # contain sensitive data
+  deny /home/*/.local/** r,
 }

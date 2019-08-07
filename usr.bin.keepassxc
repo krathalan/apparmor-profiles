@@ -56,10 +56,11 @@ profile keepassxc /usr/bin/keepassxc {
   deny /etc/machine-id rw,
   deny /etc/nsswitch.conf rw,
   deny /etc/passwd rw,
+  deny /proc/*/comm r,
   deny /proc/sys/kernel/random/boot_id r,
   deny /sys/** r,
   deny /usr/bin/ r,
   deny /usr/share/fonts/** w,
   deny /usr/share/pixmaps/ rw,
-  deny /var/** r,
+  deny /var/** rw,
 }
