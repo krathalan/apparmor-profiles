@@ -157,5 +157,5 @@ profile firefox /opt/firefox-nightly/firefox* {
 
   # Silence denial about ~/.local/share/gvfs-metadata/home, this file can 
   # contain sensitive data
-  deny /home/*/.local/** r,
+  deny /home/*/.local/share/gvfs-metadata/** r,
 }
