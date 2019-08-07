@@ -1,0 +1,56 @@
+# AppArmor profile for waybar Wayland monitor bar program
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile waybar /usr/bin/waybar {
+  #include <abstractions/base>
+  #include <abstractions/gnome>
+
+  # Fonts
+  #include <abstractions/fonts>
+  /usr/share/fonts/** r,
+
+  # Needed to run, otherwise segfaults
+  /usr/share/X11/xkb/** r,
+
+  # Graphics
+  #include <abstractions/wayland>
+
+  # Executables
+  /usr/bin/waybar mr,
+  /usr/bin/dash rix,
+
+  # Process information 
+  owner @{PROC}/@{pid} r,
+  owner @{PROC}/@{pid}/** r,
+
+  # Icons
+  /usr/share/icons/** r,
+
+  # Miscellaneous
+  /run/user/*/dconf/** rw,
+  owner @{HOME}/.config/dconf/user r,
+
+  # Audio module
+  #include <abstractions/audio>
+
+  # Network module
+  /proc/*/net/netstat r,
+
+  # Custom modules
+  /usr/bin/wbm_{battery,vpn} rix,
+  # Custom battery module
+  /sys/devices/** r,
+  # Custom VPN module
+  /sys/devices/virtual/net/** r,
+
+  # Config files in ~/.config/waybar/ are symlinks to these files
+  owner @{HOME}/documents/config/waybar-config r,
+  owner @{HOME}/documents/config/waybar-style.css r,
+
+  # Silence unneeded permissions
+  deny /etc/machine-id r,
+  deny /usr/share/fonts/** w,
+}
