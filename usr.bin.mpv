@@ -2,34 +2,22 @@
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-# Please note: you may have issues with hardware decoding. This is because the nvidia_modprobe profile in 
-# /etc/apparmor.d/ is not configured correctly. Change the profile executable at the top of the 
-# nvidia_modprobe profile file (/etc/apparmor.d/nvidia_modprobe) to /usr/bin/nvidia-modprobe.
+# Please note: you may have issues with hardware decoding on NVIDIA hardware. 
+# This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured 
+# incorrectly. Change the profile executable name at the top of the 
+# nvidia_modprobe profile file (/etc/apparmor.d/nvidia_modprobe) to 
+# /usr/bin/nvidia-modprobe.
 
 # Then rename the nvidia_modprobe file to usr.bin.nvidia-modprobe:
-# $ sudo mv /etc/apparmor.d/nvidia_modprobe /etc/apparmor.d/usr.bin.nvidia-modprobe
+# $ mv /etc/apparmor.d/nvidia_modprobe /etc/apparmor.d/usr.bin.nvidia-modprobe
 # Don't forget to enforce!
-# $ sudo aa-enforce /etc/apparmor.d/*
+# $ aa-enforce /etc/apparmor.d/*
 
 #include <tunables/global>
 
 profile mpv /usr/bin/mpv {
   #include <abstractions/base>
   #include <abstractions/fonts>
-
-  # Noisy
-  deny capability chown,
-  deny capability mknod,
-  deny capability syslog,
-  deny /dev/tty rw,
-  deny /etc/machine-id r,
-  deny /proc/devices r,
-  deny /proc/sys/vm/mmap_min_addr r,
-  deny /sys/bus/pci/devices/ r,
-  deny /usr/bin/bash rwx,
-  deny /usr/bin/xdg-screensaver rx,
-  deny /usr/share/fonts/** w,
-  deny /var/cache/fontconfig w,
 
   # Protect sensitive files and folders
   deny owner @{HOME}/.bash_history rw,
@@ -84,4 +72,18 @@ profile mpv /usr/bin/mpv {
   /usr/share/icons/** r,
   /usr/share/fonts/** r,
   /usr/share/X11/XErrorDB r,
+
+  # Silence unneeded permissions
+  deny capability chown,
+  deny capability mknod,
+  deny capability syslog,
+  deny /dev/tty rw,
+  deny /etc/machine-id r,
+  deny /proc/devices r,
+  deny /proc/sys/vm/mmap_min_addr r,
+  deny /sys/bus/pci/devices/ r,
+  deny /usr/bin/bash rwx,
+  deny /usr/bin/xdg-screensaver rx,
+  deny /usr/share/fonts/** w,
+  deny /var/cache/fontconfig w,
 }

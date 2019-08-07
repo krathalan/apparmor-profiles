@@ -2,7 +2,8 @@
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-# Forked from https://gitlab.com/madaidan/apparmor-profiles, provided without license
+# Forked from https://gitlab.com/madaidan/apparmor-profiles, provided without 
+# license
 
 #include <tunables/global>
 
@@ -15,7 +16,12 @@ profile firefox /opt/firefox-nightly/firefox* {
   #include <abstractions/audio>
   /usr/bin/jackd mrix,
 
-  # Graphics
+  # Dconf
+  #include <abstractions/dconf>
+  owner /home/*/.config/dconf/user r,
+  owner /{,var/}run/user/*/dconf/user rw,
+
+  # Graphics (WebRender)
   #include <abstractions/dri-common>
   #include <abstractions/mesa>
   #include <abstractions/nvidia>
@@ -23,7 +29,7 @@ profile firefox /opt/firefox-nightly/firefox* {
   #include <abstractions/wayland>
   /sys/devices/pci*/** r,
 
-  # NVIDIA graphics
+  # NVIDIA graphics (WebRender)
   /usr/share/glvnd/egl_vendor.d/ r,
   /usr/share/glvnd/egl_vendor.d/** r,
   /usr/bin/nvidia-modprobe mrPx,
@@ -71,7 +77,6 @@ profile firefox /opt/firefox-nightly/firefox* {
   /usr/share/gtk-3.0/settings.ini r,
   /usr/share/icons/ r,
   /usr/share/themes/ r,
-  owner /home/*/.config/dconf/user r,
 
   # KDE 4
   owner @{HOME}/.kde/share/config/* r,
@@ -99,7 +104,6 @@ profile firefox /opt/firefox-nightly/firefox* {
   owner @{HOME}/.ICEauthority r,
   owner @{HOME}/.Xauthority r,
   owner /run/user/1000/mozilla* rwlk,
-  owner /run/user/1000/dconf/user rw,
 
   # System access
   /dev/ r,

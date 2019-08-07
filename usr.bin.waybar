@@ -2,6 +2,15 @@
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
+# Please note:
+#   This is an AppArmor profile for my personal setup and is only meant to be 
+#   used with the modules I use, so may prevent some modules from loading on 
+#   your setup. You will need to write your own personal rules if you use 
+#   different modules.
+
+# Modules tested to work:
+#   sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock
+
 #include <tunables/global>
 
 profile waybar /usr/bin/waybar {
@@ -14,6 +23,10 @@ profile waybar /usr/bin/waybar {
 
   # Needed to run, otherwise segfaults
   /usr/share/X11/xkb/** r,
+
+  # Dconf
+  #include <abstractions/dconf>
+  owner /{,var/}run/user/*/dconf/user rw,
 
   # Graphics
   #include <abstractions/wayland>
@@ -30,10 +43,6 @@ profile waybar /usr/bin/waybar {
   /usr/share/gtk-3.0/settings.ini r,
   /usr/share/icons/** r,
 
-  # Miscellaneous
-  /run/user/*/dconf/** rw,
-  owner @{HOME}/.config/dconf/user r,
-
   # Audio module
   #include <abstractions/audio>
 
@@ -41,6 +50,7 @@ profile waybar /usr/bin/waybar {
   /proc/*/net/netstat r,
 
   # Custom modules
+  # https://gitlab.com/krathalan/waybar-modules
   /usr/bin/wbm_{battery,vpn} rix,
   /sys/devices/** r,
 

@@ -12,28 +12,14 @@ profile keepassxc /usr/bin/keepassxc {
   #include <abstractions/dri-common>
   #include <abstractions/mesa>
   #include <abstractions/nvidia>
-
-  # Noisy
-  deny /dev/ r,
-  deny /dev/bus/usb/ rw,
-  deny /dev/tty rw,
-  deny /etc/machine-id rw,
-  deny /etc/nsswitch.conf rw,
-  deny /etc/passwd rw,
-  deny /proc/sys/kernel/random/boot_id r,
-  deny /sys/** r,
-  deny /usr/bin/ r,
-  deny /usr/share/pixmaps/ rw,
-  deny /var/** r,
-
-  # Noisy writes (still need to read!)
-  deny /usr/share/fonts/** w,
   
   # Process information 
   owner @{PROC}/@{pid} r,
   owner @{PROC}/@{pid}/** r,
 
   # Needed to view and edit keepass databases in documents directory
+  owner @{HOME}/Documents rwl,
+  owner @{HOME}/Documents/** rwl,
   owner @{HOME}/documents rwl,
   owner @{HOME}/documents/** rwl,
 
@@ -62,4 +48,18 @@ profile keepassxc /usr/bin/keepassxc {
   owner @{HOME}/.local/share/mime/** r,
   owner @{HOME}/.ICEauthority r,
   owner @{HOME}/.Xauthority r,
+
+  # Silence unneeded permissions
+  deny /dev/ r,
+  deny /dev/bus/usb/ rw,
+  deny /dev/tty rw,
+  deny /etc/machine-id rw,
+  deny /etc/nsswitch.conf rw,
+  deny /etc/passwd rw,
+  deny /proc/sys/kernel/random/boot_id r,
+  deny /sys/** r,
+  deny /usr/bin/ r,
+  deny /usr/share/fonts/** w,
+  deny /usr/share/pixmaps/ rw,
+  deny /var/** r,
 }

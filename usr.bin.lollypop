@@ -5,45 +5,39 @@
 #include <tunables/global>
 
 profile lollypop /usr/bin/lollypop {
-  #include <abstractions/audio>
   #include <abstractions/base>
-  #include <abstractions/python>
   #include <abstractions/wayland>
-
-  # Noisy
-  deny /dev/ rw,
-  deny /etc/group rw,
-  deny /etc/nsswitch.conf rw,
-  deny /proc/** rw,
-  deny /sys/** rw,
-  deny /usr/bin/bash rwx,
-  deny /usr/share/pixmaps/ rw,
-  deny /var/** rw,
-
-  # Noisy writes (still need to read!)
-  deny owner /usr/share/fonts/** w,
 
   # Needed to listen to music
   owner @{HOME}/music/ r,
   owner @{HOME}/music/** r,
 
   # Audio
+  #include <abstractions/audio>
   /etc/alsa/conf.d/ r,
   /etc/asound.conf r,
-  /usr/lib/gstreamer*/** mrix,
-  owner @{HOME}/.cache/gstreamer*/** rw,
-  owner @{HOME}/.cache/gstreamer-1.0/ w,
+
+  # Dconf
+  #include <abstractions/dconf>
+  owner /{,var/}run/user/*/dconf/user rw,
 
   # Python
+  #include <abstractions/python>
   /usr/bin/python* ix,
   /usr/lib/python*/** r,
   /usr/lib/python*/site-packages/lollypop/** w,
 
+  # Gstreamer
+  /usr/lib/gstreamer*/** mrix,
+  owner @{HOME}/.cache/gstreamer*/** rw,
+  owner @{HOME}/.cache/gstreamer-1.0/ w,
+  # https://askubuntu.com/questions/336552/what-are-orcexec-files
+  owner /run/user/*/orcexec* mrw,
+  owner @{HOME}/orcexec* mrw,
+
   # Other
   /etc/fonts/** r,
   /etc/machine-id r,
-  /run/user/*/dconf/** rw,
-  /run/user/*/orcexec* mrw,
   /tmp/** mrw,
   /usr/bin/lollypop r,
   /usr/share/fonts/ r,
@@ -62,7 +56,6 @@ profile lollypop /usr/bin/lollypop {
   owner @{HOME}/.cache/lollypop*/ rw,
   owner @{HOME}/.cache/lollypop*/** rwlk,
   owner @{HOME}/.config/*.dirs r,
-  owner @{HOME}/.config/dconf/** rw,
   owner @{HOME}/.config/gtk*/** r,
   owner @{HOME}/.local/share/lollypop/ rw,
   owner @{HOME}/.local/share/lollypop/** rwlk,
@@ -75,5 +68,15 @@ profile lollypop /usr/bin/lollypop {
   owner @{HOME}/.icons/** r,
   owner @{HOME}/.ICEauthority r,
   owner @{HOME}/.Xauthority r,
-  owner @{HOME}/orcexec* mrw,
+
+  # Silence unneeded permissions
+  deny /dev/ rw,
+  deny /etc/group rw,
+  deny /etc/nsswitch.conf rw,
+  deny /proc/** rw,
+  deny /sys/** rw,
+  deny /usr/bin/bash rwx,
+  deny owner /usr/share/fonts/** w,
+  deny /usr/share/pixmaps/ rw,
+  deny /var/** rw,
 }
