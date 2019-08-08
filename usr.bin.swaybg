@@ -1,0 +1,21 @@
+# AppArmor profile for swaybg background setter for Wayland
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+# Please note: you may need to edit this file to specify the location of your
+#              wallpaper!
+
+#include <tunables/global>
+
+profile swaybg /usr/bin/swaybg {
+  #include <abstractions/base>
+
+  # Needed to display wallpaper
+  /usr/share/mime/** r,
+  owner /home/*/.local/share/mime/** r,
+  owner /run/user/*/sway-client* rw,
+
+  # Path to wallpaper
+  owner /home/*/Pictures/Wallpapers/** r,
+  owner /home/*/pictures/wallpapers/** r,
+}

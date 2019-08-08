@@ -46,6 +46,7 @@ profile mpv /usr/bin/mpv {
   #include <abstractions/mesa>
   #include <abstractions/video>
   #include <abstractions/wayland>
+  /etc/libva.conf r,
   /sys/devices/** r,
   
   # NVIDIA graphics

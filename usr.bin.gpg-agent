@@ -1,0 +1,37 @@
+# AppArmor profile for gpg-agent
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile gpg-agent /usr/bin/gpg-agent {
+  #include <abstractions/base>
+
+  # Process info
+  @{PROC}/@{pid}/** r,
+
+  # Pinentry
+  #include <abstractions/fonts>
+  #include <abstractions/gnome>
+  /usr/bin/pinentry* rix,
+
+  # Themes and icons
+  /usr/share/gtk-2.0/gtkrc r,
+  /usr/share/icons/** r,
+  owner /home/*/.gtkrc-2.0 r,
+  owner /home/*/.local/share/icons/** r,
+
+  # Access user keys
+  owner /home/*/.gnupg/** rw,
+
+  # Miscellaneous
+  /usr/bin/dash rix,
+  /usr/share/mime/** r,
+  owner /home/*/.local/share/mime/** r,
+
+  # Silence unnecessary permissions
+  deny /usr/share/fonts/** w,
+  deny /usr/share/pixmaps/** r,
+  deny /var/cache/** w,
+  deny /home/*/.cache/fontconfig/** wrw,
+}

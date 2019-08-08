@@ -1,0 +1,12 @@
+# AppArmor profile for ssh-agent
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile ssh-agent /usr/bin/ssh-agent {
+  #include <abstractions/base>
+  #include <abstractions/openssl>
+  
+  owner /run/user/*/ssh-agent.socket w,
+}
