@@ -5,6 +5,17 @@
 # Forked from https://gitlab.com/madaidan/apparmor-profiles, provided without 
 # license
 
+# Please note: you may have issues with hardware acceleration on NVIDIA hardware. 
+# This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured 
+# incorrectly. Change the profile executable name at the top of the 
+# nvidia_modprobe profile file (/etc/apparmor.d/nvidia_modprobe) to 
+# /usr/bin/nvidia-modprobe.
+
+# Then rename the nvidia_modprobe file to usr.bin.nvidia-modprobe:
+# $ mv /etc/apparmor.d/nvidia_modprobe /etc/apparmor.d/usr.bin.nvidia-modprobe
+# Don't forget to enforce!
+# $ aa-enforce /etc/apparmor.d/*
+
 #include <tunables/global>
 
 profile firefox /opt/firefox-nightly/firefox* {
