@@ -54,6 +54,8 @@ profile waybar /usr/bin/waybar {
   /usr/bin/wbm_{battery,vpn} rix,
   /sys/devices/** r,
 
+  # Config
+  owner /home/*/.config/waybar/** r,
   # Config files in ~/.config/waybar/ are symlinks to these files
   owner @{HOME}/documents/config/waybar-config r,
   owner @{HOME}/documents/config/waybar-style.css r,

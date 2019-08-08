@@ -8,28 +8,21 @@
 #include <tunables/global>
 
 profile firefox /opt/firefox-nightly/firefox* {
+  #include <abstractions/audio>
   #include <abstractions/base>
   #include <abstractions/nameservice>
   #include <abstractions/gnome>
   
-  # Audio
-  #include <abstractions/audio>
-  /usr/bin/jackd mrix,
-
-  # Dconf
-  #include <abstractions/dconf>
-  owner /home/*/.config/dconf/user r,
-  owner /{,var/}run/user/*/dconf/user rw,
-
   # Graphics (WebRender)
   #include <abstractions/dri-common>
   #include <abstractions/mesa>
-  #include <abstractions/nvidia>
   #include <abstractions/video>
   #include <abstractions/wayland>
   /sys/devices/pci*/** r,
+  owner /home/*/.glvnd* rw,
 
   # NVIDIA graphics (WebRender)
+  #include <abstractions/nvidia>
   /dev/nvidia* rw,
   /usr/bin/nvidia-modprobe mrPx,
   /usr/share/egl/egl_external_platform.d/ r,
@@ -40,6 +33,11 @@ profile firefox /opt/firefox-nightly/firefox* {
   owner /tmp/.gl* m,
   owner /tmp/*/.gl* m,
   owner /home/*/.nv/** w,
+
+  # Dconf
+  #include <abstractions/dconf>
+  owner /home/*/.config/dconf/user r,
+  owner /{,var/}run/user/*/dconf/user rw,
 
   # Network
   network netlink raw,
@@ -53,13 +51,13 @@ profile firefox /opt/firefox-nightly/firefox* {
 
   # Firefox subprocesses
   ptrace trace peer=firefox,
-  owner /dev/shm/shmfd-* rw,
-  owner /dev/shm/org.chromium.* rw,
-  owner /dev/shm/org.mozilla.ipc.* rw,
   /usr/bin/bash ix,
   /usr/bin/firefox r,
   /usr/lib/firefox/firefox mrix,
   /proc/*/net/if_inet6 r,
+  owner /dev/shm/shmfd-* rw,
+  owner /dev/shm/org.chromium.* rw,
+  owner /dev/shm/org.mozilla.ipc.* rw,
 
   # Firefox profiles
   owner @{HOME}/.mozilla/ rwlk,
@@ -92,7 +90,7 @@ profile firefox /opt/firefox-nightly/firefox* {
 
   # Fonts
   owner /usr/lib/firefox/fonts/** rw,
-  owner /usr/share/fonts/** rw,
+  owner /usr/share/fonts/** r,
   
   # For firefox-nightly AUR package
   /opt/firefox-nightly/firefox-bin mrix,
@@ -104,11 +102,10 @@ profile firefox /opt/firefox-nightly/firefox* {
 
   # Miscellaneous
   owner /home/*/#* mrw,
-  owner /home/*/.glvnd* rw,
   owner /tmp/#* m,
   owner @{HOME}/.ICEauthority r,
   owner @{HOME}/.Xauthority r,
-  owner /run/user/1000/mozilla* rwlk,
+  owner /run/user/*/mozilla* rwlk,
 
   # System access
   /dev/ r,
@@ -148,13 +145,10 @@ profile firefox /opt/firefox-nightly/firefox* {
   deny /etc/group r,
   deny /etc/mailcap r,
   deny /etc/machine-id r,
+  deny /usr/share/fonts/** w,
   deny /var/lib/dbus/machine-id r,
   deny /var/cache/fontconfig/ w,
   
-  # Silence denial logs about PulseAudio
-  deny /etc/pulse/client.conf r,
-  deny /usr/bin/pulseaudio x,
-
   # Silence denial about ~/.local/share/gvfs-metadata/home, this file can 
   # contain sensitive data
   deny /home/*/.local/share/gvfs-metadata/** r,
