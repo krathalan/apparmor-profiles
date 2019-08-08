@@ -9,6 +9,8 @@ profile lollypop /usr/bin/lollypop {
   #include <abstractions/wayland>
 
   # Needed to listen to music
+  owner @{HOME}/Music/ r,
+  owner @{HOME}/Music/** r,
   owner @{HOME}/music/ r,
   owner @{HOME}/music/** r,
 
