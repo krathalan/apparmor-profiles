@@ -80,16 +80,21 @@ Very much a work-in-progress profile. Not ready for usage.
 An extremely simple profile for the standard `ssh-agent` (no pinentry).
 
 ### swaybg
-A relatively simple profile for the default sway background setter program `swaybg`.
+From the top of the profile: 
+```
+# Please note: you may need to edit this file to specify the location of your
+# wallpaper!
+```
+
+Otherwise a relatively simple profile for the default sway background setter program `swaybg`.
 
 ### waybar
 From the top of the profile:
 ```
-# Please note:
-#   This is an AppArmor profile for my personal setup and is only meant to be
-#   used with the modules I use, so may prevent some modules from loading on
-#   your setup. You will need to write your own personal rules if you use
-#   different modules.
+# Please note: this is an AppArmor profile for my personal setup and is only 
+# meant to be used with the modules I use, so may prevent some modules from 
+# loading on your setup. You will need to write your own personal rules if you 
+# use different modules.
 
 # Modules tested to work:
 #   sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock
