@@ -1,0 +1,61 @@
+# AppArmor profile for NetworkManager
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+# Please note: this profile is experimental!
+
+#include <tunables/global>
+
+profile NetworkManager /usr/bin/NetworkManager {
+  #include <abstractions/base>
+
+  # Networking 
+  #include <abstractions/nameservice>
+  #include <abstractions/openssl>
+  capability net_admin,
+  capability net_bind_service,
+  capability net_raw,
+
+  # Networking devices
+  owner /sys/devices/** r,
+
+  # Resolvconf
+  owner /etc/resolvconf.conf r,
+  owner /run/resolvconf/** rw,
+
+  # Subprocesses
+  /usr/bin/{cat,rm,mkdir} mrix,
+  /usr/bin/dash mrix,
+  /usr/bin/resolvconf mrix,
+
+  # Config
+  owner /etc/NetworkManager/ r,
+  owner /etc/NetworkManager/** r,
+  # Needed to record connection information (e.g. wifi passwords)
+  owner /etc/NetworkManager/system-connections/** w,
+
+  # Needed for nmtui to function properly
+  /proc/*/stat r,
+  owner /proc/*/fd/ r,
+
+  # System files
+  owner /etc/machine-id r,
+  owner /dev/rfkill rw,
+  owner /proc/sys/kernel/random/boot_id r,
+  owner /proc/sys/net/** rw,
+  owner /run/NetworkManager/ w,
+  owner /run/NetworkManager/** rw,
+  owner /run/udev/data/** r,
+  owner /sys/bus/ r,
+  owner /sys/class/ r,
+  owner /sys/class/** r,
+  owner /var/lib/NetworkManager/ r,
+  owner /var/lib/NetworkManager/** rw,
+
+  # Write to system log
+  capability audit_write,
+
+  # Silence unneeded permissions
+  deny capability dac_override,
+  deny / r,
+}
