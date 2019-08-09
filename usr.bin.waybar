@@ -48,6 +48,10 @@ profile waybar /usr/bin/waybar {
   # Network module
   /proc/*/net/netstat r,
 
+  # Tray module
+  # Needed to show icons for discord (flatpak)
+  owner /home/*/.var/app/com.discordapp.Discord/cache/** r,
+
   # Custom modules
   # https://gitlab.com/krathalan/waybar-modules
   /usr/bin/wbm_{battery,vpn} rix,

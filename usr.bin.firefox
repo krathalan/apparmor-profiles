@@ -1,4 +1,4 @@
-# AppArmor profile for firefox-nightly browser
+# AppArmor profile for firefox browser
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -18,7 +18,7 @@
 
 #include <tunables/global>
 
-profile firefox /opt/firefox-nightly/firefox* {
+profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   #include <abstractions/audio>
   #include <abstractions/base>
   #include <abstractions/nameservice>
