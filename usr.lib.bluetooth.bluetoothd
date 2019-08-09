@@ -1,0 +1,19 @@
+# AppArmor profile for bluetoothd
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile bluetoothd /usr/lib/bluetooth/bluetoothd {
+  #include <abstractions/base>
+
+  capability net_admin,
+  capability net_bind_service,
+
+  owner /dev/rfkill rw,
+  owner /dev/uinput rw,
+  owner /etc/bluetooth/ r,
+  owner /etc/bluetooth/** r,
+  owner /sys/devices/virtual/dmi/id/chassis_type r,
+  owner /var/lib/bluetooth/** rw,
+}

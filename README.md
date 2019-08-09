@@ -11,7 +11,7 @@ These AppArmor profiles have been verified to work on the following hardware:
 - GPUs:
     - NVIDIA GeForce GTX 980 Ti
     - Intel 620 UHD Graphics
-- Network cards:
+- Network/Bluetooth cards:
 	- Intel Wireless-AC 9260
 
 I cannot guarantee that these profiles will work on any other hardware.
@@ -52,8 +52,11 @@ This fairly simple profile assumes you keep your music in `~/{M,m}usic`. If you 
 I have not tested the profile for any web features, so they probably will not work.
 
 ### mpv
-From the top of the profile:
+This fairly complex profile also allows mpv to utilize youtube-dl. I have also verified that this AppArmor profile works when mpv is invoked by other programs (like [streamlink](https://streamlink.github.io/)).
 
+Use the command line flag `--gpu-context=wayland` for Wayland support. Use the command line flag `--hwdec=auto` for nvdec (NVIDIA) and VA-API (Intel) hardware decoding. You can also tell `mpv` to always use these options [through a config file](https://mpv.io/manual/master/).
+
+From the top of the profile:
 ```
 # Please note: you may have issues with hardware decoding on NVIDIA hardware. 
 # This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured 
@@ -67,48 +70,41 @@ From the top of the profile:
 # $ aa-enforce /etc/apparmor.d/*
 ```
 
-This fairly complex profile also allows mpv to utilize youtube-dl. I have also verified that this AppArmor profile works when mpv is invoked by other programs (like [streamlink](https://streamlink.github.io/)).
-
-Use the command line flag `--gpu-context=wayland` for Wayland support.
-
-Use the command line flag `--hwdec=auto` for nvdec (NVIDIA) and VA-API (Intel) hardware decoding.
-
 ## 🛑 New profiles
 These profiles are new, and somewhat untested. Use at your own risk.
 
+### bluetoothd
+An extremely simple profile for the [`bluetoothd` executable started by the Systemd service `bluetooth.service`](https://wiki.archlinux.org/index.php/Bluetooth).
+
 ### gpg-agent
-A relatively simple profile for the standard `gpg-agent`. This profile has only been tested with the gtk2 pinentry program. Please keep isolated backups of your GPG keys.
+A relatively simple profile for the [standard `gpg-agent`](https://wiki.archlinux.org/index.php/GPG#gpg-agent). This profile has only been tested with the gtk2 pinentry program. Please keep isolated backups of your GPG keys.
 
 ### iwd
-Read more about `iwd`: https://wiki.archlinux.org/index.php/Iwd
-
-An extremely simple profile for the new NetworkManager wireless backend `iwd` but very untested. Wifi connections, Wireguard connections, switching Wifi networks, etc. all work on my machine with an Intel 9260AC. Use at your own networking peril.
+An extremely simple profile for the [new NetworkManager wireless backend, `iwd`](https://wiki.archlinux.org/index.php/Iwd).
 
 ### mako
-An extremely simple profile for the Wayland-native notification daemon, `mako`. You may need to edit the profile to allow `mako` to access your configuration file, if it's a symlink to somewhere other than inside `~/.config/mako/`.
+An extremely simple profile for the [Wayland-native notification daemon, `mako`](https://github.com/emersion/mako). You may need to edit the profile to allow `mako` to access your configuration file, if it's a symlink to somewhere other than inside `~/.config/mako/`.
 
 ### NetworkManager
-A relatively simple profile for the standard `NetworkManager` but very untested. Wifi connections, Wireguard connections, switching Wifi networks, etc. all work on my machine with an Intel 9260AC. Use at your own networking peril.
+A relatively simple profile for the [standard `NetworkManager`](https://wiki.archlinux.org/index.php/Networkmanager).
 
 ### redshift
 This extremely simple profile has been tested to work correctly on Wayland (sway) with the `redshift-wlr-gamma-control` AUR package. 
 
 ### ssh-agent
-An extremely simple profile for the standard `ssh-agent` (no pinentry).
+An extremely simple profile for the [standard `ssh-agent`](https://wiki.archlinux.org/index.php/SSH_agent#ssh-agent) (no pinentry). Please keep isolated backups of your ssh keys.
 
 ### swaybg ⚠️
+An extremely simple profile for the [default sway background setter program, `swaybg`](https://github.com/swaywm/swaybg).
+
 From the top of the profile: 
 ```
 # Please note: you may need to edit this file to specify the location of your
 # wallpaper!
 ```
 
-Otherwise an extremely simple profile for the default sway background setter program `swaybg`.
-
 ### syncthing ⚠️
-Read more about syncthing: https://syncthing.net/
-
-A fairly simple profile for the wonderful decentralized file synchronization service Syncthing. This profile has not been tested extensively. Please keep isolated backups of your data, regardless of whether or not you use this profile.
+A fairly simple profile for the [decentralized file synchronization application, Syncthing](https://syncthing.net). This profile has not been tested extensively. Please keep isolated backups of your data, regardless of whether or not you use this profile.
 
 From the top of the profile:
 ```
@@ -117,6 +113,8 @@ From the top of the profile:
 ```
 
 ### waybar ⚠️
+A fairly simple profile for the [Wayland-native system bar, `waybar`](https://github.com/Alexays/Waybar).
+
 From the top of the profile:
 ```
 # Please note: this is an AppArmor profile for my personal setup and is only 
@@ -127,8 +125,6 @@ From the top of the profile:
 # Modules tested to work:
 #   sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock
 ```
-
-Otherwise a fairly simple profile.
 
 ## Contributing
 Pull requests and issues are welcome. I cannot test for hardware I do not have access to (AMD), so those PRs would be most critical.
