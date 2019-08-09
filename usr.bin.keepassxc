@@ -18,10 +18,8 @@ profile keepassxc /usr/bin/keepassxc {
   owner @{PROC}/@{pid}/** r,
 
   # Needed to view and edit keepass databases in documents directory
-  owner @{HOME}/Documents rwl,
-  owner @{HOME}/Documents/** rwl,
-  owner @{HOME}/documents rwl,
-  owner @{HOME}/documents/** rwl,
+  owner @{HOME}/{D,d}ocuments rwl,
+  owner @{HOME}/{D,d}ocuments/** rwl,
 
   # Icons, fonts, and theming
   /usr/share/gtk-2.0/gtkrc r,

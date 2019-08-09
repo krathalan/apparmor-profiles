@@ -126,6 +126,11 @@ From the top of the profile:
 #   sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock
 ```
 
+### youtube-dl
+A fairly simple profile for the [Internet video downloader, `youtube-dl`](https://github.com/ytdl-org/youtube-dl/).
+
+The only directory in the home directory youtube-dl is allowed to access is the `~/{D,d}ownloads` directory. Edit this profile if you prefer to download your videos elsewhere.
+
 ## Contributing
 Pull requests and issues are welcome. I cannot test for hardware I do not have access to (AMD), so those PRs would be most critical.
 

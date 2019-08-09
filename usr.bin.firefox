@@ -77,10 +77,8 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   owner @{HOME}/.cache/mozilla/** rwlk,
 
   # Allow access to downloads folder
-  owner @{HOME}/Downloads/ r,
-  owner @{HOME}/Downloads/* rw,
-  owner @{HOME}/downloads/ r,
-  owner @{HOME}/downloads/** rw,
+  owner @{HOME}/{D,d}ownloads/ r,
+  owner @{HOME}/{D,d}ownloads/* rw,
   
   # Process information
   owner @{PROC}/@{pid}/ r,

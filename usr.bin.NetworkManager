@@ -20,8 +20,9 @@ profile NetworkManager /usr/bin/NetworkManager {
   owner /sys/devices/** r,
 
   # Resolvconf
-  owner /etc/resolvconf.conf r,
-  owner /run/resolvconf/ w,
+  owner /etc/resolv.conf rw,
+  owner /etc/resolvconf.conf rw,
+  owner /run/resolvconf/ rw,
   owner /run/resolvconf/** rw,
 
   # Subprocesses
