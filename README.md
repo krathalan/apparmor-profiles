@@ -128,3 +128,7 @@ From the top of the profile:
 
 ## Contributing
 Pull requests and issues are welcome. I cannot test for hardware I do not have access to (AMD), so those PRs would be most critical.
+
+To get started writing AppArmor profiles, I highly recommend this video from openSUSE: https://invidio.us/watch?v=o2xa8JYcrmw&hl=en-US&local=true&autoplay=1&subtitles=%2C%2C
+
+You may also find this document incredibly helpful: https://gitlab.com/apparmor/apparmor/wikis/AppArmor_Core_Policy_Reference

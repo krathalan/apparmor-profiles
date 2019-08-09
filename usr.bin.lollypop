@@ -25,7 +25,7 @@ profile lollypop /usr/bin/lollypop {
 
   # Python
   #include <abstractions/python>
-  /usr/bin/python* ix,
+  /usr/bin/python* rix,
   /usr/lib/python*/** r,
   /usr/lib/python*/site-packages/lollypop/** w,
 
