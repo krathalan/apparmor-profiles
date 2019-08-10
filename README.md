@@ -79,6 +79,9 @@ An extremely simple profile for the [`bluetoothd` executable started by the Syst
 ### gpg-agent
 A relatively simple profile for the [standard `gpg-agent`](https://wiki.archlinux.org/index.php/GPG#gpg-agent). This profile has only been tested with the gtk2 pinentry program. Please keep isolated backups of your GPG keys.
 
+### hexchat
+A fairly simple profile for the [popular IRC client, `hexchat`](https://hexchat.github.io/).
+
 ### iwd
 An extremely simple profile for the [new NetworkManager wireless backend, `iwd`](https://wiki.archlinux.org/index.php/Iwd).
 
@@ -90,6 +93,9 @@ A relatively simple profile for the [standard `NetworkManager`](https://wiki.arc
 
 ### redshift
 This extremely simple profile has been tested to work correctly on Wayland (sway) with the `redshift-wlr-gamma-control` AUR package. 
+
+### rngd
+An extremely simple profile for the for the [entropy generator daemon, `rngd`](https://wiki.archlinux.org/index.php/Rng-tools).
 
 ### ssh-agent
 An extremely simple profile for the [standard `ssh-agent`](https://wiki.archlinux.org/index.php/SSH_agent#ssh-agent) (no pinentry). Please keep isolated backups of your ssh keys.
