@@ -1,4 +1,4 @@
-# AppArmor profile for swaybg background setter for Wayland
+# AppArmor profile for swaybg background setter for Sway
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
