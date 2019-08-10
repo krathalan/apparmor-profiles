@@ -60,4 +60,6 @@ profile NetworkManager /usr/bin/NetworkManager {
   # Silence unneeded permissions
   deny capability dac_override,
   deny / r,
+  deny /proc/sys/kernel/osrelease r,
+  deny /usr/bin/systemctl rx,
 }

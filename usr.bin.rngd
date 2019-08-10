@@ -1,0 +1,19 @@
+# AppArmor profile for rngd entropy generator
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile rngd /usr/bin/rngd {
+  #include <abstractions/base>
+
+  # Kind of dangerous; sys_admin is a huge capability
+  capability sys_admin,
+
+  # System access
+  owner /dev/random rw,
+  owner /proc/sys/kernel/random/* rw,
+
+  # Config file
+  owner /etc/conf.d/rngd r,
+}
