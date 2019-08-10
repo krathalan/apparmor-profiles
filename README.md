@@ -14,13 +14,33 @@ These AppArmor profiles have been verified to work on the following hardware:
 - Network/Bluetooth cards:
 	- Intel Wireless-AC 9260
 
-I cannot guarantee that these profiles will work on any other hardware.
+I cannot guarantee that these profiles will work on any other hardware. All profiles should work with Xorg on NVIDIA hardware and with Sway (and probably Xorg) on Intel hardware.
 
-All profiles should work with Xorg on NVIDIA hardware and with Wayland (and probably Xorg) on Intel hardware.
+⚠️ This symbol means you may/will need to edit the profile for your specific configuration. You can find more information for the specific program in the "Notes about each profile" section.
 
-⚠️ <--- This symbol means you will need to edit the profile for your specific configuration.
+### Tested profiles
+- Firefox
+- KeepassXC ⚠️
+- Lollypop ⚠️
+- mpv
 
-## Tested profiles
+### New and somewhat untested profiles
+- bluetoothd
+- gpg-agent ⚠️
+- hexchat
+- iwd
+- mako ⚠️
+- NetworkManager
+- pulseaudio
+- redshift
+- rngd
+- ssh-agent ⚠️
+- swaybg ⚠️
+- syncthing ⚠️
+- waybar ⚠️
+- youtube-dl ⚠️
+
+## Notes about each profile
 ### Firefox
 From the top of the profile:
 
@@ -37,22 +57,28 @@ From the top of the profile:
 # $ aa-enforce /etc/apparmor.d/*
 ```
 
-This complex profile has only been tested with the standard `firefox` package as well as the AUR package `firefox-nightly` on Arch Linux, and only with WebRender (on both Intel and Nvidia hardware, on both Wayland and Xorg). This single profile will apply to both Firefox and Firefox Nightly.
+This profile has only been tested on Arch Linux with the standard `firefox` package as well as the AUR package `firefox-nightly`, and only with WebRender (on the aforementioned hardware). This single profile will apply to both Firefox and Firefox Nightly.
 
 You will need to edit this file if your Firefox Nightly files are somewhere other than `/opt/firefox-nightly` (e.g. if you just download the binary from Mozilla's website).
 
 The only directories in the home directory that Firefox is allowed to access are `~/{D,d}ownloads` and `~/.mozilla`. You won't be able to, for example, upload things to the web from your Documents directory. You'll need to copy the file to your downloads directory first.
 
-### KeepassXC ⚠️
-This fairly simple profile assumes you keep your database file in `~/{D,d}ocuments/`. If you do not, edit the file to where you store your database. KeepassXC does not need access to your whole home directory. Please keep isolated backups of your database files.
+### gpg-agent ⚠️
+This profile has only been tested with the gtk2 pinentry program. You may need to edit the profile to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg`.
 
-### Lollypop
-This fairly simple profile assumes you keep your music in `~/{M,m}usic`. If you do not, edit the file to where you store your database. Lollypop does not need access to your whole home directory.
+### KeepassXC ⚠️
+This profile assumes you keep your database file in `~/{D,d}ocuments/`. If you do not, edit the file to where you store your database. KeepassXC does not need access to your whole home directory. Please keep isolated backups of your database files.
+
+### Lollypop ⚠️
+This profile assumes you keep your music in `~/{M,m}usic`. If you do not, edit the file to where you store your database. Lollypop does not need access to your whole home directory.
 
 I have not tested the profile for any web features, so they probably will not work.
 
+### mako ⚠️
+You may need to edit the profile to allow `mako` to access your configuration file, if it's a symlink to somewhere other than inside `~/.config/mako/`.
+
 ### mpv
-This fairly complex profile also allows mpv to utilize youtube-dl. I have also verified that this AppArmor profile works when mpv is invoked by other programs (like [streamlink](https://streamlink.github.io/)).
+This profile allows mpv to utilize `youtube-dl` to stream videos and confines it in the `youtube-dl` AppArmor profile in this project (you will need the separate `youtube-dl` profile enabled for this functionality). I have also verified that this AppArmor profile works when mpv is invoked by other programs like [streamlink](https://streamlink.github.io/).
 
 Use the command line flag `--gpu-context=wayland` for Wayland support. Use the command line flag `--hwdec=auto` for nvdec (NVIDIA) and VA-API (Intel) hardware decoding. You can also tell `mpv` to always use these options [through a config file](https://mpv.io/manual/master/).
 
@@ -70,42 +96,13 @@ From the top of the profile:
 # $ aa-enforce /etc/apparmor.d/*
 ```
 
-## 🛑 New profiles
-These profiles are new, and somewhat untested. Use at your own risk.
-
-### bluetoothd
-An extremely simple profile for the [`bluetoothd` executable started by the Systemd service `bluetooth.service`](https://wiki.archlinux.org/index.php/Bluetooth).
-
-### gpg-agent
-A relatively simple profile for the [standard `gpg-agent`](https://wiki.archlinux.org/index.php/GPG#gpg-agent). This profile has only been tested with the gtk2 pinentry program. Please keep isolated backups of your GPG keys.
-
-### hexchat
-A fairly simple profile for the [popular IRC client, `hexchat`](https://hexchat.github.io/).
-
-### iwd
-An extremely simple profile for the [new NetworkManager wireless backend, `iwd`](https://wiki.archlinux.org/index.php/Iwd).
-
-### mako
-An extremely simple profile for the [Wayland-native notification daemon, `mako`](https://github.com/emersion/mako). You may need to edit the profile to allow `mako` to access your configuration file, if it's a symlink to somewhere other than inside `~/.config/mako/`.
-
-### NetworkManager
-A relatively simple profile for the [standard `NetworkManager`](https://wiki.archlinux.org/index.php/Networkmanager).
-
-### pulseaudio
-A moderately complex profile for the [standard Linux sound system, `pulseaudio`](https://www.freedesktop.org/wiki/Software/PulseAudio/).
-
 ### redshift
-This extremely simple profile has been tested to work correctly on Wayland (sway) with the `redshift-wlr-gamma-control` AUR package. 
+This profile has been tested to work correctly on Sway with the `redshift-wlr-gamma-control` AUR package.
 
-### rngd
-An extremely simple profile for the for the [entropy generator daemon, `rngd`](https://wiki.archlinux.org/index.php/Rng-tools).
-
-### ssh-agent
-An extremely simple profile for the [standard `ssh-agent`](https://wiki.archlinux.org/index.php/SSH_agent#ssh-agent) (no pinentry). Please keep isolated backups of your ssh keys.
+### ssh-agent ⚠️
+You may need to edit the profile to allow access to your SSH keys, if you keep them somewhere other than `~/.ssh`.
 
 ### swaybg ⚠️
-An extremely simple profile for the [default sway background setter program, `swaybg`](https://github.com/swaywm/swaybg).
-
 From the top of the profile: 
 ```
 # Please note: you may need to edit this file to specify the location of your
@@ -113,8 +110,6 @@ From the top of the profile:
 ```
 
 ### syncthing ⚠️
-A fairly simple profile for the [decentralized file synchronization application, Syncthing](https://syncthing.net). This profile has not been tested extensively. Please keep isolated backups of your data, regardless of whether or not you use this profile.
-
 From the top of the profile:
 ```
 # Please note: you will need to edit this file to allow syncthing to access your
@@ -122,8 +117,6 @@ From the top of the profile:
 ```
 
 ### waybar ⚠️
-A fairly simple profile for the [Wayland-native system bar, `waybar`](https://github.com/Alexays/Waybar).
-
 From the top of the profile:
 ```
 # Please note: this is an AppArmor profile for my personal setup and is only 
@@ -135,9 +128,7 @@ From the top of the profile:
 #   sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock
 ```
 
-### youtube-dl
-A fairly simple profile for the [Internet video downloader, `youtube-dl`](https://github.com/ytdl-org/youtube-dl/).
-
+### youtube-dl ⚠️
 The only directory in the home directory youtube-dl is allowed to access is the `~/{D,d}ownloads` directory. Edit this profile if you prefer to download your videos elsewhere.
 
 ## Contributing
