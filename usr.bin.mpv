@@ -51,11 +51,11 @@ profile mpv /usr/bin/mpv {
   
   # NVIDIA graphics
   #include <abstractions/nvidia>
-  /usr/share/glvnd/egl_vendor.d/ r,
-  /usr/share/glvnd/egl_vendor.d/** r,
+  @{system_share_dirs}/glvnd/egl_vendor.d/ r,
+  @{system_share_dirs}/glvnd/egl_vendor.d/** r,
   /usr/bin/nvidia-modprobe mrPx,
   /dev/nvidia* rw,
-  /usr/share/nvidia/** r,
+  @{system_share_dirs}/nvidia/** r,
 
   # Audio
   #include <abstractions/audio>
@@ -69,10 +69,10 @@ profile mpv /usr/bin/mpv {
   /tmp/** mrw,
   /usr/bin/mpv r,
   /usr/bin/pulseaudio rix,
-  /usr/share/X11/Xcms.txt r,
-  /usr/share/icons/** r,
-  /usr/share/fonts/** r,
-  /usr/share/X11/XErrorDB r,
+  @{system_share_dirs}/X11/Xcms.txt r,
+  @{system_share_dirs}/icons/** r,
+  @{system_share_dirs}/fonts/** r,
+  @{system_share_dirs}/X11/XErrorDB r,
 
   # Silence unneeded permissions
   deny capability chown,
@@ -85,6 +85,6 @@ profile mpv /usr/bin/mpv {
   deny @{sys}/bus/pci/devices/ r,
   deny /usr/bin/bash rwx,
   deny /usr/bin/xdg-screensaver rx,
-  deny /usr/share/fonts/** w,
+  deny @{system_share_dirs}/fonts/** w,
   deny /var/cache/fontconfig w,
 }

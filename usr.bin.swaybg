@@ -11,8 +11,8 @@ profile swaybg /usr/bin/swaybg {
   #include <abstractions/base>
 
   # Needed to display wallpaper
-  /usr/share/mime/** r,
-  owner @{HOME}/.local/share/mime/** r,
+  @{system_share_dirs}/mime/** r,
+  owner @{user_share_dirs}/mime/** r,
   owner /run/user/*/sway-client* rw,
 
   # Path to wallpaper

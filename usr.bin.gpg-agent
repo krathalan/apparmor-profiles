@@ -16,22 +16,22 @@ profile gpg-agent /usr/bin/gpg-agent {
   /usr/bin/pinentry* rix,
 
   # Themes and icons
-  /usr/share/gtk-2.0/gtkrc r,
-  /usr/share/icons/** r,
+  @{system_share_dirs}/gtk-2.0/gtkrc r,
+  @{system_share_dirs}/icons/** r,
   owner @{HOME}/.gtkrc-2.0 r,
-  owner @{HOME}/.local/share/icons/** r,
+  owner @{user_share_dirs}/icons/** r,
 
   # Access user keys
   owner @{HOME}/.gnupg/** rw,
 
   # Miscellaneous
   /usr/bin/dash rix,
-  /usr/share/mime/** r,
-  owner @{HOME}/.local/share/mime/** r,
+  @{system_share_dirs}/mime/** r,
+  owner @{user_share_dirs}/mime/** r,
 
   # Silence unnecessary permissions
-  deny /usr/share/fonts/** w,
-  deny /usr/share/pixmaps/** r,
+  deny @{system_share_dirs}/fonts/** w,
+  deny @{system_share_dirs}/pixmaps/** r,
   deny /var/cache/** w,
   deny @{HOME}/.cache/fontconfig/** wrw,
 }

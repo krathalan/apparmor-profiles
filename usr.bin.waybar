@@ -18,10 +18,10 @@ profile waybar /usr/bin/waybar {
 
   # Fonts
   #include <abstractions/fonts>
-  /usr/share/fonts/** r,
+  @{system_share_dirs}/fonts/** r,
 
   # Needed to run, otherwise segfaults
-  /usr/share/X11/xkb/** r,
+  @{system_share_dirs}/X11/xkb/** r,
 
   # Dconf
   #include <abstractions/dconf>
@@ -39,8 +39,8 @@ profile waybar /usr/bin/waybar {
   owner @{PROC}/@{pid}/** r,
 
   # Icons and themes
-  /usr/share/gtk-3.0/settings.ini r,
-  /usr/share/icons/** r,
+  @{system_share_dirs}/gtk-3.0/settings.ini r,
+  @{system_share_dirs}/icons/** r,
 
   # Audio module
   #include <abstractions/audio>
@@ -65,5 +65,5 @@ profile waybar /usr/bin/waybar {
 
   # Silence unneeded permissions
   deny /etc/machine-id r,
-  deny /usr/share/fonts/** w,
+  deny @{system_share_dirs}/fonts/** w,
 }

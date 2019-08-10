@@ -29,7 +29,7 @@ profile youtube-dl /usr/bin/youtube-dl {
 
   # Needed to save files
   /usr/bin/file mrix,
-  /usr/share/file/** r,
+  @{system_share_dirs}/file/** r,
   owner @{HOME}/{D,d}ownloads/** rw,
 
   # ffmpeg?

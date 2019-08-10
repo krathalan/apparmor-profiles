@@ -9,9 +9,9 @@ profile mako /usr/bin/mako {
   #include <abstractions/fonts>
   
   # Application icons
-  /usr/share/icons/** r,
-  /usr/share/mime/** r,
-  owner @{HOME}/.local/share/mime/** r,
+  @{system_share_dirs}/icons/** r,
+  @{system_share_dirs}/mime/** r,
+  owner @{user_share_dirs}/mime/** r,
   
   # Shared memory
   owner /dev/shm/mako* rw,
@@ -22,6 +22,6 @@ profile mako /usr/bin/mako {
   owner @{HOME}/documents/config/mako-config r,
   
   # Deny unnecessary permissions
-  deny /usr/share/fonts/** w,
-  deny /usr/share/pixmaps/ r,
+  deny @{system_share_dirs}/fonts/** w,
+  deny @{system_share_dirs}/pixmaps/ r,
 }

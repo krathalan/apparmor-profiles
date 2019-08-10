@@ -36,11 +36,11 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   #include <abstractions/nvidia>
   /dev/nvidia* rw,
   /usr/bin/nvidia-modprobe mrPx,
-  /usr/share/egl/egl_external_platform.d/ r,
-  /usr/share/egl/egl_external_platform.d/** r,
-  /usr/share/glvnd/egl_vendor.d/ r,
-  /usr/share/glvnd/egl_vendor.d/** r,
-  /usr/share/nvidia/** r,
+  @{system_share_dirs}/egl/egl_external_platform.d/ r,
+  @{system_share_dirs}/egl/egl_external_platform.d/** r,
+  @{system_share_dirs}/glvnd/egl_vendor.d/ r,
+  @{system_share_dirs}/glvnd/egl_vendor.d/** r,
+  @{system_share_dirs}/nvidia/** r,
   owner /tmp/.gl* m,
   owner /tmp/*/.gl* m,
   owner @{HOME}/.nv/** w,
@@ -86,20 +86,20 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   @{PROC}/sys/kernel/random/uuid r,
 
   # Themes and icons
-  /usr/share/gtk-3.0/settings.ini r,
-  /usr/share/icons/ r,
-  /usr/share/themes/ r,
+  @{system_share_dirs}/gtk-3.0/settings.ini r,
+  @{system_share_dirs}/icons/ r,
+  @{system_share_dirs}/themes/ r,
 
   # KDE 4
   owner @{HOME}/.kde/share/config/* r,
 
   # Xfce4
   /etc/xfce4/defaults.list r,
-  /usr/share/xfce4/applications/ r,
+  @{system_share_dirs}/xfce4/applications/ r,
 
   # Fonts
   owner /usr/lib/firefox/fonts/** rw,
-  owner /usr/share/fonts/** r,
+  owner @{system_share_dirs}/fonts/** r,
   
   # For firefox-nightly AUR package
   /opt/firefox-nightly/firefox-bin mrix,
@@ -118,15 +118,15 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
 
   # System access
   /dev/ r,
-  /usr/share/ r,
-  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+  @{system_share_dirs}/ r,
+  @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
   /etc/mime.types r,
-  /usr/share/mime/ r,
-  /usr/share/applications/** rk,
-  /usr/share/gnome/applications/ r,
-  /usr/share/gnome/applications/kde4/ r,
-  /usr/share/poppler/cMap/ r,
-  /usr/share/pixmaps/ r,
+  @{system_share_dirs}/mime/ r,
+  @{system_share_dirs}/applications/** rk,
+  @{system_share_dirs}/gnome/applications/ r,
+  @{system_share_dirs}/gnome/applications/kde4/ r,
+  @{system_share_dirs}/poppler/cMap/ r,
+  @{system_share_dirs}/pixmaps/ r,
 
   @{sys}/devices/system/cpu/ r,
   @{sys}/devices/system/cpu/present r,
@@ -154,11 +154,11 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   deny /etc/group r,
   deny /etc/mailcap r,
   deny /etc/machine-id r,
-  deny /usr/share/fonts/** w,
+  deny @{system_share_dirs}/fonts/** w,
   deny /var/lib/dbus/machine-id r,
   deny /var/cache/fontconfig/ w,
   
   # Silence denial about ~/.local/share/gvfs-metadata/home, this file can 
   # contain sensitive data
-  deny @{HOME}/.local/share/gvfs-metadata/** r,
+  deny @{user_share_dirs}/gvfs-metadata/** r,
 }
