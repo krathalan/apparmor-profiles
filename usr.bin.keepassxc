@@ -12,6 +12,9 @@ profile keepassxc /usr/bin/keepassxc {
   #include <abstractions/dri-common>
   #include <abstractions/mesa>
   #include <abstractions/nvidia>
+  #include <abstractions/wayland>
+  @{system_share_dirs}/glvnd/egl_vendor.d/ r,
+  @{system_share_dirs}/glvnd/egl_vendor.d/** r,
   
   # Process information 
   owner @{PROC}/@{pid} r,
