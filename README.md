@@ -124,8 +124,8 @@ From the top of the profile:
 # loading on your setup. You will need to write your own personal rules if you 
 # use different modules.
 
-# Modules tested to work:
-#   sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock
+# Modules tested to work: sway/workspaces, sway/mode, sway/window, network,
+# pulseaudio, cpu, clock, tray
 ```
 
 ### youtube-dl ⚠️
