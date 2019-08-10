@@ -54,8 +54,7 @@ profile waybar /usr/bin/waybar {
 
   # Custom modules
   # https://gitlab.com/krathalan/waybar-modules
-  /usr/bin/wbm_{battery,vpn} rix,
-  @{sys}/devices/** r,
+  /usr/bin/wbm_{battery,vpn} rPx,
 
   # Config
   owner @{HOME}/.config/waybar/** r,
