@@ -83,6 +83,6 @@ profile mpv /usr/bin/mpv {
   deny /usr/bin/bash rwx,
   deny /usr/bin/xdg-screensaver rx,
   deny @{system_share_dirs}/fonts/** w,
-  deny /var/cache/fontconfig w,
+  deny /var/cache/fontconfig/ w,
   deny @{HOME}/.cache/fontconfig/** rwk,
 }

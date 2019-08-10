@@ -20,7 +20,7 @@ profile lollypop /usr/bin/lollypop {
 
   # Dconf
   #include <abstractions/dconf>
-  owner /{,var/}run/user/*/dconf/user rw,
+  owner /run/user/*/dconf/user rw,
 
   # Python
   #include <abstractions/python>

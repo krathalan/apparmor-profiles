@@ -48,7 +48,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   # Dconf
   #include <abstractions/dconf>
   owner @{HOME}/.config/dconf/user r,
-  owner /{,var/}run/user/*/dconf/user rw,
+  owner /run/user/*/dconf/user rw,
 
   # Network
   network netlink raw,
