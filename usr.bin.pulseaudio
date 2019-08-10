@@ -1,0 +1,53 @@
+# AppArmor profile for pulseaudio sound system
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile pulseaudio /usr/bin/pulseaudio {
+  #include <abstractions/audio>
+  #include <abstractions/base>
+  #include <abstractions/dbus-session-strict>
+  #include <abstractions/user-tmp>
+
+  # Dconf
+  #include <abstractions/dconf>
+  owner /run/user/*/dconf/user rw,
+
+  # Subprocesses
+  /usr/lib/pulse/gsettings-helper mrix,
+
+  # User data
+  /run/systemd/users/* r,
+  owner @{HOME}/ r,
+  owner @{HOME}/.esd_auth rwk,
+  owner @{HOME}/.config/pulse/ r,
+  owner @{HOME}/.config/pulse/** rw,
+
+  # System access
+  /run/udev/data/* r,
+  @{sys}/bus/ r,
+  @{sys}/class/ r,
+  @{sys}/class/sound/ r,
+  @{sys}/devices/pci** r,
+  @{sys}/devices/virtual/dmi/id/* r,
+  @{sys}/devices/virtual/sound/** r,
+  @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
+  @{system_share_dirs}/pulseaudio/alsa-mixer/** r,
+  owner @{PROC}/*/fd/ r,
+  owner /run/user/*/pulse/* rw,
+
+  # Keep track of applications using audio
+  /var/lib/flatpak/exports/share/applications/ r,
+  @{system_share_dirs}/applications/ r,
+  @{system_share_dirs}/applications/* r,
+  # For some reason pulseaudio/apparmor doesn't accept the tunable version
+  /usr/share/applications/ r,
+  /usr/share/applications/* r,
+
+  # Pavucontrol
+  # https://askubuntu.com/questions/336552/what-are-orcexec-files
+  owner /run/user/*/orcexec* mrw,
+  owner /tmp/orcexec* mrw,
+  owner @{HOME}/orcexec* mrw,
+}

@@ -91,6 +91,9 @@ An extremely simple profile for the [Wayland-native notification daemon, `mako`]
 ### NetworkManager
 A relatively simple profile for the [standard `NetworkManager`](https://wiki.archlinux.org/index.php/Networkmanager).
 
+### pulseaudio
+A moderately complex profile for the [standard Linux sound system, `pulseaudio`](https://www.freedesktop.org/wiki/Software/PulseAudio/).
+
 ### redshift
 This extremely simple profile has been tested to work correctly on Wayland (sway) with the `redshift-wlr-gamma-control` AUR package. 
 
