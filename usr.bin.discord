@@ -1,0 +1,71 @@
+# AppArmor profile for discord proprietary chat program
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
+  #include <abstractions/audio>
+  #include <abstractions/base>
+  #include <abstractions/fonts>
+  #include <abstractions/gnome>
+
+  # Graphics
+  #include <abstractions/mesa>
+  @{sys}/bus/pci/devices/ r,
+  @{sys}/devices/pci*/** r,
+  @{system_share_dirs}/glvnd/egl_vendor.d/ r,
+  @{system_share_dirs}/glvnd/egl_vendor.d/** r,
+
+  # Networking
+  #include <abstractions/nameservice>
+  /etc/ca-certificates/trust-source/ r,
+  /etc/ca-certificates/trust-source/anchors/ r,
+  /etc/ca-certificates/trust-source/blacklist/ r,
+  owner @{HOME}/.pki/nssdb/* rwk,
+
+  # Subprocesses
+  /usr/bin/dash mrix,
+  /opt/discord/Discord mrix,
+  owner /dev/shm/.org.chromium.Chromium.* rw,
+
+  # Process information
+  @{PROC}/ r,
+  @{PROC}/*/stat r,
+  owner @{PROC}/@{pid}/ r,
+  owner @{PROC}/@{pid}/** r,
+  owner @{PROC}/*/oom_score_adj w,
+
+  # Miscellaneous
+  /opt/discord/** r,
+  @{system_share_dirs}/gtk-3.0/settings.ini r,
+  owner @{HOME}/.config/gtk-3.0/settings.ini r,
+  owner /run/user/*/discord* w,
+
+  # Allow access to downloads folder for uploads ONLY (no downloads)
+  owner @{HOME}/{D,d}ownloads/ r,
+  owner @{HOME}/{D,d}ownloads/** r,
+
+  # Config
+  owner @{HOME}/.config/discord/ rw,
+  owner @{HOME}/.config/discord/** mrwk,
+
+  # File picker (still works without these permissions)
+  deny /etc/fstab r,
+  deny /run/user/*/dconf/user rw,
+  deny @{HOME}/.cache/thumbnails/** rw,
+  deny @{HOME}/.config/dconf/user rw,
+
+  # Silence unnecessary permissions
+  deny ptrace,
+  deny /dev/ r,
+  deny /etc/machine-id r,
+  deny /dev/pts/0 rw,
+  deny @{PROC}/*/cmdline r,
+  deny @{PROC}/vmstat r,
+  deny /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
+  deny /sys/devices/virtual/tty/** r,
+  deny /usr/bin/xdg-mime x,
+  deny /usr/bin/xdg-open x,
+  deny @{system_share_dirs}/fonts/** w,
+}

@@ -22,25 +22,42 @@ I cannot guarantee that these profiles will work on any other hardware. All prof
 - Firefox
 - KeepassXC ⚠️
 - Lollypop ⚠️
-- mpv
+- mpv ⚠️
 
 ### New and somewhat untested profiles
 - bluetoothd
+- discord
 - gpg-agent ⚠️
+- evince ⚠️
 - hexchat
 - iwd
+- less
 - mako ⚠️
 - NetworkManager
 - pulseaudio
-- redshift
+- redshift ⚠️
 - rngd
 - ssh-agent ⚠️
+- streamlink
 - swaybg ⚠️
 - syncthing ⚠️
 - waybar ⚠️
 - youtube-dl ⚠️
 
 ## Notes about each profile
+### discord
+This profile assumes you only want to upload files from `~/{D,d}ownloads`. If you do not, edit the file. Discord does not need access to your whole home directory.
+
+Streamer mode and showing any currently playing games/music/etc. will not work as `ptrace` is completely disabled in this profile, as Discord tries to run `ptrace` on every program running on your machine. `ptrace` is an extremely dangerous capability. From the [`ptrace` manpage](http://man7.org/linux/man-pages/man2/ptrace.2.html):
+
+```
+The ptrace() system call provides a means by which one process (the
+"tracer") may observe and control the execution of another process
+(the "tracee"), and examine and change the tracee's memory and
+registers.  It is primarily used to implement breakpoint debugging
+and system call tracing.
+```
+
 ### Firefox
 From the top of the profile:
 
@@ -66,6 +83,9 @@ The only directories in the home directory that Firefox is allowed to access are
 ### gpg-agent ⚠️
 This profile has only been tested with the gtk2 pinentry program. You may need to edit the profile to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg`.
 
+### evince ⚠️
+This profile assumes you only want to view documents in `~/{D,d}ocuments/` and `~/{D,d}ownloads`. If you do not, edit the file. Evince does not need access to your whole home directory.
+
 ### KeepassXC ⚠️
 This profile assumes you keep your database file in `~/{D,d}ocuments/`. If you do not, edit the file to where you store your database. KeepassXC does not need access to your whole home directory. Please keep isolated backups of your database files.
 
@@ -77,8 +97,10 @@ I have not tested the profile for any web features, so they probably will not wo
 ### mako ⚠️
 You may need to edit the profile to allow `mako` to access your configuration file, if it's a symlink to somewhere other than inside `~/.config/mako/`.
 
-### mpv
-This profile allows mpv to utilize `youtube-dl` to stream videos and confines it in the `youtube-dl` AppArmor profile in this project (you will need the separate `youtube-dl` profile enabled for this functionality). I have also verified that this AppArmor profile works when mpv is invoked by other programs like [streamlink](https://streamlink.github.io/).
+### mpv ⚠️
+You may need to edit the profile to allow `mpv` to acces your configuration file, if it's a symlink to somehwere other than `~/.config/mpv`.
+
+This profile allows mpv to utilize `youtube-dl` to stream videos and confines it in the `youtube-dl` AppArmor profile in this project. You will need the separate `youtube-dl` profile enabled for this functionality. I have also verified that this AppArmor profile works when mpv is invoked by other programs like [streamlink](https://streamlink.github.io/).
 
 Use the command line flag `--gpu-context=wayland` for Wayland support. Use the command line flag `--hwdec=auto` for nvdec (NVIDIA) and VA-API (Intel) hardware decoding. You can also tell `mpv` to always use these options [through a config file](https://mpv.io/manual/master/).
 
@@ -96,11 +118,16 @@ From the top of the profile:
 # $ aa-enforce /etc/apparmor.d/*
 ```
 
-### redshift
+### redshift ⚠️
 This profile has been tested to work correctly on Sway with the `redshift-wlr-gamma-control` AUR package.
+
+You may need to edit the profile to allow `redshift` to access your configuration file, if it's a symlink to somewhere other than `~/.config/redshift/redshift.conf`.
 
 ### ssh-agent ⚠️
 You may need to edit the profile to allow access to your SSH keys, if you keep them somewhere other than `~/.ssh`.
+
+### streamlink
+You will need to set `mpv` as your default player and have the separate `mpv` AppArmor profile from this repository enabled.
 
 ### swaybg ⚠️
 From the top of the profile: 
