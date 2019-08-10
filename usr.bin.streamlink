@@ -32,8 +32,8 @@ profile streamlink /usr/bin/streamlink {
   /usr/share/file/** r,
 
   # Process information
-  owner /proc/*/fd/ r,
-  owner /proc/*/mounts r,
+  owner @{PROC}/*/fd/ r,
+  owner @{PROC}/*/mounts r,
 
   # Miscellaneous
   /etc/mime.types r,
