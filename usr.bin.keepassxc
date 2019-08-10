@@ -58,6 +58,9 @@ profile keepassxc /usr/bin/keepassxc {
   owner @{HOME}/.ICEauthority r,
   owner @{HOME}/.Xauthority r,
 
+  # GVFS isn't tested :)
+  deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
+
   # Silence unneeded permissions
   deny /dev/ r,
   deny /dev/bus/usb/ rw,

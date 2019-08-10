@@ -70,6 +70,10 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   owner /dev/shm/org.chromium.* rw,
   owner /dev/shm/org.mozilla.ipc.* rw,
 
+  # Process information
+  @{PROC}/@{pid}/ r,
+  @{PROC}/@{pid}/** r,
+
   # Firefox profiles
   owner @{HOME}/.mozilla/ rwlk,
   owner @{HOME}/.mozilla/** rwlk,
@@ -80,11 +84,6 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   owner @{HOME}/{D,d}ownloads/ r,
   owner @{HOME}/{D,d}ownloads/* rw,
   
-  # Process information
-  owner @{PROC}/@{pid}/ r,
-  owner @{PROC}/@{pid}/** r,
-  @{PROC}/sys/kernel/random/uuid r,
-
   # Themes and icons
   @{system_share_dirs}/gtk-3.0/settings.ini r,
   @{system_share_dirs}/icons/ r,
@@ -110,11 +109,12 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   deny /opt/firefox-nightly/crashreporter x,
 
   # Miscellaneous
-  owner @{HOME}/#* mrw,
+  @{PROC}/sys/kernel/random/uuid r,
+  owner /run/user/*/mozilla* rwlk,
   owner /tmp/#* m,
+  owner @{HOME}/#* mrw,
   owner @{HOME}/.ICEauthority r,
   owner @{HOME}/.Xauthority r,
-  owner /run/user/*/mozilla* rwlk,
 
   # System access
   /dev/ r,

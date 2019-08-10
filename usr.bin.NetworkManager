@@ -19,16 +19,18 @@ profile NetworkManager /usr/bin/NetworkManager {
   # Networking devices
   owner @{sys}/devices/** r,
 
+  # Write to system log
+  capability audit_write,
+
   # Resolvconf
-  owner /etc/resolv.conf rw,
-  owner /etc/resolvconf.conf rw,
+  /usr/bin/resolvconf mrix,
+  owner /etc/resolv* rw,
   owner /run/resolvconf/ rw,
   owner /run/resolvconf/** rw,
 
   # Subprocesses
-  /usr/bin/{cat,rm,mkdir} mrix,
+  /usr/bin/{cat,cp,mkdir,rm} mrix,
   /usr/bin/dash mrix,
-  /usr/bin/resolvconf mrix,
 
   # Config
   owner /etc/NetworkManager/ r,
@@ -54,12 +56,12 @@ profile NetworkManager /usr/bin/NetworkManager {
   owner /var/lib/NetworkManager/ r,
   owner /var/lib/NetworkManager/** rw,
 
-  # Write to system log
-  capability audit_write,
-
-  # Silence unneeded permissions
+  # Even if NetworkManager "needs" these permissions, it still works without 
+  # them and allowing them would make the profile much less effective
   deny capability dac_override,
+  deny /usr/bin/systemctl rx,
+
+  # Silence unnecessary permissions
   deny / r,
   deny @{PROC}/sys/kernel/osrelease r,
-  deny /usr/bin/systemctl rx,
 }

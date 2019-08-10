@@ -41,11 +41,13 @@ profile evince /usr/bin/evince {
   owner @{user_share_dirs}/recently-used.xbel* rw,
   owner @{HOME}/.cache/thumbnails/** rw,
 
+  # Poppler is a PDF rendering library
+  @{system_share_dirs}/poppler/ r,
+  @{system_share_dirs}/poppler/** r,
+
   # Miscellaneous
   @{system_share_dirs}/evince/** r,
   @{system_share_dirs}/mime/mime.cache r,
-  @{system_share_dirs}/poppler/ r,
-  @{system_share_dirs}/poppler/** r,
   @{system_share_dirs}/X11/xkb/** r,
   owner @{user_share_dirs}/mime/mime.cache r,
 
