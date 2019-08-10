@@ -12,7 +12,7 @@ profile rngd /usr/bin/rngd {
 
   # System access
   owner /dev/random rw,
-  owner /proc/sys/kernel/random/* rw,
+  owner @{PROC}/sys/kernel/random/* rw,
 
   # Config file
   owner /etc/conf.d/rngd r,

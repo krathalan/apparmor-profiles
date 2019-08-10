@@ -19,28 +19,24 @@ profile hexchat /usr/bin/hexchat {
 
   # Mime
   /usr/share/mime/mime.cache r,
-  owner /home/*/.local/share/mime/mime.cache r,
+  owner @{HOME}/.local/share/mime/mime.cache r,
 
   # Icons and themes
   /usr/share/gtk-2.0/gtkrc r,
   /usr/share/icons/ r,
   /usr/share/icons/** r,
-  owner /home/*/.gtkrc-2.0 r,
-  owner /home/*/.local/share/icons/ r,
-  owner /home/*/.local/share/icons/** r,
+  owner @{HOME}/.gtkrc-2.0 r,
+  owner @{HOME}/.local/share/icons/ r,
+  owner @{HOME}/.local/share/icons/** r,
 
   # Config
-  owner /home/*/.config/hexchat/ rw,
-  owner /home/*/.config/hexchat/** rw,
-  owner /home/*/.config/user-dirs.dirs r,
-
-  # Fonts (from abstractions/fonts)
-  owner /home/*/.cache/fontconfig/ rw,
-  owner /home/*/.cache/fontconfig/** mrwl,
+  owner @{HOME}/.config/hexchat/ rw,
+  owner @{HOME}/.config/hexchat/** rw,
+  owner @{HOME}/.config/user-dirs.dirs r,
 
   # Silence unneeded permissions
   deny /usr/share/fonts/** w,
   deny /usr/share/pixmaps/ r,
   deny /var/lib/flatpak/** r,
-  deny owner /home/*/ r,
+  deny owner @{HOME}/ r,
 }

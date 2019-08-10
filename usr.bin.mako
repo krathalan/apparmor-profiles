@@ -11,15 +11,15 @@ profile mako /usr/bin/mako {
   # Application icons
   /usr/share/icons/** r,
   /usr/share/mime/** r,
-  owner /home/*/.local/share/mime/** r,
+  owner @{HOME}/.local/share/mime/** r,
   
   # Shared memory
   owner /dev/shm/mako* rw,
   
   # Config file
-  owner /home/*/.config/mako/** r,
+  owner @{HOME}/.config/mako/** r,
   # Config file at ~/.config/mako/config is a symlink to this file
-  owner /home/*/documents/config/mako-config r,
+  owner @{HOME}/documents/config/mako-config r,
   
   # Deny unnecessary permissions
   deny /usr/share/fonts/** w,

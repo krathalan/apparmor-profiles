@@ -24,16 +24,16 @@ profile youtube-dl /usr/bin/youtube-dl {
   # Process information
   owner @{PROC}/@{pid} r,
   owner @{PROC}/@{pid}/** r,
-  owner /proc/*/fd/ r,
-  owner /proc/*/mounts r,
+  owner @{PROC}/*/fd/ r,
+  owner @{PROC}/*/mounts r,
 
   # Needed to save files
   /usr/bin/file mrix,
   /usr/share/file/** r,
-  owner /home/*/{D,d}ownloads/** rw,
+  owner @{HOME}/{D,d}ownloads/** rw,
 
   # ffmpeg?
-  /sys/devices/system/cpu/ r,
+  @{sys}/devices/system/cpu/ r,
 
   # System access
   /etc/mime.types r,

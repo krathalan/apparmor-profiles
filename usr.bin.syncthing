@@ -15,25 +15,25 @@ profile syncthing /usr/bin/syncthing {
   #include <abstractions/ssl_certs>
   #include <abstractions/ssl_keys>
   /etc/ca-certificates/extracted/** r,
-  /proc/sys/net/core/somaxconn r,
+  @{PROC}/sys/net/core/somaxconn r,
   /usr/bin/ip rix,
 
   # Personal synced directories
-  owner /home/*/documents/ r,
-  owner /home/*/documents/** rw,
-  owner /home/*/downloads/dropbox/ r,
-  owner /home/*/downloads/dropbox/** rw,
-  owner /home/*/music/ r,
-  owner /home/*/music/** rw,
-  owner /home/*/pictures/ r,
-  owner /home/*/pictures/** rw,
+  owner @{HOME}/documents/ r,
+  owner @{HOME}/documents/** rw,
+  owner @{HOME}/downloads/dropbox/ r,
+  owner @{HOME}/downloads/dropbox/** rw,
+  owner @{HOME}/music/ r,
+  owner @{HOME}/music/** rw,
+  owner @{HOME}/pictures/ r,
+  owner @{HOME}/pictures/** rw,
 
   # Process information
   owner @{PROC}/@{pid}/** r,
 
   # Config
-  owner /home/*/.config/syncthing/ r,
-  owner /home/*/.config/syncthing/** rwk,
+  owner @{HOME}/.config/syncthing/ r,
+  owner @{HOME}/.config/syncthing/** rwk,
 
   # Miscellaneous
   /etc/mime.types r,

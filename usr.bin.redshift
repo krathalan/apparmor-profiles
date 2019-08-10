@@ -10,7 +10,7 @@ profile redshift /usr/bin/redshift {
   #include <abstractions/base>
 
   # Config file 
-  owner /home/*/.config/redshift/redshift.conf r,
+  owner @{HOME}/.config/redshift/redshift.conf r,
 
   # Miscellaneous
   owner /run/user/*/redshift-shared* rw,

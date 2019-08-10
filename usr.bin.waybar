@@ -46,19 +46,19 @@ profile waybar /usr/bin/waybar {
   #include <abstractions/audio>
 
   # Network module
-  /proc/*/net/netstat r,
+  @{PROC}/*/net/netstat r,
 
   # Tray module
   # Needed to show icons for discord (flatpak)
-  owner /home/*/.var/app/com.discordapp.Discord/cache/** r,
+  owner @{HOME}/.var/app/com.discordapp.Discord/cache/** r,
 
   # Custom modules
   # https://gitlab.com/krathalan/waybar-modules
   /usr/bin/wbm_{battery,vpn} rix,
-  /sys/devices/** r,
+  @{sys}/devices/** r,
 
   # Config
-  owner /home/*/.config/waybar/** r,
+  owner @{HOME}/.config/waybar/** r,
   # Config files in ~/.config/waybar/ are symlinks to these files
   owner @{HOME}/documents/config/waybar-config r,
   owner @{HOME}/documents/config/waybar-style.css r,

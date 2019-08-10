@@ -29,8 +29,8 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   #include <abstractions/mesa>
   #include <abstractions/video>
   #include <abstractions/wayland>
-  /sys/devices/pci*/** r,
-  owner /home/*/.glvnd* rw,
+  @{sys}/devices/pci*/** r,
+  owner @{HOME}/.glvnd* rw,
 
   # NVIDIA graphics (WebRender)
   #include <abstractions/nvidia>
@@ -43,11 +43,11 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   /usr/share/nvidia/** r,
   owner /tmp/.gl* m,
   owner /tmp/*/.gl* m,
-  owner /home/*/.nv/** w,
+  owner @{HOME}/.nv/** w,
 
   # Dconf
   #include <abstractions/dconf>
-  owner /home/*/.config/dconf/user r,
+  owner @{HOME}/.config/dconf/user r,
   owner /{,var/}run/user/*/dconf/user rw,
 
   # Network
@@ -65,7 +65,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   /usr/bin/bash ix,
   /usr/bin/firefox r,
   /usr/lib/firefox/firefox mrix,
-  /proc/*/net/if_inet6 r,
+  @{PROC}/*/net/if_inet6 r,
   owner /dev/shm/shmfd-* rw,
   owner /dev/shm/org.chromium.* rw,
   owner /dev/shm/org.mozilla.ipc.* rw,
@@ -110,7 +110,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   deny /opt/firefox-nightly/crashreporter x,
 
   # Miscellaneous
-  owner /home/*/#* mrw,
+  owner @{HOME}/#* mrw,
   owner /tmp/#* m,
   owner @{HOME}/.ICEauthority r,
   owner @{HOME}/.Xauthority r,
@@ -128,15 +128,15 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   /usr/share/poppler/cMap/ r,
   /usr/share/pixmaps/ r,
 
-  /sys/devices/system/cpu/ r,
-  /sys/devices/system/cpu/present r,
-  /sys/devices/system/node/ r,
-  /sys/devices/system/node/node[0-9]*/meminfo r,
-  deny /sys/devices/virtual/block/*/uevent r,
+  @{sys}/devices/system/cpu/ r,
+  @{sys}/devices/system/cpu/present r,
+  @{sys}/devices/system/node/ r,
+  @{sys}/devices/system/node/node[0-9]*/meminfo r,
+  deny @{sys}/devices/virtual/block/*/uevent r,
 
   /etc/udev/udev.conf r,
   /run/udev/data/+pci:* r,
-  /sys/devices/pci[0-9]*/**/uevent r,
+  @{sys}/devices/pci[0-9]*/**/uevent r,
 
   # Silence denial logs about permissions we don't need
   deny capability sys_admin,
@@ -145,8 +145,8 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   deny @{HOME}/.config/gtk-2.0/ rw,
   deny @{HOME}/.config/gtk-2.0/** rw,
   deny @{PROC}/@{pid}/net/route r,
-  deny /sys/devices/system/cpu/cpufreq/policy[0-9]*/cpuinfo_max_freq r,
-  deny /sys/devices/system/cpu/*/cache/index[0-9]*/size r,
+  deny @{sys}/devices/system/cpu/cpufreq/policy[0-9]*/cpuinfo_max_freq r,
+  deny @{sys}/devices/system/cpu/*/cache/index[0-9]*/size r,
   deny /etc/host.conf r,
   deny /etc/hosts r,
   deny /etc/nsswitch.conf r,
@@ -160,5 +160,5 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   
   # Silence denial about ~/.local/share/gvfs-metadata/home, this file can 
   # contain sensitive data
-  deny /home/*/.local/share/gvfs-metadata/** r,
+  deny @{HOME}/.local/share/gvfs-metadata/** r,
 }

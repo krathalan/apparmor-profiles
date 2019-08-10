@@ -17,7 +17,7 @@ profile NetworkManager /usr/bin/NetworkManager {
   capability net_raw,
 
   # Networking devices
-  owner /sys/devices/** r,
+  owner @{sys}/devices/** r,
 
   # Resolvconf
   owner /etc/resolv.conf rw,
@@ -37,20 +37,20 @@ profile NetworkManager /usr/bin/NetworkManager {
   owner /etc/NetworkManager/system-connections/** w,
 
   # Needed for nmtui to function properly
-  /proc/*/stat r,
-  owner /proc/*/fd/ r,
+  @{PROC}/*/stat r,
+  owner @{PROC}/*/fd/ r,
 
   # System files
   owner /etc/machine-id r,
   owner /dev/rfkill rw,
-  owner /proc/sys/kernel/random/boot_id r,
-  owner /proc/sys/net/** rw,
+  owner @{PROC}/sys/kernel/random/boot_id r,
+  owner @{PROC}/sys/net/** rw,
   owner /run/NetworkManager/ w,
   owner /run/NetworkManager/** rw,
   owner /run/udev/data/** r,
-  owner /sys/bus/ r,
-  owner /sys/class/ r,
-  owner /sys/class/** r,
+  owner @{sys}/bus/ r,
+  owner @{sys}/class/ r,
+  owner @{sys}/class/** r,
   owner /var/lib/NetworkManager/ r,
   owner /var/lib/NetworkManager/** rw,
 
@@ -60,6 +60,6 @@ profile NetworkManager /usr/bin/NetworkManager {
   # Silence unneeded permissions
   deny capability dac_override,
   deny / r,
-  deny /proc/sys/kernel/osrelease r,
+  deny @{PROC}/sys/kernel/osrelease r,
   deny /usr/bin/systemctl rx,
 }

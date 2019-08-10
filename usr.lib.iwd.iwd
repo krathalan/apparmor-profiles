@@ -12,7 +12,7 @@ profile iwd /usr/lib/iwd/iwd {
   capability net_admin,
 
   owner /dev/rfkill rw,
-  owner /sys/devices/** r,
+  owner @{sys}/devices/** r,
   owner /var/lib/iwd/ r,
   owner /var/lib/iwd/** rw,
 }
