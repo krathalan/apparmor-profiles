@@ -33,5 +33,5 @@ profile gpg-agent /usr/bin/gpg-agent {
   deny @{system_share_dirs}/fonts/** w,
   deny @{system_share_dirs}/pixmaps/** r,
   deny /var/cache/** w,
-  deny @{HOME}/.cache/fontconfig/** wrw,
+  deny @{HOME}/.cache/fontconfig/** rwk,
 }

@@ -60,18 +60,16 @@ profile mpv /usr/bin/mpv {
   #include <abstractions/audio>
   /etc/alsa/conf.d/** r,
   /etc/asound.conf r,
+  /usr/bin/pulseaudio rPx,
 
   # Other
-  owner @{HOME}/.cache/fontconfig/** rw,
-  owner @{HOME}/.config/mpv rw,
   /etc/mpv/** r,
   /tmp/** mrw,
   /usr/bin/mpv r,
-  /usr/bin/pulseaudio rix,
   @{system_share_dirs}/X11/Xcms.txt r,
   @{system_share_dirs}/icons/** r,
-  @{system_share_dirs}/fonts/** r,
   @{system_share_dirs}/X11/XErrorDB r,
+  owner @{HOME}/.config/mpv rw,
 
   # Silence unneeded permissions
   deny capability chown,
@@ -86,4 +84,5 @@ profile mpv /usr/bin/mpv {
   deny /usr/bin/xdg-screensaver rx,
   deny @{system_share_dirs}/fonts/** w,
   deny /var/cache/fontconfig w,
+  deny @{HOME}/.cache/fontconfig/** rwk,
 }

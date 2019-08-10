@@ -6,6 +6,7 @@
 
 profile lollypop /usr/bin/lollypop {
   #include <abstractions/base>
+  #include <abstractions/fonts>
   #include <abstractions/wayland>
 
   # Needed to listen to music
@@ -35,36 +36,36 @@ profile lollypop /usr/bin/lollypop {
   owner /run/user/*/orcexec* mrw,
   owner @{HOME}/orcexec* mrw,
 
-  # Other
-  /etc/fonts/** r,
-  /tmp/** mrw,
-  /usr/bin/lollypop r,
-  @{system_share_dirs}/fonts/ r,
-  @{system_share_dirs}/fonts/** r,
-  @{system_share_dirs}/glib*/** r,
-  @{system_share_dirs}/gtk*/** r,
+  # Icons and themes
+  @{user_share_dirs}/icons/ r,
+  @{user_share_dirs}/icons/** r,
   @{system_share_dirs}/icons/ r,
   @{system_share_dirs}/icons/** r,
-  @{system_share_dirs}/lollypop/** r,
-  @{system_share_dirs}/mime/** r,
   @{system_share_dirs}/themes/** r,
+  owner @{HOME}/.icons/ r,
+  owner @{HOME}/.icons/** r,
+
+  # Mime
+  @{system_share_dirs}/mime/** r,
+  owner @{user_share_dirs}/mime/ r,
+  owner @{user_share_dirs}/mime/** r,
+
+  # Miscellaneous
+  /tmp/** mrw,
+  /usr/bin/lollypop r,
+  @{system_share_dirs}/glib*/** r,
+  @{system_share_dirs}/gtk*/** r,
+  @{system_share_dirs}/lollypop/** r,
   @{system_share_dirs}/X11/xkb/ r,
   @{system_share_dirs}/X11/xkb/** r,
   
-  owner @{HOME}/.cache/fontconfig/** rw,
   owner @{HOME}/.cache/lollypop*/ rw,
   owner @{HOME}/.cache/lollypop*/** rwlk,
   owner @{HOME}/.config/*.dirs r,
   owner @{HOME}/.config/gtk*/** r,
   owner @{user_share_dirs}/lollypop/ rw,
   owner @{user_share_dirs}/lollypop/** rwlk,
-  owner @{user_share_dirs}/icons/ r,
-  owner @{user_share_dirs}/icons/** r,
-  owner @{user_share_dirs}/mime/ r,
-  owner @{user_share_dirs}/mime/** r,
   owner @{user_share_dirs}/recently-used* rw,
-  owner @{HOME}/.icons/ r,
-  owner @{HOME}/.icons/** r,
   owner @{HOME}/.ICEauthority r,
   owner @{HOME}/.Xauthority r,
 
@@ -79,4 +80,5 @@ profile lollypop /usr/bin/lollypop {
   deny @{system_share_dirs}/fonts/** w,
   deny @{system_share_dirs}/pixmaps/ rw,
   deny /var/** rw,
+  deny @{HOME}/.cache/fontconfig/** rwk,
 }

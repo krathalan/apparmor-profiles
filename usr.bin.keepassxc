@@ -25,7 +25,6 @@ profile keepassxc /usr/bin/keepassxc {
   @{system_share_dirs}/icons/ r,
   @{system_share_dirs}/icons/** r,
   @{system_share_dirs}/themes/** r,
-  owner @{HOME}/.cache/fontconfig/** rwk,
   owner @{HOME}/.gtkrc-2.0 r,
   owner @{HOME}/.icons/ r,
   owner @{HOME}/.icons/** r,
@@ -75,4 +74,5 @@ profile keepassxc /usr/bin/keepassxc {
   deny @{system_share_dirs}/fonts/** w,
   deny @{system_share_dirs}/pixmaps/ rw,
   deny /var/** rw,
+  deny @{HOME}/.cache/fontconfig/** rwk,
 }
