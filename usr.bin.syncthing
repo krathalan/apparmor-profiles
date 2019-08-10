@@ -28,9 +28,6 @@ profile syncthing /usr/bin/syncthing {
   owner @{HOME}/pictures/ r,
   owner @{HOME}/pictures/** rw,
 
-  # Process information
-  owner @{PROC}/@{pid}/** r,
-
   # Config
   owner @{HOME}/.config/syncthing/ r,
   owner @{HOME}/.config/syncthing/** rwk,

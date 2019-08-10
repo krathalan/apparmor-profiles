@@ -22,8 +22,6 @@ profile youtube-dl /usr/bin/youtube-dl {
   /usr/bin/youtube-dl r,
 
   # Process information
-  owner @{PROC}/@{pid} r,
-  owner @{PROC}/@{pid}/** r,
   owner @{PROC}/*/fd/ r,
   owner @{PROC}/*/mounts r,
 

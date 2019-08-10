@@ -1,0 +1,23 @@
+# AppArmor profile for less pager
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile less /usr/bin/less {
+  #include <abstractions/base>
+  #include <abstractions/bash>
+
+  / r,
+  /** r,
+
+  # Source highlighting
+  /usr/bin/bash mrix,
+  /usr/bin/dash mrix,
+  /usr/bin/source-highlight mrix,
+  /usr/bin/src-hilite-lesspipe.sh mrix,
+
+  # Silence unnecessary permissions
+  deny / w,
+  deny /** w,
+}

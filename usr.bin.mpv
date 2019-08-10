@@ -40,10 +40,6 @@ profile mpv /usr/bin/mpv {
   #include <abstractions/nameservice>
   /usr/bin/youtube-dl rPx,
 
-  # Process information 
-  owner @{PROC}/@{pid} r,
-  owner @{PROC}/@{pid}/** r,
-
   # Graphics
   #include <abstractions/dri-common>
   #include <abstractions/mesa>

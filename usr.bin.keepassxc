@@ -16,10 +16,6 @@ profile keepassxc /usr/bin/keepassxc {
   @{system_share_dirs}/glvnd/egl_vendor.d/ r,
   @{system_share_dirs}/glvnd/egl_vendor.d/** r,
   
-  # Process information 
-  owner @{PROC}/@{pid} r,
-  owner @{PROC}/@{pid}/** r,
-
   # Needed to view and edit keepass databases in documents directory
   owner @{HOME}/{D,d}ocuments rwl,
   owner @{HOME}/{D,d}ocuments/** rwl,

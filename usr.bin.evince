@@ -1,0 +1,58 @@
+# AppArmor profile for evince document viewer
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile evince /usr/bin/evince {
+  #include <abstractions/base>
+  #include <abstractions/fonts>
+  #include <abstractions/gnome>
+  #include <abstractions/wayland>
+
+  # Dconf
+  #include <abstractions/dconf>
+  owner /run/user/*/dconf/user w,
+
+  # Needed to open documents from the file picker 
+  /usr/bin/gio-launch-desktop rix,
+  /usr/bin/evince rPx,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/fd r,
+
+  # Themes and icons
+  @{system_share_dirs}/gtk-3.0/settings.ini r,
+  @{system_share_dirs}/icons/** r,
+  owner @{HOME}/.config/gtk-3.0/settings.ini r,
+  owner @{user_share_dirs}/icons/** r,
+
+  # Needed to read documents
+  owner @{HOME}/{D,d}ocuments/ r,
+  owner @{HOME}/{D,d}ocuments/** r,
+  owner @{HOME}/{D,d}ownloads/ r,
+  owner @{HOME}/{D,d}ownloads/** r,
+
+  # Recently opened files are shown at application startup
+  @{system_share_dirs}/thumbnailers/ r,
+  @{system_share_dirs}/thumbnailers/* r,
+  # For some reason evince/apparmor doesn't accept the tunable version
+  /usr/share/thumbnailers/ r,
+  /usr/share/thumbnailers/* r,
+  owner @{user_share_dirs}/recently-used.xbel* rw,
+  owner @{HOME}/.cache/thumbnails/** rw,
+
+  # Miscellaneous
+  @{system_share_dirs}/evince/** r,
+  @{system_share_dirs}/mime/mime.cache r,
+  @{system_share_dirs}/poppler/ r,
+  @{system_share_dirs}/poppler/** r,
+  @{system_share_dirs}/X11/xkb/** r,
+  owner @{user_share_dirs}/mime/mime.cache r,
+
+  # Silence unneeded permissions
+  deny /etc/fstab r,
+  deny /etc/nsswitch.conf r,
+  deny /etc/passwd r,
+  deny @{system_share_dirs}/fonts/** w,
+  deny /var/lib/flatpak/** r,
+}

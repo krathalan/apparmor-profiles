@@ -34,10 +34,6 @@ profile waybar /usr/bin/waybar {
   /usr/bin/waybar mr,
   /usr/bin/dash rix,
 
-  # Process information 
-  owner @{PROC}/@{pid} r,
-  owner @{PROC}/@{pid}/** r,
-
   # Icons and themes
   @{system_share_dirs}/gtk-3.0/settings.ini r,
   @{system_share_dirs}/icons/** r,
