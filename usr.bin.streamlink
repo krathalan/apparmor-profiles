@@ -1,0 +1,43 @@
+# AppArmor profile for streamlink online video streamer
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile streamlink /usr/bin/streamlink {
+  #include <abstractions/base>
+  #include <abstractions/fonts>
+  #include <abstractions/python>
+
+  # Networking
+  #include <abstractions/nameservice>
+  #include <abstractions/openssl>
+  /etc/ca-certificates/extracted/tls-ca-bundle.pem r,
+
+  # Needed to open mpv media player and feed it data
+  signal send set=term peer=mpv,
+  /usr/bin/mpv mrPx,
+
+  # Needed to open vlc media player and feed it data
+  /usr/bin/vlc mrUx,
+
+  # Subprocesses
+  /usr/bin/ r,
+  /usr/bin/dash mrix,
+  /usr/bin/file mrix,
+  /usr/bin/ldconfig mrix,
+  /usr/bin/python3.7 r,
+  /usr/bin/streamlink r,
+  /usr/bin/uname mrix,
+  /usr/share/file/** r,
+
+  # Process information
+  owner /proc/*/fd/ r,
+  owner /proc/*/mounts r,
+
+  # Miscellaneous
+  /etc/mime.types r,
+
+  # Silence unnecessary permissions
+  deny owner /usr/share/fonts/** w,
+}

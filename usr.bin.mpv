@@ -32,6 +32,9 @@ profile mpv /usr/bin/mpv {
   # Needed to view videos on other drives
   owner /run/media/*/ r,
   owner /run/media/*/** r,
+
+  # Needed to view videos with an AppArmor-enforced streamlink
+  signal receive set=term peer=streamlink,
   
   # Needed to download and view videos with youtube-dl
   #include <abstractions/nameservice>
