@@ -17,14 +17,14 @@ profile keepassxc /usr/bin/keepassxc {
   @{system_share_dirs}/glvnd/egl_vendor.d/** r,
   
   # Needed to view and edit keepass databases in documents directory
-  owner @{HOME}/{D,d}ocuments rwl,
+  owner @{HOME}/{D,d}ocuments/ rwl,
   owner @{HOME}/{D,d}ocuments/** rwl,
 
   # Icons, fonts, and theming
   @{system_share_dirs}/gtk-2.0/gtkrc r,
   @{system_share_dirs}/icons/ r,
   @{system_share_dirs}/icons/** r,
-  @{system_share_dirs}/fonts/** r,
+  @{system_share_dirs}/themes/** r,
   owner @{HOME}/.cache/fontconfig/** rwk,
   owner @{HOME}/.gtkrc-2.0 r,
   owner @{HOME}/.icons/ r,
@@ -32,15 +32,27 @@ profile keepassxc /usr/bin/keepassxc {
   owner @{user_share_dirs}/icons/ r,
   owner @{user_share_dirs}/icons/** r,
 
+  # File picker
+  owner @{user_share_dirs}/recently-used.xbel* rw,
+  owner @{HOME}/.config/gtk-2.0/gtkfilechooser.ini* rw,
+  owner @{HOME}/.config/gtk-3.0/bookmarks r,
+  owner @{HOME}/.config/user-dirs.dirs r,
+
+  # Qt
+  owner @{HOME}/.config/QtProject.conf* rwl,
+  owner @{HOME}/.config/QtProject.conf.lock rwk,
+  owner @{HOME}/.config/#* rw,
+  owner @{HOME}/.cache/qt* l,
+
+  # Config
+  owner @{HOME}/.config/keepassxc/** rwlk,
+
   # Other
   /tmp/** rwk,
   /usr/bin/keepassxc mr,
   @{system_share_dirs}/keepassxc/** r,
   @{system_share_dirs}/mime/** r,
-  @{system_share_dirs}/themes/** r,
   owner @{HOME}/.cache/#* rw,
-  owner @{HOME}/.cache/qt* l,
-  owner @{HOME}/.config/keepassxc/** rwlk,
   owner @{user_share_dirs}/mime r,
   owner @{user_share_dirs}/mime/** r,
   owner @{HOME}/.ICEauthority r,
@@ -50,11 +62,11 @@ profile keepassxc /usr/bin/keepassxc {
   deny /dev/ r,
   deny /dev/bus/usb/ rw,
   deny /dev/tty rw,
+  deny /etc/fstab rw,
   deny /etc/machine-id rw,
   deny /etc/nsswitch.conf rw,
   deny /etc/passwd rw,
-  deny @{PROC}/*/comm r,
-  deny @{PROC}/sys/kernel/random/boot_id r,
+  deny @{PROC}/** r,
   deny @{sys}/** r,
   deny /usr/bin/ r,
   deny @{system_share_dirs}/fonts/** w,
