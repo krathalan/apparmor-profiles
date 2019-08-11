@@ -21,7 +21,6 @@
 profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   #include <abstractions/audio>
   #include <abstractions/base>
-  #include <abstractions/nameservice>
   #include <abstractions/gnome>
   
   # Graphics (WebRender)
@@ -51,6 +50,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   owner /run/user/*/dconf/user rw,
 
   # Network
+  #include <abstractions/nameservice>
   network netlink raw,
   network tcp,
   network udp,

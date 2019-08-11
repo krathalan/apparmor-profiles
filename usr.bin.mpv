@@ -37,9 +37,6 @@ profile mpv /usr/bin/mpv {
   signal receive set=term peer=streamlink,
   
   # Needed to stream videos with youtube-dl
-  /etc/host.conf r,
-  /etc/hosts r,
-  /etc/nsswitch.conf r,
   /etc/resolv.conf r,
   /usr/bin/youtube-dl rPx,
 
@@ -79,13 +76,19 @@ profile mpv /usr/bin/mpv {
   deny capability mknod,
   deny capability syslog,
   deny /dev/tty rw,
+  deny /etc/gai.conf r,
+  deny /etc/host.conf r,
+  deny /etc/hosts r,
   deny /etc/machine-id r,
+  deny /etc/nsswitch.conf r,
+  deny /etc/passwd r,
   deny @{PROC}/devices r,
   deny @{PROC}/sys/vm/mmap_min_addr r,
   deny @{sys}/bus/pci/devices/ r,
   deny /usr/bin/bash rwx,
   deny /usr/bin/xdg-screensaver rx,
   deny @{system_share_dirs}/fonts/** w,
+  deny @{system_share_dirs}/p11-kit/modules/ r,
   deny /var/cache/fontconfig/ w,
   deny @{HOME}/.cache/fontconfig/** rwk,
 }
