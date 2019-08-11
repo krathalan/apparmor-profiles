@@ -1,4 +1,5 @@
 # AppArmor profile for swaybg background setter for Sway
+# Version of swaybg profiled: 1.0
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 

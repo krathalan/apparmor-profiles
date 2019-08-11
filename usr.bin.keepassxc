@@ -1,4 +1,5 @@
 # AppArmor profile for keepassxc password manager
+# Version of keepass profiled: 2.4.3
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 

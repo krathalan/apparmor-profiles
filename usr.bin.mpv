@@ -1,4 +1,5 @@
 # AppArmor profile for mpv media player
+# Version of mpv profiled: 0.29.1
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 

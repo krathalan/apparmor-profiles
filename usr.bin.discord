@@ -1,4 +1,5 @@
 # AppArmor profile for discord proprietary chat program
+# Version of discord profiled: July 25, 2019
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 

@@ -1,4 +1,5 @@
 # AppArmor profile for pipewire media processor
+# Version of pipewire profiled: 0.2.6
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 

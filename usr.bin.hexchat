@@ -1,4 +1,5 @@
 # AppArmor profile for hexchat IRC client
+# Version of hexchat profiled: 2.14.2
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -35,6 +36,9 @@ profile hexchat /usr/bin/hexchat {
   owner @{HOME}/.config/user-dirs.dirs r,
 
   # Silence unneeded permissions
+  deny /usr/bin/gio-launch-desktop rx,
+  deny @{PROC}/ r,
+  deny @{PROC}/** r,
   deny @{system_share_dirs}/fonts/** w,
   deny @{system_share_dirs}/pixmaps/ r,
   deny /var/lib/flatpak/** r,

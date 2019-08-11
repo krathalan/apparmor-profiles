@@ -1,4 +1,5 @@
 # AppArmor profile for redshift screen temperature adjuster
+# Version of redshift profiled: 1.12
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 

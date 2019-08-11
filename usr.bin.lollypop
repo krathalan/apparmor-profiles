@@ -1,4 +1,5 @@
 # AppArmor profile for lollypop music player
+# Version of lollypop profiled: 1.1.4
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -69,8 +70,12 @@ profile lollypop /usr/bin/lollypop {
   owner @{HOME}/.ICEauthority r,
   owner @{HOME}/.Xauthority r,
 
+  # GVFS isn't tested :)
+  deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
+
   # Silence unneeded permissions
   deny /dev/ rw,
+  deny /etc/fstab r,
   deny /etc/group rw,
   deny /etc/machine-id r,
   deny /etc/nsswitch.conf rw,

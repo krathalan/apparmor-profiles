@@ -1,4 +1,5 @@
 # AppArmor profile for iwd NetworkManager backend
+# Version of iwd profiled: 0.19
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
