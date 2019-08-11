@@ -36,8 +36,11 @@ profile mpv /usr/bin/mpv {
   # Needed to view videos with an AppArmor-enforced streamlink
   signal receive set=term peer=streamlink,
   
-  # Needed to download and view videos with youtube-dl
-  #include <abstractions/nameservice>
+  # Needed to stream videos with youtube-dl
+  /etc/host.conf r,
+  /etc/hosts r,
+  /etc/nsswitch.conf r,
+  /etc/resolv.conf r,
   /usr/bin/youtube-dl rPx,
 
   # Graphics

@@ -57,6 +57,7 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   deny @{HOME}/.config/dconf/user rw,
 
   # Silence unnecessary permissions
+  deny capability sys_ptrace,
   deny ptrace,
   deny /dev/ r,
   deny /etc/machine-id r,
