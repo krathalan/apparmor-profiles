@@ -29,7 +29,7 @@ profile streamlink /usr/bin/streamlink {
   /usr/bin/python3.7 r,
   /usr/bin/streamlink r,
   /usr/bin/uname mrix,
-  /usr/share/file/** r,
+  @{system_share_dirs}/file/** r,
 
   # Process information
   owner @{PROC}/*/fd/ r,
@@ -39,5 +39,5 @@ profile streamlink /usr/bin/streamlink {
   /etc/mime.types r,
 
   # Silence unnecessary permissions
-  deny owner /usr/share/fonts/** w,
+  deny owner @{system_share_dirs}/fonts/** w,
 }
