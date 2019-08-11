@@ -35,8 +35,11 @@ profile hexchat /usr/bin/hexchat {
   owner @{HOME}/.config/hexchat/** rw,
   owner @{HOME}/.config/user-dirs.dirs r,
 
+  # Let hexchat open URLs
+  /usr/bin/gio-launch-desktop rix,
+  /{usr,opt}/{bin,firefox-nightly}/firefox* rPx,
+
   # Silence unneeded permissions
-  deny /usr/bin/gio-launch-desktop rx,
   deny @{PROC}/ r,
   deny @{PROC}/** r,
   deny @{system_share_dirs}/fonts/** w,
