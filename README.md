@@ -34,6 +34,7 @@ I cannot guarantee that these profiles will work on any other hardware. All prof
 - less
 - mako ⚠️
 - NetworkManager
+- pipewire
 - pulseaudio
 - redshift ⚠️
 - rngd

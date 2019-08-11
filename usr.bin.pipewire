@@ -1,0 +1,19 @@
+# AppArmor profile for pipewire media processor
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile pipewire /usr/bin/pipewire {
+  #include <abstractions/audio>
+  #include <abstractions/base>
+
+  /etc/pipewire/* r,
+  /sys/bus/ r,
+  /sys/class/ r,
+  owner /run/user/*/pipewire* rwkl,
+
+  # Silence unnecessary permissions
+  deny /etc/nsswitch.conf r,
+  deny /etc/passwd r,
+}
