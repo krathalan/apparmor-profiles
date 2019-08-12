@@ -33,10 +33,6 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
 
   # Process information -- Discord will not work at all without this
   @{PROC}/ r,
-  @{PROC}/*/stat r,
-  owner @{PROC}/@{pid}/ r,
-  owner @{PROC}/@{pid}/** r,
-  owner @{PROC}/*/oom_score_adj w,
 
   # Miscellaneous
   /opt/discord/** r,
@@ -52,21 +48,27 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   owner @{HOME}/.config/discord/ rw,
   owner @{HOME}/.config/discord/** mrwk,
 
-  # File picker (still works without these permissions)
+  # File picker still works without these permissions
   deny /etc/fstab r,
   deny /run/user/*/dconf/user rw,
   deny @{HOME}/.cache/thumbnails/** rw,
   deny @{HOME}/.config/dconf/user rw,
 
-  # Silence unnecessary permissions
+  # Discord does this supposedly to look for OBS/games you're playing
   deny capability sys_ptrace,
   deny ptrace,
-  deny /dev/ r,
-  deny /etc/machine-id r,
-  deny /dev/pts/0 rw,
   deny @{PROC}/*/cmdline r,
+
+  # Silence unnecessary permissions
+  deny /dev/ r,
+  deny /dev/pts/0 rw,
+  deny /etc/machine-id r,
+  deny @{PROC}/*/oom_score_adj w,
+  deny @{PROC}/*/stat r,
+  deny @{PROC}/@{pid}/ r,
+  deny @{PROC}/@{pid}/** r,
   deny @{PROC}/vmstat r,
-  deny /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
+  deny /sys/devices/system/cpu/** r,
   deny /sys/devices/virtual/tty/** r,
   deny /usr/bin/xdg-mime x,
   deny /usr/bin/xdg-open x,

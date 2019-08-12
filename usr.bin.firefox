@@ -30,8 +30,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   #include <abstractions/mesa>
   #include <abstractions/wayland>
   @{sys}/devices/pci[0-9]*/*/drm/ r,
-  @{system_share_dirs}/glvnd/egl_vendor.d/ r,
-  @{system_share_dirs}/glvnd/egl_vendor.d/** r,
+  @{system_share_dirs}/glvnd/** r,
   owner @{HOME}/.glvnd* rw,
 
   # NVIDIA graphics (WebRender)
@@ -47,28 +46,58 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
 
   # Dconf
   #include <abstractions/dconf>
-  owner @{HOME}/.config/dconf/user r,
   owner /run/user/*/dconf/user rw,
+  owner @{HOME}/.config/dconf/user r,
 
   # Network
   #include <abstractions/nameservice>
   network netlink raw,
   network tcp,
   network udp,
-
-  # SSL certificates   
-  /etc/ca-certificates/trust-source/ r,
-  /etc/ca-certificates/trust-source/anchors/ r,
-  /etc/ca-certificates/trust-source/blacklist/ r,
+  /etc/ca-certificates/trust-source/{,anchors/,blacklist/} r,
+  /etc/{host.conf,hosts,nsswitch.conf} r,
 
   # Firefox subprocesses
   ptrace trace peer=firefox,
   /usr/bin/bash ix,
-  /usr/bin/firefox r,
-  /usr/lib/firefox/firefox mrix,
+  /{usr,opt}/{bin,firefox-nightly,lib/firefox}/firefox* mrix,
   owner /dev/shm/shmfd-* rw,
-  owner /dev/shm/org.chromium.* rw,
-  owner /dev/shm/org.mozilla.ipc.* rw,
+  owner /dev/shm/org.{chromium,mozilla}.{,ipc.}* rw,
+
+  # System access
+  /dev/ r,
+  /etc/mime.types r,
+  /etc/udev/udev.conf r,
+  /run/udev/data/+pci:* r,
+  @{sys}/devices/pci[0-9]*/**/uevent r,
+  @{system_share_dirs}/ r,
+  @{system_share_dirs}/mime/ r,
+
+  # Gsettings https://developer.gnome.org/gio/stable/GSettings.html
+  @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
+
+  # Poppler is a PDF rendering library
+  @{system_share_dirs}/poppler/cMap/ r,
+  
+  # Icons, themes, fonts
+  /usr/lib/firefox/fonts/** rw,
+  @{system_share_dirs}/fonts/** r,
+  @{system_share_dirs}/gtk-3.0/settings.ini r,
+  @{system_share_dirs}/icons/ r,
+  @{system_share_dirs}/themes/ r,
+
+  # Desktop environment specific configs
+  /etc/xfce4/defaults.list r,
+  owner @{HOME}/.kde/share/config/* r,
+
+  # For firefox-nightly AUR package
+  /opt/firefox-nightly/ r,
+  /opt/firefox-nightly/** mr,
+
+  # Miscellaneous
+  owner /run/user/*/mozilla* rwlk,
+  owner /tmp/#* m,
+  owner @{HOME}/#* mrw,
 
   # Firefox profiles
   owner @{HOME}/.mozilla/ rwlk,
@@ -76,88 +105,41 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   owner @{HOME}/.cache/mozilla/ rwlk,
   owner @{HOME}/.cache/mozilla/** rwlk,
 
-  # Allow access to downloads folder
+  # Allow access for downloads and uploads
   owner @{HOME}/{D,d}ownloads/ rw,
   owner @{HOME}/{D,d}ownloads/* rw,
-  
-  # Themes and icons
-  @{system_share_dirs}/gtk-3.0/settings.ini r,
-  @{system_share_dirs}/icons/ r,
-  @{system_share_dirs}/themes/ r,
 
-  # KDE 4
-  owner @{HOME}/.kde/share/config/* r,
-
-  # Xfce4
-  /etc/xfce4/defaults.list r,
-  @{system_share_dirs}/xfce4/applications/ r,
-
-  # Fonts
-  owner /usr/lib/firefox/fonts/** rw,
-  owner @{system_share_dirs}/fonts/** r,
-  
-  # For firefox-nightly AUR package
-  /opt/firefox-nightly/firefox-bin mrix,
-  /opt/firefox-nightly/ r,
-  /opt/firefox-nightly/** mr,
-  deny /opt/firefox-nightly/ w,
-  deny /opt/firefox-nightly/** w,
-  deny /opt/firefox-nightly/crashreporter x,
-
-  # Miscellaneous
-  owner /run/user/*/mozilla* rwlk,
-  owner /tmp/#* m,
-  owner @{HOME}/#* mrw,
+  # Xorg
   owner @{HOME}/.ICEauthority r,
   owner @{HOME}/.Xauthority r,
 
-  # System access
-  /dev/ r,
-  @{system_share_dirs}/ r,
-  @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
-  /etc/mime.types r,
-  @{system_share_dirs}/mime/ r,
-  @{system_share_dirs}/applications/** rk,
-  @{system_share_dirs}/gnome/applications/ r,
-  @{system_share_dirs}/gnome/applications/kde4/ r,
-  @{system_share_dirs}/poppler/cMap/ r,
-  @{system_share_dirs}/pixmaps/ r,
+  # Don't allow launching other applications to open files
+  deny /usr/bin/gio-launch-desktop rx,
+  deny @{system_share_dirs}/xfce4/applications/ r,
+  deny @{system_share_dirs}/applications/** rk,
+  deny @{system_share_dirs}/gnome/applications/ r,
+  deny @{system_share_dirs}/gnome/applications/kde4/ r,
 
-  @{sys}/devices/system/cpu/ r,
-  @{sys}/devices/system/cpu/present r,
-  @{sys}/devices/system/node/ r,
-  @{sys}/devices/system/node/node[0-9]*/meminfo r,
-  deny @{sys}/devices/virtual/block/*/uevent r,
-
-  /etc/udev/udev.conf r,
-  /run/udev/data/+pci:* r,
-  @{sys}/devices/pci[0-9]*/**/uevent r,
-
-  # Silence denial logs about permissions we don't need
-  deny capability sys_admin,
-  deny @{HOME}/.cache/fontconfig/ rw,
-  deny @{HOME}/.cache/fontconfig/** rw,
-  deny @{HOME}/.config/gtk-2.0/ rw,
-  deny @{HOME}/.config/gtk-2.0/** rw,
-  deny @{sys}/devices/system/cpu/cpufreq/policy[0-9]*/cpuinfo_max_freq r,
-  deny @{sys}/devices/system/cpu/*/cache/index[0-9]*/size r,
-  deny /etc/fstab r,
-  deny /etc/host.conf r,
-  deny /etc/hosts r,
-  deny /etc/nsswitch.conf r,
-  deny /etc/passwd r,
-  deny /etc/group r,
-  deny /etc/mailcap r,
-  deny /etc/machine-id r,
-  deny @{system_share_dirs}/fonts/** w,
-  deny /var/lib/dbus/machine-id r,
-  deny /var/cache/fontconfig/ w,
-
-  # Deny /proc
-  deny @{PROC} r,
-  deny @{PROC}/** r,
-  
   # Silence denial about ~/.local/share/gvfs-metadata/home, this file can 
   # contain sensitive data
   deny @{user_share_dirs}/gvfs-metadata/** r,
+
+  # Deny /proc and /var
+  deny @{PROC} rw,
+  deny @{PROC}/** rw,
+  deny /var/** rw,
+  
+  # Silence denial logs about permissions we don't need
+  deny capability sys_admin,
+  deny /etc/{fstab,passwd,group,mailcap,machine-id} r,
+  deny /opt/firefox-nightly/ w,
+  deny /opt/firefox-nightly/** w,
+  deny /opt/firefox-nightly/crashreporter rx,
+  deny @{sys}/devices/system/cpu/** r,
+  deny @{system_share_dirs}/fonts/** w,
+  deny @{system_share_dirs}/pixmaps/ r,
+  deny @{HOME}/.cache/fontconfig/ rw, 
+  deny @{HOME}/.cache/fontconfig/** rw,
+  deny @{HOME}/.config/gtk-2.0/ rw, 
+  deny @{HOME}/.config/gtk-2.0/** rw,
 }
