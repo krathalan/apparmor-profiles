@@ -30,6 +30,7 @@ I cannot guarantee that these profiles will work on any other hardware. All prof
 - gpg-agent ⚠️
 - evince ⚠️
 - hexchat
+- irssi ⚠️
 - iwd
 - less
 - mako ⚠️
@@ -86,6 +87,9 @@ This profile has only been tested with the gtk2 pinentry program. You may need t
 
 ### evince ⚠️
 This profile assumes you only want to view documents in `~/{D,d}ocuments/` and `~/{D,d}ownloads`. If you do not, edit the file. Evince does not need access to your whole home directory.
+
+### irssi ⚠️
+You may need to edit the profile to allow `irssi` to access your configuration files, if they are symlinks to somewhere other than inside `~/.irssi/`.
 
 ### KeepassXC ⚠️
 This profile assumes you keep your database file in `~/{D,d}ocuments/`. If you do not, edit the file to where you store your database. KeepassXC does not need access to your whole home directory. Please keep isolated backups of your database files.
