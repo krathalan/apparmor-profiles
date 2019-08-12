@@ -30,6 +30,10 @@ profile mpv /usr/bin/mpv {
   owner @{HOME}/ r,
   owner @{HOME}/** r,
 
+  # If you want to save screenshots, uncomment this. There are other
+  # screenshot tools like grim and scrot
+  deny @{HOME}/mpv* w,
+
   # Needed to view videos on other drives
   owner /run/media/*/ r,
   owner /run/media/*/** r,

@@ -26,10 +26,12 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   
   # Graphics (WebRender)
   #include <abstractions/dri-common>
+  #include <abstractions/dri-enumerate>
   #include <abstractions/mesa>
-  #include <abstractions/video>
   #include <abstractions/wayland>
-  @{sys}/devices/pci*/** r,
+  @{sys}/devices/pci[0-9]*/*/drm/ r,
+  @{system_share_dirs}/glvnd/egl_vendor.d/ r,
+  @{system_share_dirs}/glvnd/egl_vendor.d/** r,
   owner @{HOME}/.glvnd* rw,
 
   # NVIDIA graphics (WebRender)
@@ -38,8 +40,6 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   /usr/bin/nvidia-modprobe mrPx,
   @{system_share_dirs}/egl/egl_external_platform.d/ r,
   @{system_share_dirs}/egl/egl_external_platform.d/** r,
-  @{system_share_dirs}/glvnd/egl_vendor.d/ r,
-  @{system_share_dirs}/glvnd/egl_vendor.d/** r,
   @{system_share_dirs}/nvidia/** r,
   owner /tmp/.gl* m,
   owner /tmp/*/.gl* m,
@@ -66,14 +66,9 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   /usr/bin/bash ix,
   /usr/bin/firefox r,
   /usr/lib/firefox/firefox mrix,
-  @{PROC}/*/net/if_inet6 r,
   owner /dev/shm/shmfd-* rw,
   owner /dev/shm/org.chromium.* rw,
   owner /dev/shm/org.mozilla.ipc.* rw,
-
-  # Process information
-  @{PROC}/@{pid}/ r,
-  @{PROC}/@{pid}/** r,
 
   # Firefox profiles
   owner @{HOME}/.mozilla/ rwlk,
@@ -110,7 +105,6 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   deny /opt/firefox-nightly/crashreporter x,
 
   # Miscellaneous
-  @{PROC}/sys/kernel/random/uuid r,
   owner /run/user/*/mozilla* rwlk,
   owner /tmp/#* m,
   owner @{HOME}/#* mrw,
@@ -158,6 +152,10 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   deny @{system_share_dirs}/fonts/** w,
   deny /var/lib/dbus/machine-id r,
   deny /var/cache/fontconfig/ w,
+
+  # Deny /proc
+  deny @{PROC} r,
+  deny @{PROC}/** r,
   
   # Silence denial about ~/.local/share/gvfs-metadata/home, this file can 
   # contain sensitive data

@@ -31,13 +31,11 @@ profile streamlink /usr/bin/streamlink {
   /usr/bin/uname mrix,
   @{system_share_dirs}/file/** r,
 
-  # Process information
-  owner @{PROC}/*/fd/ r,
-  owner @{PROC}/*/mounts r,
-
   # Miscellaneous
   /etc/mime.types r,
 
   # Silence unnecessary permissions
-  deny owner @{system_share_dirs}/fonts/** w,
+  deny @{system_share_dirs}/fonts/** w,
+  deny @{PROC}/*/fd/ r,
+  deny @{PROC}/*/mounts r,
 }

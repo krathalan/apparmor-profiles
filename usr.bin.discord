@@ -12,9 +12,10 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   #include <abstractions/gnome>
 
   # Graphics
+  #include <abstractions/dri-enumerate>
   #include <abstractions/mesa>
   @{sys}/bus/pci/devices/ r,
-  @{sys}/devices/pci*/** r,
+  @{sys}/devices/pci[0-9]*/**/{class,irq,resource} r,
   @{system_share_dirs}/glvnd/egl_vendor.d/ r,
   @{system_share_dirs}/glvnd/egl_vendor.d/** r,
 
@@ -30,7 +31,7 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   /opt/discord/Discord mrix,
   owner /dev/shm/.org.chromium.Chromium.* rw,
 
-  # Process information
+  # Process information -- Discord will not work at all without this
   @{PROC}/ r,
   @{PROC}/*/stat r,
   owner @{PROC}/@{pid}/ r,

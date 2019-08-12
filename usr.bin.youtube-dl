@@ -22,10 +22,6 @@ profile youtube-dl /usr/bin/youtube-dl {
   /usr/bin/python3.7 r,
   /usr/bin/youtube-dl r,
 
-  # Process information
-  owner @{PROC}/*/fd/ r,
-  owner @{PROC}/*/mounts r,
-
   # Needed to save files
   /usr/bin/file mrix,
   @{system_share_dirs}/file/** r,
@@ -36,4 +32,8 @@ profile youtube-dl /usr/bin/youtube-dl {
 
   # System access
   /etc/mime.types r,
+
+  # Silence unnecessary permissions
+  deny @{PROC}/*/fd/ r,
+  deny @{PROC}/*/mounts r,
 }

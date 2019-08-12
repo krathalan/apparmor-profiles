@@ -18,8 +18,6 @@ profile evince /usr/bin/evince {
   # Needed to open documents from the file picker 
   /usr/bin/gio-launch-desktop rix,
   /usr/bin/evince rPx,
-  owner @{PROC}/@{pid}/mountinfo r,
-  owner @{PROC}/@{pid}/fd r,
 
   # Themes and icons
   @{system_share_dirs}/gtk-3.0/settings.ini r,
@@ -56,6 +54,8 @@ profile evince /usr/bin/evince {
   deny /etc/fstab r,
   deny /etc/nsswitch.conf r,
   deny /etc/passwd r,
+  deny @{PROC}/@{pid}/mountinfo r,
+  deny @{PROC}/@{pid}/fd r,
   deny @{system_share_dirs}/fonts/** w,
   deny /var/lib/flatpak/** r,
 }
