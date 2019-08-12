@@ -3,6 +3,9 @@
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
+# Please note: this profile is no longer maintained! I use irssi, which has a
+# maintained AppArmor profile in the root of this repository.
+
 #include <tunables/global>
 
 profile hexchat /usr/bin/hexchat {
