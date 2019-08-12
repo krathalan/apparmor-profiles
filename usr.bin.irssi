@@ -1,0 +1,21 @@
+# AppArmor profile for irssi IRC client
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile irssi /usr/bin/irssi {
+  #include <abstractions/base>
+  #include <abstractions/bash>
+
+  # Irssi has perl scripting
+  #include <abstractions/perl>
+
+  # Networking
+  #include <abstractions/nameservice>
+  #include <abstractions/openssl>
+  /etc/ca-certificates/extracted/tls-ca-bundle.pem r,
+
+  @{system_share_dirs}/irssi/** r,
+  owner @{HOME}/.irssi/* rw,
+}

@@ -147,6 +147,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   deny @{HOME}/.config/gtk-2.0/** rw,
   deny @{sys}/devices/system/cpu/cpufreq/policy[0-9]*/cpuinfo_max_freq r,
   deny @{sys}/devices/system/cpu/*/cache/index[0-9]*/size r,
+  deny /etc/fstab r,
   deny /etc/host.conf r,
   deny /etc/hosts r,
   deny /etc/nsswitch.conf r,
