@@ -82,7 +82,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   owner @{HOME}/.cache/mozilla/** rwlk,
 
   # Allow access to downloads folder
-  owner @{HOME}/{D,d}ownloads/ r,
+  owner @{HOME}/{D,d}ownloads/ rw,
   owner @{HOME}/{D,d}ownloads/* rw,
   
   # Themes and icons
