@@ -171,3 +171,10 @@ To get started writing AppArmor profiles, I highly recommend this video from ope
 "If you know how to use bash, chmod, and grep, you already understand AppArmor and you can probably reverse-engineer the policy by yourself," at 13:25 in the video: https://invidio.us/watch?v=k3kerBRYLhw
 
 You may also find this document incredibly helpful: https://gitlab.com/apparmor/apparmor/wikis/AppArmor_Core_Policy_Reference
+
+### Addendum: what is /etc/machine-id?
+> Because it's possible to forward things like D-Bus, the X11 $DISPLAY, etc. over the network, two processes might be aware of each other over such a connection but not be running on the same machine and therefore be unable to share resources. The machine ID lets them check for that, so you can properly handle things like "I'm going to send a message to the screensaver in my display to not activate, I don't care if it's the same machine" vs. "I'm going to send a message to the terminal in my display to open a new tab, but only if it's actually on the same machine, otherwise I should start a new terminal". (These days I think that definition should be updated to "container" instead of "kernel": if you're running separate logical machines inside the same kernel with separate PIDs etc., they should have separate machine IDs.)
+
+> systemd and (IIRC) cloud-init use it to run once-per-machine tasks on machines that could come from images: if you want to prep a number of machines in advance, do the install, then change the machine ID. At boot time, startup scripts will say "Oh, this machine ID has not been initialized yet" and do things, and then not do them on the next boot. 
+
+https://web.archive.org/web/20190813022810/https://news.ycombinator.com/item?id=19529708
