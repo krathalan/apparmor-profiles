@@ -14,28 +14,29 @@ These AppArmor profiles have been verified to work on the following hardware:
 - Network/Bluetooth cards:
 	- Intel Wireless-AC 9260
 
-I cannot guarantee that these profiles will work on any other hardware. All profiles should work with Xorg on NVIDIA hardware and with Sway (and probably Xorg) on Intel hardware. However, it's very possible these profiles will still work with AMD graphics, as it seems AMD graphics share a lot of similar behavior with Intel graphics.
+I cannot guarantee that these profiles will work on any other hardware. All profiles should work with Xorg on NVIDIA hardware and with Sway (and probably Xorg) on Intel hardware. If you own an NVIDIA card, please read the NVIDIA section below.
+
+However, it's very possible these profiles will still work with AMD graphics, as it seems AMD graphics share a lot of similar behavior with Intel graphics.
 
 These profiles strive to be at least ~95% functional with zero audit log warnings under proper behavior. Functionality is not ignored; rather sometimes it's blocked in the interest of security. See notes about profiles such as discord below, or click [here](#discord). If functionality is not explicitly blocked, then it's probably a bug in the profile and should be fixed. Create an issue.
 
-## Abstraction
+## Abstractions
 Many profiles for GUI applications (like Firefox, KeepassXC, Lollypop etc.) require access to common files, like icons, themes, fonts, and so on. To ease the burden of maintenance and to reduce policy error, these rules have been put into an abstraction. Move the `krathalans-common-gui` file in the `abstractions/` folder in this repository to `/etc/apparmor.d/abstractions/` and `sudo systemctl reload apparmor.service`.
 
 Many profiles for GUI applications WILL NOT WORK if you do not have this abstraction loaded.
 
-## NVIDIA
-```
-# Please note: you may have issues with hardware acceleration on NVIDIA hardware. 
-# This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured 
-# incorrectly. Change the profile executable name at the top of the 
-# nvidia_modprobe profile file (/etc/apparmor.d/nvidia_modprobe) to 
-# /usr/bin/nvidia-modprobe.
+Additionally, Firefox and MPV require the `krathalans-graphics` abstraction to be in `/etc/apparmor.d/abstractions/` for hardware acceleration and hardware video decoding. See the NVIDIA section below if you own an NVIDIA card.
 
-# Then rename the nvidia_modprobe file to usr.bin.nvidia-modprobe:
-# $ mv /etc/apparmor.d/nvidia_modprobe /etc/apparmor.d/usr.bin.nvidia-modprobe
-# Don't forget to enforce!
-# $ aa-enforce /etc/apparmor.d/*
-```
+## NVIDIA
+You may have issues with hardware acceleration on NVIDIA hardware. This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured incorrectly. Change the profile executable name at the top of the nvidia_modprobe profile file (`/etc/apparmor.d/nvidia_modprobe`) to "/usr/bin/nvidia-modprobe".
+
+Then rename the nvidia_modprobe file to usr.bin.nvidia-modprobe:
+`# mv /etc/apparmor.d/nvidia_modprobe /etc/apparmor.d/usr.bin.nvidia-modprobe`
+
+Don't forget to enforce!
+`# aa-enforce /etc/apparmor.d/usr.bin.nvidia-modprobe`
+
+You will also have to copy BOTH `abstractions/krathalans-graphics` and `abstractions/krathalans-graphics-nvidia` profiles to `/etc/apparmor.d/abstractions` and `#include` the NVIDIA file in the Firefox and MPV AppArmor profiles. Adding NVIDIA rules to a profile makes it much less secure, so this should be done for NVIDIA users only.
 
 ---
 

@@ -1,12 +1,7 @@
-# Rules needed for hardware acceleration/decoding
+# Rules needed for hardware acceleration/decoding (NVIDIA)
+# Only enable this if you need it -- this makes the application much less secure
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
-
-  # General
-  #include <abstractions/dri-common>
-  #include <abstractions/dri-enumerate>
-  #include <abstractions/mesa>
-  #include <abstractions/wayland>
 
   # NVIDIA
   #include <abstractions/nvidia>
