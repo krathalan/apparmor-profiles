@@ -88,7 +88,7 @@ and system call tracing.
 ```
 
 ### Firefox
-This profile has been tested with the standard `firefox` package as well as the AUR package `firefox-nightly`, and only with WebRender (on the aforementioned hardware, on both Xorg and Sway). This single profile will apply to both Firefox and Firefox Nightly.
+This profile has been tested with the standard `firefox` package as well as the AUR package `firefox-nightly`, and with OpenGL (default) and WebRender -- on the aforementioned hardware, on both Xorg and Sway. This single profile will apply to both Firefox and Firefox Nightly.
 
 You will need to edit this file if your Firefox Nightly files are somewhere other than `/opt/firefox-nightly` (e.g. if you just download the binary from Mozilla's website).
 
