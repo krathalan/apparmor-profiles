@@ -22,15 +22,33 @@ profile mpv /usr/bin/mpv {
 
   #include <abstractions/krathalans-common-gui>
 
-  # Protect sensitive files and folders
-  deny owner @{HOME}/.bash_history rw,
-  deny owner @{HOME}/.gnupg rw,
-  deny owner @{HOME}/.mozilla rw,
-  deny owner @{HOME}/.ssh rw,
+  # Graphics
+  #include <abstractions/krathalans-advanced-graphics>
+  /etc/libva.conf r,
+  @{sys}/devices/pci[0-9]*/**/config r,
+  
+  # Audio
+  #include <abstractions/audio>
+  /etc/alsa/conf.d/** r,
+  /etc/asound.conf r,
+  /usr/bin/pulseaudio rPx,
+
+  # Needed to view media with an AppArmor-enforced streamlink
+  signal receive set=term peer=streamlink,
+  
+  # Needed to stream media with youtube-dl
+  /etc/{gai,host,hosts,nsswitch,resolv}{,.conf} r,
+  /usr/bin/youtube-dl rPx,
 
   # Needed to view media in home directory
   owner @{HOME}/ r,
   owner @{HOME}/** r,
+
+  # Protect sensitive files and folders
+  deny owner @{HOME}/.bash_history rw,
+  deny owner @{HOME}/.gnupg** rw,
+  deny owner @{HOME}/.mozilla** rw,
+  deny owner @{HOME}/.ssh** rw,
 
   # If you want to save screenshots, uncomment this. There are other
   # screenshot tools like grim and scrot
@@ -40,53 +58,25 @@ profile mpv /usr/bin/mpv {
   owner /run/media/*/ r,
   owner /run/media/*/** r,
 
-  # Needed to view media with an AppArmor-enforced streamlink
-  signal receive set=term peer=streamlink,
-  
-  # Needed to stream media with youtube-dl
-  /etc/resolv.conf r,
-  /usr/bin/youtube-dl rPx,
-
-  # Graphics
-  #include <abstractions/dri-common>
-  #include <abstractions/mesa>
-  #include <abstractions/wayland>
-  /etc/libva.conf r,
-  @{sys}/devices/** r,
-  
-  # NVIDIA graphics
-  #include <abstractions/nvidia>
-  @{system_share_dirs}/glvnd/egl_vendor.d/ r,
-  @{system_share_dirs}/glvnd/egl_vendor.d/** r,
-  /usr/bin/nvidia-modprobe mrPx,
-  /dev/nvidia* rw,
-  @{system_share_dirs}/nvidia/** r,
-
-  # Audio
-  #include <abstractions/audio>
-  /etc/alsa/conf.d/** r,
-  /etc/asound.conf r,
-  /usr/bin/pulseaudio rPx,
+  # Config
+  /etc/mpv/** r,
+  owner @{HOME}/.config/mpv r,
 
   # Other
-  /etc/mpv/** r,
   /tmp/** mrw,
   /usr/bin/mpv r,
-  owner @{HOME}/.config/mpv rw,
+
+  # Deny /proc
+  deny @{PROC}/ r,
+  deny @{PROC}/** r,
 
   # Silence unneeded permissions
   deny capability chown,
   deny capability mknod,
   deny capability syslog,
   deny /dev/tty rw,
-  deny /etc/gai.conf r,
-  deny /etc/host.conf r,
-  deny /etc/hosts r,
-  deny /etc/nsswitch.conf r,
-  deny @{PROC}/devices r,
-  deny @{PROC}/sys/vm/mmap_min_addr r,
   deny @{sys}/bus/pci/devices/ r,
-  deny /usr/bin/bash rwx,
+  deny /usr/bin/bash rx,
   deny /usr/bin/xdg-screensaver rx,
   deny @{system_share_dirs}/p11-kit/modules/ r,
 }

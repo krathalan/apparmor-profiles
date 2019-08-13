@@ -26,25 +26,18 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
 
   #include <abstractions/krathalans-common-gui>
   
-  # Graphics (WebRender)
-  #include <abstractions/dri-common>
-  #include <abstractions/dri-enumerate>
-  #include <abstractions/mesa>
-  #include <abstractions/wayland>
+  # Graphics
+  #include <abstractions/krathalans-advanced-graphics>
   @{sys}/devices/pci[0-9]*/*/drm/ r,
-  @{system_share_dirs}/glvnd/** r,
   owner @{HOME}/.glvnd* rw,
 
-  # NVIDIA graphics (WebRender)
-  #include <abstractions/nvidia>
-  /dev/nvidia* rw,
-  /usr/bin/nvidia-modprobe mrPx,
-  @{system_share_dirs}/egl/egl_external_platform.d/ r,
-  @{system_share_dirs}/egl/egl_external_platform.d/** r,
-  @{system_share_dirs}/nvidia/** r,
+  # NVIDIA graphics
   owner /tmp/.gl* m,
   owner /tmp/*/.gl* m,
   owner @{HOME}/.nv/** w,
+
+  # Allow access for downloads and uploads
+  #include <abstractions/user-download>
 
   # Dconf
   #include <abstractions/dconf>
@@ -54,7 +47,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   # Network
   #include <abstractions/nameservice>
   /etc/ca-certificates/trust-source/{,anchors/,blacklist/} r,
-  /etc/{host.conf,hosts,nsswitch.conf} r,
+  /etc/{host,hosts,nsswitch}{,.conf} r,
 
   # Firefox subprocesses
   ptrace trace peer=firefox,
@@ -95,10 +88,6 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   owner @{HOME}/.mozilla/** rwlk,
   owner @{HOME}/.cache/mozilla/ rwlk,
   owner @{HOME}/.cache/mozilla/** rwlk,
-
-  # Allow access for downloads and uploads
-  owner @{HOME}/{D,d}ownloads/ rw,
-  owner @{HOME}/{D,d}ownloads/* rw,
 
   # Don't allow launching other applications to open files
   deny /usr/bin/gio-launch-desktop rx,

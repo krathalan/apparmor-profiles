@@ -37,6 +37,8 @@
   owner @{HOME}/.cache/qt* l,
 
   # Xorg
+  # Many applications don't need the entire X abstraction
+  # Many wayland applications still require /usr/share/X11
   @{system_share_dirs}/X11/** r,
   owner @{HOME}/.{ICE,X}authority r,
 

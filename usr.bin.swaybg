@@ -16,6 +16,9 @@ profile swaybg /usr/bin/swaybg {
   owner @{user_share_dirs}/mime/** r,
   owner /run/user/*/sway-client* rw,
 
+  # Default background
+  @{system_share_dirs}/backgrounds/sway/* r,
+
   # Path to wallpaper
   owner @{HOME}/{P,p}ictures/{W,w}allpapers/** r,
 }
