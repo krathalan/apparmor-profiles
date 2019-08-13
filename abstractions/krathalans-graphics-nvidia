@@ -9,7 +9,6 @@
   /usr/bin/nvidia-modprobe mrPx,
   @{system_share_dirs}/egl/egl_external_platform.d/ r,
   @{system_share_dirs}/egl/egl_external_platform.d/** r,
-  @{system_share_dirs}/glvnd/** r,
   @{system_share_dirs}/nvidia/** r,
 
   # Other files in @{sys}/devices/pci[0-9]*/ that aren't part of 
