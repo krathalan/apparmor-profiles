@@ -17,6 +17,5 @@ profile swaybg /usr/bin/swaybg {
   owner /run/user/*/sway-client* rw,
 
   # Path to wallpaper
-  owner @{HOME}/Pictures/Wallpapers/** r,
-  owner @{HOME}/pictures/wallpapers/** r,
+  owner @{HOME}/{P,p}ictures/{W,w}allpapers/** r,
 }

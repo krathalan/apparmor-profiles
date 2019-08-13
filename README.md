@@ -1,6 +1,6 @@
 # apparmor-profiles
 
-AppArmor profiles for various user applications.
+AppArmor profiles for various user applications. Only tested on Arch Linux.
 
 ## Notes about usage
 These AppArmor profiles have been verified to work on the following hardware:
@@ -14,37 +14,64 @@ These AppArmor profiles have been verified to work on the following hardware:
 - Network/Bluetooth cards:
 	- Intel Wireless-AC 9260
 
-I cannot guarantee that these profiles will work on any other hardware. All profiles should work with Xorg on NVIDIA hardware and with Sway (and probably Xorg) on Intel hardware.
+I cannot guarantee that these profiles will work on any other hardware. All profiles should work with Xorg on NVIDIA hardware and with Sway (and probably Xorg) on Intel hardware. However, it's very possible these profiles will still work with AMD graphics, as it seems AMD graphics share a lot of similar behavior with Intel graphics.
 
-⚠️ This symbol means you may/will need to edit the profile for your specific configuration. You can find more information for the specific program in the "Notes about each profile" section.
+These profiles strive to be at least ~95% functional with zero audit log warnings under proper behavior. Functionality is not ignored; rather sometimes it's blocked in the interest of security. See notes about profiles such as discord below, or click [here](#discord). If functionality is not explicitly blocked, then it's probably a bug in the profile and should be fixed. Create an issue.
+
+## Abstraction
+Many profiles for GUI applications (like Firefox, KeepassXC, Lollypop etc.) require access to common files, like icons, themes, fonts, and so on. To ease the burden of maintenance and to reduce policy error, these rules have been put into an abstraction. Move the `krathalans-common-gui` file in the `abstractions/` folder in this repository to `/etc/apparmor.d/abstractions/` and `sudo systemctl reload apparmor.service`.
+
+Many profiles for GUI applications WILL NOT WORK if you do not have this abstraction loaded.
+
+## NVIDIA
+```
+# Please note: you may have issues with hardware acceleration on NVIDIA hardware. 
+# This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured 
+# incorrectly. Change the profile executable name at the top of the 
+# nvidia_modprobe profile file (/etc/apparmor.d/nvidia_modprobe) to 
+# /usr/bin/nvidia-modprobe.
+
+# Then rename the nvidia_modprobe file to usr.bin.nvidia-modprobe:
+# $ mv /etc/apparmor.d/nvidia_modprobe /etc/apparmor.d/usr.bin.nvidia-modprobe
+# Don't forget to enforce!
+# $ aa-enforce /etc/apparmor.d/*
+```
+
+---
+
+⚠️ This symbol means you may/will need to edit the profile for your specific configuration. You can find more information for the specific profile by clicking on its name or simply scrolling down.
+
+Don't be afraid though -- many profiles work with default configurations.
 
 ### Tested profiles
-- Firefox
-- KeepassXC ⚠️
-- Lollypop ⚠️
-- mpv ⚠️
+- bluetoothd
+- [Firefox ⚠️](#firefox)
+- iwd
+- [KeepassXC ⚠️](#keepassxc)
+- less
+- [Lollypop ⚠️](#lollypop)
+- [mako ⚠️](#mako)
+- [mpv ⚠️](#mpv)
+- NetworkManager
+- [swaybg ⚠️](#swaybg)
+- [waybar ⚠️](#waybar)
 
 ### New and somewhat untested profiles
-- bluetoothd
-- discord
-- gpg-agent ⚠️
-- evince ⚠️
-- hexchat
-- irssi ⚠️
-- iwd
-- less
-- mako ⚠️
-- NetworkManager
-- pipewire
+- [discord ⚠️](#discord)
+- [gpg-agent ⚠️](#gpg-agent)
+- [evince ⚠️](#evince)
+- [irssi ⚠️](#irssi)
 - pulseaudio
-- redshift ⚠️
+- [redshift ⚠️](#redshift)
 - rngd
-- ssh-agent ⚠️
-- streamlink
-- swaybg ⚠️
-- syncthing ⚠️
-- waybar ⚠️
-- youtube-dl ⚠️
+- [ssh-agent ⚠️](#ssh-agent)
+- [streamlink ⚠️](#streamlink)
+- [syncthing ⚠️](#syncthing)
+- [youtube-dl ⚠️](#youtube-dl)
+
+### Unmaintained profiles
+- hexchat (check out irssi!)
+- pipewire
 
 ## Notes about each profile
 ### discord
@@ -61,22 +88,7 @@ and system call tracing.
 ```
 
 ### Firefox
-From the top of the profile:
-
-```
-# Please note: you may have issues with hardware acceleration on NVIDIA hardware. 
-# This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured 
-# incorrectly. Change the profile executable name at the top of the 
-# nvidia_modprobe profile file (/etc/apparmor.d/nvidia_modprobe) to 
-# /usr/bin/nvidia-modprobe.
-
-# Then rename the nvidia_modprobe file to usr.bin.nvidia-modprobe:
-# $ mv /etc/apparmor.d/nvidia_modprobe /etc/apparmor.d/usr.bin.nvidia-modprobe
-# Don't forget to enforce!
-# $ aa-enforce /etc/apparmor.d/*
-```
-
-This profile has only been tested on Arch Linux with the standard `firefox` package as well as the AUR package `firefox-nightly`, and only with WebRender (on the aforementioned hardware). This single profile will apply to both Firefox and Firefox Nightly.
+This profile has been tested with the standard `firefox` package as well as the AUR package `firefox-nightly`, and only with WebRender (on the aforementioned hardware, on both Xorg and Sway). This single profile will apply to both Firefox and Firefox Nightly.
 
 You will need to edit this file if your Firefox Nightly files are somewhere other than `/opt/firefox-nightly` (e.g. if you just download the binary from Mozilla's website).
 
@@ -92,7 +104,7 @@ This profile assumes you only want to view documents in `~/{D,d}ocuments/` and `
 You may need to edit the profile to allow `irssi` to access your configuration files, if they are symlinks to somewhere other than inside `~/.irssi/`.
 
 ### KeepassXC ⚠️
-This profile assumes you keep your database file in `~/{D,d}ocuments/`. If you do not, edit the file to where you store your database. KeepassXC does not need access to your whole home directory. Please keep isolated backups of your database files.
+This profile assumes you keep your database file in `~/{D,d}ocuments/`. If you do not, edit the file to where you store your database. KeepassXC does not need access to your whole home directory.
 
 ### Lollypop ⚠️
 This profile assumes you keep your music in `~/{M,m}usic`. If you do not, edit the file to where you store your database. Lollypop does not need access to your whole home directory.
@@ -105,23 +117,11 @@ You may need to edit the profile to allow `mako` to access your configuration fi
 ### mpv ⚠️
 You may need to edit the profile to allow `mpv` to acces your configuration file, if it's a symlink to somehwere other than `~/.config/mpv`.
 
-This profile allows mpv to utilize `youtube-dl` to stream videos and confines it in the `youtube-dl` AppArmor profile in this project. You will need the separate `youtube-dl` profile enabled for this functionality. I have also verified that this AppArmor profile works when mpv is invoked by other programs like [streamlink](https://streamlink.github.io/).
+This profile allows mpv to utilize `youtube-dl` to stream videos and confines it in the `youtube-dl` AppArmor profile in this project. You will need the separate `youtube-dl` profile enabled for this functionality.
+
+This AppArmor profile also works when mpv is invoked by other programs like [streamlink](https://streamlink.github.io/). A streamlink profile is also available.
 
 Use the command line flag `--gpu-context=wayland` for Wayland support. Use the command line flag `--hwdec=auto` for nvdec (NVIDIA) and VA-API (Intel) hardware decoding. You can also tell `mpv` to always use these options [through a config file](https://mpv.io/manual/master/).
-
-From the top of the profile:
-```
-# Please note: you may have issues with hardware decoding on NVIDIA hardware. 
-# This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured 
-# incorrectly. Change the profile executable name at the top of the 
-# nvidia_modprobe profile file (/etc/apparmor.d/nvidia_modprobe) to 
-# /usr/bin/nvidia-modprobe.
-
-# Then rename the nvidia_modprobe file to usr.bin.nvidia-modprobe:
-# $ mv /etc/apparmor.d/nvidia_modprobe /etc/apparmor.d/usr.bin.nvidia-modprobe
-# Don't forget to enforce!
-# $ aa-enforce /etc/apparmor.d/*
-```
 
 ### redshift ⚠️
 This profile has been tested to work correctly on Sway with the `redshift-wlr-gamma-control` AUR package.
@@ -132,7 +132,7 @@ You may need to edit the profile to allow `redshift` to access your configuratio
 You may need to edit the profile to allow access to your SSH keys, if you keep them somewhere other than `~/.ssh`.
 
 ### streamlink
-You will need to set `mpv` as your default player and have the separate `mpv` AppArmor profile from this repository enabled.
+You will need to set either `mpv` or `vlc` as your default player. If you choose `mpv`, you must have the separate `mpv` AppArmor profile from this repository enabled. If you choose `vlc`, I have not written an AppArmor profile for it yet, so streamlink will execute `vlc` unconfined (less secure).
 
 ### swaybg ⚠️
 From the top of the profile: 
