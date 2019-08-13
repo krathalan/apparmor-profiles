@@ -53,9 +53,6 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
 
   # Network
   #include <abstractions/nameservice>
-  network netlink raw,
-  network tcp,
-  network udp,
   /etc/ca-certificates/trust-source/{,anchors/,blacklist/} r,
   /etc/{host.conf,hosts,nsswitch.conf} r,
 

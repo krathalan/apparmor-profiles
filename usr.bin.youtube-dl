@@ -11,8 +11,7 @@ profile youtube-dl /usr/bin/youtube-dl {
   # Networking
   #include <abstractions/nameservice>
   #include <abstractions/openssl>
-  /etc/ca-certificates/extracted/ r,
-  /etc/ca-certificates/extracted/** r,
+  /etc/ca-certificates/extracted** r,
 
   # Executables
   #include <abstractions/python>

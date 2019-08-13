@@ -21,9 +21,7 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
 
   # Networking
   #include <abstractions/nameservice>
-  /etc/ca-certificates/trust-source/ r,
-  /etc/ca-certificates/trust-source/anchors/ r,
-  /etc/ca-certificates/trust-source/blacklist/ r,
+  /etc/ca-certificates/trust-source/{,anchors/,blacklist/} r,
   owner @{HOME}/.pki/nssdb/* rwk,
 
   # Subprocesses

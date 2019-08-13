@@ -43,6 +43,9 @@ profile NetworkManager /usr/bin/NetworkManager {
   @{PROC}/*/stat r,
   owner @{PROC}/*/fd/ r,
 
+  # NetworkManager runs as root anyways
+  capability dac_override,
+
   # System files
   owner /etc/machine-id r,
   owner /dev/rfkill rw,
@@ -59,7 +62,6 @@ profile NetworkManager /usr/bin/NetworkManager {
 
   # Even if NetworkManager "needs" these permissions, it still works without 
   # them and allowing them would make the profile much less effective
-  deny capability dac_override,
   deny /usr/bin/systemctl rx,
 
   # Silence unnecessary permissions
