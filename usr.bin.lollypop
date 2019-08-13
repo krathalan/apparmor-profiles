@@ -10,6 +10,8 @@ profile lollypop /usr/bin/lollypop {
   #include <abstractions/fonts>
   #include <abstractions/wayland>
 
+  #include <abstractions/krathalans-common-gui>
+
   # Needed to listen to music
   owner @{HOME}/{M,m}usic/ r,
   owner @{HOME}/{M,m}usic/** r,
@@ -25,6 +27,7 @@ profile lollypop /usr/bin/lollypop {
 
   # Python
   #include <abstractions/python>
+  /usr/bin/ r,
   /usr/bin/python* rix,
   /usr/lib/python*/** r,
   /usr/lib/python*/site-packages/lollypop/** w,
@@ -37,53 +40,27 @@ profile lollypop /usr/bin/lollypop {
   owner /run/user/*/orcexec* mrw,
   owner @{HOME}/orcexec* mrw,
 
-  # Icons and themes
-  @{user_share_dirs}/icons/ r,
-  @{user_share_dirs}/icons/** r,
-  @{system_share_dirs}/icons/ r,
-  @{system_share_dirs}/icons/** r,
-  @{system_share_dirs}/themes/** r,
-  owner @{HOME}/.icons/ r,
-  owner @{HOME}/.icons/** r,
-
-  # Mime
-  @{system_share_dirs}/mime/** r,
-  owner @{user_share_dirs}/mime/ r,
-  owner @{user_share_dirs}/mime/** r,
-
   # Miscellaneous
   /tmp/** mrw,
   /usr/bin/lollypop r,
   @{system_share_dirs}/glib*/** r,
-  @{system_share_dirs}/gtk*/** r,
   @{system_share_dirs}/lollypop/** r,
-  @{system_share_dirs}/X11/xkb/ r,
-  @{system_share_dirs}/X11/xkb/** r,
   
   owner @{HOME}/.cache/lollypop*/ rw,
   owner @{HOME}/.cache/lollypop*/** rwlk,
-  owner @{HOME}/.config/*.dirs r,
-  owner @{HOME}/.config/gtk*/** r,
+  owner @{HOME}/.config/user-dirs.dirs r,
   owner @{user_share_dirs}/lollypop/ rw,
   owner @{user_share_dirs}/lollypop/** rwlk,
   owner @{user_share_dirs}/recently-used* rw,
-  owner @{HOME}/.ICEauthority r,
-  owner @{HOME}/.Xauthority r,
 
   # GVFS isn't tested :)
   deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
 
   # Silence unneeded permissions
   deny /dev/ rw,
-  deny /etc/fstab r,
-  deny /etc/group rw,
-  deny /etc/machine-id r,
   deny /etc/nsswitch.conf rw,
   deny @{PROC}/** rw,
   deny @{sys}/** rw,
   deny /usr/bin/bash rwx,
-  deny @{system_share_dirs}/fonts/** w,
-  deny @{system_share_dirs}/pixmaps/ rw,
   deny /var/** rw,
-  deny @{HOME}/.cache/fontconfig/** rwk,
 }

@@ -23,6 +23,8 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   #include <abstractions/audio>
   #include <abstractions/base>
   #include <abstractions/gnome>
+
+  #include <abstractions/krathalans-common-gui>
   
   # Graphics (WebRender)
   #include <abstractions/dri-common>
@@ -66,12 +68,11 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
 
   # System access
   /dev/ r,
-  /etc/mime.types r,
   /etc/udev/udev.conf r,
   /run/udev/data/+pci:* r,
   @{sys}/devices/pci[0-9]*/**/uevent r,
   @{system_share_dirs}/ r,
-  @{system_share_dirs}/mime/ r,
+  /usr/lib/firefox/fonts/** rw,
 
   # Gsettings https://developer.gnome.org/gio/stable/GSettings.html
   @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
@@ -79,13 +80,6 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   # Poppler is a PDF rendering library
   @{system_share_dirs}/poppler/cMap/ r,
   
-  # Icons, themes, fonts
-  /usr/lib/firefox/fonts/** rw,
-  @{system_share_dirs}/fonts/** r,
-  @{system_share_dirs}/gtk-3.0/settings.ini r,
-  @{system_share_dirs}/icons/ r,
-  @{system_share_dirs}/themes/ r,
-
   # Desktop environment specific configs
   /etc/xfce4/defaults.list r,
   owner @{HOME}/.kde/share/config/* r,
@@ -109,10 +103,6 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   owner @{HOME}/{D,d}ownloads/ rw,
   owner @{HOME}/{D,d}ownloads/* rw,
 
-  # Xorg
-  owner @{HOME}/.ICEauthority r,
-  owner @{HOME}/.Xauthority r,
-
   # Don't allow launching other applications to open files
   deny /usr/bin/gio-launch-desktop rx,
   deny @{system_share_dirs}/xfce4/applications/ r,
@@ -131,15 +121,9 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   
   # Silence denial logs about permissions we don't need
   deny capability sys_admin,
-  deny /etc/{fstab,passwd,group,mailcap,machine-id} r,
+  deny /etc/mailcap r,
   deny /opt/firefox-nightly/ w,
   deny /opt/firefox-nightly/** w,
   deny /opt/firefox-nightly/crashreporter rx,
   deny @{sys}/devices/system/cpu/** r,
-  deny @{system_share_dirs}/fonts/** w,
-  deny @{system_share_dirs}/pixmaps/ r,
-  deny @{HOME}/.cache/fontconfig/ rw, 
-  deny @{HOME}/.cache/fontconfig/** rw,
-  deny @{HOME}/.config/gtk-2.0/ rw, 
-  deny @{HOME}/.config/gtk-2.0/** rw,
 }

@@ -16,13 +16,9 @@
 profile waybar /usr/bin/waybar {
   #include <abstractions/base>
   #include <abstractions/gnome>
-
-  # Fonts
   #include <abstractions/fonts>
-  @{system_share_dirs}/fonts/** r,
 
-  # Needed to run, otherwise segfaults
-  @{system_share_dirs}/X11/xkb/** r,
+  #include <abstractions/krathalans-common-gui>
 
   # Dconf
   #include <abstractions/dconf>
@@ -32,12 +28,8 @@ profile waybar /usr/bin/waybar {
   #include <abstractions/wayland>
 
   # Executables
-  /usr/bin/waybar mr,
+  /usr/bin/waybar mrPx,
   /usr/bin/dash rix,
-
-  # Icons and themes
-  @{system_share_dirs}/gtk-3.0/settings.ini r,
-  @{system_share_dirs}/icons/** r,
 
   # Audio module
   #include <abstractions/audio>
@@ -49,8 +41,7 @@ profile waybar /usr/bin/waybar {
   # Needed to show icons for discord (flatpak)
   owner @{HOME}/.var/app/com.discordapp.Discord/cache/** r,
 
-  # Custom modules
-  # https://gitlab.com/krathalan/waybar-modules
+  # Custom modules https://gitlab.com/krathalan/waybar-modules
   /usr/bin/wbm_{battery,vpn} rPx,
 
   # Config
@@ -58,8 +49,4 @@ profile waybar /usr/bin/waybar {
   # Config files in ~/.config/waybar/ are symlinks to these files
   owner @{HOME}/documents/config/waybar-config r,
   owner @{HOME}/documents/config/waybar-style.css r,
-
-  # Silence unneeded permissions
-  deny /etc/machine-id r,
-  deny @{system_share_dirs}/fonts/** w,
 }

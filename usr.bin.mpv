@@ -20,6 +20,8 @@ profile mpv /usr/bin/mpv {
   #include <abstractions/base>
   #include <abstractions/fonts>
 
+  #include <abstractions/krathalans-common-gui>
+
   # Protect sensitive files and folders
   deny owner @{HOME}/.bash_history rw,
   deny owner @{HOME}/.gnupg rw,
@@ -71,9 +73,6 @@ profile mpv /usr/bin/mpv {
   /etc/mpv/** r,
   /tmp/** mrw,
   /usr/bin/mpv r,
-  @{system_share_dirs}/X11/Xcms.txt r,
-  @{system_share_dirs}/icons/** r,
-  @{system_share_dirs}/X11/XErrorDB r,
   owner @{HOME}/.config/mpv rw,
 
   # Silence unneeded permissions
@@ -84,16 +83,11 @@ profile mpv /usr/bin/mpv {
   deny /etc/gai.conf r,
   deny /etc/host.conf r,
   deny /etc/hosts r,
-  deny /etc/machine-id r,
   deny /etc/nsswitch.conf r,
-  deny /etc/passwd r,
   deny @{PROC}/devices r,
   deny @{PROC}/sys/vm/mmap_min_addr r,
   deny @{sys}/bus/pci/devices/ r,
   deny /usr/bin/bash rwx,
   deny /usr/bin/xdg-screensaver rx,
-  deny @{system_share_dirs}/fonts/** w,
   deny @{system_share_dirs}/p11-kit/modules/ r,
-  deny /var/cache/fontconfig/ w,
-  deny @{HOME}/.cache/fontconfig/** rwk,
 }

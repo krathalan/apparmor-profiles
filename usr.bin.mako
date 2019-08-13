@@ -8,11 +8,8 @@
 profile mako /usr/bin/mako {
   #include <abstractions/base>
   #include <abstractions/fonts>
-  
-  # Application icons
-  @{system_share_dirs}/icons/** r,
-  @{system_share_dirs}/mime/** r,
-  owner @{user_share_dirs}/mime/** r,
+
+  #include <abstractions/krathalans-common-gui>
   
   # Shared memory
   owner /dev/shm/mako* rw,
@@ -21,8 +18,4 @@ profile mako /usr/bin/mako {
   owner @{HOME}/.config/mako/** r,
   # Config file at ~/.config/mako/config is a symlink to this file
   owner @{HOME}/documents/config/mako-config r,
-  
-  # Deny unnecessary permissions
-  deny @{system_share_dirs}/fonts/** w,
-  deny @{system_share_dirs}/pixmaps/ r,
 }

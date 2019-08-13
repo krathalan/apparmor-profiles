@@ -1,0 +1,46 @@
+# vim:syntax=apparmor
+# Rules commonly needed by graphical applications
+
+  # Icons, themes, fonts
+  @{system_share_dirs}/fonts** r,
+  @{system_share_dirs}/icons** r,
+  @{system_share_dirs}/themes** r,
+  owner @{HOME}/.icons** r,
+  owner @{HOME}/.fonts** r,
+  owner @{HOME}/.themes** r,
+  owner @{user_share_dirs}/icons** r,
+  owner @{user_share_dirs}/fonts** r,
+  owner @{user_share_dirs}/themes** r,
+
+  # Unnecessary
+  deny @{system_share_dirs}/fonts** w,
+  deny /var/cache/fontconfig** w,
+  deny @{HOME}/.cache/fontconfig** rwk,
+
+  # Mime
+  /etc/mime.types r,
+  @{system_share_dirs}/mime** r,
+  owner @{user_share_dirs}/mime** r,
+
+  # GTK settings
+  @{system_share_dirs}/gtk-2.0/gtkrc r,
+  @{system_share_dirs}/gtk-3.0/settings.ini r,
+  owner @{HOME}/.gtkrc-2.0 r,
+  owner @{HOME}/.config/gtk-3.0/{bookmarks,settings.ini} r,
+
+  # Qt
+  owner @{HOME}/.config/QtProject.conf* rwl,
+  owner @{HOME}/.config/QtProject.conf.* k,
+  # AppArmor doesn't seem to like tunable version
+  owner /home/*/.config/QtProject.conf.* k,
+  owner @{HOME}/.cache/qt* l,
+
+  # Xorg
+  @{system_share_dirs}/X11/** r,
+  owner @{HOME}/.{ICE,X}authority r,
+
+  # Commonly automatically touched by dconf
+  deny /etc/{fstab,group,machine-id,passwd} r,
+
+  # There's not really anything in this folder
+  deny @{system_share_dirs}/pixmaps/ rw,

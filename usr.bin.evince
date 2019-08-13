@@ -11,6 +11,8 @@ profile evince /usr/bin/evince {
   #include <abstractions/gnome>
   #include <abstractions/wayland>
 
+  #include <abstractions/krathalans-common-gui>
+
   # Dconf
   #include <abstractions/dconf>
   owner /run/user/*/dconf/user w,
@@ -18,12 +20,6 @@ profile evince /usr/bin/evince {
   # Needed to open documents from the file picker 
   /usr/bin/gio-launch-desktop rix,
   /usr/bin/evince rPx,
-
-  # Themes and icons
-  @{system_share_dirs}/gtk-3.0/settings.ini r,
-  @{system_share_dirs}/icons/** r,
-  owner @{HOME}/.config/gtk-3.0/settings.ini r,
-  owner @{user_share_dirs}/icons/** r,
 
   # Needed to read documents
   owner @{HOME}/{D,d}ocuments/ r,
@@ -46,16 +42,10 @@ profile evince /usr/bin/evince {
 
   # Miscellaneous
   @{system_share_dirs}/evince/** r,
-  @{system_share_dirs}/mime/mime.cache r,
-  @{system_share_dirs}/X11/xkb/** r,
-  owner @{user_share_dirs}/mime/mime.cache r,
 
   # Silence unneeded permissions
-  deny /etc/fstab r,
   deny /etc/nsswitch.conf r,
-  deny /etc/passwd r,
   deny @{PROC}/@{pid}/mountinfo r,
-  deny @{PROC}/@{pid}/fd r,
-  deny @{system_share_dirs}/fonts/** w,
+  deny @{PROC}/@{pid}/fd/ r,
   deny /var/lib/flatpak/** r,
 }

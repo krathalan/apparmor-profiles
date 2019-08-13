@@ -9,6 +9,8 @@ profile keepassxc /usr/bin/keepassxc {
   #include <abstractions/base>
   #include <abstractions/fonts>
 
+  #include <abstractions/krathalans-common-gui>
+
   # Graphics
   #include <abstractions/dri-common>
   #include <abstractions/mesa>
@@ -21,28 +23,10 @@ profile keepassxc /usr/bin/keepassxc {
   owner @{HOME}/{D,d}ocuments/ rwl,
   owner @{HOME}/{D,d}ocuments/** rwl,
 
-  # Icons, fonts, and theming
-  @{system_share_dirs}/gtk-2.0/gtkrc r,
-  @{system_share_dirs}/icons/ r,
-  @{system_share_dirs}/icons/** r,
-  @{system_share_dirs}/themes/** r,
-  owner @{HOME}/.gtkrc-2.0 r,
-  owner @{HOME}/.icons/ r,
-  owner @{HOME}/.icons/** r,
-  owner @{user_share_dirs}/icons/ r,
-  owner @{user_share_dirs}/icons/** r,
-
   # File picker
   owner @{user_share_dirs}/recently-used.xbel* rw,
   owner @{HOME}/.config/gtk-2.0/gtkfilechooser.ini* rw,
-  owner @{HOME}/.config/gtk-3.0/bookmarks r,
   owner @{HOME}/.config/user-dirs.dirs r,
-
-  # Qt
-  owner @{HOME}/.config/QtProject.conf* rwl,
-  owner @{HOME}/.config/QtProject.conf.lock rwk,
-  owner @{HOME}/.config/#* rw,
-  owner @{HOME}/.cache/qt* l,
 
   # Config
   owner @{HOME}/.config/keepassxc/** rwlk,
@@ -51,12 +35,8 @@ profile keepassxc /usr/bin/keepassxc {
   /tmp/** rwk,
   /usr/bin/keepassxc mr,
   @{system_share_dirs}/keepassxc/** r,
-  @{system_share_dirs}/mime/** r,
   owner @{HOME}/.cache/#* rw,
-  owner @{user_share_dirs}/mime r,
-  owner @{user_share_dirs}/mime/** r,
-  owner @{HOME}/.ICEauthority r,
-  owner @{HOME}/.Xauthority r,
+  owner @{HOME}/.config/#* rw,
 
   # GVFS isn't tested :)
   deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
@@ -65,15 +45,9 @@ profile keepassxc /usr/bin/keepassxc {
   deny /dev/ r,
   deny /dev/bus/usb/ rw,
   deny /dev/tty rw,
-  deny /etc/fstab rw,
-  deny /etc/machine-id rw,
-  deny /etc/nsswitch.conf rw,
-  deny /etc/passwd rw,
+  deny /etc/nsswitch.conf r,
   deny @{PROC}/** r,
   deny @{sys}/** r,
   deny /usr/bin/ r,
-  deny @{system_share_dirs}/fonts/** w,
-  deny @{system_share_dirs}/pixmaps/ rw,
   deny /var/** rw,
-  deny @{HOME}/.cache/fontconfig/** rwk,
 }
