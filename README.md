@@ -25,7 +25,7 @@ Many profiles for GUI applications (like Firefox, KeepassXC, Lollypop etc.) requ
 
 Many profiles for GUI applications WILL NOT WORK if you do not have this abstraction loaded.
 
-Additionally, Firefox and MPV require the `krathalans-graphics` abstraction to be in `/etc/apparmor.d/abstractions/` for hardware acceleration and hardware video decoding. See the NVIDIA section below if you own an NVIDIA card.
+Additionally, Firefox and mpv require the `krathalans-graphics` abstraction to be in `/etc/apparmor.d/abstractions/` for hardware acceleration and hardware video decoding. See the NVIDIA section below if you own an NVIDIA card.
 
 ## NVIDIA
 You may have issues with hardware acceleration on NVIDIA hardware. This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured incorrectly. Change the profile executable name at the top of the nvidia_modprobe profile file (`/etc/apparmor.d/nvidia_modprobe`) to "/usr/bin/nvidia-modprobe".
@@ -36,7 +36,7 @@ Then rename the nvidia_modprobe file to usr.bin.nvidia-modprobe:
 Don't forget to enforce!
 `# aa-enforce /etc/apparmor.d/usr.bin.nvidia-modprobe`
 
-You will also have to copy BOTH `abstractions/krathalans-graphics` and `abstractions/krathalans-graphics-nvidia` profiles to `/etc/apparmor.d/abstractions` and `#include` the NVIDIA file in the Firefox and MPV AppArmor profiles. Adding NVIDIA rules to a profile makes it much less secure, so this should be done for NVIDIA users only.
+You will also have to copy BOTH `abstractions/krathalans-graphics` and `abstractions/krathalans-graphics-nvidia` profiles to `/etc/apparmor.d/abstractions` and `#include` the NVIDIA file in the Firefox and MPV AppArmor profiles. Adding NVIDIA rules to a profile makes the profile much less secure, so this should be done for NVIDIA users only.
 
 ---
 
@@ -78,6 +78,8 @@ Don't be afraid though -- many profiles work with default configurations.
 ### discord
 This profile assumes you only want to upload files from `~/{D,d}ownloads`. If you do not, edit the file. Discord does not need access to your whole home directory.
 
+This profile intentionally does not enable hardware acceleration due to the deeper level of system access hardware acceleration requires, the [insecurity of modern graphics drivers](https://security.stackexchange.com/questions/182501/modern-linux-gpu-driver-security?answertab=votes#tab-top), and the reluctance to give proprietary software deeper system access than it truly needs.
+
 Streamer mode and showing any currently playing games/music/etc. will not work as `ptrace` is completely disabled in this profile, as Discord tries to run `ptrace` on every program running on your machine. `ptrace` is an extremely dangerous capability. From the [`ptrace` manpage](http://man7.org/linux/man-pages/man2/ptrace.2.html):
 
 ```
@@ -88,7 +90,7 @@ registers.  It is primarily used to implement breakpoint debugging
 and system call tracing.
 ```
 
-### Firefox
+### Firefox ⚠️
 This profile has been tested with the standard `firefox` package as well as the AUR package `firefox-nightly`, and with OpenGL (default) and WebRender -- on the aforementioned hardware, on both Xorg and Sway. This single profile will apply to both Firefox and Firefox Nightly.
 
 You will need to edit this file if your Firefox Nightly files are somewhere other than `/opt/firefox-nightly` (e.g. if you just download the binary from Mozilla's website).
