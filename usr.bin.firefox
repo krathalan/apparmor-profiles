@@ -20,11 +20,6 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   @{sys}/devices/pci[0-9]*/*/drm/ r,
   owner @{HOME}/.glvnd* rw,
 
-  # NVIDIA graphics
-  owner /tmp/.gl* m,
-  owner /tmp/*/.gl* m,
-  owner @{HOME}/.nv/** w,
-
   # Allow access for downloads and uploads
   #include <abstractions/user-download>
 
@@ -100,5 +95,6 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   deny /opt/firefox-nightly/ w,
   deny /opt/firefox-nightly/** w,
   deny /opt/firefox-nightly/crashreporter rx,
+  deny @{sys}/bus/pci/devices/ r,
   deny @{sys}/devices/system/cpu/** r,
 }

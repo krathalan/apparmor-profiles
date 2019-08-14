@@ -15,4 +15,7 @@ profile redshift /usr/bin/redshift {
 
   # Miscellaneous
   owner /run/user/*/redshift-shared* rw,
+
+  # Xorg
+  owner @{HOME}/.Xauthority r,
 }

@@ -11,14 +11,6 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   #include <abstractions/fonts>
   #include <abstractions/gnome>
 
-  # Graphics
-  #include <abstractions/dri-enumerate>
-  #include <abstractions/mesa>
-  @{sys}/bus/pci/devices/ r,
-  @{sys}/devices/pci[0-9]*/**/{class,irq,resource} r,
-  @{system_share_dirs}/glvnd/egl_vendor.d/ r,
-  @{system_share_dirs}/glvnd/egl_vendor.d/** r,
-
   # Networking
   #include <abstractions/nameservice>
   /etc/ca-certificates/trust-source/{,anchors/,blacklist/} r,
@@ -55,16 +47,16 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   # Discord does this supposedly to look for OBS/games you're playing
   deny capability sys_ptrace,
   deny ptrace,
-  deny @{PROC}/*/cmdline r,
 
   # Silence unnecessary permissions
   deny /dev/ r,
-  deny /dev/pts/0 rw,
+  deny /dev/pts/* rw,
   deny /etc/machine-id r,
-  deny @{PROC}/*/oom_score_adj w,
-  deny @{PROC}/*/stat r,
+  deny @{PROC}/driver/nvidia/params r,
   deny @{PROC}/@{pid}/ r,
   deny @{PROC}/@{pid}/** r,
+  deny @{PROC}/@{pid}/oom_score_adj w,  
+  deny @{PROC}/sys/** r,
   deny @{PROC}/vmstat r,
   deny /sys/devices/system/cpu/** r,
   deny /sys/devices/virtual/tty/** r,
