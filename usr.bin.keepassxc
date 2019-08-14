@@ -10,23 +10,16 @@ profile keepassxc /usr/bin/keepassxc {
   #include <abstractions/fonts>
 
   #include <abstractions/krathalans-common-gui>
-
-  # Graphics
-  #include <abstractions/dri-common>
-  #include <abstractions/mesa>
-  #include <abstractions/nvidia>
-  #include <abstractions/wayland>
-  @{system_share_dirs}/glvnd/egl_vendor.d/ r,
-  @{system_share_dirs}/glvnd/egl_vendor.d/** r,
   
   # Needed to view and edit keepass databases in documents directory
   owner @{HOME}/{D,d}ocuments/ rwl,
   owner @{HOME}/{D,d}ocuments/** rwl,
 
   # File picker
-  owner @{user_share_dirs}/recently-used.xbel* rw,
   owner @{HOME}/.config/gtk-2.0/gtkfilechooser.ini* rw,
   owner @{HOME}/.config/user-dirs.dirs r,
+  # Still works without this, may contain sensitive information
+  deny @{user_share_dirs}/recently-used.xbel* rw,
 
   # Config
   owner @{HOME}/.config/keepassxc/** rwlk,
@@ -41,13 +34,17 @@ profile keepassxc /usr/bin/keepassxc {
   # GVFS isn't tested :)
   deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
 
+  # Deny /proc, /run, /sys, and /var
+  deny @{PROC}/** r,
+  deny /run/** rw,
+  deny @{sys}/** r,
+  deny /var/** rw,
+
   # Silence unneeded permissions
   deny /dev/ r,
   deny /dev/bus/usb/ rw,
   deny /dev/tty rw,
   deny /etc/nsswitch.conf r,
-  deny @{PROC}/** r,
-  deny @{sys}/** r,
   deny /usr/bin/ r,
-  deny /var/** rw,
+  deny @{system_share_dirs}/glvnd/egl_vendor.d/ r,
 }
