@@ -40,13 +40,20 @@ profile keepassxc /usr/bin/keepassxc {
   deny /tmp/** rwk,
   deny /var/** rw,
 
+  # Silence denials about pulseaudio, no idea where these are from
+  deny /etc/pulse/client.conf r,
+  deny /run/user/*/pulse/ rw,
+  deny /usr/bin/pulseaudio rx,
+
   # Silence unneeded permissions
   deny /dev/ r,
   deny /dev/bus/usb/ rw,
+  deny /dev/shm/ r,
   deny /dev/tty rw,
   deny /etc/nsswitch.conf r,
   deny /usr/bin/ r,
   deny @{system_share_dirs}/glvnd/egl_vendor.d/ r,
+  deny @{system_share_dirs}/nvidia/* r,
   deny @{HOME}/.cache/#* rw,
   deny @{HOME}/.config/#* rw,
 }
