@@ -18,7 +18,6 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   # Graphics -- include <abstractions/krathalans-graphics-nvidia> if you need it
   #include <abstractions/krathalans-graphics>
   @{sys}/devices/pci[0-9]*/*/drm/ r,
-  owner @{HOME}/.glvnd* rw,
 
   # Allow access for downloads and uploads
   #include <abstractions/user-download>
@@ -73,23 +72,20 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
 
   # Don't allow launching other applications to open files
   deny /usr/bin/gio-launch-desktop rx,
-  deny @{system_share_dirs}/xfce4/applications/ r,
-  deny @{system_share_dirs}/applications/** rk,
-  deny @{system_share_dirs}/gnome/applications/ r,
-  deny @{system_share_dirs}/gnome/applications/kde4/ r,
 
   # Silence denial about ~/.local/share/gvfs-metadata/home, this file can 
   # contain sensitive data
   deny @{user_share_dirs}/gvfs-metadata/** r,
 
   # Deny /proc and /var
-  deny @{PROC} rw,
+  deny @{PROC}/ rw,
   deny @{PROC}/** rw,
   deny /var/** rw,
 
   # Don't allow executable mapping of arbitrary files
-  deny /tmp/* mrw,
-  deny @{HOME}/* mrw,
+  deny /tmp/#* mrw,
+  deny @{HOME}/#* mrw,
+  deny @{HOME}/.glvnd* mrw,
   
   # Silence denial logs about permissions we don't need
   deny capability sys_admin,
