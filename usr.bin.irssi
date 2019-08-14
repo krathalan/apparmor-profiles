@@ -11,14 +11,16 @@ profile irssi /usr/bin/irssi {
   # Irssi has perl scripting
   #include <abstractions/perl>
 
+  # Include user overrides for possible symlinked config files
+  #include <local/usr.bin.irssi>
+
   # Networking
   #include <abstractions/nameservice>
   #include <abstractions/openssl>
   /etc/ca-certificates/extracted/tls-ca-bundle.pem r,
 
   @{system_share_dirs}/irssi/** r,
-  owner @{HOME}/.irssi/* rw,
 
-  # Config files in ~/.irssi are symlinks to files here
-  owner @{HOME}/documents/config/irssi/* r,
+  # Config
+  owner @{HOME}/.irssi/* rw,
 }

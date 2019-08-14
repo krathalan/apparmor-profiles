@@ -10,12 +10,13 @@ profile mako /usr/bin/mako {
   #include <abstractions/fonts>
 
   #include <abstractions/krathalans-common-gui>
-  
+
+  # Include user overrides for possible symlinked config files
+  #include <local/usr.bin.mako>
+ 
   # Shared memory
   owner /dev/shm/mako* rw,
   
   # Config file
   owner @{HOME}/.config/mako/** r,
-  # Config file at ~/.config/mako/config is a symlink to this file
-  owner @{HOME}/documents/config/mako-config r,
 }

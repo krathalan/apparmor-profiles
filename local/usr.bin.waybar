@@ -1,0 +1,6 @@
+# Custom modules https://gitlab.com/krathalan/waybar-modules
+/usr/bin/wbm_{battery,vpn} rPx,
+
+# Config files in ~/.config/waybar/ are symlinks to these files
+owner @{HOME}/documents/config/waybar-config r,
+owner @{HOME}/documents/config/waybar-style.css r,

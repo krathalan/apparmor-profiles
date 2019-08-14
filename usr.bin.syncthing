@@ -3,9 +3,6 @@
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-# Please note: you will need to edit this file to allow syncthing to access your
-# personal synced directories.
-
 #include <tunables/global>
 
 profile syncthing /usr/bin/syncthing {
@@ -19,15 +16,8 @@ profile syncthing /usr/bin/syncthing {
   @{PROC}/sys/net/core/somaxconn r,
   /usr/bin/ip rix,
 
-  # Personal synced directories
-  owner @{HOME}/documents/ r,
-  owner @{HOME}/documents/** rw,
-  owner @{HOME}/downloads/dropbox/ r,
-  owner @{HOME}/downloads/dropbox/** rw,
-  owner @{HOME}/music/ r,
-  owner @{HOME}/music/** rw,
-  owner @{HOME}/pictures/ r,
-  owner @{HOME}/pictures/** rw,
+  # Include user overrides for synced directories
+  #include <local/usr.bin.syncthing>
 
   # Config
   owner @{HOME}/.config/syncthing/ r,

@@ -27,6 +27,9 @@ Many profiles for GUI applications WILL NOT WORK if you do not have this abstrac
 
 Additionally, Firefox and mpv require the `krathalans-graphics` abstraction to be in `/etc/apparmor.d/abstractions/` for hardware acceleration and hardware video decoding. See the NVIDIA section below if you own an NVIDIA card.
 
+## Adding local changes
+To add local changes without changing the file provided by this repository, use local overrides. See `less /etc/apparmor.d/local/README` for more details. You can see examples of local overrides in the `local/` directory in this repository.
+
 ## NVIDIA
 You may have issues with hardware acceleration on NVIDIA hardware. This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured incorrectly. Change the profile executable name at the top of the nvidia_modprobe profile file (`/etc/apparmor.d/nvidia_modprobe`) to "/usr/bin/nvidia-modprobe".
 
@@ -42,7 +45,7 @@ You will also have to copy BOTH `abstractions/krathalans-graphics` and `abstract
 
 ---
 
-⚠️ This symbol means you may/will need to edit the profile for your specific configuration. You can find more information for the specific profile by clicking on its name or simply scrolling down.
+⚠️ This symbol means you may/will need to add local changes for your specific configuration. You can find more information for the specific profile by clicking on its name or simply scrolling down.
 
 Don't be afraid though -- many profiles work with default configurations.
 
@@ -78,7 +81,7 @@ Don't be afraid though -- many profiles work with default configurations.
 
 ## Notes about each profile
 ### discord
-This profile assumes you only want to upload files from `~/{D,d}ownloads`. If you do not, edit the file. Discord does not need access to your whole home directory.
+This profile assumes you only want to upload files from `~/{D,d}ownloads`. If you do not, add local changes. Discord does not need access to your whole home directory.
 
 This profile intentionally does not enable hardware acceleration due to the deeper level of system access hardware acceleration requires, the [insecurity of modern graphics drivers](https://security.stackexchange.com/questions/182501/modern-linux-gpu-driver-security?answertab=votes#tab-top), and the reluctance to give proprietary software deeper system access than it truly needs.
 
@@ -95,32 +98,32 @@ and system call tracing.
 ### Firefox
 This profile has been tested with the standard `firefox` package as well as the AUR package `firefox-nightly`, and with OpenGL (default) and WebRender -- on the aforementioned hardware, on both Xorg and Sway. This single profile will apply to both Firefox and Firefox Nightly.
 
-You will need to edit this file if your Firefox Nightly files are somewhere other than `/opt/firefox-nightly` (e.g. if you just download the binary from Mozilla's website).
+You will need to add local changes if your Firefox Nightly files are somewhere other than `/opt/firefox-nightly` (e.g. if you just download the binary from Mozilla's website).
 
 The only directories in the home directory that Firefox is allowed to access are `~/{D,d}ownloads` and `~/.mozilla`. You won't be able to, for example, upload things to the web from your Documents directory. You'll need to copy the file to your downloads directory first.
 
 ### gpg-agent
-This profile has only been tested with the gtk2 pinentry program. You may need to edit the profile to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg`.
+This profile has only been tested with the gtk2 pinentry program. You may need to add local changes to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg`.
 
 ### evince
-This profile assumes you only want to view documents in `~/{D,d}ocuments/` and `~/{D,d}ownloads`. If you do not, edit the file. Evince does not need access to your whole home directory.
+This profile assumes you only want to view documents in `~/{D,d}ocuments/` and `~/{D,d}ownloads`. If you do not, add local changes. Evince does not need access to your whole home directory.
 
 ### irssi
-You may need to edit the profile to allow `irssi` to access your configuration files, if they are symlinks to somewhere other than inside `~/.irssi/`.
+You may need to add local changes to allow `irssi` to access your configuration files, if they are symlinks to somewhere other than inside `~/.irssi/`.
 
 ### KeepassXC
-This profile assumes you keep your database file in `~/{D,d}ocuments/`. If you do not, edit the file to where you store your database. KeepassXC does not need access to your whole home directory.
+This profile assumes you keep your database file in `~/{D,d}ocuments/`. If you do not, add local changes. KeepassXC does not need access to your whole home directory.
 
 ### Lollypop
-This profile assumes you keep your music in `~/{M,m}usic`. If you do not, edit the file to where you store your database. Lollypop does not need access to your whole home directory.
+This profile assumes you keep your music in `~/{M,m}usic`. If you do not, add local changes. Lollypop does not need access to your whole home directory.
 
 I have not tested the profile for any web features, so they probably will not work.
 
 ### mako
-You may need to edit the profile to allow `mako` to access your configuration file, if it's a symlink to somewhere other than inside `~/.config/mako/`.
+You may need to add local changes to allow `mako` to access your configuration file, if it's a symlink to somewhere other than inside `~/.config/mako/`.
 
 ### mpv
-You may need to edit the profile to allow `mpv` to acces your configuration file, if it's a symlink to somehwere other than `~/.config/mpv`.
+You may need to add local changes to allow `mpv` to acces your configuration file, if it's a symlink to somehwere other than `~/.config/mpv`.
 
 This profile allows mpv to utilize `youtube-dl` to stream videos and confines it in the `youtube-dl` AppArmor profile in this project. You will need the separate `youtube-dl` profile enabled for this functionality.
 
@@ -131,42 +134,25 @@ Use the command line flag `--gpu-context=wayland` for Wayland support. Use the c
 ### redshift
 This profile has been tested to work correctly on Xorg with the regular `redshift` package and on Sway with the `redshift-wlr-gamma-control` AUR package.
 
-You may need to edit the profile to allow `redshift` to access your configuration file, if it's a symlink to somewhere other than `~/.config/redshift/redshift.conf`.
+You may need to add local changes to allow `redshift` to access your configuration file, if it's a symlink to somewhere other than `~/.config/redshift/redshift.conf`.
 
 ### ssh-agent
-You may need to edit the profile to allow access to your SSH keys, if you keep them somewhere other than `~/.ssh`.
+You may need to add local changes to allow `ssh-agent` access to your SSH keys, if you keep them somewhere other than `~/.ssh`.
 
 ### streamlink
 You will need to set either `mpv` or `vlc` as your default player. If you choose `mpv`, you must have the separate `mpv` AppArmor profile from this repository enabled. If you choose `vlc`, I have not written an AppArmor profile for it yet, so streamlink will execute `vlc` unconfined (less secure).
 
 ### swaybg
-From the top of the profile:
-```
-# Please note: you may need to edit this file to specify the location of your
-# wallpaper!
-```
+You may need to add local changes to allow `swaybg` to access your specified wallpaper, if you keep it somewhere other than `~/{P,p}ictures/{W,w}allpapers/`.
 
 ### syncthing
-From the top of the profile:
-```
-# Please note: you will need to edit this file to allow syncthing to access your
-# personal synced directories.
-```
+You *will* need to add local changes to allow `syncthing` to access your synced directories.
 
 ### waybar
-From the top of the profile:
-```
-# Please note: this is an AppArmor profile for my personal setup and is only
-# meant to be used with the modules I use, so may prevent some modules from
-# loading on your setup. You will need to write your own personal rules if you
-# use different modules.
-
-# Modules tested to work: sway/workspaces, sway/mode, sway/window, network,
-# pulseaudio, cpu, clock, tray
-```
+You may need to add local changes to allow `waybar` modules to work which I have not tested. I have tested the following modules to work: sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock, tray.
 
 ### youtube-dl
-The only directory in the home directory youtube-dl is allowed to access is the `~/{D,d}ownloads` directory. Edit this profile if you prefer to download your videos elsewhere.
+The only directory in the home directory youtube-dl is allowed to access is the `~/{D,d}ownloads` directory. Add local changes if you prefer to download your videos elsewhere.
 
 ## Contributing
 Writing AppArmor profiles is fairly easy. Pull requests and issues are welcome. I cannot test for hardware I do not have access to (AMD), so those PRs would be most critical.

@@ -1,0 +1,9 @@
+# Personal synced directories
+owner @{HOME}/documents/ r,
+owner @{HOME}/documents/** rw,
+owner @{HOME}/downloads/dropbox/ r,
+owner @{HOME}/downloads/dropbox/** rw,
+owner @{HOME}/music/ r,
+owner @{HOME}/music/** rw,
+owner @{HOME}/pictures/ r,
+owner @{HOME}/pictures/** rw,
