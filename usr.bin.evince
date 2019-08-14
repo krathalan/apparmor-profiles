@@ -43,8 +43,21 @@ profile evince /usr/bin/evince {
   # Miscellaneous
   @{system_share_dirs}/evince/** r,
 
+  # Config
+  owner @{HOME}/.config/evince/* rw,
+
+  # Silence denial about ~/.local/share/gvfs-metadata/home, this file can 
+  # contain sensitive data
+  deny @{user_share_dirs}/gvfs-metadata/** r,
+
+  # Silence denials about pulseaudio, no idea where these are from
+  deny /etc/pulse/client.conf r,
+  deny /run/user/*/pulse/ rw,
+  deny /usr/bin/pulseaudio rx,
+
   # Silence unneeded permissions
   deny /etc/nsswitch.conf r,
+  deny /dev/shm/ r,
   deny @{PROC}/@{pid}/mountinfo r,
   deny @{PROC}/@{pid}/fd/ r,
   deny /var/lib/flatpak/** r,

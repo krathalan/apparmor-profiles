@@ -31,9 +31,11 @@ Additionally, Firefox and mpv require the `krathalans-graphics` abstraction to b
 You may have issues with hardware acceleration on NVIDIA hardware. This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured incorrectly. Change the profile executable name at the top of the nvidia_modprobe profile file (`/etc/apparmor.d/nvidia_modprobe`) to "/usr/bin/nvidia-modprobe".
 
 Then rename the nvidia_modprobe file to usr.bin.nvidia-modprobe:
+
 `# mv /etc/apparmor.d/nvidia_modprobe /etc/apparmor.d/usr.bin.nvidia-modprobe`
 
 Don't forget to enforce!
+
 `# aa-enforce /etc/apparmor.d/usr.bin.nvidia-modprobe`
 
 You will also have to copy BOTH `abstractions/krathalans-graphics` and `abstractions/krathalans-graphics-nvidia` profiles to `/etc/apparmor.d/abstractions` and `#include` the NVIDIA file in the Firefox and MPV AppArmor profiles. Adding NVIDIA rules to a profile makes the profile much less secure, so this should be done for NVIDIA users only.
@@ -46,7 +48,10 @@ Don't be afraid though -- many profiles work with default configurations.
 
 ### Tested profiles
 - bluetoothd
+- [discord ⚠️](#discord)
+- [evince ⚠️](#evince)
 - [Firefox ⚠️](#firefox)
+- [gpg-agent ⚠️](#gpg-agent)
 - iwd
 - [KeepassXC ⚠️](#keepassxc)
 - less
@@ -54,20 +59,17 @@ Don't be afraid though -- many profiles work with default configurations.
 - [mako ⚠️](#mako)
 - [mpv ⚠️](#mpv)
 - NetworkManager
-- [swaybg ⚠️](#swaybg)
-- [waybar ⚠️](#waybar)
-
-### New and somewhat untested profiles
-- [discord ⚠️](#discord)
-- [gpg-agent ⚠️](#gpg-agent)
-- [evince ⚠️](#evince)
-- [irssi ⚠️](#irssi)
 - pulseaudio
 - [redshift ⚠️](#redshift)
 - rngd
 - [ssh-agent ⚠️](#ssh-agent)
 - [streamlink ⚠️](#streamlink)
+- [swaybg ⚠️](#swaybg)
 - [syncthing ⚠️](#syncthing)
+- [waybar ⚠️](#waybar)
+
+### New and somewhat untested profiles
+- [irssi ⚠️](#irssi)
 - [youtube-dl ⚠️](#youtube-dl)
 
 ### Unmaintained profiles
@@ -75,7 +77,7 @@ Don't be afraid though -- many profiles work with default configurations.
 - pipewire
 
 ## Notes about each profile
-### discord
+### discord ⚠️
 This profile assumes you only want to upload files from `~/{D,d}ownloads`. If you do not, edit the file. Discord does not need access to your whole home directory.
 
 This profile intentionally does not enable hardware acceleration due to the deeper level of system access hardware acceleration requires, the [insecurity of modern graphics drivers](https://security.stackexchange.com/questions/182501/modern-linux-gpu-driver-security?answertab=votes#tab-top), and the reluctance to give proprietary software deeper system access than it truly needs.
@@ -127,14 +129,14 @@ This AppArmor profile also works when mpv is invoked by other programs like [str
 Use the command line flag `--gpu-context=wayland` for Wayland support. Use the command line flag `--hwdec=auto` for nvdec (NVIDIA) and VA-API (Intel) hardware decoding. You can also tell `mpv` to always use these options [through a config file](https://mpv.io/manual/master/).
 
 ### redshift ⚠️
-This profile has been tested to work correctly on Sway with the `redshift-wlr-gamma-control` AUR package.
+This profile has been tested to work correctly on Xorg with the regular `redshift` package and on Sway with the `redshift-wlr-gamma-control` AUR package.
 
 You may need to edit the profile to allow `redshift` to access your configuration file, if it's a symlink to somewhere other than `~/.config/redshift/redshift.conf`.
 
 ### ssh-agent ⚠️
 You may need to edit the profile to allow access to your SSH keys, if you keep them somewhere other than `~/.ssh`.
 
-### streamlink
+### streamlink ⚠️
 You will need to set either `mpv` or `vlc` as your default player. If you choose `mpv`, you must have the separate `mpv` AppArmor profile from this repository enabled. If you choose `vlc`, I have not written an AppArmor profile for it yet, so streamlink will execute `vlc` unconfined (less secure).
 
 ### swaybg ⚠️
