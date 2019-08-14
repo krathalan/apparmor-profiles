@@ -64,8 +64,6 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
 
   # Miscellaneous
   owner /run/user/*/mozilla* rwlk,
-  owner /tmp/#* m,
-  owner @{HOME}/#* mrw,
 
   # Firefox profiles
   owner @{HOME}/.mozilla/ rwlk,
@@ -88,6 +86,10 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   deny @{PROC} rw,
   deny @{PROC}/** rw,
   deny /var/** rw,
+
+  # Don't allow executable mapping of arbitrary files
+  deny /tmp/* mrw,
+  deny @{HOME}/* mrw,
   
   # Silence denial logs about permissions we don't need
   deny capability sys_admin,

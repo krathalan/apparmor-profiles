@@ -52,8 +52,10 @@ profile mpv /usr/bin/mpv {
   owner @{HOME}/.config/mpv r,
 
   # Other
-  /tmp/** mrw,
   /usr/bin/mpv r,
+
+  # Don't allow executable mapping of arbitrary files
+  deny /tmp/** mrw,
 
   # Deny unneeded @{PROC} -- still need @{PROC}/devices for NVIDIA
   deny @{PROC}/*/cmdline r,

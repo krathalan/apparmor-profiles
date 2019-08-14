@@ -36,12 +36,14 @@ profile lollypop /usr/bin/lollypop {
   /usr/lib/gstreamer*/** mrix,
   owner @{HOME}/.cache/gstreamer*/** rw,
   owner @{HOME}/.cache/gstreamer-1.0/ w,
+
+  # Don't allow executable mapping of arbitrary files
   # https://askubuntu.com/questions/336552/what-are-orcexec-files
-  owner /run/user/*/orcexec* mrw,
-  owner @{HOME}/orcexec* mrw,
+  deny /run/user/*/orcexec* mrw,
+  deny /tmp/** mrw,
+  deny @{HOME}/orcexec* mrw,
 
   # Miscellaneous
-  /tmp/** mrw,
   /usr/bin/lollypop r,
   @{system_share_dirs}/glib*/** r,
   @{system_share_dirs}/lollypop/** r,
