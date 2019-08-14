@@ -77,7 +77,7 @@ Don't be afraid though -- many profiles work with default configurations.
 - pipewire
 
 ## Notes about each profile
-### discord ⚠️
+### discord
 This profile assumes you only want to upload files from `~/{D,d}ownloads`. If you do not, edit the file. Discord does not need access to your whole home directory.
 
 This profile intentionally does not enable hardware acceleration due to the deeper level of system access hardware acceleration requires, the [insecurity of modern graphics drivers](https://security.stackexchange.com/questions/182501/modern-linux-gpu-driver-security?answertab=votes#tab-top), and the reluctance to give proprietary software deeper system access than it truly needs.
@@ -92,34 +92,34 @@ registers.  It is primarily used to implement breakpoint debugging
 and system call tracing.
 ```
 
-### Firefox ⚠️
+### Firefox
 This profile has been tested with the standard `firefox` package as well as the AUR package `firefox-nightly`, and with OpenGL (default) and WebRender -- on the aforementioned hardware, on both Xorg and Sway. This single profile will apply to both Firefox and Firefox Nightly.
 
 You will need to edit this file if your Firefox Nightly files are somewhere other than `/opt/firefox-nightly` (e.g. if you just download the binary from Mozilla's website).
 
 The only directories in the home directory that Firefox is allowed to access are `~/{D,d}ownloads` and `~/.mozilla`. You won't be able to, for example, upload things to the web from your Documents directory. You'll need to copy the file to your downloads directory first.
 
-### gpg-agent ⚠️
+### gpg-agent
 This profile has only been tested with the gtk2 pinentry program. You may need to edit the profile to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg`.
 
-### evince ⚠️
+### evince
 This profile assumes you only want to view documents in `~/{D,d}ocuments/` and `~/{D,d}ownloads`. If you do not, edit the file. Evince does not need access to your whole home directory.
 
-### irssi ⚠️
+### irssi
 You may need to edit the profile to allow `irssi` to access your configuration files, if they are symlinks to somewhere other than inside `~/.irssi/`.
 
-### KeepassXC ⚠️
+### KeepassXC
 This profile assumes you keep your database file in `~/{D,d}ocuments/`. If you do not, edit the file to where you store your database. KeepassXC does not need access to your whole home directory.
 
-### Lollypop ⚠️
+### Lollypop
 This profile assumes you keep your music in `~/{M,m}usic`. If you do not, edit the file to where you store your database. Lollypop does not need access to your whole home directory.
 
 I have not tested the profile for any web features, so they probably will not work.
 
-### mako ⚠️
+### mako
 You may need to edit the profile to allow `mako` to access your configuration file, if it's a symlink to somewhere other than inside `~/.config/mako/`.
 
-### mpv ⚠️
+### mpv
 You may need to edit the profile to allow `mpv` to acces your configuration file, if it's a symlink to somehwere other than `~/.config/mpv`.
 
 This profile allows mpv to utilize `youtube-dl` to stream videos and confines it in the `youtube-dl` AppArmor profile in this project. You will need the separate `youtube-dl` profile enabled for this functionality.
@@ -128,37 +128,37 @@ This AppArmor profile also works when mpv is invoked by other programs like [str
 
 Use the command line flag `--gpu-context=wayland` for Wayland support. Use the command line flag `--hwdec=auto` for nvdec (NVIDIA) and VA-API (Intel) hardware decoding. You can also tell `mpv` to always use these options [through a config file](https://mpv.io/manual/master/).
 
-### redshift ⚠️
+### redshift
 This profile has been tested to work correctly on Xorg with the regular `redshift` package and on Sway with the `redshift-wlr-gamma-control` AUR package.
 
 You may need to edit the profile to allow `redshift` to access your configuration file, if it's a symlink to somewhere other than `~/.config/redshift/redshift.conf`.
 
-### ssh-agent ⚠️
+### ssh-agent
 You may need to edit the profile to allow access to your SSH keys, if you keep them somewhere other than `~/.ssh`.
 
-### streamlink ⚠️
+### streamlink
 You will need to set either `mpv` or `vlc` as your default player. If you choose `mpv`, you must have the separate `mpv` AppArmor profile from this repository enabled. If you choose `vlc`, I have not written an AppArmor profile for it yet, so streamlink will execute `vlc` unconfined (less secure).
 
 ### swaybg ⚠️
-From the top of the profile: 
+From the top of the profile:
 ```
 # Please note: you may need to edit this file to specify the location of your
 # wallpaper!
 ```
 
-### syncthing ⚠️
+### syncthing
 From the top of the profile:
 ```
 # Please note: you will need to edit this file to allow syncthing to access your
 # personal synced directories.
 ```
 
-### waybar ⚠️
+### waybar
 From the top of the profile:
 ```
-# Please note: this is an AppArmor profile for my personal setup and is only 
-# meant to be used with the modules I use, so may prevent some modules from 
-# loading on your setup. You will need to write your own personal rules if you 
+# Please note: this is an AppArmor profile for my personal setup and is only
+# meant to be used with the modules I use, so may prevent some modules from
+# loading on your setup. You will need to write your own personal rules if you
 # use different modules.
 
 # Modules tested to work: sway/workspaces, sway/mode, sway/window, network,
@@ -180,6 +180,6 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 ### Addendum: what is /etc/machine-id?
 > Because it's possible to forward things like D-Bus, the X11 $DISPLAY, etc. over the network, two processes might be aware of each other over such a connection but not be running on the same machine and therefore be unable to share resources. The machine ID lets them check for that, so you can properly handle things like "I'm going to send a message to the screensaver in my display to not activate, I don't care if it's the same machine" vs. "I'm going to send a message to the terminal in my display to open a new tab, but only if it's actually on the same machine, otherwise I should start a new terminal". (These days I think that definition should be updated to "container" instead of "kernel": if you're running separate logical machines inside the same kernel with separate PIDs etc., they should have separate machine IDs.)
 
-> systemd and (IIRC) cloud-init use it to run once-per-machine tasks on machines that could come from images: if you want to prep a number of machines in advance, do the install, then change the machine ID. At boot time, startup scripts will say "Oh, this machine ID has not been initialized yet" and do things, and then not do them on the next boot. 
+> systemd and (IIRC) cloud-init use it to run once-per-machine tasks on machines that could come from images: if you want to prep a number of machines in advance, do the install, then change the machine ID. At boot time, startup scripts will say "Oh, this machine ID has not been initialized yet" and do things, and then not do them on the next boot.
 
 https://web.archive.org/web/20190813022810/https://news.ycombinator.com/item?id=19529708
