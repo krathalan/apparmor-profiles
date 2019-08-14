@@ -10,6 +10,9 @@ profile keepassxc /usr/bin/keepassxc {
   #include <abstractions/fonts>
 
   #include <abstractions/krathalans-common-gui>
+
+  # Needed to change the cursor when hovering over a text field, etc.
+  owner /run/user/*/wayland-cursor* rw,
   
   # Needed to view and edit keepass databases in documents directory
   owner @{HOME}/{D,d}ocuments/ rwl,
@@ -25,19 +28,16 @@ profile keepassxc /usr/bin/keepassxc {
   owner @{HOME}/.config/keepassxc/** rwlk,
 
   # Other
-  /tmp/** rwk,
   /usr/bin/keepassxc mr,
   @{system_share_dirs}/keepassxc/** r,
-  owner @{HOME}/.cache/#* rw,
-  owner @{HOME}/.config/#* rw,
 
   # GVFS isn't tested :)
   deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
 
   # Deny /proc, /run, /sys, and /var
   deny @{PROC}/** r,
-  deny /run/** rw,
   deny @{sys}/** r,
+  deny /tmp/** rwk,
   deny /var/** rw,
 
   # Silence unneeded permissions
@@ -47,4 +47,6 @@ profile keepassxc /usr/bin/keepassxc {
   deny /etc/nsswitch.conf r,
   deny /usr/bin/ r,
   deny @{system_share_dirs}/glvnd/egl_vendor.d/ r,
+  deny @{HOME}/.cache/#* rw,
+  deny @{HOME}/.config/#* rw,
 }
