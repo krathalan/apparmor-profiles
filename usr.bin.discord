@@ -34,7 +34,8 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   owner @{HOME}/{D,d}ownloads/ r,
   owner @{HOME}/{D,d}ownloads/** r,
 
-  # Config
+  # Config -- even tho mw permissions are somewhat unfortunate, discord needs
+  # this to run as it downloads the actual application to this directory
   owner @{HOME}/.config/discord/ rw,
   owner @{HOME}/.config/discord/** mrwk,
 
