@@ -52,6 +52,7 @@ Don't be afraid though -- many profiles work with default configurations.
 - [evince ⚠️](#evince)
 - [Firefox ⚠️](#firefox)
 - [gpg-agent ⚠️](#gpg-agent)
+- [irssi ⚠️](#irssi)
 - iwd
 - [KeepassXC ⚠️](#keepassxc)
 - less
@@ -67,10 +68,9 @@ Don't be afraid though -- many profiles work with default configurations.
 - [swaybg ⚠️](#swaybg)
 - [syncthing ⚠️](#syncthing)
 - [waybar ⚠️](#waybar)
+- [youtube-dl ⚠️](#youtube-dl)
 
 ### New and somewhat untested profiles
-- [irssi ⚠️](#irssi)
-- [youtube-dl ⚠️](#youtube-dl)
 
 ### Unmaintained profiles
 - hexchat (check out irssi!)
