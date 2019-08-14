@@ -3,8 +3,6 @@
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-# Please note: this profile is experimental!
-
 #include <tunables/global>
 
 profile iwd /usr/lib/iwd/iwd {
