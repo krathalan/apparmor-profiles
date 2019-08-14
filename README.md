@@ -139,7 +139,7 @@ You may need to edit the profile to allow access to your SSH keys, if you keep t
 ### streamlink
 You will need to set either `mpv` or `vlc` as your default player. If you choose `mpv`, you must have the separate `mpv` AppArmor profile from this repository enabled. If you choose `vlc`, I have not written an AppArmor profile for it yet, so streamlink will execute `vlc` unconfined (less secure).
 
-### swaybg ⚠️
+### swaybg
 From the top of the profile:
 ```
 # Please note: you may need to edit this file to specify the location of your
@@ -165,7 +165,7 @@ From the top of the profile:
 # pulseaudio, cpu, clock, tray
 ```
 
-### youtube-dl ⚠️
+### youtube-dl
 The only directory in the home directory youtube-dl is allowed to access is the `~/{D,d}ownloads` directory. Edit this profile if you prefer to download your videos elsewhere.
 
 ## Contributing
