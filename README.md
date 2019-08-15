@@ -49,6 +49,8 @@ You will also have to copy BOTH `abstractions/krathalans-graphics` and `abstract
 
 Don't be afraid though -- many profiles work with default configurations.
 
+Unmaintained profiles will probably work for a while but you should generally avoid using them.
+
 ### Tested profiles
 - bluetoothd
 - [discord ⚠️](#discord)
@@ -57,7 +59,6 @@ Don't be afraid though -- many profiles work with default configurations.
 - [gpg-agent ⚠️](#gpg-agent)
 - [irssi ⚠️](#irssi)
 - iwd
-- [KeepassXC ⚠️](#keepassxc)
 - less
 - [Lollypop ⚠️](#lollypop)
 - [mako ⚠️](#mako)
@@ -79,6 +80,7 @@ Don't be afraid though -- many profiles work with default configurations.
 
 ### Unmaintained profiles
 - hexchat (check out irssi!)
+- [KeepassXC ⚠️](#keepassxc)
 - pipewire
 
 ## Notes about each profile
