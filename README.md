@@ -74,6 +74,7 @@ Don't be afraid though -- many profiles work with default configurations.
 - [youtube-dl ⚠️](#youtube-dl)
 
 ### New and somewhat untested profiles
+- [transmission-cli ⚠️](#transmission-cli)
 - wpa_supplicant
 
 ### Unmaintained profiles
@@ -148,6 +149,11 @@ You may need to add local changes to allow `swaybg` to access your specified wal
 
 ### syncthing
 You *will* need to add local changes to allow `syncthing` to access your synced directories.
+
+### transmission-cli
+You may need to add local changes to allow `transmission-cli` to access your configuration files, if you keep them somewhere other than `~/.config/transmission`.
+
+This profile assumes you only want to download files to `~/{D,d}ownlads`.
 
 ### waybar
 You may need to add local changes to allow `waybar` modules to work which I have not tested. I have tested the following modules to work: sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock, tray.

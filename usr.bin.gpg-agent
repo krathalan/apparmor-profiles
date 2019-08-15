@@ -23,6 +23,7 @@ profile gpg-agent /usr/bin/gpg-agent {
 
   # Miscellaneous
   /usr/bin/dash rix,
+  @{system_share_dirs}/gnupg/* r,
 
   # Silence unnecessary permissions
   deny /var/cache/** w,

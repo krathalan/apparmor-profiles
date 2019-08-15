@@ -87,6 +87,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
 
   # Don't allow executable mapping of arbitrary files
   deny /tmp/#* mrw,
+  deny /tmp/.glvnd* mrw,
   deny @{HOME}/#* mrw,
   deny @{HOME}/.glvnd* mrw,
   
