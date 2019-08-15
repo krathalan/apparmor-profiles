@@ -1,5 +1,5 @@
 # AppArmor profile for youtube-dl Internet video downloader
-# Version of youtube-dl profiled: 2019.08.02
+# Version of youtube-dl profiled: 2019.08.13
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -22,12 +22,11 @@ profile youtube-dl /usr/bin/youtube-dl {
   /usr/bin/youtube-dl r,
 
   # Needed to save files
+  #include <abstractions/user-download>
   /usr/bin/file mrix,
   @{system_share_dirs}/file/** r,
-  owner @{HOME}/{D,d}ownloads/** rw,
-
-  # ffmpeg?
-  @{sys}/devices/system/cpu/ r,
+  owner @{HOME}/.cache/youtube-dl/ rw,
+  owner @{HOME}/.cache/youtube-dl/** rw,
 
   # System access
   /etc/mime.types r,
@@ -35,4 +34,6 @@ profile youtube-dl /usr/bin/youtube-dl {
   # Silence unnecessary permissions
   deny @{PROC}/*/fd/ r,
   deny @{PROC}/*/mounts r,
+  # ffmpeg?
+  deny @{sys}/devices/system/cpu/ r,
 }
