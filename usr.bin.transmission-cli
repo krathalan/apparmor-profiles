@@ -1,0 +1,30 @@
+# Last Modified: Thu Aug 15 12:43:07 2019
+#include <tunables/global>
+
+# AppArmor profile for transmission-cli bittorrent client
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+
+profile transmission-cli /usr/bin/transmission-cli flags=(complain) {
+  #include <abstractions/base>
+
+  # Networking
+  #include <abstractions/nameservice>
+  #include <abstractions/openssl>
+  owner @{PROC}/@{pid}/net/route r,
+
+  # Allow access for writing downloaded files
+  #include <abstractions/user-download>
+
+  # Include user overrides for possible symlinked config files
+  #include <local/usr.bin.transmission-cli>
+
+  # Config
+  owner @{HOME}/.config/transmission/ rw,
+  owner @{HOME}/.config/transmission/** rw,
+
+  # Silence unnecessary permissions
+  deny @{PROC}/sys/kernel/random/uuid r,
+  deny @{PROC}/*/mounts r,
+}
