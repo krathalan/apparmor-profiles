@@ -1,0 +1,18 @@
+# AppArmor profile for wpa_supplicant NetworkManager wifi backend
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile wpa_supplicant /usr/bin/wpa_supplicant {
+  #include <abstractions/base>
+
+  capability net_admin,
+  capability net_raw,
+
+  owner /dev/rfkill r,
+  owner /etc/ssl/openssl.cnf r,
+
+  # Devices
+  owner /proc/sys/net/ipv{4,6}/conf/*/drop_{gratuitous_arp,unicast_in_l2_multicast,unsolicited_na} rw,
+}

@@ -74,6 +74,7 @@ Don't be afraid though -- many profiles work with default configurations.
 - [youtube-dl ⚠️](#youtube-dl)
 
 ### New and somewhat untested profiles
+- wpa_supplicant
 
 ### Unmaintained profiles
 - hexchat (check out irssi!)
