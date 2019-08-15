@@ -66,9 +66,9 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   deny @{PROC}/driver/nvidia/params r,
   deny @{sys}/** r,
 
-  # Deny Xorg -- I don't think Discord requires this but it's safer to deny
-  # it in case any other rule allows it :)
-  deny @{HOME}/.{ICE,X}authority r,
+  # Discord requires this on Xorg but not on Wayland under Xwayland
+  # Disable for now as Xorg still has still majority usage
+  #deny @{HOME}/.{ICE,X}authority r,
 
   # Silence unnecessary permissions
   deny /dev/ r,
