@@ -9,25 +9,27 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   #include <abstractions/audio>
   #include <abstractions/base>
   #include <abstractions/fonts>
-  #include <abstractions/gnome>
 
   # Networking
   #include <abstractions/nameservice>
   /etc/ca-certificates/trust-source/{,anchors/,blacklist/} r,
   owner @{HOME}/.pki/nssdb/* rwk,
 
+  # File picker
+  #include <abstractions/gnome>
+  @{system_share_dirs}/gtk-3.0/settings.ini r,
+  owner @{HOME}/.config/gtk-3.0/settings.ini r,
+
   # Subprocesses
   /usr/bin/dash mrix,
   /opt/discord/Discord mrix,
   owner /dev/shm/.org.chromium.Chromium.* rw,
 
-  # Process information -- Discord will not work at all without this
+  # Discord will not work at all without this
   @{PROC}/ r,
 
   # Miscellaneous
   /opt/discord/** r,
-  @{system_share_dirs}/gtk-3.0/settings.ini r,
-  owner @{HOME}/.config/gtk-3.0/settings.ini r,
   owner /run/user/*/discord* w,
 
   # Allow access to downloads folder for uploads ONLY (no downloads)
@@ -39,8 +41,12 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   owner @{HOME}/.config/discord/ rw,
   owner @{HOME}/.config/discord/** mrwk,
 
+  # Don't allow opening files with arbitrary programs
+  deny /usr/bin/xdg-mime x,
+  deny /usr/bin/xdg-open x,
+
   # File picker still works without these permissions
-  deny /etc/fstab r,
+  deny /etc/{fstab,machine-id} r,
   deny /run/user/*/dconf/user rw,
   deny @{HOME}/.cache/thumbnails/** rw,
   deny @{HOME}/.config/dconf/user rw,
@@ -49,18 +55,22 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   deny capability sys_ptrace,
   deny ptrace,
 
-  # Silence unnecessary permissions
-  deny /dev/ r,
-  deny /dev/pts/* rw,
-  deny /etc/machine-id r,
-  deny @{PROC}/driver/nvidia/params r,
+  # Deny all of /proc discord tries to access without breaking discord
   deny @{PROC}/@{pid}/ r,
   deny @{PROC}/@{pid}/** r,
   deny @{PROC}/@{pid}/oom_score_adj w,  
   deny @{PROC}/sys/** r,
   deny @{PROC}/vmstat r,
+
+  # Deny various paths for hardware acceleration
+  deny @{PROC}/driver/nvidia/params r,
   deny @{sys}/** r,
-  deny /usr/bin/xdg-mime x,
-  deny /usr/bin/xdg-open x,
+
+  # Deny Xorg -- still works without this
+  deny @{HOME}/.{ICE,X}authority r,
+
+  # Silence unnecessary permissions
+  deny /dev/ r,
+  deny /dev/pts/* rw,
   deny @{system_share_dirs}/fonts/** w,
 }
