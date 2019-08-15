@@ -8,9 +8,6 @@
 profile gpg-agent /usr/bin/gpg-agent {
   #include <abstractions/base>
 
-  # Process info
-  @{PROC}/@{pid}/** r,
-
   # Curses pinentry
   /usr/bin/pinentry-curses rix,
   /dev/pts/* rw,
@@ -19,7 +16,7 @@ profile gpg-agent /usr/bin/gpg-agent {
   # Include user overrides for possible symlinked config files
   #include <local/usr.bin.gpg-agent>
 
-  # Access user keys
+  # Access user keys and config
   owner @{HOME}/.gnupg/** rw,
 
   # Miscellaneous
@@ -27,5 +24,6 @@ profile gpg-agent /usr/bin/gpg-agent {
   @{system_share_dirs}/gnupg/* r,
 
   # Silence unnecessary permissions
+  deny @{PROC}/@{pid}/** r,
   deny /var/cache/** w,
 }

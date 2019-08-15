@@ -1,10 +1,9 @@
-# Last Modified: Thu Aug 15 12:43:07 2019
-#include <tunables/global>
-
 # AppArmor profile for transmission-cli bittorrent client
+# Version of transmission-cli profiled: 2.94
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
+#include <tunables/global>
 
 profile transmission-cli /usr/bin/transmission-cli flags=(complain) {
   #include <abstractions/base>
