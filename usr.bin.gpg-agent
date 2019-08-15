@@ -8,15 +8,16 @@
 profile gpg-agent /usr/bin/gpg-agent {
   #include <abstractions/base>
 
-  #include <abstractions/krathalans-common-gui>
-
   # Process info
   @{PROC}/@{pid}/** r,
 
-  # Pinentry
-  #include <abstractions/fonts>
-  #include <abstractions/gnome>
-  /usr/bin/pinentry* rix,
+  # Curses pinentry
+  /usr/bin/pinentry-curses rix,
+  /dev/pts/* rw,
+  @{system_share_dirs}/terminfo/** r,
+
+  # Include user overrides for possible symlinked config files
+  #include <local/usr.bin.gpg-agent>
 
   # Access user keys
   owner @{HOME}/.gnupg/** rw,

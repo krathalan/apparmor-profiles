@@ -1,0 +1,2 @@
+# Config file at ~/.gnupg/gpg-agent.conf is a symlink to this file
+owner @{HOME}/documents/config/gpg-agent.conf r,

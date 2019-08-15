@@ -105,7 +105,9 @@ You will need to add local changes if your Firefox Nightly files are somewhere o
 The only directories in the home directory that Firefox is allowed to access are `~/{D,d}ownloads` and `~/.mozilla`. You won't be able to, for example, upload things to the web from your Documents directory. You'll need to copy the file to your downloads directory first.
 
 ### gpg-agent
-This profile has only been tested with the gtk2 pinentry program. You may need to add local changes to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg`.
+This profile will only work with the `pinentry-curses` pinentry program.
+
+You may need to add local changes to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg`.
 
 ### evince
 This profile assumes you only want to view documents in `~/{D,d}ocuments/` and `~/{D,d}ownloads`. If you do not, add local changes. Evince does not need access to your whole home directory.
