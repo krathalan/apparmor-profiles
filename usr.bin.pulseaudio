@@ -47,6 +47,9 @@ profile pulseaudio /usr/bin/pulseaudio {
   /usr/share/applications/ r,
   /usr/share/applications/* r,
 
+  # Needed for audio in some games (e.g. Pillars of Eternity II)
+  @{PROC}/@{pid}/stat r,
+
   # Pavucontrol
   # https://askubuntu.com/questions/336552/what-are-orcexec-files
   owner /run/user/*/orcexec* mrw,
