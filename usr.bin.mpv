@@ -15,7 +15,10 @@ profile mpv /usr/bin/mpv {
   #include <abstractions/krathalans-graphics>
   /etc/libva.conf r,
   @{sys}/devices/pci[0-9]*/**/config r,
-  
+
+  # Include user overrides for krathalans-graphics-nvidia
+  #include <local/usr.bin.mpv>
+
   # Audio
   #include <abstractions/audio>
   /etc/alsa/conf.d/** r,
