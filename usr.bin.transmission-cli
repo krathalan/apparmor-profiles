@@ -5,7 +5,7 @@
 
 #include <tunables/global>
 
-profile transmission-cli /usr/bin/transmission-cli flags=(complain) {
+profile transmission-cli /usr/bin/transmission-cli {
   #include <abstractions/base>
 
   # Networking
