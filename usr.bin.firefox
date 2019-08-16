@@ -75,6 +75,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
 
   # Don't allow launching other applications to open files
   deny /usr/bin/gio-launch-desktop rx,
+  deny /etc/mailcap r,
 
   # Silence denial about ~/.local/share/gvfs-metadata/home, this file can 
   # contain sensitive data
@@ -93,7 +94,6 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   
   # Silence denial logs about permissions we don't need
   deny capability sys_admin,
-  deny /etc/mailcap r,
   deny /opt/firefox-nightly/ w,
   deny /opt/firefox-nightly/** w,
   deny /opt/firefox-nightly/crashreporter rx,
