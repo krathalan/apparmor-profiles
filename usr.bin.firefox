@@ -33,7 +33,8 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   # Network
   #include <abstractions/nameservice>
   /etc/ca-certificates/trust-source/{,anchors/,blacklist/} r,
-  /etc/{host,hosts,nsswitch}{,.conf} r,
+  /etc/{host,nsswitch}.conf r,
+  /etc/hosts r,
 
   # Firefox subprocesses
   ptrace trace peer=firefox,

@@ -29,7 +29,8 @@ profile mpv /usr/bin/mpv {
   signal receive set=term peer=streamlink,
   
   # Needed to stream media with youtube-dl
-  /etc/{gai,host,hosts,nsswitch,resolv}{,.conf} r,
+  /etc/{gai,host,nsswitch,resolv}.conf r,
+  /etc/hosts r,
   /usr/bin/youtube-dl rPx,
 
   # Needed to view media in home directory
