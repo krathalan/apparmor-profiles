@@ -21,10 +21,8 @@ profile ssh /usr/bin/ssh {
 
   # Networking -- dont need entire nameservice abstraction
   #include <abstractions/openssl>
-  /etc/nsswitch.conf r,
-  /etc/passwd r,
-  /etc/protocols r,
-  /etc/services r,
+  /etc/{host,nsswitch,resolv}.conf r,
+  /etc/{hosts,passwd,protocols,services} r,
   /etc/ssh/ssh_config r,
 
   # SSH keys, known hosts
