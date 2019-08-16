@@ -1,0 +1,34 @@
+# AppArmor profile for ssh
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile ssh /usr/bin/ssh {
+  #include <abstractions/base>
+  #include <abstractions/perl>
+
+  # Executables
+  /usr/bin/dash mrix,
+  /usr/bin/env r,
+  /usr/bin/ssh r,
+
+  # Mosh
+  /usr/bin/mosh rPx,
+  signal send set=hup peer=mosh,
+
+  # Networking -- dont need entire nameservice abstraction
+  #include <abstractions/openssl>
+  /etc/nsswitch.conf r,
+  /etc/passwd r,
+  /etc/protocols r,
+  /etc/services r,
+  /etc/ssh/ssh_config r,
+
+  # SSH keys, known hosts
+  owner @{HOME}/.ssh/ rw,
+  owner @{HOME}/.ssh/* r,
+
+  # Silence unnecessary permissions
+  deny @{PROC}/@{pid}/fd/ r,
+}

@@ -1,0 +1,27 @@
+# AppArmor profile for mosh mobile shell
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile mosh /usr/bin/mosh* {
+  #include <abstractions/base>
+  #include <abstractions/perl>
+
+  # Binaries
+  /usr/bin/env r,
+  /usr/bin/mosh r,
+  /usr/bin/mosh-client mrPx,
+
+  # SSH
+  /usr/bin/ssh Px,
+  signal receive set=hup peer=/usr/bin/ssh,
+
+  # Networking
+  /etc/nsswitch.conf r,
+  /etc/protocols r,
+  /etc/services r,
+
+  # Display properly on different host terminals
+  @{system_share_dirs}/terminfo/** r,
+}

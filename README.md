@@ -75,6 +75,8 @@ Unmaintained profiles will probably work for a while but you should generally av
 - [youtube-dl ⚠️](#youtube-dl)
 
 ### New and somewhat untested profiles
+- mosh
+- [ssh ⚠️](#ssh)
 - [transmission-cli ⚠️](#transmission-cli)
 - wpa_supplicant
 
@@ -141,6 +143,9 @@ Use the command line flag `--gpu-context=wayland` for Wayland support. Use the c
 This profile has been tested to work correctly on Xorg with the regular `redshift` package and on Sway with the `redshift-wlr-gamma-control` AUR package.
 
 You may need to add local changes to allow `redshift` to access your configuration file, if it's a symlink to somewhere other than `~/.config/redshift/redshift.conf`.
+
+### ssh
+You may need to add local changes to allow `ssh` to access your SSH keys, if you keep them somewhere other than `~/.ssh`.
 
 ### ssh-agent
 You may need to add local changes to allow `ssh-agent` access to your SSH keys, if you keep them somewhere other than `~/.ssh`.
