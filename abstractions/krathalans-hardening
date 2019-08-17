@@ -8,3 +8,7 @@
   deny signal (receive) peer=unconfined,
   deny unix (create),
   deny unix (receive) peer=(label=unconfined),
+
+  # Deny executable mapping in writable space as allowed in abstractions/fonts
+  deny @{HOME}/.{,cache/}fontconfig/ rw,
+  deny @{HOME}/.{,cache/}fontconfig/** mrwl,

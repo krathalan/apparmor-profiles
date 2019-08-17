@@ -1,4 +1,4 @@
-# Rules commonly needed by graphical (GTK, Qt) applications
+# Rules commonly needed by graphical (GTK) applications
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -16,7 +16,8 @@
   # Unnecessary
   deny @{system_share_dirs}/fonts** w,
   deny /var/cache/fontconfig** w,
-  deny @{HOME}/.cache/fontconfig** rwk,
+  deny @{HOME}/.{,cache/}fontconfig/ rw,
+  deny @{HOME}/.{,cache/}fontconfig/** mrwl,
 
   # Mime
   /etc/mime.types r,

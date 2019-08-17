@@ -121,9 +121,6 @@ This profile assumes you only want to view documents in `~/{D,d}ocuments/` and `
 ### irssi
 You may need to add local changes to allow `irssi` to access your configuration files, if they are symlinks to somewhere other than inside `~/.irssi/`.
 
-### KeepassXC
-This profile assumes you keep your database file in `~/{D,d}ocuments/`. If you do not, add local changes. KeepassXC does not need access to your whole home directory.
-
 ### Lollypop
 This profile assumes you keep your music in `~/{M,m}usic`. If you do not, add local changes. Lollypop does not need access to your whole home directory.
 

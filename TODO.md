@@ -9,8 +9,12 @@ As stated in the readme, profiles should strive to be at least ~95% functional w
 - Enabled for profiles: firefox, gpg-agent, mosh, ssh, ssh-agent
 - Is not enabled for profiles (but should be, pending testing): discord, evince, irssi, less, lollypop, mako, mpv, NetworkManager, pulseaudio, redshift, rngd, streamlink, swaybg, syncthing, transmission-cli, waybar, wpa_supplicant, youtube-dl, bluetoothd, iwd
 
-### Reduce usage of nameservice abstraction
-<abstractions/nameservice> contains a lot of rules which many programs don't need all of. Explore removing this abstraction and using more rules (or perhaps a custom network abstraction) for the following profiles: discord, firefox, irssi, NetworkManager, streamlink, syncthing, transmission-cli, youtube-dl
+### Reduce usage of gnome and nameservice abstractions
+<abstractions/nameservice> and <abstractions/gnome> contain a lot of rules which many programs don't need all of. Explore removing this abstraction and using more rules (or perhaps a custom abstraction).
+
+The following profiles use <abstractions/nameservice>: discord, firefox, irssi, NetworkManager, streamlink, syncthing, transmission-cli, youtube-dl
+
+The following profiles use <abstractions/gnome>: discord, firefox, evince, waybar
 
 ## Stats
 ### Most used abstractions
