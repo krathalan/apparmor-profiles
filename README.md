@@ -147,6 +147,10 @@ You may need to add local changes to allow `redshift` to access your configurati
 ### ssh
 You must add your SSH key to your SSH agent with `ssh-add` first. This profile does not allow `ssh` to read/write from `/dev/tty`, so it will not prompt you for your passphrase if your SSH key is locked and will fail without much information.
 
+This profile will work with [`mosh`, the mobile shell](https://mosh.org/), and with `git` for interacting with remote repositories. 
+
+This profile will work using `ssh` in the traditional way to "ssh into" remote machines, but `mosh` will give you terminfo support for any terminal on the host without having to install it on the remote machine; not to mention better connection stability, connection through sleep/hibernate, etc. There's an AppArmor profile for `mosh` in this repository, and these profiles work together.
+
 You may need to add local changes to allow `ssh` to access your SSH keys, if you keep them somewhere other than `~/.ssh`.
 
 ### ssh-agent
