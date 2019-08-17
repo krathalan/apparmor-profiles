@@ -9,6 +9,7 @@ profile mpv /usr/bin/mpv {
   #include <abstractions/base>
   #include <abstractions/fonts>
 
+  # Icons, themes, etc
   #include <abstractions/krathalans-common-gui>
 
   # Graphics -- include <abstractions/krathalans-graphics-nvidia> if you need it

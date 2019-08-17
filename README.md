@@ -25,6 +25,8 @@ Many profiles for GUI applications (like Firefox, KeepassXC, Lollypop etc.) requ
 
 Many profiles for GUI applications WILL NOT WORK if you do not have this abstraction loaded.
 
+Some profiles require the `krathalans-hardening` abstraction.
+
 Additionally, Firefox and mpv require the `krathalans-graphics` abstraction to be in `/etc/apparmor.d/abstractions/` for hardware acceleration and hardware video decoding. See the NVIDIA section below if you own an NVIDIA card.
 
 ## Adding local changes
@@ -177,7 +179,9 @@ You may need to add local changes to allow `waybar` modules to work which I have
 The only directory in the home directory youtube-dl is allowed to access is the `~/{D,d}ownloads` directory. Add local changes if you prefer to download your videos elsewhere.
 
 ## Contributing
-Writing AppArmor profiles is fairly easy. Pull requests and issues are welcome. I cannot test for hardware I do not have access to (AMD), so those PRs would be most critical.
+Writing AppArmor profiles is fairly easy. "If you know how to use bash, chmod, and grep, you already understand AppArmor and you can probably reverse-engineer the policy by yourself," at 13:25 in the video: https://invidio.us/watch?v=k3kerBRYLhw
+
+Pull requests and issues are welcome. I cannot test for hardware I do not have access to (AMD), so those PRs would be most critical. Also, see [TODO.md](TODO.md).
 
 To get started writing AppArmor profiles, I highly recommend this video from openSUSE: https://invidio.us/watch?v=o2xa8JYcrmw
 

@@ -8,6 +8,9 @@
 profile ssh-agent /usr/bin/ssh-agent {
   #include <abstractions/base>
   #include <abstractions/openssl>
+
+  # Deny some stuff from abstractions/base
+  #include <abstractions/krathalans-hardening>
   
   owner /run/user/*/ssh-agent.socket w,
 }

@@ -10,6 +10,7 @@ profile waybar /usr/bin/waybar {
   #include <abstractions/gnome>
   #include <abstractions/fonts>
 
+  # Icons, themes, etc
   #include <abstractions/krathalans-common-gui>
 
   # Dconf

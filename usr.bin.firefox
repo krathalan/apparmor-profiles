@@ -13,8 +13,12 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   #include <abstractions/base>
   #include <abstractions/gnome>
 
+  # Icons, themes, etc
   #include <abstractions/krathalans-common-gui>
-  
+
+  # Deny some stuff from abstractions/base
+  #include <abstractions/krathalans-hardening>
+
   # Graphics -- include <abstractions/krathalans-graphics-nvidia> if you need it
   #include <abstractions/krathalans-graphics>
   @{sys}/devices/pci[0-9]*/*/drm/ r,

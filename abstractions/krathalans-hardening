@@ -1,0 +1,10 @@
+# Rules that deny some things enabled in abstractions/base
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+  # General
+  deny ptrace (readby),
+  deny ptrace (tracedby),
+  deny signal (receive) peer=unconfined,
+  deny unix (create),
+  deny unix (receive) peer=(label=unconfined),
