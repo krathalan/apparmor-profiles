@@ -27,6 +27,9 @@ profile ssh /usr/bin/ssh {
   owner @{HOME}/.ssh/ rw,
   owner @{HOME}/.ssh/* r,
 
+  # Use ssh-add with ssh-agent instead of letting ssh prompt you
+  deny /dev/tty rw,
+
   # Silence unnecessary permissions
   deny @{PROC}/@{pid}/fd/ r,
 }

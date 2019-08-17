@@ -8,16 +8,18 @@
 profile gpg-agent /usr/bin/gpg-agent {
   #include <abstractions/base>
 
-  # Curses pinentry
-  /usr/bin/pinentry-curses rix,
-  /dev/pts/* rw,
-  @{system_share_dirs}/terminfo/** r,
+  # Access user keys and config
+  #include <abstractions/gnupg>
+  owner @{HOME}/.gnupg/private-keys*/ w,
+  owner @{HOME}/.gnupg/private-keys*/* r,
 
   # Include user overrides for possible symlinked config files
   #include <local/usr.bin.gpg-agent>
 
-  # Access user keys and config
-  owner @{HOME}/.gnupg/** rw,
+  # Curses pinentry
+  /usr/bin/pinentry-curses rix,
+  /dev/pts/* rw,
+  @{system_share_dirs}/terminfo/** r,
 
   # Miscellaneous
   /usr/bin/dash rix,

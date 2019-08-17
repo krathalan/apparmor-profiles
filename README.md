@@ -145,6 +145,8 @@ This profile has been tested to work correctly on Xorg with the regular `redshif
 You may need to add local changes to allow `redshift` to access your configuration file, if it's a symlink to somewhere other than `~/.config/redshift/redshift.conf`.
 
 ### ssh
+You must add your SSH key to your SSH agent with `ssh-add` first. This profile does not allow `ssh` to read/write from `/dev/tty`, so it will not prompt you for your passphrase if your SSH key is locked and will fail without much information.
+
 You may need to add local changes to allow `ssh` to access your SSH keys, if you keep them somewhere other than `~/.ssh`.
 
 ### ssh-agent

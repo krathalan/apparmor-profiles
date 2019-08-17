@@ -16,6 +16,7 @@ profile mosh /usr/bin/mosh* {
   # SSH
   /usr/bin/ssh Px,
   signal receive set=hup peer=/usr/bin/ssh,
+  signal receive set=hup peer=ssh,
 
   # Networking
   /etc/nsswitch.conf r,
