@@ -6,6 +6,7 @@
 
 profile pass /usr/bin/pass {
   #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
   #include <abstractions/user-tmp>
 
   # Include user overrides for different password or GNUPG directories 

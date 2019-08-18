@@ -6,7 +6,7 @@ As stated in the readme, profiles should strive to be at least ~95% functional w
 ## TODO
 ### Explore hardening options
 - See abstractions/krathalans-hardening
-- Enabled for profiles: discord, firefox, gpg-agent, mosh, ssh, ssh-agent
+- Enabled for profiles: discord, firefox, gpg-agent, mosh, pass, ssh, ssh-agent
 - Is not enabled for profiles (but should be, pending testing): all
 
 ### Reduce usage of gnome abstraction
