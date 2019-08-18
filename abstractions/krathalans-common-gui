@@ -22,7 +22,9 @@
   # Mime
   /etc/mime.types r,
   @{system_share_dirs}/mime/{,**} r,
+  owner @{HOME}/.config/mimeapps.list r,
   owner @{user_share_dirs}/mime/{,**} r,
+  owner @{user_share_dirs}/applications/mimeinfo.cache r,
 
   # GTK settings
   @{system_share_dirs}/gtk-2.0/gtkrc r,

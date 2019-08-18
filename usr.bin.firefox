@@ -11,9 +11,10 @@
 profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   #include <abstractions/audio>
   #include <abstractions/base>
-  #include <abstractions/gnome>
+  #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
   #include <abstractions/krathalans-hardening>
+  #include <abstractions/user-tmp>
 
   # Graphics -- include <abstractions/krathalans-graphics-nvidia> if you need it
   #include <abstractions/krathalans-graphics>
@@ -54,10 +55,6 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   # Poppler is a PDF rendering library
   @{system_share_dirs}/poppler/cMap/ r,
   
-  # Desktop environment specific configs
-  /etc/xfce4/defaults.list r,
-  owner @{HOME}/.kde/share/config/* r,
-
   # For firefox-nightly AUR package
   /opt/firefox-nightly/ r,
   /opt/firefox-nightly/** mr,
@@ -70,6 +67,11 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   owner @{HOME}/.mozilla/** rwlk,
   owner @{HOME}/.cache/mozilla/ rwlk,
   owner @{HOME}/.cache/mozilla/** rwlk,
+
+  # Needed to set as default browser
+  owner @{HOME}/.config/mimeapps.list* rw,
+  owner @{user_share_dirs}/applications/{,**} r,
+  owner @{user_share_dirs}/applications/userapp-Nightly* w,
 
   # Don't allow launching other applications to open files
   deny /usr/bin/gio-launch-desktop rx,
@@ -86,9 +88,10 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
 
   # Don't allow executable mapping of arbitrary files
   deny /tmp/#* mrw,
-  deny /tmp/.glvnd* mrw,
+  deny /tmp/.gl* mrw,
   deny @{HOME}/#* mrw,
-  deny @{HOME}/.glvnd* mrw,
+  deny @{HOME}/.gl* mrw,
+  deny @{HOME}/.nv/* r,
   
   # Silence denial logs about permissions we don't need
   deny capability sys_admin,
@@ -97,5 +100,6 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   deny /opt/firefox-nightly/crashreporter rx,
   deny @{sys}/bus/pci/devices/ r,
   deny @{sys}/devices/system/cpu/** r,
+  deny @{system_share_dirs}/applications/{,**} r,
   deny @{HOME}/.cache/thumbnails/** r,
 }
