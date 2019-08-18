@@ -19,25 +19,25 @@ The following profiles use <abstractions/gnome>: waybar
 `grep -i abstractions usr.* | awk '{printf "%s\n", $3}' | grep -v "Graphics" | grep -v "Deny" | sort | uniq -c | sort --reverse --general-numeric-sort`
 
 ```
-     25 <abstractions/base>
+     26 <abstractions/base>
       9 <abstractions/krathalans-networking>
+      8 <abstractions/krathalans-hardening>
       8 <abstractions/fonts>
-      7 <abstractions/krathalans-hardening>
       7 <abstractions/krathalans-common-gui>
       6 <abstractions/audio>
       5 <abstractions/dconf>
       3 <abstractions/wayland>
+      3 <abstractions/user-tmp>
       3 <abstractions/user-download>
       3 <abstractions/python>
       3 <abstractions/perl>
-      2 <abstractions/user-tmp>
+      3 <abstractions/bash>
       2 <abstractions/openssl>
       2 <abstractions/krathalans-graphics>
-      2 <abstractions/bash>
+      2 <abstractions/gnupg>
       1 <abstractions/ssl_keys>
       1 <abstractions/ssl_certs>
       1 <abstractions/nameservice>
-      1 <abstractions/gnupg>
       1 <abstractions/gnome>
       1 <abstractions/dbus-session-strict>
 ```

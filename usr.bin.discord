@@ -59,8 +59,10 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   deny @{PROC}/vmstat r,
 
   # Deny various paths for hardware acceleration
+  deny /dev/dri/ r,
   deny @{PROC}/driver/nvidia/params r,
   deny @{sys}/** r,
+  deny @{system_share_dirs}/drirc.d/ r,
 
   # Deny /tmp as this can contain sensitive files
   deny /tmp/** rw,
