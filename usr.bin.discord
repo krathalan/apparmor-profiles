@@ -10,14 +10,12 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   #include <abstractions/base>
   #include <abstractions/fonts>
 
+  #include <abstractions/krathalans-common-gui>
+  #include <abstractions/krathalans-hardening>
+
   # Networking
   #include <abstractions/krathalans-networking>
   owner @{HOME}/.pki/nssdb/* rwk,
-
-  # File picker
-  #include <abstractions/gnome>
-  @{system_share_dirs}/gtk-3.0/settings.ini r,
-  owner @{HOME}/.config/gtk-3.0/settings.ini r,
 
   # Subprocesses
   /usr/bin/dash mrix,
@@ -65,9 +63,8 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   deny @{PROC}/driver/nvidia/params r,
   deny @{sys}/** r,
 
-  # Discord requires this on Xorg but not on Wayland under Xwayland
-  # Disable for now as Xorg still has still majority usage
-  #deny @{HOME}/.{ICE,X}authority r,
+  # Deny /tmp as this can contain sensitive files
+  deny /tmp/** rw,
 
   # Silence unnecessary permissions
   deny /dev/ r,

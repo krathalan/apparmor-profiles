@@ -1,4 +1,4 @@
-# Rules that deny some things enabled in abstractions/base
+# Rules for denying some things allowed in other abstractions
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
