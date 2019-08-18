@@ -6,7 +6,7 @@ As stated in the readme, profiles should strive to be at least ~95% functional w
 ## TODO
 ### Explore hardening options
 - See abstractions/krathalans-hardening
-- Enabled for profiles: discord, firefox, gpg-agent, mosh, pass, ssh, ssh-agent, waybar
+- Enabled for profiles: bluetoothd, discord, evince, firefox, gpg-agent, iwd, mosh, NetworkManager, pass, ssh, ssh-agent, waybar, wpa_supplicant
 - Is not enabled for profiles (but should be, pending testing): all
 
 ## Stats
@@ -14,8 +14,8 @@ As stated in the readme, profiles should strive to be at least ~95% functional w
 `grep -i abstractions usr.* | awk '{printf "%s\n", $3}' | grep -v "Graphics" | grep -v "Deny" | sort | uniq -c | sort --reverse --general-numeric-sort`
 
 ```
-     26 <abstractions/base>
-     11 <abstractions/krathalans-hardening>
+     28 <abstractions/base>
+     13 <abstractions/krathalans-hardening>
      10 <abstractions/krathalans-networking>
       8 <abstractions/fonts>
       7 <abstractions/krathalans-common-gui>
@@ -27,7 +27,7 @@ As stated in the readme, profiles should strive to be at least ~95% functional w
       3 <abstractions/python>
       3 <abstractions/perl>
       3 <abstractions/bash>
-      2 <abstractions/krathalans-graphics>
+      2 <abstractions/krathalans-hwaccel>
       2 <abstractions/gnupg>
       1 <abstractions/ssl_keys>
       1 <abstractions/ssl_certs>

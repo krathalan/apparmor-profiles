@@ -5,7 +5,6 @@
   # General
   deny ptrace (readby),
   deny ptrace (tracedby),
-  deny signal (receive) peer=unconfined,
   deny unix (create),
   deny unix (receive) peer=(label=unconfined),
 

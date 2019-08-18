@@ -7,6 +7,7 @@
 
 profile NetworkManager /usr/bin/NetworkManager {
   #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
 
   # Networking 
   #include <abstractions/krathalans-networking>
@@ -26,6 +27,7 @@ profile NetworkManager /usr/bin/NetworkManager {
 
     /usr/bin/dash rix,
     /usr/bin/resolvconf r,
+    /usr/bin/systemctl rCx,
 
     # Helper programs
     /usr/bin/{cat,rm,mkdir} rix,
