@@ -77,9 +77,9 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   deny /usr/bin/gio-launch-desktop rx,
   deny /etc/mailcap r,
 
-  # Silence denial about ~/.local/share/gvfs-metadata/home, this file can 
-  # contain sensitive data
+  # Silence denials about some files; these can contain sensitive data
   deny @{user_share_dirs}/gvfs-metadata/** r,
+  deny @{user_share_dirs}/recently-used.xbel* rw,
 
   # Deny /proc and /var
   deny @{PROC}/ rw,

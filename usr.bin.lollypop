@@ -52,7 +52,7 @@ profile lollypop /usr/bin/lollypop {
   owner @{HOME}/.config/user-dirs.dirs r,
   owner @{user_share_dirs}/lollypop/ rw,
   owner @{user_share_dirs}/lollypop/** rwlk,
-  owner @{user_share_dirs}/recently-used* rw,
+  owner @{user_share_dirs}/recently-used.xbel* rw,
 
   # GVFS isn't tested :)
   deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
