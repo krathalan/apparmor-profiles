@@ -21,13 +21,9 @@ However, it's very possible these profiles will still work with AMD graphics, as
 These profiles strive to be at least ~95% functional with zero audit log warnings under proper behavior. Functionality is not ignored; rather sometimes it's blocked in the interest of security. See notes about profiles such as discord below, or click [here](#discord). If functionality is not explicitly blocked, then it's probably a bug in the profile and should be fixed. Create an issue.
 
 ## Abstractions
-Many profiles for GUI applications (like Firefox, KeepassXC, Lollypop etc.) require access to common files, like icons, themes, fonts, and so on. To ease the burden of maintenance and to reduce policy error, these rules have been put into an abstraction. Move the `krathalans-common-gui` file in the `abstractions/` folder in this repository to `/etc/apparmor.d/abstractions/` and `sudo systemctl reload apparmor.service`.
+Many profiles require access to common files, like icons, themes, fonts, and so on. To ease the burden of maintenance and to reduce policy error, many rules have been put into abstractions. Copy the files in the `abstractions/` folder in this repository to `/etc/apparmor.d/abstractions/` and `sudo systemctl reload apparmor.service`.
 
-Many profiles for GUI applications WILL NOT WORK if you do not have this abstraction loaded.
-
-Some profiles require the `krathalans-hardening` abstraction.
-
-Additionally, Firefox and mpv require the `krathalans-graphics` abstraction to be in `/etc/apparmor.d/abstractions/` for hardware acceleration and hardware video decoding. See the NVIDIA section below if you own an NVIDIA card.
+Many profiles WILL NOT WORK if you do not have abstractions loaded.
 
 ## Adding local changes
 To add local changes without changing the file provided by this repository, use local overrides. See `less /etc/apparmor.d/local/README` for more details. You can see examples of local overrides in the `local/` directory in this repository.
@@ -64,11 +60,13 @@ Unmaintained profiles will probably work for a while but you should generally av
 - less
 - [Lollypop ⚠️](#lollypop)
 - [mako ⚠️](#mako)
+- mosh
 - [mpv ⚠️](#mpv)
 - NetworkManager
 - pulseaudio
 - [redshift ⚠️](#redshift)
 - rngd
+- [ssh ⚠️](#ssh)
 - [ssh-agent ⚠️](#ssh-agent)
 - [streamlink ⚠️](#streamlink)
 - [swaybg ⚠️](#swaybg)
@@ -77,14 +75,13 @@ Unmaintained profiles will probably work for a while but you should generally av
 - [youtube-dl ⚠️](#youtube-dl)
 
 ### New and somewhat untested profiles
-- mosh
-- [ssh ⚠️](#ssh)
+- [pass ⚠️](#pass)
 - [transmission-cli ⚠️](#transmission-cli)
 - wpa_supplicant
 
 ### Unmaintained profiles
 - hexchat (check out irssi!)
-- [KeepassXC ⚠️](#keepassxc)
+- KeepassXC (check out pass!)
 - pipewire
 
 ## Notes about each profile
@@ -137,6 +134,9 @@ This profile allows mpv to utilize `youtube-dl` to stream videos and confines it
 This AppArmor profile also works when mpv is invoked by other programs like [streamlink](https://streamlink.github.io/). A streamlink profile is also available.
 
 Use the command line flag `--gpu-context=wayland` for Wayland support. Use the command line flag `--hwdec=auto` for nvdec (NVIDIA) and VA-API (Intel) hardware decoding. You can also tell `mpv` to always use these options [through a config file](https://mpv.io/manual/master/).
+
+### pass
+You may need to add local changes to allow `pass` to access your password files and GNUPG files if they're somehwere other than `~/.password-store` and `~/.gnupg` respectively.
 
 ### redshift
 This profile has been tested to work correctly on Xorg with the regular `redshift` package and on Sway with the `redshift-wlr-gamma-control` AUR package.

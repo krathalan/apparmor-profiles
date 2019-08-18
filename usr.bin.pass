@@ -1,0 +1,74 @@
+# AppArmor profile for pass UNIX password manager
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile pass /usr/bin/pass {
+  #include <abstractions/base>
+  #include <abstractions/user-tmp>
+
+  # Include user overrides for different password or GNUPG directories 
+  #include <local/usr.bin.pass>
+
+  # Various programs -- pass is a bash script, after all
+  #include <abstractions/bash>
+  /usr/bin/base64 mrix,
+  /usr/bin/bash mrix,
+  /usr/bin/getopt mrix,
+  /usr/bin/head mrix,
+  /usr/bin/pass r,
+  /usr/bin/sed mrix,
+  /usr/bin/sleep mrix,
+  /usr/bin/tail mrix,
+  /usr/bin/tree mrix,
+  /usr/bin/which mrix,
+
+  # Needed for generating passwords
+  /usr/bin/dirname mrix,
+  /usr/bin/mkdir mrix,
+  /usr/bin/tr mrix,
+  owner @{HOME}/.gnupg/random_seed k,
+
+  # Needed for deleting passwords
+  /usr/bin/rm mrix,
+  /usr/bin/rmdir mrix,
+
+  # Needed for renaming passwords
+  /usr/bin/grep mrix,
+  /usr/bin/find mrix,
+  /usr/bin/mv mrix,
+  /usr/bin/sort mrix,
+
+  # Needed for copying passwords
+  /usr/bin/cp mrix,
+
+  # GPG
+  #include <abstractions/gnupg>
+  /usr/bin/gpg mrix,
+  owner @{HOME}/.gnupg/.* w,
+
+  # Write to console
+  /dev/tty rw,
+
+  # Default password store
+  owner @{HOME}/.password-store/{,**} rw,
+
+  # xclip
+  /usr/bin/xclip mrix,
+  # Needed to clear clipboard after X seconds
+  /usr/bin/pkill mrix,
+  # Needed or otherwise segfaults
+  @{PROC} r,
+  owner @{HOME}/.Xauthority r,
+
+  # No git support -- that would require networking :)
+  deny /usr/bin/git mrx,
+
+  # Deny unnecessary permissions
+  # These only seem to happen when xclip is used
+  deny /etc/nsswitch.conf r,
+  deny /etc/passwd r,
+  deny @{PROC}/sys/kernel/osrelease r,
+  deny @{PROC}/@{pid}/cmdline r,
+}
