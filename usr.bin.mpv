@@ -10,12 +10,12 @@ profile mpv /usr/bin/mpv {
   #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
 
-  # Graphics -- include <abstractions/krathalans-graphics-nvidia> if you need it
-  #include <abstractions/krathalans-graphics>
+  # Hardware acceleration
+  #include <abstractions/krathalans-hwaccel>
   /etc/libva.conf r,
   @{sys}/devices/pci[0-9]*/**/config r,
 
-  # Include user overrides for krathalans-graphics-nvidia
+  # Include user overrides for krathalans-hwaccel-nvidia
   #include <local/usr.bin.mpv>
 
   # Audio

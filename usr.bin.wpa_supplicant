@@ -6,6 +6,7 @@
 
 profile wpa_supplicant /usr/bin/wpa_supplicant {
   #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
 
   capability net_admin,
   capability net_raw,
@@ -14,5 +15,5 @@ profile wpa_supplicant /usr/bin/wpa_supplicant {
   owner /etc/ssl/openssl.cnf r,
 
   # Devices
-  owner /proc/sys/net/ipv{4,6}/conf/*/drop_{gratuitous_arp,unicast_in_l2_multicast,unsolicited_na} rw,
+  owner @{PROC}/sys/net/ipv{4,6}/conf/*/drop_{gratuitous_arp,unicast_in_l2_multicast,unsolicited_na} rw,
 }

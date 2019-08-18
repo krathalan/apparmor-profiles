@@ -7,35 +7,32 @@
 
 profile NetworkManager /usr/bin/NetworkManager {
   #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
 
   # Networking 
-  #include <abstractions/nameservice>
-  #include <abstractions/openssl>
+  #include <abstractions/krathalans-networking>
   capability net_admin,
   capability net_bind_service,
   capability net_raw,
-
-  # Networking devices
-  owner @{sys}/devices/** r,
 
   # Write to system log
   capability audit_write,
 
   # Resolvconf
+  # On systems where /etc/resolv.conf is managed programmatically, it is
+  # a symlink to /{,var/}run/(program is managing it)/resolv.conf.
   /usr/bin/resolvconf mrix,
   owner /etc/resolv* rw,
-  owner /run/resolvconf/ rw,
-  owner /run/resolvconf/** rw,
+  owner /{,var/}run/{resolvconf,NetworkManager,systemd/resolve,connman,netconfig}/{,**} rw,
 
-  # Subprocesses
+  # Various helper programs
   /usr/bin/{cat,cp,mkdir,rm} mrix,
   /usr/bin/dash mrix,
 
   # Config
-  owner /etc/NetworkManager/ r,
-  owner /etc/NetworkManager/** r,
+  owner /etc/NetworkManager/{,**} r,
   # Needed to record connection information (e.g. wifi passwords)
-  owner /etc/NetworkManager/system-connections/** w,
+  owner /etc/NetworkManager/system-connections/{,**} w,
 
   # Needed for nmtui to function properly
   @{PROC}/*/stat r,
@@ -44,17 +41,18 @@ profile NetworkManager /usr/bin/NetworkManager {
   # NetworkManager runs as root anyways
   capability dac_override,
 
-  # System files
-  owner /etc/machine-id r,
+  # Devices (e.g. network adapters)
   owner /dev/rfkill rw,
-  owner @{PROC}/sys/kernel/random/boot_id r,
+  owner /run/udev/data/** r,
+  owner @{sys}/devices/** r,
+  owner @{sys}/bus/ r,
+  owner @{sys}/class/{,**} r,
+
+  # Miscellaneous
+  owner /etc/passwd r,
   owner @{PROC}/sys/net/** rw,
   owner /run/NetworkManager/ w,
   owner /run/NetworkManager/** rw,
-  owner /run/udev/data/** r,
-  owner @{sys}/bus/ r,
-  owner @{sys}/class/ r,
-  owner @{sys}/class/** r,
   owner /var/lib/NetworkManager/ r,
   owner /var/lib/NetworkManager/** rw,
 
@@ -64,5 +62,7 @@ profile NetworkManager /usr/bin/NetworkManager {
 
   # Silence unnecessary permissions
   deny / r,
+  deny /etc/machine-id r,
   deny @{PROC}/sys/kernel/osrelease r,
+  deny @{PROC}/sys/kernel/random/boot_id r,
 }

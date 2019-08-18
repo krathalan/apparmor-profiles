@@ -16,11 +16,11 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   #include <abstractions/krathalans-hardening>
   #include <abstractions/user-tmp>
 
-  # Graphics -- include <abstractions/krathalans-graphics-nvidia> if you need it
-  #include <abstractions/krathalans-graphics>
+  # Hardware acceleration
+  #include <abstractions/krathalans-hwaccel>
   @{sys}/devices/pci[0-9]*/*/drm/ r,
 
-  # Include user overrides for krathalans-graphics-nvidia
+  # Include user overrides for krathalans-hwaccel-nvidia
   #include <local/usr.bin.firefox>
 
   # Allow access for downloads and uploads

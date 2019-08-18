@@ -15,8 +15,8 @@ As stated in the readme, profiles should strive to be at least ~95% functional w
 
 ```
      26 <abstractions/base>
-      9 <abstractions/krathalans-networking>
-      8 <abstractions/krathalans-hardening>
+     11 <abstractions/krathalans-hardening>
+     10 <abstractions/krathalans-networking>
       8 <abstractions/fonts>
       7 <abstractions/krathalans-common-gui>
       6 <abstractions/audio>
@@ -27,11 +27,10 @@ As stated in the readme, profiles should strive to be at least ~95% functional w
       3 <abstractions/python>
       3 <abstractions/perl>
       3 <abstractions/bash>
-      2 <abstractions/openssl>
       2 <abstractions/krathalans-graphics>
       2 <abstractions/gnupg>
       1 <abstractions/ssl_keys>
       1 <abstractions/ssl_certs>
-      1 <abstractions/nameservice>
+      1 <abstractions/openssl>
       1 <abstractions/dbus-session-strict>
 ```

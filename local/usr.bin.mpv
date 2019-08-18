@@ -1,1 +1,1 @@
-#include <abstractions/krathalans-graphics-nvidia>
+#include <abstractions/krathalans-hwaccel-nvidia>
