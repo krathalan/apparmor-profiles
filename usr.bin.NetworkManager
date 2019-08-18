@@ -24,6 +24,7 @@ profile NetworkManager /usr/bin/NetworkManager {
 
   profile resolvconf /usr/bin/resolvconf {
     #include <abstractions/base>
+    #include <abstractions/krathalans-hardening>
 
     /usr/bin/dash rix,
     /usr/bin/resolvconf r,
@@ -42,6 +43,7 @@ profile NetworkManager /usr/bin/NetworkManager {
 
   profile systemctl /usr/bin/systemctl {
     #include <abstractions/base>
+    #include <abstractions/krathalans-hardening>
 
     capability sys_resource,
     ptrace read peer=unconfined,
