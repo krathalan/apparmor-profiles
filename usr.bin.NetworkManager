@@ -69,7 +69,7 @@ profile NetworkManager /usr/bin/NetworkManager {
 
   # Devices (e.g. network adapters)
   owner /dev/rfkill rw,
-  owner /run/udev/data/** r,
+  owner /{,var/}run/udev/data/** r,
   owner @{sys}/devices/** r,
   owner @{sys}/bus/ r,
   owner @{sys}/class/{,**} r,
@@ -78,8 +78,8 @@ profile NetworkManager /usr/bin/NetworkManager {
   owner /etc/machine-id r,
   owner /etc/passwd r,
   owner @{PROC}/sys/net/** rw,
-  owner /run/NetworkManager/ w,
-  owner /run/NetworkManager/** rw,
+  owner /{,var/}run/NetworkManager/ w,
+  owner /{,var/}run/NetworkManager/** rw,
   owner /var/lib/NetworkManager/ r,
   owner /var/lib/NetworkManager/** rw,
 

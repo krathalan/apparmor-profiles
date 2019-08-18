@@ -9,6 +9,7 @@ profile pulseaudio /usr/bin/pulseaudio {
   #include <abstractions/audio>
   #include <abstractions/base>
   #include <abstractions/dbus-session-strict>
+  #include <abstractions/krathalans-hardening>
   #include <abstractions/user-tmp>
 
   # Dconf
@@ -20,14 +21,14 @@ profile pulseaudio /usr/bin/pulseaudio {
   /usr/lib/pulse/gsettings-helper mrix,
 
   # User data
-  /run/systemd/users/* r,
+  /{,var/}run/systemd/users/* r,
   owner @{HOME}/ r,
   owner @{HOME}/.esd_auth rwk,
   owner @{HOME}/.config/pulse/ r,
   owner @{HOME}/.config/pulse/** rw,
 
   # System access
-  /run/udev/data/* r,
+  /{,var/}run/udev/data/* r,
   @{sys}/bus/ r,
   @{sys}/class/ r,
   @{sys}/class/sound/ r,

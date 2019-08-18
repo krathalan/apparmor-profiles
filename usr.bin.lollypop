@@ -36,12 +36,6 @@ profile lollypop /usr/bin/lollypop {
   owner @{HOME}/.cache/gstreamer*/** rw,
   owner @{HOME}/.cache/gstreamer-1.0/ w,
 
-  # Don't allow executable mapping of arbitrary files
-  # https://askubuntu.com/questions/336552/what-are-orcexec-files
-  deny /run/user/*/orcexec* mrw,
-  deny /tmp/** mrw,
-  deny @{HOME}/orcexec* mrw,
-
   # Miscellaneous
   /usr/bin/lollypop r,
   @{system_share_dirs}/glib*/** r,
@@ -53,6 +47,12 @@ profile lollypop /usr/bin/lollypop {
   owner @{user_share_dirs}/lollypop/ rw,
   owner @{user_share_dirs}/lollypop/** rwlk,
   owner @{user_share_dirs}/recently-used.xbel* rw,
+
+  # Don't allow executable mapping of arbitrary files
+  # https://askubuntu.com/questions/336552/what-are-orcexec-files
+  deny /run/user/*/orcexec* mrw,
+  deny /tmp/** mrw,
+  deny @{HOME}/orcexec* mrw,
 
   # GVFS isn't tested :)
   deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,

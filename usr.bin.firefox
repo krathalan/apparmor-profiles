@@ -44,7 +44,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   # System access
   /dev/ r,
   /etc/udev/udev.conf r,
-  /run/udev/data/+pci:* r,
+  /{,var/}run/udev/data/+pci:* r,
   @{sys}/devices/pci[0-9]*/**/uevent r,
   @{system_share_dirs}/ r,
   /usr/lib/firefox/fonts/** rw,
