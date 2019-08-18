@@ -7,7 +7,6 @@
 
 profile NetworkManager /usr/bin/NetworkManager {
   #include <abstractions/base>
-  #include <abstractions/krathalans-hardening>
 
   # Networking 
   #include <abstractions/krathalans-networking>
@@ -19,15 +18,38 @@ profile NetworkManager /usr/bin/NetworkManager {
   capability audit_write,
 
   # Resolvconf
-  # On systems where /etc/resolv.conf is managed programmatically, it is
-  # a symlink to /{,var/}run/(program is managing it)/resolv.conf.
-  /usr/bin/resolvconf mrix,
-  owner /etc/resolv* rw,
-  owner /{,var/}run/{resolvconf,NetworkManager,systemd/resolve,connman,netconfig}/{,**} rw,
+  /usr/bin/systemctl rCx,
+  /usr/bin/resolvconf rCx,
 
-  # Various helper programs
-  /usr/bin/{cat,cp,mkdir,rm} mrix,
-  /usr/bin/dash mrix,
+  profile resolvconf /usr/bin/resolvconf {
+    #include <abstractions/base>
+
+    /usr/bin/dash rix,
+    /usr/bin/resolvconf r,
+
+    # Helper programs
+    /usr/bin/{cat,rm,mkdir} rix,
+
+    # Needed to
+    owner / r,
+
+    # Miscellaneous
+    /etc/resolv* rw,
+    /{,var/}run/resolvconf/{,**} rw,
+  }
+
+  profile systemctl /usr/bin/systemctl {
+    #include <abstractions/base>
+
+    capability sys_resource,
+    ptrace read peer=unconfined,
+
+    owner @{PROC}/@{pid}/{,**} r,
+    owner @{PROC}/cmdline r,
+  }
+
+  # Helper programs
+  /usr/bin/dash rix,
 
   # Config
   owner /etc/NetworkManager/{,**} r,
@@ -49,6 +71,7 @@ profile NetworkManager /usr/bin/NetworkManager {
   owner @{sys}/class/{,**} r,
 
   # Miscellaneous
+  owner /etc/machine-id r,
   owner /etc/passwd r,
   owner @{PROC}/sys/net/** rw,
   owner /run/NetworkManager/ w,
@@ -56,13 +79,8 @@ profile NetworkManager /usr/bin/NetworkManager {
   owner /var/lib/NetworkManager/ r,
   owner /var/lib/NetworkManager/** rw,
 
-  # Even if NetworkManager "needs" these permissions, it still works without 
-  # them and allowing them would make the profile much less effective
-  deny /usr/bin/systemctl rx,
-
   # Silence unnecessary permissions
   deny / r,
-  deny /etc/machine-id r,
   deny @{PROC}/sys/kernel/osrelease r,
   deny @{PROC}/sys/kernel/random/boot_id r,
 }
