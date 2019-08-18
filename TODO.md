@@ -6,13 +6,8 @@ As stated in the readme, profiles should strive to be at least ~95% functional w
 ## TODO
 ### Explore hardening options
 - See abstractions/krathalans-hardening
-- Enabled for profiles: discord, firefox, gpg-agent, mosh, pass, ssh, ssh-agent
+- Enabled for profiles: discord, firefox, gpg-agent, mosh, pass, ssh, ssh-agent, waybar
 - Is not enabled for profiles (but should be, pending testing): all
-
-### Reduce usage of gnome abstraction
-<abstractions/gnome> contains a lot of rules which many programs don't need all of. Explore removing this abstraction and using more rules (or perhaps a custom abstraction).
-
-The following profiles use <abstractions/gnome>: waybar
 
 ## Stats
 ### Most used abstractions
@@ -38,6 +33,5 @@ The following profiles use <abstractions/gnome>: waybar
       1 <abstractions/ssl_keys>
       1 <abstractions/ssl_certs>
       1 <abstractions/nameservice>
-      1 <abstractions/gnome>
       1 <abstractions/dbus-session-strict>
 ```

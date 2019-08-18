@@ -8,8 +8,8 @@
 profile waybar /usr/bin/waybar {
   #include <abstractions/base>
   #include <abstractions/fonts>
-  #include <abstractions/gnome>
   #include <abstractions/krathalans-common-gui>
+  #include <abstractions/krathalans-hardening>
 
   # Dconf
   #include <abstractions/dconf>
@@ -20,6 +20,12 @@ profile waybar /usr/bin/waybar {
 
   # Include user overrides for possible symlinked config files
   #include <local/usr.bin.waybar>
+
+  # Config
+  owner @{HOME}/.config/waybar/** r,
+
+  # Misc
+  @{system_share_dirs}/glib-[0-9]*/schemas/{,**} r,
 
   # Executables
   /usr/bin/waybar mrPx,
@@ -34,7 +40,4 @@ profile waybar /usr/bin/waybar {
   # Tray module
   # Needed to show icons for discord (flatpak)
   owner @{HOME}/.var/app/com.discordapp.Discord/cache/** r,
-
-  # Config
-  owner @{HOME}/.config/waybar/** r,
 }
