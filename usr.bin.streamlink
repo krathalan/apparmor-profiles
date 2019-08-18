@@ -10,9 +10,7 @@ profile streamlink /usr/bin/streamlink {
   #include <abstractions/python>
 
   # Networking
-  #include <abstractions/nameservice>
-  #include <abstractions/openssl>
-  /etc/ca-certificates/extracted/tls-ca-bundle.pem r,
+  #include <abstractions/krathalans-networking>
 
   # Needed to open mpv media player and feed it data
   signal send set=term peer=mpv,

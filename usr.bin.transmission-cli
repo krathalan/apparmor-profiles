@@ -9,8 +9,7 @@ profile transmission-cli /usr/bin/transmission-cli {
   #include <abstractions/base>
 
   # Networking
-  #include <abstractions/nameservice>
-  #include <abstractions/openssl>
+  #include <abstractions/krathalans-networking>
   owner @{PROC}/@{pid}/net/route r,
 
   # Allow access for writing downloaded files

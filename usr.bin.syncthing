@@ -9,10 +9,10 @@ profile syncthing /usr/bin/syncthing {
   #include <abstractions/base>
 
   # Networking
-  #include <abstractions/nameservice>
+  #include <abstractions/krathalans-networking>
   #include <abstractions/ssl_certs>
   #include <abstractions/ssl_keys>
-  /etc/ca-certificates/extracted/** r,
+  /etc/ca-certificates/extracted/cadir/* r,
   @{PROC}/sys/net/core/somaxconn r,
   /usr/bin/ip rix,
 

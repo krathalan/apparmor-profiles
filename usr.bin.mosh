@@ -23,8 +23,7 @@ profile mosh /usr/bin/mosh* {
 
   # Networking
   /etc/nsswitch.conf r,
-  /etc/protocols r,
-  /etc/services r,
+  /etc/{protocols,services} r,
 
   # Display properly on different host terminals
   @{system_share_dirs}/terminfo/** r,

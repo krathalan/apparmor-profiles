@@ -20,10 +20,9 @@ profile ssh /usr/bin/ssh {
   /usr/bin/mosh rPx,
   signal send set=hup peer=mosh,
 
-  # Networking -- dont need entire nameservice abstraction
-  #include <abstractions/openssl>
-  /etc/{host,nsswitch,resolv}.conf r,
-  /etc/{hosts,passwd,protocols,services} r,
+  # Networking
+  #include <abstractions/krathalans-networking>
+  /etc/{passwd,protocols,services} r,
   /etc/ssh/ssh_config r,
 
   # SSH keys, known hosts

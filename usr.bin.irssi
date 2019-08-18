@@ -15,9 +15,7 @@ profile irssi /usr/bin/irssi {
   #include <local/usr.bin.irssi>
 
   # Networking
-  #include <abstractions/nameservice>
-  #include <abstractions/openssl>
-  /etc/ca-certificates/extracted/tls-ca-bundle.pem r,
+  #include <abstractions/krathalans-networking>
 
   @{system_share_dirs}/irssi/** r,
 

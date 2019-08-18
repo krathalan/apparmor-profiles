@@ -1,0 +1,11 @@
+# Basic networking rules
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+  # General
+  #include <abstractions/openssl>
+  /etc/ca-certificates/extracted/tls-ca-bundle.pem r,
+  /etc/ca-certificates/trust-source/{,**} r,
+  /etc/{gai,host,nsswitch,resolv}.conf r,
+  /etc/hosts r,
+  @{system_share_dirs}/ca-certificates/trust-source/{,**} r,

@@ -35,10 +35,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   owner @{HOME}/.config/dconf/user r,
 
   # Network
-  #include <abstractions/nameservice>
-  /etc/ca-certificates/trust-source/{,anchors/,blacklist/} r,
-  /etc/{host,nsswitch}.conf r,
-  /etc/hosts r,
+  #include <abstractions/krathalans-networking>
 
   # Firefox subprocesses
   ptrace trace peer=firefox,
@@ -104,4 +101,5 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   deny /opt/firefox-nightly/crashreporter rx,
   deny @{sys}/bus/pci/devices/ r,
   deny @{sys}/devices/system/cpu/** r,
+  deny @{HOME}/.cache/thumbnails/** r,
 }

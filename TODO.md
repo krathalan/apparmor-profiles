@@ -9,10 +9,8 @@ As stated in the readme, profiles should strive to be at least ~95% functional w
 - Enabled for profiles: firefox, gpg-agent, mosh, ssh, ssh-agent
 - Is not enabled for profiles (but should be, pending testing): discord, evince, irssi, less, lollypop, mako, mpv, NetworkManager, pulseaudio, redshift, rngd, streamlink, swaybg, syncthing, transmission-cli, waybar, wpa_supplicant, youtube-dl, bluetoothd, iwd
 
-### Reduce usage of gnome and nameservice abstractions
-<abstractions/nameservice> and <abstractions/gnome> contain a lot of rules which many programs don't need all of. Explore removing this abstraction and using more rules (or perhaps a custom abstraction).
-
-The following profiles use <abstractions/nameservice>: discord, firefox, irssi, NetworkManager, streamlink, syncthing, transmission-cli, youtube-dl
+### Reduce usage of gnome abstraction
+<abstractions/gnome> contains a lot of rules which many programs don't need all of. Explore removing this abstraction and using more rules (or perhaps a custom abstraction).
 
 The following profiles use <abstractions/gnome>: discord, firefox, evince, waybar
 
@@ -22,7 +20,7 @@ The following profiles use <abstractions/gnome>: discord, firefox, evince, wayba
 
 ```
      25 <abstractions/base>
-      8 <abstractions/nameservice>
+      8 <abstractions/krathalans-networking>
       7 <abstractions/openssl>
       7 <abstractions/fonts>
       6 <abstractions/krathalans-common-gui>
@@ -39,6 +37,7 @@ The following profiles use <abstractions/gnome>: discord, firefox, evince, wayba
       1 <abstractions/user-tmp>
       1 <abstractions/ssl_keys>
       1 <abstractions/ssl_certs>
+      1 <abstractions/nameservice>
       1 <abstractions/gnupg>
       1 <abstractions/dbus-session-strict>
 ```

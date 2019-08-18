@@ -11,8 +11,7 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   #include <abstractions/fonts>
 
   # Networking
-  #include <abstractions/nameservice>
-  /etc/ca-certificates/trust-source/{,anchors/,blacklist/} r,
+  #include <abstractions/krathalans-networking>
   owner @{HOME}/.pki/nssdb/* rwk,
 
   # File picker

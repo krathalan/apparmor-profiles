@@ -9,9 +9,7 @@ profile youtube-dl /usr/bin/youtube-dl {
   #include <abstractions/base>
 
   # Networking
-  #include <abstractions/nameservice>
-  #include <abstractions/openssl>
-  /etc/ca-certificates/extracted** r,
+  #include <abstractions/krathalans-networking>
 
   # Executables
   #include <abstractions/python>
