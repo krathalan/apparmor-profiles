@@ -7,10 +7,8 @@
 
 profile waybar /usr/bin/waybar {
   #include <abstractions/base>
-  #include <abstractions/gnome>
   #include <abstractions/fonts>
-
-  # Icons, themes, etc
+  #include <abstractions/gnome>
   #include <abstractions/krathalans-common-gui>
 
   # Dconf

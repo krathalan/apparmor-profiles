@@ -7,8 +7,6 @@
 
 profile gpg-agent /usr/bin/gpg-agent {
   #include <abstractions/base>
-
-  # Deny some stuff from abstractions/base
   #include <abstractions/krathalans-hardening>
 
   # Access user keys and config

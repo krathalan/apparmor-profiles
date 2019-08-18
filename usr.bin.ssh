@@ -6,10 +6,8 @@
 
 profile ssh /usr/bin/ssh {
   #include <abstractions/base>
-  #include <abstractions/perl>
-
-  # Deny some stuff from abstractions/base
   #include <abstractions/krathalans-hardening>
+  #include <abstractions/perl>
 
   # Executables
   /usr/bin/dash mrix,

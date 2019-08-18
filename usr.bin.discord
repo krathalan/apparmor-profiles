@@ -9,7 +9,6 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   #include <abstractions/audio>
   #include <abstractions/base>
   #include <abstractions/fonts>
-
   #include <abstractions/krathalans-common-gui>
   #include <abstractions/krathalans-hardening>
 

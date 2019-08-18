@@ -8,10 +8,8 @@
 profile lollypop /usr/bin/lollypop {
   #include <abstractions/base>
   #include <abstractions/fonts>
-  #include <abstractions/wayland>
-
-  # Icons, themes, etc
   #include <abstractions/krathalans-common-gui>
+  #include <abstractions/wayland>
 
   # Needed to listen to music
   owner @{HOME}/{M,m}usic/ r,
