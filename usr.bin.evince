@@ -8,8 +8,8 @@
 profile evince /usr/{bin,lib}/evince{,d} {
   #include <abstractions/base>
   #include <abstractions/fonts>
-  #include <abstractions/gnome>
   #include <abstractions/krathalans-common-gui>
+  #include <abstractions/krathalans-hardening>
   #include <abstractions/wayland>
 
   # Dconf
@@ -39,6 +39,11 @@ profile evince /usr/{bin,lib}/evince{,d} {
   @{system_share_dirs}/poppler/ r,
   @{system_share_dirs}/poppler/** r,
 
+  # GNOME
+  owner @{HOME}/.config/mimeapps.list* rw,
+  owner @{user_share_dirs}/applications/{,**} r,
+  @{system_share_dirs}/glib-[0-9]*/schemas/{,**} r,
+
   # Miscellaneous
   @{system_share_dirs}/evince/** r,
 
@@ -59,5 +64,6 @@ profile evince /usr/{bin,lib}/evince{,d} {
   deny /dev/shm/ r,
   deny @{PROC}/@{pid}/mountinfo r,
   deny @{PROC}/@{pid}/fd/ r,
+  deny @{system_share_dirs}/applications/{,**} r,
   deny /var/lib/flatpak/** r,
 }

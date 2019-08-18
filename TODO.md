@@ -12,7 +12,7 @@ As stated in the readme, profiles should strive to be at least ~95% functional w
 ### Reduce usage of gnome abstraction
 <abstractions/gnome> contains a lot of rules which many programs don't need all of. Explore removing this abstraction and using more rules (or perhaps a custom abstraction).
 
-The following profiles use <abstractions/gnome>: evince, waybar
+The following profiles use <abstractions/gnome>: waybar
 
 ## Stats
 ### Most used abstractions
@@ -22,8 +22,8 @@ The following profiles use <abstractions/gnome>: evince, waybar
      25 <abstractions/base>
       9 <abstractions/krathalans-networking>
       8 <abstractions/fonts>
+      7 <abstractions/krathalans-hardening>
       7 <abstractions/krathalans-common-gui>
-      6 <abstractions/krathalans-hardening>
       6 <abstractions/audio>
       5 <abstractions/dconf>
       3 <abstractions/wayland>
@@ -33,11 +33,11 @@ The following profiles use <abstractions/gnome>: evince, waybar
       2 <abstractions/user-tmp>
       2 <abstractions/openssl>
       2 <abstractions/krathalans-graphics>
-      2 <abstractions/gnome>
       2 <abstractions/bash>
       1 <abstractions/ssl_keys>
       1 <abstractions/ssl_certs>
       1 <abstractions/nameservice>
       1 <abstractions/gnupg>
+      1 <abstractions/gnome>
       1 <abstractions/dbus-session-strict>
 ```
