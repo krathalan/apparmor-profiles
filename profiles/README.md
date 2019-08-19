@@ -4,7 +4,7 @@
 
 ### Tested profiles
 - bluetoothd
-- [Discord ⚠️](#Discord)
+- [Discord ⚠️](#discord)
 - [evince ⚠️](#evince)
 - [Firefox ⚠️](#firefox)
 - [gpg-agent ⚠️](#gpg-agent)
