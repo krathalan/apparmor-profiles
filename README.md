@@ -18,6 +18,8 @@ I cannot guarantee that these profiles will work on any other hardware. All prof
 
 These profiles strive to be at least ~95% functional with zero audit log warnings under proper behavior. Functionality is not ignored; rather sometimes it's blocked in the interest of security, such as blocking hardware acceleration for Discord. If functionality is not explicitly blocked, then it's probably a bug in the profile and should be fixed. Create an issue.
 
+You should read through [the notes in `profiles/README.md`](profiles#profiles) before using these profiles.
+
 ## Abstractions
 Many profiles require access to common files: icons, themes, and fonts for GUI applications; hardware acceleration resources; networking resources; and so on. To ease the burden of maintenance and to reduce policy error, many rules have been put into abstractions. Copy the files in the `abstractions/` folder in this repository to `/etc/apparmor.d/abstractions/` and `sudo systemctl reload apparmor.service`.
 
