@@ -8,7 +8,7 @@
 
 #include <tunables/global>
 
-profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
+profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   #include <abstractions/audio>
   #include <abstractions/base>
   #include <abstractions/fonts>
@@ -37,7 +37,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   # Firefox subprocesses
   ptrace trace peer=firefox,
   /usr/bin/bash ix,
-  /{usr,opt}/{bin,firefox-nightly,lib/firefox}/firefox* mrix,
+  /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* mrPx,
   owner /dev/shm/shmfd-* rw,
   owner /dev/shm/org.{chromium,mozilla}.{,ipc.}* rw,
 
@@ -53,7 +53,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
 
   # Poppler is a PDF rendering library
-  @{system_share_dirs}/poppler/cMap/ r,
+  @{system_share_dirs}/poppler/{,**} r,
   
   # For firefox-nightly AUR package
   /opt/firefox-nightly/ r,
@@ -72,6 +72,7 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   owner @{HOME}/.config/mimeapps.list* rw,
   owner @{user_share_dirs}/applications/{,**} r,
   owner @{user_share_dirs}/applications/userapp-Nightly* w,
+  owner @{user_share_dirs}/applications/userapp-Firefox* w,
 
   # Don't allow launching other applications to open files
   deny /usr/bin/gio-launch-desktop rx,
@@ -95,11 +96,12 @@ profile firefox /{usr,opt}/{bin,firefox-nightly}/firefox* {
   
   # Silence denial logs about permissions we don't need
   deny capability sys_admin,
-  deny /opt/firefox-nightly/ w,
-  deny /opt/firefox-nightly/** w,
-  deny /opt/firefox-nightly/crashreporter rx,
+  deny /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/{crashreporter,pingsender} rx,
+  deny /opt/firefox-nightly/{,**} w,
   deny @{sys}/bus/pci/devices/ r,
   deny @{sys}/devices/system/cpu/** r,
+  deny /usr/lib/firefox*/{,**} w,
   deny @{system_share_dirs}/applications/{,**} r,
+  deny @{HOME}/Desktop w,
   deny @{HOME}/.cache/thumbnails/** r,
 }

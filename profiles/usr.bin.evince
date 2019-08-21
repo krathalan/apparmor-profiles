@@ -21,23 +21,18 @@ profile evince /usr/{bin,lib}/evince{,d} {
   /usr/bin/evince rPx,
 
   # Needed to read documents
-  owner @{HOME}/{D,d}ocuments/ r,
-  owner @{HOME}/{D,d}ocuments/** r,
-  owner @{HOME}/{D,d}ownloads/ r,
-  owner @{HOME}/{D,d}ownloads/** r,
+  owner @{HOME}/{D,d}ocuments/{,**} r,
+  owner @{HOME}/{D,d}ownloads/{,**} r,
 
   # Recently opened files are shown at application startup
-  @{system_share_dirs}/thumbnailers/ r,
-  @{system_share_dirs}/thumbnailers/* r,
+  @{system_share_dirs}/thumbnailers/{,*} r,
   # For some reason evince/apparmor doesn't accept the tunable version
-  /usr/share/thumbnailers/ r,
-  /usr/share/thumbnailers/* r,
+  /usr/share/thumbnailers/{,*} r,
   owner @{user_share_dirs}/recently-used.xbel* rw,
   owner @{HOME}/.cache/thumbnails/** rw,
 
   # Poppler is a PDF rendering library
-  @{system_share_dirs}/poppler/ r,
-  @{system_share_dirs}/poppler/** r,
+  @{system_share_dirs}/poppler/{,**} r,
 
   # GNOME
   owner @{HOME}/.config/mimeapps.list* rw,
