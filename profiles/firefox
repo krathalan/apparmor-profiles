@@ -42,7 +42,7 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   owner /dev/shm/org.{chromium,mozilla}.{,ipc.}* rw,
 
   # Telemetry reporter
-  /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/pingsender rPx,
+  /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/pingsender rix,
 
   # System access
   /dev/ r,
