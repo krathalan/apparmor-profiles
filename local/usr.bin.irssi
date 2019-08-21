@@ -1,2 +1,2 @@
 # Config files in ~/.irssi are symlinks to files here
-owner @{HOME}/documents/config/irssi/* r,
+owner @{HOME}/documents/config/irssi/* rw,

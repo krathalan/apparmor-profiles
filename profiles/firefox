@@ -41,6 +41,9 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   owner /dev/shm/shmfd-* rw,
   owner /dev/shm/org.{chromium,mozilla}.{,ipc.}* rw,
 
+  # Telemetry reporter
+  /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/pingsender rPx,
+
   # System access
   /dev/ r,
   /etc/udev/udev.conf r,
@@ -96,7 +99,7 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   
   # Silence denial logs about permissions we don't need
   deny capability sys_admin,
-  deny /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/{crashreporter,pingsender} rx,
+  deny /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/crashreporter rx,
   deny /opt/firefox-nightly/{,**} w,
   deny @{sys}/bus/pci/devices/ r,
   deny @{sys}/devices/system/cpu/** r,
