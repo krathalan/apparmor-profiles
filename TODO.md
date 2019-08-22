@@ -6,7 +6,7 @@ As stated in the readme, profiles should strive to be at least ~95% functional w
 ## TODO
 ### Explore hardening options
 - See abstractions/krathalans-hardening
-- Enabled for profiles: bluetoothd, discord, evince, firefox, gpg-agent, iwd, mosh, NetworkManager, pass, ssh, ssh-agent, waybar, wpa_supplicant
+- Enabled for profiles: bluetoothd, evince, firefox, gpg-agent, iwd, mosh, NetworkManager, NetworkManager//resolvconf, NetworkManager//systemctl, pass, pulseaudio, ssh, ssh-agent, waybar, wpa_supplicant
 - Is not enabled for profiles (but should be, pending testing): all
 
 ## Stats
@@ -15,12 +15,12 @@ As stated in the readme, profiles should strive to be at least ~95% functional w
 
 ```
      28 <abstractions/base>
-     13 <abstractions/krathalans-hardening>
-     10 <abstractions/krathalans-networking>
-      8 <abstractions/fonts>
-      7 <abstractions/krathalans-common-gui>
-      6 <abstractions/audio>
+     15 <abstractions/krathalans-hardening>
+      9 <abstractions/krathalans-networking>
+      7 <abstractions/fonts>
+      6 <abstractions/krathalans-common-gui>
       5 <abstractions/dconf>
+      5 <abstractions/audio>
       3 <abstractions/wayland>
       3 <abstractions/user-tmp>
       3 <abstractions/user-download>
