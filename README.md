@@ -11,7 +11,7 @@ These AppArmor profiles have been tested on the following hardware:
     - NVIDIA GeForce GTX 980 Ti
     - Intel 620 UHD Graphics
 - Network adapters:
-    - Intel Wireless-AC 9260 (iwd)
+    - Intel Wireless-AC 9260 (iwd and wpa_supplicant)
     - Broadcom BCM4360 (wpa_supplicant)
 - Bluetooth adapters (bluetoothd):
     - Intel Wireless-AC 9260
