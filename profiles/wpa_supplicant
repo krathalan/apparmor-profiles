@@ -10,6 +10,7 @@ profile wpa_supplicant /usr/bin/wpa_supplicant {
 
   capability net_admin,
   capability net_raw,
+  capability sys_module,
 
   owner /dev/rfkill r,
   owner /etc/ssl/openssl.cnf r,
