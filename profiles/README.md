@@ -4,7 +4,6 @@
 
 ### Tested profiles
 - bluetoothd
-- [Discord ⚠️](#discord)
 - [evince ⚠️](#evince)
 - [Firefox ⚠️](#firefox)
 - [gpg-agent ⚠️](#gpg-agent)
@@ -33,20 +32,8 @@
 - wpa_supplicant
 
 ## Notes about each profile
-### Discord
-This profile assumes you only want to upload files from `~/{D,d}ownloads`. If you do not, add local changes. Discord does not need access to your whole home directory.
-
-This profile intentionally does not enable hardware acceleration due to the deeper level of system access hardware acceleration requires, the [insecurity of modern graphics drivers](https://security.stackexchange.com/questions/182501/modern-linux-gpu-driver-security?answertab=votes#tab-top), and the reluctance to give proprietary software deeper system access than it truly needs.
-
-Streamer mode and showing any currently playing games/music/etc. will not work as `ptrace` is completely disabled in this profile, as Discord tries to run `ptrace` on every program running on your machine. `ptrace` is an extremely dangerous capability. From the [`ptrace` manpage](http://man7.org/linux/man-pages/man2/ptrace.2.html):
-
-```
-The ptrace() system call provides a means by which one process (the
-"tracer") may observe and control the execution of another process
-(the "tracee"), and examine and change the tracee's memory and
-registers.  It is primarily used to implement breakpoint debugging
-and system call tracing.
-```
+### evince
+This profile assumes you only want to view documents in `~/{D,d}ocuments/` and `~/{D,d}ownloads`. If you do not, add local changes. Evince does not need access to your whole home directory.
 
 ### Firefox
 This profile has been tested with the standard `firefox` package as well as the AUR package `firefox-nightly`, and with OpenGL (default) and WebRender -- on the aforementioned hardware, on both Xorg and Sway. This single profile will apply to both Firefox and Firefox Nightly.
@@ -59,9 +46,6 @@ The only directories in the home directory that Firefox is allowed to access are
 This profile will only work with the `pinentry-curses` pinentry program.
 
 You may need to add local changes to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg`.
-
-### evince
-This profile assumes you only want to view documents in `~/{D,d}ocuments/` and `~/{D,d}ownloads`. If you do not, add local changes. Evince does not need access to your whole home directory.
 
 ### irssi
 You may need to add local changes to allow `irssi` to access your configuration files, if they are symlinks to somewhere other than inside `~/.irssi/`.

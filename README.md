@@ -1,9 +1,8 @@
 # apparmor-profiles
-
-AppArmor profiles for various programs. Only tested on Arch Linux.
+AppArmor profiles for various programs and services on Arch Linux.
 
 ## Notes about usage
-These AppArmor profiles have been verified to work on the following hardware:
+These AppArmor profiles have been tested on the following hardware:
 
 - CPUs:
     - Intel 4960K
@@ -11,8 +10,12 @@ These AppArmor profiles have been verified to work on the following hardware:
 - GPUs:
     - NVIDIA GeForce GTX 980 Ti
     - Intel 620 UHD Graphics
-- Network/Bluetooth cards:
-	- Intel Wireless-AC 9260
+- Network adapters:
+    - Intel Wireless-AC 9260 (iwd)
+    - Broadcom BCM4360 (wpa_supplicant)
+- Bluetooth adapters (bluetoothd):
+    - Intel Wireless-AC 9260
+    - Broadcom BCM20702A0
 
 I cannot guarantee that these profiles will work on any other hardware. All profiles should work with Xorg on NVIDIA hardware and with Sway (and probably Xorg) on Intel hardware. However, it's very possible these profiles will still work with AMD graphics, as it seems AMD graphics share a lot of similar behavior with Intel graphics. If you own an NVIDIA card, please read the NVIDIA section below.
 

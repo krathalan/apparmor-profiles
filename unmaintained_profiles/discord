@@ -3,6 +3,20 @@
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
+# This profile assumes you only want to upload files from `~/{D,d}ownloads`. 
+# If you do not, add local changes. Discord does not need access to your whole 
+# home directory.
+
+# This profile intentionally does not enable hardware acceleration due to the 
+# deeper level of system access hardware acceleration requires, the [insecurity 
+# of modern graphics drivers, and the reluctance to give proprietary software 
+# deeper system access than it truly needs.
+
+# Streamer mode and showing any currently playing games/music/etc. will not work 
+# as `ptrace` is completely disabled in this profile, as Discord tries to run 
+# `ptrace` on every program running on your machine. `ptrace` is an extremely 
+# dangerous capability.
+
 #include <tunables/global>
 
 profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
