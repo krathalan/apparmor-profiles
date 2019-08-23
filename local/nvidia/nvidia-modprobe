@@ -1,4 +1,4 @@
-# Additions and overrides for usr.bin.nvidia-modprobe
+# Additions and overrides for nvidia-modprobe
 
 # Add rules for rootless Xorg
 # See https://wiki.archlinux.org/index.php/Xorg#Rootless_Xorg

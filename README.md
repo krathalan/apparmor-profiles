@@ -34,15 +34,15 @@ To add local changes without changing the file provided by this repository, use 
 ## NVIDIA
 You may have issues with hardware acceleration on NVIDIA hardware. This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured incorrectly. Change the profile executable name at the top of the nvidia_modprobe profile file (`/etc/apparmor.d/nvidia_modprobe`) to "/usr/bin/nvidia-modprobe".
 
-Then rename the nvidia_modprobe file to usr.bin.nvidia-modprobe:
+Then rename the nvidia_modprobe file to nvidia-modprobe:
 
-`# mv /etc/apparmor.d/nvidia_modprobe /etc/apparmor.d/usr.bin.nvidia-modprobe`
+`# mv /etc/apparmor.d/nvidia_modprobe /etc/apparmor.d/nvidia-modprobe`
 
 Don't forget to enforce!
 
-`# aa-enforce /etc/apparmor.d/usr.bin.nvidia-modprobe`
+`# aa-enforce /etc/apparmor.d/nvidia-modprobe`
 
-You will also have to add `#include <abstractions/krathalans-hwaccel-nvidia>` in the Firefox and MPV AppArmor local override profiles. Adding NVIDIA rules to a profile makes the profile much less secure, so this should be done for NVIDIA users only.
+You will also have to add `#include <abstractions/krathalans-hwaccel-nvidia>` in the Firefox and MPV AppArmor local override profiles. Adding NVIDIA rules to a profile makes the profile much less secure, so this should be done for NVIDIA users only. Alternatively, you can simply copy the files from `local/nvidia` in this repository into `/etc/apparmor.d/local` and run `sudo systemctl reload apparmor.service`.
 
 ## Contributing
 Writing AppArmor profiles is fairly easy. "If you know how to use bash, chmod, and grep, you already understand AppArmor and you can probably reverse-engineer the policy by yourself," at 13:25 in the video: https://invidio.us/watch?v=k3kerBRYLhw
