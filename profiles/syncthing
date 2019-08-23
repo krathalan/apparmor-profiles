@@ -17,7 +17,7 @@ profile syncthing /usr/bin/syncthing {
   /usr/bin/ip rix,
 
   # Include user overrides for synced directories
-  #include <local/usr.bin.syncthing>
+  #include <local/syncthing>
 
   # Config
   owner @{HOME}/.config/syncthing/ r,

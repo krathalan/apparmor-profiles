@@ -9,7 +9,7 @@ profile swaybg /usr/bin/swaybg {
   #include <abstractions/base>
 
   # Include user overrides for alternate wallpaper directories
-  #include <local/usr.bin.swaybg>
+  #include <local/swaybg>
 
   # Needed to display wallpaper
   @{system_share_dirs}/mime/** r,

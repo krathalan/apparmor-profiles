@@ -10,7 +10,7 @@ profile pass /usr/bin/pass {
   #include <abstractions/user-tmp>
 
   # Include user overrides for different password or GNUPG directories 
-  #include <local/usr.bin.pass>
+  #include <local/pass>
 
   # Various programs -- pass is a bash script, after all
   #include <abstractions/bash>

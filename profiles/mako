@@ -11,7 +11,7 @@ profile mako /usr/bin/mako {
   #include <abstractions/krathalans-common-gui>
 
   # Include user overrides for possible symlinked config files
-  #include <local/usr.bin.mako>
+  #include <local/mako>
  
   # Shared memory
   owner /dev/shm/mako* rw,

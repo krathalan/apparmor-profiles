@@ -16,7 +16,7 @@ profile mpv /usr/bin/mpv {
   @{sys}/devices/pci[0-9]*/**/config r,
 
   # Include user overrides for krathalans-hwaccel-nvidia
-  #include <local/usr.bin.mpv>
+  #include <local/mpv>
 
   # Audio
   #include <abstractions/audio>

@@ -16,7 +16,7 @@ profile transmission-cli /usr/bin/transmission-cli {
   #include <abstractions/user-download>
 
   # Include user overrides for possible symlinked config files
-  #include <local/usr.bin.transmission-cli>
+  #include <local/transmission-cli>
 
   # Config
   owner @{HOME}/.config/transmission/ rw,

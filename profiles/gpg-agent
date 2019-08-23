@@ -15,7 +15,7 @@ profile gpg-agent /usr/bin/gpg-agent {
   owner @{HOME}/.gnupg/private-keys*/* r,
 
   # Include user overrides for possible symlinked config files
-  #include <local/usr.bin.gpg-agent>
+  #include <local/gpg-agent>
 
   # Curses pinentry
   /usr/bin/pinentry-curses rix,

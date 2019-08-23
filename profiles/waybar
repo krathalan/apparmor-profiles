@@ -19,7 +19,7 @@ profile waybar /usr/bin/waybar {
   #include <abstractions/wayland>
 
   # Include user overrides for possible symlinked config files
-  #include <local/usr.bin.waybar>
+  #include <local/waybar>
 
   # Config
   owner @{HOME}/.config/waybar/** r,

@@ -12,7 +12,7 @@ profile irssi /usr/bin/irssi {
   #include <abstractions/perl>
 
   # Include user overrides for possible symlinked config files
-  #include <local/usr.bin.irssi>
+  #include <local/irssi>
 
   # Networking
   #include <abstractions/krathalans-networking>

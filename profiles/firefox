@@ -21,7 +21,7 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   @{sys}/devices/pci[0-9]*/*/drm/ r,
 
   # Include user overrides for krathalans-hwaccel-nvidia
-  #include <local/usr.bin.firefox>
+  #include <local/firefox>
 
   # Allow access for downloads and uploads
   #include <abstractions/user-download>
