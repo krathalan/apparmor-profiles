@@ -5,7 +5,7 @@
 
   # NVIDIA
   #include <abstractions/nvidia>
-  /dev/nvidia* rw,
+  /dev/nvidia-uvm rw,
   @{PROC}/devices r,
   /usr/bin/nvidia-modprobe mrPx,
   @{system_share_dirs}/egl/egl_external_platform.d/ r,

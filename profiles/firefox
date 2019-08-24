@@ -86,9 +86,10 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   deny @{user_share_dirs}/gvfs-metadata/** r,
   deny @{user_share_dirs}/recently-used.xbel* rw,
 
-  # Deny /proc and /var
-  deny @{PROC}/ rw,
-  deny @{PROC}/** rw,
+  # Deny unnecessary /proc
+  deny @{PROC}/@{pid}/{,**} rw,
+
+  # Deny /var
   deny /var/** rw,
 
   # Don't allow executable mapping of arbitrary files
