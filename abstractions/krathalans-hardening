@@ -11,3 +11,7 @@
   # Deny executable mapping in writable space as allowed in abstractions/fonts
   deny @{HOME}/.{,cache/}fontconfig/ rw,
   deny @{HOME}/.{,cache/}fontconfig/** mrwl,
+
+  # Deny executable mapping in writable space as allowed in abstractions/base for ecryptfs
+  deny @{HOME}/.Private/** mrxwlk,
+  deny @{HOMEDIRS}/.ecryptfs/*/.Private/** mrxwlk,
