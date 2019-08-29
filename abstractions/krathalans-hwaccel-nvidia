@@ -12,9 +12,9 @@
   @{system_share_dirs}/egl/egl_external_platform.d/** r,
   @{system_share_dirs}/nvidia/** r,
 
-  owner /tmp/.gl* m,
-  owner /tmp/*/.gl* m,
-  owner @{HOME}/.nv/** w,
+  deny /tmp/.gl* m,
+  deny /tmp/*/.gl* m,
+  deny @{HOME}/.nv/** w,
 
   # Other files in @{sys}/devices/pci[0-9]*/ that aren't part of 
   # abstractions/dri-enumerate don't belong in this abstraction; allow on a

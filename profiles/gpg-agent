@@ -22,6 +22,9 @@ profile gpg-agent /usr/bin/gpg-agent {
   /dev/pts/* rw,
   @{system_share_dirs}/terminfo/** r,
 
+  # Arch Linux keyring
+  owner /etc/pacman.d/gnupg/{,**} rw,
+
   # Miscellaneous
   /usr/bin/dash rix,
   @{system_share_dirs}/gnupg/* r,
