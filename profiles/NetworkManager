@@ -27,6 +27,7 @@ profile NetworkManager /usr/bin/NetworkManager {
     #include <abstractions/krathalans-hardening>
 
     /usr/bin/dash rix,
+    /usr/bin/cp rix,
     /usr/bin/resolvconf r,
     /usr/bin/systemctl rCx,
 
