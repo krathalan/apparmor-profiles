@@ -11,22 +11,22 @@ As stated in the readme, profiles should strive to be at least ~95% functional w
 
 ## Stats
 ### Most used abstractions
-`grep -i abstractions usr.* | awk '{printf "%s\n", $3}' | grep -v "Graphics" | grep -v "Deny" | sort | uniq -c | sort --reverse --general-numeric-sort`
+`grep -i abstractions profiles/* | awk '{printf "%s\n", $3}' | grep -v "Graphics" | grep -v "Deny" | sort | uniq -c | sort --reverse --general-numeric-sort`
 
 ```
-     28 <abstractions/base>
+     29 <abstractions/base>
      15 <abstractions/krathalans-hardening>
       9 <abstractions/krathalans-networking>
       7 <abstractions/fonts>
       6 <abstractions/krathalans-common-gui>
       5 <abstractions/dconf>
       5 <abstractions/audio>
+      4 <abstractions/bash>
       3 <abstractions/wayland>
       3 <abstractions/user-tmp>
       3 <abstractions/user-download>
       3 <abstractions/python>
       3 <abstractions/perl>
-      3 <abstractions/bash>
       2 <abstractions/krathalans-hwaccel>
       2 <abstractions/gnupg>
       1 <abstractions/ssl_keys>
