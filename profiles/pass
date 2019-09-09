@@ -44,6 +44,29 @@ profile pass /usr/bin/pass {
   # Needed for copying passwords
   /usr/bin/cp mrix,
 
+  # Needed for editing passwords (with nano!)
+  /usr/bin/mktemp mrix,
+  owner /dev/shm/pass.*/{,*,**} rw,
+
+  /usr/bin/nano rCx,
+  profile /usr/bin/nano {
+    #include <abstractions/base>
+    #include <abstractions/bash>
+
+    # Config files
+    /etc/nanorc r,
+    /usr/bin/nano mr,
+    owner @{HOME}/.nanorc r,
+    owner @{HOME}/documents/config/nanorc r,
+
+    # Syntax highlighting
+    /usr/share/file/misc/magic.mgc r,
+    /usr/share/nano-syntax-highlighting/{,*} r,
+
+    # Needed for pass to read the edited file
+    owner /dev/shm/pass.*/{,*,**} rw,
+  }
+
   # GPG
   #include <abstractions/gnupg>
   /usr/bin/gpg mrix,
@@ -62,6 +85,9 @@ profile pass /usr/bin/pass {
   # Needed or otherwise segfaults
   @{PROC} r,
   owner @{HOME}/.Xauthority r,
+
+  # Pass asks for diff when editing entries, but it never displays a diff of anything
+  deny /usr/bin/diff mrx,
 
   # No git support -- that would require networking :)
   deny /usr/bin/git mrx,
