@@ -23,12 +23,16 @@ profile ssh /usr/bin/ssh {
   /etc/{passwd,protocols,services} r,
   /etc/ssh/ssh_config r,
 
-  # SSH keys, known hosts
+  # SSH keys
   owner @{HOME}/.ssh/ rw,
   owner @{HOME}/.ssh/* r,
 
-  # Use ssh-add with ssh-agent instead of letting ssh prompt you
-  deny /dev/tty rw,
+  # Needed for ssh to prompt you for your key as well as to establish the
+  # authenticity of new hosts
+  /dev/tty rw,
+
+  # Needed to record authenticity of new hosts
+  owner @{HOME}/.ssh/known_hosts rw,
 
   # Silence unnecessary permissions
   deny @{PROC}/@{pid}/fd/ r,
