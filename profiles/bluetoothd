@@ -17,5 +17,5 @@ profile bluetoothd /usr/lib/bluetooth/bluetoothd {
   owner /etc/bluetooth/ r,
   owner /etc/bluetooth/** r,
   owner @{sys}/devices/virtual/dmi/id/chassis_type r,
-  owner /var/lib/bluetooth/** rw,
+  owner /var/lib/bluetooth/{,**} rw,
 }

@@ -22,6 +22,7 @@ profile lollypop /usr/bin/lollypop {
 
   # Dconf
   #include <abstractions/dconf>
+  owner /run/user/*/dconf/ w,
   owner /run/user/*/dconf/user rw,
 
   # Python
@@ -48,6 +49,10 @@ profile lollypop /usr/bin/lollypop {
   owner @{user_share_dirs}/lollypop/** rwlk,
   owner @{user_share_dirs}/recently-used.xbel* rw,
 
+  # Seems to work fine without access to a shell
+  deny /usr/bin/bash mrx,
+  deny /usr/bin/dash mrx,
+
   # Don't allow executable mapping of arbitrary files
   # https://askubuntu.com/questions/336552/what-are-orcexec-files
   deny /run/user/*/orcexec* mrw,
@@ -62,6 +67,6 @@ profile lollypop /usr/bin/lollypop {
   deny /etc/nsswitch.conf rw,
   deny @{PROC}/** rw,
   deny @{sys}/** rw,
-  deny /usr/bin/bash rwx,
+  deny /usr/share/nvidia/{,**} rw,
   deny /var/** rw,
 }

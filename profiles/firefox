@@ -28,6 +28,7 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
 
   # Dconf
   #include <abstractions/dconf>
+  owner /run/user/*/dconf/ w,
   owner /run/user/*/dconf/user rw,
   owner @{HOME}/.config/dconf/user r,
 
