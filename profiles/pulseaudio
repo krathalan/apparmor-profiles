@@ -1,5 +1,5 @@
 # AppArmor profile for pulseaudio sound system
-# Version of pulseaudio profiled: 12.99.3
+# Version of pulseaudio profiled: 13.0
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
