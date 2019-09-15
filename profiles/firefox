@@ -37,7 +37,7 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
 
   # Firefox subprocesses
   ptrace trace peer=firefox,
-  /usr/bin/bash ix,
+  /usr/bin/{bash,dash} rix,
   # Must be px to avoid env scrubbing for LD_PRELOAD libEGL.so, libmozsandbox.so
   /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* mrpx,
   owner /dev/shm/shmfd-* rw,

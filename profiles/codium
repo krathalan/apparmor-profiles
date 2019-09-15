@@ -19,6 +19,24 @@ profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin
   #include <abstractions/user-tmp>
   #include <abstractions/krathalans-networking>
 
+  # Needed to open links in Firefox
+  /usr/bin/xdg-open rCx,
+
+  profile xdg-open /usr/bin/xdg-open {
+    #include <abstractions/base>
+
+    # Helper programs
+    /usr/bin/{cut,dash,dbus-send,egrep,grep,head,sed,uname,which,xdg-mime} rix,
+    /usr/bin/xdg-open r,
+
+    # Browsers -- only allow Firefox
+    /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* rPx,
+    deny /usr/bin/lynx rx,
+
+    # Config
+    @{system_share_dirs}/applications/{,**} r,
+  }
+
   # Needed to function at all
   /dev/shm/.org.chromium.Chromium.* rw,
   @{PROC}/ r,
