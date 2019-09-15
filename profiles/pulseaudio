@@ -36,7 +36,7 @@ profile pulseaudio /usr/bin/pulseaudio {
   @{sys}/devices/pci[0-9]*/**/sound/card[0-9]/** r,
   @{sys}/devices/virtual/dmi/id/* r,
   @{sys}/devices/virtual/sound/** r,
-  @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
+  @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
   @{system_share_dirs}/pulseaudio/alsa-mixer/** r,
   owner @{PROC}/*/fd/ r,
   owner /run/user/*/pulse/* rw,

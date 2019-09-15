@@ -55,7 +55,7 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   /usr/lib/firefox/fonts/** rw,
 
   # Gsettings https://developer.gnome.org/gio/stable/GSettings.html
-  @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
+  @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
 
   # Poppler is a PDF rendering library
   @{system_share_dirs}/poppler/{,**} r,
