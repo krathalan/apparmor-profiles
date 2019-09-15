@@ -35,6 +35,10 @@ profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin
 
     # Config
     @{system_share_dirs}/applications/{,**} r,
+    @{user_share_dirs}/applications/{,**} r,
+
+    # Silence unnecessary permissions
+    deny /usr/bin/{gawk,uname} rx,
   }
 
   # Needed to function at all
