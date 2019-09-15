@@ -1,0 +1,94 @@
+# AppArmor profile for VSCodium editor
+# Version of VSCodium profiled: 1.38.1
+# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin/codium} {
+  #include <abstractions/base>
+  #include <abstractions/dri-common>
+  #include <abstractions/fonts>
+  #include <abstractions/krathalans-common-gui>
+
+  # Helper programs
+  #include <abstractions/bash>
+  /usr/bin/{bash,dirname,git,grep,id,readlink,shellcheck,which} rix,
+
+  # Needed to download extensions, updates
+  #include <abstractions/krathalans-networking>
+
+  # Needed to function at all
+  /dev/shm/.org.chromium.Chromium.* rw,
+  @{PROC}/ r,
+
+  # Sockets
+  owner /tmp/vscode*.sock w,
+  owner /run/user/*/vscode*.sock w,
+
+  # Chromium/Electron spawns and uses multiple processes
+  @{system_share_dirs}/vscodium-bin/{,**} mr,
+  /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin/codium} rpx,
+
+  # Needed to record open documents at shutdown and open them again at startup
+  owner @{HOME}/.local/share/recently-used.xbel* rw,
+
+  # Config
+  owner @{HOME}/.config/VSCodium/{,**} k,
+  owner @{HOME}/.vscode-oss/{,**} rw,
+
+  # Needed to edit documents (including config files)
+  owner @{HOME}/{,*} rw,
+  owner @{HOME}/.config/{,**} rw,
+  owner @{HOME}/{D,d}ocuments/{,**} rw,
+  owner @{HOME}/{G,g}it/{,**} rw,
+
+  # File picker
+  @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
+
+  # Needed to render
+  @{sys}/bus/pci/devices/ r,
+  @{sys}/devices/pci[0-9]*/** r,
+
+  # Nvidia (disable hardware accel)
+  /usr/bin/nvidia-modprobe Px,
+  deny /dev/nvidia* rw,
+  deny @{PROC}/driver/nvidia/{,**} r,
+  deny @{PROC}/modules r,
+  deny @{system_share_dirs}/nvidia/{,**} r,
+  deny @{HOME}/.nv/* mrwlk,
+  
+  # Possibly needed for debugging?
+  deny @{PROC}/sys/kernel/yama/ptrace_scope r,
+
+  # An editor doesn't need audio
+  deny /etc/pulse/client.conf r,
+  deny /run/user/*/pulse/ rw,
+
+  # Dconf -- disabling this doesn't affect VSCodium
+  deny owner /run/user/*/dconf/user rw,
+  deny owner @{HOME}/.config/dconf/user r,
+
+  # Use a separate terminal program
+  deny /dev/ptmx rw,
+  deny /dev/pts/[0-9] rw,
+  deny /dev/tty rw,
+  deny /dev/tty[0-9] rw,
+  deny /sys/devices/virtual/tty/** r,
+
+  # Silence unnecessary permissions
+  deny signal send set=term peer=unconfined,
+  deny /usr/bin/env rx,
+  deny /dev/shm/ r,
+  deny @{PROC}/version r,
+  deny @{PROC}/vmstat r,
+  deny @{PROC}/*/comm r,
+  deny @{PROC}/*/fd/ r,
+  deny @{PROC}/*/mountinfo r,
+  deny @{PROC}/*/oom_score_adj w,
+  deny @{PROC}/*/stat r,
+  deny @{PROC}/*/statm r,
+  deny @{PROC}/*/task/ r,
+  deny @{sys}/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
+  deny @{HOME}/.pki/{,**} rw,
+}
