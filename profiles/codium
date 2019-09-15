@@ -13,17 +13,17 @@ profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin
 
   # Helper programs
   #include <abstractions/bash>
-  /usr/bin/{bash,dirname,git,grep,id,readlink,shellcheck,which} rix,
+  /usr/bin/{bash,dash,dirname,git,grep,id,readlink,shellcheck,which} rix,
 
-  # Needed to download extensions, updates
+  # Needed to browse download extensions
+  #include <abstractions/user-tmp>
   #include <abstractions/krathalans-networking>
 
   # Needed to function at all
   /dev/shm/.org.chromium.Chromium.* rw,
   @{PROC}/ r,
 
-  # Sockets
-  owner /tmp/vscode*.sock w,
+  # Socket
   owner /run/user/*/vscode*.sock w,
 
   # Chromium/Electron spawns and uses multiple processes
