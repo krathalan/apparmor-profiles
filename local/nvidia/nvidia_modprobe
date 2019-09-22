@@ -1,4 +1,7 @@
-# Additions and overrides for nvidia-modprobe
+# Additions and overrides for nvidia_modprobe
+
+# This seems to be missing from the base profile
+@{PROC}/driver/nvidia/params r,
 
 # Add rules for rootless Xorg
 # See https://wiki.archlinux.org/index.php/Xorg#Rootless_Xorg
@@ -6,8 +9,8 @@
 /dev/nvidia[0-9] w,
 /dev/nvidia-modeset w,
 
-# This seems to be missing from the base profile
-@{PROC}/driver/nvidia/params r,
+# VSCodium hwaccel
+/usr/share/vscodium-bin/icudtl.dat r,
 
 # Silence denials about arbitrary file handles
 # See https://gitlab.com/apparmor/apparmor/issues/49

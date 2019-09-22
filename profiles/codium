@@ -19,6 +19,9 @@ profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin
   #include <abstractions/user-tmp>
   #include <abstractions/krathalans-networking>
 
+  # Nvidia users
+  #include <local/codium>
+
   # Needed to open links in Firefox
   /usr/bin/xdg-open rCx,
 
@@ -71,21 +74,17 @@ profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin
   # Needed to render
   @{sys}/bus/pci/devices/ r,
   @{sys}/devices/pci[0-9]*/** r,
-
-  # Nvidia (disable hardware accel)
-  /usr/bin/nvidia-modprobe Px,
-  deny /dev/nvidia* rw,
-  deny @{PROC}/driver/nvidia/{,**} r,
-  deny @{PROC}/modules r,
-  deny @{system_share_dirs}/nvidia/{,**} r,
-  deny @{HOME}/.nv/* mrwlk,
   
   # Possibly needed for debugging?
   deny @{PROC}/sys/kernel/yama/ptrace_scope r,
 
   # An editor doesn't need audio
+  deny /usr/bin/pulseaudio rx,
   deny /etc/pulse/client.conf r,
   deny /run/user/*/pulse/ rw,
+
+  # GVFS isn't necessary
+  deny /usr/share/gvfs/remote-volume-monitors/ r,
 
   # Dconf -- disabling this doesn't affect VSCodium
   deny owner /run/user/*/dconf/user rw,
