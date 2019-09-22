@@ -7,9 +7,9 @@
 
 profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin/codium} {
   #include <abstractions/base>
-  #include <abstractions/dri-common>
   #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
+  #include <abstractions/krathalans-hwaccel>
 
   # Helper programs
   #include <abstractions/bash>

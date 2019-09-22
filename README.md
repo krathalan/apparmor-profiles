@@ -8,7 +8,7 @@ These AppArmor profiles have been tested on the following hardware:
     - Intel 4960K
     - Intel 8250U
 - GPUs:
-    - NVIDIA GeForce GTX 980 Ti
+    - NVIDIA GeForce GTX 980 Ti with proprietary drivers
     - Intel 620 UHD Graphics
 - Network adapters:
     - Intel Wireless-AC 9260 (iwd and wpa_supplicant)
@@ -24,7 +24,8 @@ These profiles strive to be at least ~95% functional with zero audit log warning
 You should read through [the notes in `profiles/README.md`](profiles#profiles) before using these profiles.
 
 ## Abstractions
-Many profiles require access to common files: icons, themes, and fonts for GUI applications; hardware acceleration resources; networking resources; and so on. To ease the burden of maintenance and to reduce policy error, many rules have been put into abstractions. Copy the files in the `abstractions/` folder in this repository to `/etc/apparmor.d/abstractions/` and `sudo systemctl reload apparmor.service`.
+Many profiles require access to common files: icons, themes, and fonts for GUI applications; hardware acceleration resources; networking resources; and so on. To ease the burden of maintenance and to reduce policy error, many rules have been put into abstractions. Copy all files in the `abstractions/` folder in this repository to `/etc/apparmor.d/abstractions/`, then run  
+`$ sudo systemctl reload apparmor.service`
 
 Many profiles WILL NOT WORK if you do not have all abstractions loaded.
 
@@ -32,17 +33,21 @@ Many profiles WILL NOT WORK if you do not have all abstractions loaded.
 To add local changes without changing the file provided by this repository, use local overrides. See `less /etc/apparmor.d/local/README` for more details. You can see examples of local overrides in the `local/` directory in this repository.
 
 ## NVIDIA
-You may have issues with hardware acceleration on NVIDIA hardware. This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured incorrectly. Change the profile executable name at the top of the nvidia_modprobe profile file (`/etc/apparmor.d/nvidia_modprobe`) to "/usr/bin/nvidia-modprobe".
+You may have issues with hardware acceleration on NVIDIA hardware. This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured incorrectly. Change the profile executable name at the top of the nvidia_modprobe profile file (`/etc/apparmor.d/nvidia_modprobe`) to "/usr/bin/nvidia-modprobe", so the top of the profile looks like this:  
+```
+# vim:syntax=apparmor
 
-Then rename the nvidia_modprobe file to nvidia-modprobe:
+#include <tunables/global>
 
-`# mv /etc/apparmor.d/nvidia_modprobe /etc/apparmor.d/nvidia-modprobe`
+profile nvidia_modprobe /usr/bin/nvidia-modprobe {
+  #include <abstractions/base>
+  ...
+```
 
-Don't forget to enforce!
+Don't forget to enforce!  
+`$ sudo aa-enforce /etc/apparmor.d/nvidia_modprobe`
 
-`# aa-enforce /etc/apparmor.d/nvidia-modprobe`
-
-You will also have to add `#include <abstractions/krathalans-hwaccel-nvidia>` in the Firefox and MPV AppArmor local override profiles. Adding NVIDIA rules to a profile makes the profile much less secure, so this should be done for NVIDIA users only. Alternatively, you can simply copy the files from `local/nvidia` in this repository into `/etc/apparmor.d/local` and run `sudo systemctl reload apparmor.service`.
+You will also have to add `#include <abstractions/krathalans-hwaccel-nvidia>` to the Firefox, MPV, and VSCodium local profile override files in `/etc/apparmor.d/local`. Alternatively, you can simply copy all files from `local/nvidia` in this repository into `/etc/apparmor.d/local` and run `sudo systemctl reload apparmor.service`.
 
 ## Contributing
 Writing AppArmor profiles is fairly easy. "If you know how to use bash, chmod, and grep, you already understand AppArmor and you can probably reverse-engineer the policy by yourself," at 13:25 in the video: https://invidio.us/watch?v=k3kerBRYLhw
