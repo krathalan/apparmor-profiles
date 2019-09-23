@@ -95,9 +95,11 @@ You may need to add local changes to allow `swaybg` to access your specified wal
 You *will* need to add local changes to allow `syncthing` to access your synced directories.
 
 ### transmission-cli
-You may need to add local changes to allow `transmission-cli` to access your configuration files, if you keep them somewhere other than `~/.config/transmission`.
+You may need to add local changes to allow `transmission-cli` to access your configuration files, if you keep them somewhere other than `~/.config/transmission*`.
 
 This profile assumes you only want to download files to `~/{D,d}ownlads`.
+
+This profile applies to all `transmission-*` binaries, including `transmission-daemon` and `transmission-remote`.
 
 ### waybar
 You may need to add local changes to allow `waybar` modules to work which I have not tested. I have tested the following modules to work: sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock, tray.

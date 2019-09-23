@@ -5,12 +5,11 @@
 
 #include <tunables/global>
 
-profile transmission-cli /usr/bin/transmission-cli {
+profile transmission-cli /usr/bin/transmission* {
   #include <abstractions/base>
 
   # Networking
   #include <abstractions/krathalans-networking>
-  owner @{PROC}/@{pid}/net/route r,
 
   # Allow access for writing downloaded files
   #include <abstractions/user-download>
@@ -19,10 +18,9 @@ profile transmission-cli /usr/bin/transmission-cli {
   #include <local/transmission-cli>
 
   # Config
-  owner @{HOME}/.config/transmission/ rw,
-  owner @{HOME}/.config/transmission/** rw,
-
+  owner @{HOME}/.config/transmission*/ rw,
+  owner @{HOME}/.config/transmission*/** rw,
+  
   # Silence unnecessary permissions
-  deny @{PROC}/sys/kernel/random/uuid r,
-  deny @{PROC}/*/mounts r,
+  deny @{PROC}/{,**} r,
 }
