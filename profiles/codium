@@ -68,6 +68,9 @@ profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin
   owner @{HOME}/{D,d}ocuments/{,**} rw,
   owner @{HOME}/{G,g}it/{,**} rw,
 
+  # Protect sensitive file(s)
+  deny @{HOME}/.bash_history rw,
+
   # File picker
   @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
 

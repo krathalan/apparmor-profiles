@@ -19,7 +19,7 @@ These AppArmor profiles have been tested on the following hardware:
 
 I cannot guarantee that these profiles will work on any other hardware. All profiles should work with Xorg on NVIDIA hardware and with Sway (and probably Xorg) on Intel hardware. However, it's very possible these profiles will still work with AMD graphics, as it seems AMD graphics share a lot of similar behavior with Intel graphics. If you own an NVIDIA card, please read the NVIDIA section below.
 
-These profiles strive to be at least ~95% functional with zero audit log warnings under proper behavior. Functionality is not ignored; rather sometimes it's blocked in the interest of security, such as blocking hardware acceleration for Discord. If functionality is not explicitly blocked, then it's probably a bug in the profile and should be fixed. Create an issue.
+These profiles strive to be at least ~95% functional with zero audit log warnings under proper behavior. Functionality is not ignored. If functionality is not explicitly blocked, then it's probably a bug in the profile and should be fixed. Create an issue.
 
 You should read through [the notes in `profiles/README.md`](profiles#profiles) before using these profiles.
 

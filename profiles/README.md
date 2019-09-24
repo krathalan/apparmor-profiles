@@ -4,6 +4,7 @@
 
 ### Tested profiles
 - bluetoothd
+- [codium ⚠️](#codium)
 - [evince ⚠️](#evince)
 - [Firefox ⚠️](#firefox)
 - [gpg-agent ⚠️](#gpg-agent)
@@ -24,34 +25,40 @@
 - [streamlink ⚠️](#streamlink)
 - [swaybg ⚠️](#swaybg)
 - [syncthing ⚠️](#syncthing)
+- [transmission-cli ⚠️](#transmission-cli)
 - [waybar ⚠️](#waybar)
+- wpa_supplicant
 - [youtube-dl ⚠️](#youtube-dl)
 
-### New and somewhat untested profiles
-- [transmission-cli ⚠️](#transmission-cli)
-- wpa_supplicant
-
 ## Notes about each profile
+### codium
+This profile assumes you only want to edit files in the base `~` directory (for files like `~/.bashrc`), `~/.config/`, `~/{D,d}ocuments/`, and `~/{G,g}it/`.
+
+This profile is only allowed to open an AppArmor-confined Firefox when opening a URL. 
+
+You will need to add local changes if your VSCodium configuration files are somewhere other than `~/.config/VSCodium/` and `~/.vscode-oss`, or if you use extensions which require files outside of the profile.
+
 ### evince
-This profile assumes you only want to view documents in `~/{D,d}ocuments/` and `~/{D,d}ownloads`. If you do not, add local changes. Evince does not need access to your whole home directory.
+This profile assumes you only want to view documents in `~/{D,d}ocuments/` and `~/{D,d}ownloads/`. If you do not, add local changes. Evince does not need access to your whole home directory.
 
 ### Firefox
-This profile has been tested with the standard `firefox` package as well as the AUR package `firefox-nightly`, and with OpenGL (default) and WebRender -- on the aforementioned hardware, on both Xorg and Sway. This single profile will apply to both Firefox and Firefox Nightly.
+This profile has been tested with the `firefox` and `firefox-developer-edition` repo packages and the `firefox-nightly` AUR package, and with OpenGL (default) and WebRender -- on the aforementioned hardware, on both Xorg and Sway. This single profile will apply to all Firefox versions.
 
-You will need to add local changes if your Firefox Nightly files are somewhere other than `/opt/firefox-nightly` (e.g. if you just download the binary from Mozilla's website).
+You will need to add local changes if your Firefox Nightly files are somewhere other than `/opt/firefox-nightly/` (e.g. if you just download the binary from Mozilla's website).
 
-The only directories in the home directory that Firefox is allowed to access are `~/{D,d}ownloads` and `~/.mozilla`. You won't be able to, for example, upload things to the web from your Documents directory. You'll need to copy the file to your downloads directory first.
+The only directories in the home directory that Firefox is allowed to access are `~/{D,d}ownloads/` and `~/.mozilla/`. You won't be able to, for example, upload things to the web from your Documents directory. You'll need to copy the file to your downloads directory first.
 
 ### gpg-agent
-This profile will only work with the `pinentry-curses` pinentry program.
+This profile will only work with the `pinentry-curses` pinentry program. As per the Arch Wiki (https://wiki.archlinux.org/index.php/GPG#pinentry), to use the curses pinentry, add the following to `~/.gnupg/gpg-agent.conf`:  
+`pinentry-program /usr/bin/pinentry-curses`
 
-You may need to add local changes to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg`.
+You may need to add local changes to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg/`.
 
 ### irssi
 You may need to add local changes to allow `irssi` to access your configuration files, if they are symlinks to somewhere other than inside `~/.irssi/`.
 
 ### Lollypop
-This profile assumes you keep your music in `~/{M,m}usic`. If you do not, add local changes. Lollypop does not need access to your whole home directory.
+This profile assumes you keep your music in `~/{M,m}usic/`. If you do not, add local changes. Lollypop does not need access to your whole home directory.
 
 I have not tested the profile for any web features, so they probably will not work.
 
@@ -59,7 +66,7 @@ I have not tested the profile for any web features, so they probably will not wo
 You may need to add local changes to allow `mako` to access your configuration file, if it's a symlink to somewhere other than inside `~/.config/mako/`.
 
 ### mpv
-You may need to add local changes to allow `mpv` to acces your configuration file, if it's a symlink to somehwere other than `~/.config/mpv`.
+You may need to add local changes to allow `mpv` to acces your configuration file, if it's a symlink to somehwere other than `~/.config/mpv/`.
 
 This profile allows mpv to utilize `youtube-dl` to stream videos and confines it in the `youtube-dl` AppArmor profile in this project. You will need the separate `youtube-dl` profile enabled for this functionality.
 
@@ -68,22 +75,22 @@ This AppArmor profile also works when mpv is invoked by other programs like [str
 Use the command line flag `--gpu-context=wayland` for Wayland support. Use the command line flag `--hwdec=auto` for nvdec (NVIDIA) and VA-API (Intel) hardware decoding. You can also tell `mpv` to always use these options [through a config file](https://mpv.io/manual/master/).
 
 ### pass
-You may need to add local changes to allow `pass` to access your password files and GNUPG files if they're somehwere other than `~/.password-store` and `~/.gnupg` respectively.
+You may need to add local changes to allow `pass` to access your password files and GNUPG files if they're somehwere other than `~/.password-store/` and `~/.gnupg/` respectively.
 
 ### redshift
-This profile has been tested to work correctly on Xorg with the regular `redshift` package and on Sway with the `redshift-wlr-gamma-control` AUR package.
+This profile has been tested to work correctly on Xorg with the `redshift` repo package and on Sway with the `redshift-wlr-gamma-control` AUR package.
 
-You may need to add local changes to allow `redshift` to access your configuration file, if it's a symlink to somewhere other than `~/.config/redshift/redshift.conf`.
+You may need to add local changes to allow `redshift` to access your configuration file, if it's a symlink to somewhere other than `~/.config/redshift/`.
 
 ### ssh
 This profile will work with [`mosh`, the mobile shell](https://mosh.org/), and with `git` for interacting with remote repositories.
 
 This profile will work using `ssh` in the traditional way to "ssh into" remote machines, but `mosh` will give you terminfo support for any terminal on the host without having to install it on the remote machine; not to mention better connection stability, connection through sleep/hibernate, etc. There's an AppArmor profile for `mosh` in this repository, and these profiles work together.
 
-You may need to add local changes to allow `ssh` to access your SSH keys, if you keep them somewhere other than `~/.ssh`.
+You may need to add local changes to allow `ssh` to access your SSH keys, if you keep them somewhere other than `~/.ssh/`.
 
 ### ssh-agent
-You may need to add local changes to allow `ssh-agent` access to your SSH keys, if you keep them somewhere other than `~/.ssh`.
+You may need to add local changes to allow `ssh-agent` access to your SSH keys, if you keep them somewhere other than `~/.ssh/`.
 
 ### streamlink
 You will need to set either `mpv` or `vlc` as your default player. If you choose `mpv`, you must have the separate `mpv` AppArmor profile from this repository enabled. If you choose `vlc`, I have not written an AppArmor profile for it yet, so streamlink will execute `vlc` unconfined (less secure).
@@ -95,9 +102,9 @@ You may need to add local changes to allow `swaybg` to access your specified wal
 You *will* need to add local changes to allow `syncthing` to access your synced directories.
 
 ### transmission-cli
-You may need to add local changes to allow `transmission-cli` to access your configuration files, if you keep them somewhere other than `~/.config/transmission*`.
+You may need to add local changes to allow `transmission-cli` to access your configuration files, if you keep them somewhere other than `~/.config/transmission*/`.
 
-This profile assumes you only want to download files to `~/{D,d}ownlads`.
+This profile assumes you only want to download files to `~/{D,d}ownlads/`.
 
 This profile applies to all `transmission-*` binaries, including `transmission-daemon` and `transmission-remote`.
 
@@ -105,4 +112,4 @@ This profile applies to all `transmission-*` binaries, including `transmission-d
 You may need to add local changes to allow `waybar` modules to work which I have not tested. I have tested the following modules to work: sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock, tray.
 
 ### youtube-dl
-The only directory in the home directory youtube-dl is allowed to access is the `~/{D,d}ownloads` directory. Add local changes if you prefer to download your videos elsewhere.
+The only directory in the home directory youtube-dl is allowed to access is the `~/{D,d}ownloads/` directory. Add local changes if you prefer to download your videos elsewhere.
