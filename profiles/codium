@@ -128,7 +128,7 @@ profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin
 
   # Silence unnecessary permissions
   deny signal send set=term peer=unconfined,
-  deny /usr/bin/{env,id} rx,
+  deny /usr/bin/{date,env,id,tput,tty} rx,
   deny /dev/shm/ r,
   deny @{PROC}/version r,
   deny @{PROC}/vmstat r,
@@ -140,5 +140,6 @@ profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin
   deny @{PROC}/*/statm r,
   deny @{PROC}/*/task/ r,
   deny @{sys}/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
+  deny @{system_share_dirs}/bash-completion/bash_completion r,
   deny @{HOME}/.pki/{,**} rw,
 }
