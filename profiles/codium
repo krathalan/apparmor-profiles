@@ -13,7 +13,7 @@ profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin
 
   # Helper programs
   #include <abstractions/bash>
-  /usr/bin/{bash,dash,dirname,git,grep,id,readlink,which} rix,
+  /usr/bin/{bash,dash,dirname,git,grep,readlink,which} rix,
 
   # Needed to browse and download extensions
   #include <abstractions/krathalans-networking>
@@ -128,7 +128,7 @@ profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin
 
   # Silence unnecessary permissions
   deny signal send set=term peer=unconfined,
-  deny /usr/bin/env rx,
+  deny /usr/bin/{env,id} rx,
   deny /dev/shm/ r,
   deny @{PROC}/version r,
   deny @{PROC}/vmstat r,
