@@ -1,15 +1,18 @@
-# AppArmor profile for VSCodium editor
-# Version of VSCodium profiled: 1.38.1
+# AppArmor profile for VSCodium and VS Code editor
+# Version of VSCode/ium profiled: 1.38.1
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
 #include <tunables/global>
 
-profile codium /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code,code-oss,code.js,codium} {
+profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code,code-oss,code.js,codium} {
   #include <abstractions/base>
   #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
   #include <abstractions/krathalans-hwaccel>
+
+  # Nvidia users
+  #include <local/code>
 
   # Helper programs
   #include <abstractions/bash>
@@ -18,9 +21,6 @@ profile codium /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{co
   # Needed to browse and download extensions
   #include <abstractions/krathalans-networking>
   #include <abstractions/user-tmp>
-
-  # Nvidia users
-  #include <local/codium>
 
   # Needed to function at all
   /dev/shm/.org.chromium.Chromium.* rw,
@@ -108,7 +108,7 @@ profile codium /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{co
   # Extension is MIT Licensed: https://github.com/timonwong/vscode-shellcheck
   /usr/bin/shellcheck rix,
   
-  # Possibly needed for debugging?
+  # Possibly needed for debugging? Use separate debugger program (e.g. gdb)
   deny @{PROC}/sys/kernel/yama/ptrace_scope r,
 
   # An editor doesn't need audio
