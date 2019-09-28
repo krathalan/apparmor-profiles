@@ -5,7 +5,7 @@
 
 #include <tunables/global>
 
-profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin/codium} {
+profile codium /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code,code-oss,code.js,codium} {
   #include <abstractions/base>
   #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
@@ -25,6 +25,7 @@ profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin
   # Needed to function at all
   /dev/shm/.org.chromium.Chromium.* rw,
   @{PROC}/ r,
+  owner @{PROC}/*/comm w,
   owner /run/user/*/vscode*.sock w,
 
   # Needed to render
@@ -33,12 +34,15 @@ profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin
 
   # Chromium/Electron spawns and uses multiple processes
   @{system_share_dirs}/vscodium-bin/{,**} mr,
-  /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin/codium} rpx,
+  /usr/lib/code/{,**} mr,
+  /usr/lib/electron4/electron rix,
+  /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code,code-oss,code.js,codium} rpx,
 
   # Needed to record open documents at shutdown and open them again at startup
   owner @{HOME}/.local/share/recently-used.xbel* rw,
 
   # Config
+  owner "@{HOME}/.config/Code - OSS/{,**}" k,
   owner @{HOME}/.config/VSCodium/{,**} k,
   owner @{HOME}/.vscode-oss/{,**} rw,
 
@@ -128,7 +132,7 @@ profile codium /usr/{bin/codium,share/vscodium-bin/bin/codium,share/vscodium-bin
 
   # Silence unnecessary permissions
   deny signal send set=term peer=unconfined,
-  deny /usr/bin/{date,env,id,tput,tty} rx,
+  deny /usr/bin/{date,env,id,ip,tput,tty} rx,
   deny /dev/shm/ r,
   deny @{PROC}/version r,
   deny @{PROC}/vmstat r,
