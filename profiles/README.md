@@ -4,7 +4,7 @@
 
 ### Tested profiles
 - bluetoothd
-- [codium ⚠️](#codium)
+- [code ⚠️](#code)
 - [evince ⚠️](#evince)
 - [Firefox ⚠️](#firefox)
 - [gpg-agent ⚠️](#gpg-agent)
@@ -31,12 +31,14 @@
 - [youtube-dl ⚠️](#youtube-dl)
 
 ## Notes about each profile
-### codium
+### code
+This profile will work with both the `code` repo package and the `vscodium-bin` AUR package.
+
 This profile assumes you only want to edit files in the base `~` directory (for files like `~/.bashrc`), `~/.config/`, `~/{D,d}ocuments/`, and `~/{G,g}it/`.
 
 This profile is only allowed to open an AppArmor-confined Firefox when opening a URL. 
 
-You will need to add local changes if your VSCodium configuration files are somewhere other than `~/.config/VSCodium/` and `~/.vscode-oss`, or if you use extensions which require files outside of the profile.
+You will need to add local changes if your VSCodium configuration files are somewhere other than `~/.config/VSCodium/`, `~/.config/Code - OSS`, and `~/.vscode-oss`, or if you use extensions which require files outside of the profile.
 
 ### evince
 This profile assumes you only want to view documents in `~/{D,d}ocuments/` and `~/{D,d}ownloads/`. If you do not, add local changes. Evince does not need access to your whole home directory.
