@@ -18,46 +18,12 @@ profile NetworkManager /usr/bin/NetworkManager {
   # Write to system log
   capability audit_write,
 
-  # Resolvconf
-  /usr/bin/systemctl rCx,
-  /usr/bin/resolvconf rCx,
-
-  profile resolvconf /usr/bin/resolvconf {
-    #include <abstractions/base>
-    #include <abstractions/krathalans-hardening>
-
-    /usr/bin/dash rix,
-    /usr/bin/cp rix,
-    /usr/bin/resolvconf r,
-    /usr/bin/systemctl rCx,
-
-    # Helper programs
-    /usr/bin/{cat,rm,mkdir} rix,
-
-    # Needed to
-    owner / r,
-
-    # Miscellaneous
-    /etc/resolv* rw,
-    /{,var/}run/resolvconf/{,**} rw,
-  }
-
-  profile systemctl /usr/bin/systemctl {
-    #include <abstractions/base>
-    #include <abstractions/krathalans-hardening>
-
-    capability sys_resource,
-    ptrace read peer=unconfined,
-
-    owner @{PROC}/@{pid}/{,**} r,
-    owner @{PROC}/cmdline r,
-  }
-
   # Helper programs
   /usr/bin/dash rix,
 
   # Config
   owner /etc/NetworkManager/{,**} r,
+  
   # Needed to record connection information (e.g. wifi passwords)
   owner /etc/NetworkManager/system-connections/{,**} w,
 
@@ -83,6 +49,39 @@ profile NetworkManager /usr/bin/NetworkManager {
   owner /{,var/}run/NetworkManager/** rw,
   owner /var/lib/NetworkManager/ r,
   owner /var/lib/NetworkManager/** rw,
+
+  # Resolvconf
+  /usr/bin/systemctl rCx,
+  /usr/bin/resolvconf rCx,
+
+  profile resolvconf /usr/bin/resolvconf {
+    #include <abstractions/base>
+    #include <abstractions/krathalans-hardening>
+
+    /usr/bin/dash rix,
+    /usr/bin/cp rix,
+    /usr/bin/resolvconf r,
+    /usr/bin/systemctl rCx,
+
+    # Helper programs
+    /usr/bin/{cat,rm,mkdir} rix,
+
+    # Needed to function
+    owner / r,
+    /etc/resolv* rw,
+    /{,var/}run/resolvconf/{,**} rw,
+  }
+
+  profile systemctl /usr/bin/systemctl {
+    #include <abstractions/base>
+    #include <abstractions/krathalans-hardening>
+
+    capability sys_resource,
+    ptrace read peer=unconfined,
+
+    owner @{PROC}/@{pid}/{,**} r,
+    owner @{PROC}/cmdline r,
+  }
 
   # Silence unnecessary permissions
   deny / r,
