@@ -147,5 +147,6 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   deny @{PROC}/*/task/ r,
   deny @{sys}/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
   deny @{system_share_dirs}/bash-completion/bash_completion r,
+  deny @{HOME}/.cache/{,**} r,
   deny @{HOME}/.pki/{,**} rw,
 }
