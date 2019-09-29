@@ -47,6 +47,8 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   owner @{HOME}/.vscode-oss/{,**} rw,
 
   # Needed to edit documents (including config files)
+  # This doesn't give permission for the whole home dir (and all subdirs), just
+  # the base home dir where stuff like ~/.gitconfig sits
   owner @{HOME}/{,*} rw,
   owner @{HOME}/.config/{,**} rw,
   owner @{HOME}/{D,d}ocuments/{,**} rw,
