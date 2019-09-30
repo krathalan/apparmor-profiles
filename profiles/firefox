@@ -35,6 +35,9 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   # Network
   #include <abstractions/krathalans-networking>
 
+  # Spell checking
+  #include <abstractions/enchant>
+
   # Firefox subprocesses
   ptrace trace peer=firefox,
   /usr/bin/{bash,dash} rix,
@@ -87,6 +90,9 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   deny @{user_share_dirs}/gvfs-metadata/** r,
   deny @{user_share_dirs}/recently-used.xbel* rw,
 
+  # GVFS is unnecessary
+  deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
+
   # Deny unnecessary /proc
   deny @{PROC}/@{pid}/{,**} rw,
 
@@ -108,6 +114,6 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   deny @{sys}/devices/system/cpu/** r,
   deny /usr/lib/firefox*/{,**} w,
   deny @{system_share_dirs}/applications/{,**} r,
-  deny @{HOME}/Desktop w,
+  deny @{HOME}/Desktop/ w,
   deny @{HOME}/.cache/thumbnails/** r,
 }
