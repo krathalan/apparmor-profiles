@@ -25,8 +25,7 @@ profile pulseaudio /usr/bin/pulseaudio {
   /{,var/}run/systemd/users/* r,
   owner @{HOME}/ r,
   owner @{HOME}/.esd_auth rwk,
-  owner @{HOME}/.config/pulse/ r,
-  owner @{HOME}/.config/pulse/** rw,
+  owner @{HOME}/.config/pulse/{,**} rw,
 
   # System access
   /{,var/}run/udev/data/* r,
@@ -43,11 +42,9 @@ profile pulseaudio /usr/bin/pulseaudio {
 
   # Keep track of applications using audio
   /var/lib/flatpak/exports/share/applications/ r,
-  @{system_share_dirs}/applications/ r,
-  @{system_share_dirs}/applications/* r,
+  @{system_share_dirs}/applications/{,*} r,
   # For some reason pulseaudio/apparmor doesn't accept the tunable version
-  /usr/share/applications/ r,
-  /usr/share/applications/* r,
+  /usr/share/applications/{,*} r,
 
   # Needed for audio in some games (e.g. Pillars of Eternity II)
   @{PROC}/@{pid}/stat r,
