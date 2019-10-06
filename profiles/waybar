@@ -29,7 +29,7 @@ profile waybar /usr/bin/waybar {
 
   # Executables
   /usr/bin/waybar mrPx,
-  /usr/bin/dash rix,
+  /usr/bin/{bash,dash} rix,
 
   # Audio module
   #include <abstractions/audio>
