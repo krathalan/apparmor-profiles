@@ -46,10 +46,10 @@ profile pass /usr/bin/pass {
 
   # Needed for editing passwords (with nano!)
   /usr/bin/mktemp mrix,
+  /usr/bin/nano rCx,
   owner /dev/shm/pass.*/{,*,**} rw,
 
-  /usr/bin/nano rCx,
-  profile /usr/bin/nano {
+  profile nano /usr/bin/nano {
     #include <abstractions/base>
     #include <abstractions/bash>
 
