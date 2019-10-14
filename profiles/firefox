@@ -112,6 +112,7 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   deny /opt/firefox-nightly/{,**} w,
   deny @{sys}/bus/pci/devices/ r,
   deny @{sys}/devices/system/cpu/** r,
+  deny /usr/bin/lsb_release rx,
   deny /usr/lib/firefox*/{,**} w,
   deny @{system_share_dirs}/applications/{,**} r,
   deny @{HOME}/Desktop/ w,

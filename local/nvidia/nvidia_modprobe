@@ -12,6 +12,10 @@
 # VSCodium hwaccel
 /usr/share/vscodium-bin/icudtl.dat r,
 
+# Steam
+owner @{HOME}/.steam/steam.pipe r,
+owner @{HOME}/.local/share/Steam/shader*/{,**} w,
+
 # Silence denials about arbitrary file handles
 # See https://gitlab.com/apparmor/apparmor/issues/49
 deny /dev/shm/org.chromium** rw,
