@@ -1,4 +1,5 @@
 # AppArmor profile for wpa_supplicant NetworkManager wifi backend
+# Version of wpa_supplicant profiled: 2:2.9
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 

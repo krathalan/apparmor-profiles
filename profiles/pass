@@ -1,4 +1,5 @@
 # AppArmor profile for pass UNIX password manager
+# Version of pass profiled: 1.7.3
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
