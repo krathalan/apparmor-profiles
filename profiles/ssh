@@ -1,4 +1,5 @@
 # AppArmor profile for ssh
+# Version of ssh (openssh) profiled: 8.1
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
