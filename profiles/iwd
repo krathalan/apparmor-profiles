@@ -11,8 +11,14 @@ profile iwd /usr/lib/iwd/iwd {
 
   capability net_admin,
 
+  # Config
+  owner /etc/iwd/{,**} r,
+
+  # Device access
   owner /dev/rfkill rw,
   owner @{sys}/devices/** r,
+
+  # Connection information (e.g. wifi passwords)
   owner /var/lib/iwd/ r,
   owner /var/lib/iwd/** rw,
 }
