@@ -29,6 +29,9 @@ profile gpg-agent /usr/bin/gpg-agent {
   /usr/bin/dash rix,
   @{system_share_dirs}/gnupg/* r,
 
+  # I don't have hardware to test this
+  deny /usr/lib/gnupg/scdaemon rx,
+
   # Silence unnecessary permissions
   deny @{PROC}/@{pid}/** r,
   deny /var/cache/** w,
