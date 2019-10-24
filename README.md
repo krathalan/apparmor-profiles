@@ -34,7 +34,8 @@ To add local changes without changing the file provided by this repository, use 
 
 ## NVIDIA
 You may have issues with hardware acceleration on NVIDIA hardware. This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured incorrectly. Change the profile executable name at the top of the nvidia_modprobe profile file (`/etc/apparmor.d/nvidia_modprobe`) to "/usr/bin/nvidia-modprobe", so the top of the profile looks like this:  
-```
+
+```  
 # vim:syntax=apparmor
 
 #include <tunables/global>
@@ -42,7 +43,8 @@ You may have issues with hardware acceleration on NVIDIA hardware. This is becau
 profile nvidia_modprobe /usr/bin/nvidia-modprobe {
   #include <abstractions/base>
   ...
-```
+  
+```  
 
 Don't forget to enforce!  
 `$ sudo aa-enforce /etc/apparmor.d/nvidia_modprobe`
