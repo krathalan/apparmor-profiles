@@ -1,13 +1,14 @@
 # apparmor-profiles
 AppArmor profiles for various programs and services on Arch Linux.
 
-Table of contents:  
-1. [Notes about usage](#notes-about-usage)
-2. [Abstractions](#abstractions)
-3. [Adding local changes](#adding-local-changes)
-4. [NVIDIA](#nvidia)
-5. [Issues](#issues)
-6. [Contributing](#contributing)
+Table of contents:
+
+1. [Notes about usage](https://git.sr.ht/~krathalan/apparmor-profiles#notes-about-usage)
+2. [Abstractions](https://git.sr.ht/~krathalan/apparmor-profiles#abstractions)
+3. [Adding local changes](https://git.sr.ht/~krathalan/apparmor-profiles#adding-local-changes)
+4. [NVIDIA](https://git.sr.ht/~krathalan/apparmor-profiles#nvidia)
+5. [Issues](https://git.sr.ht/~krathalan/apparmor-profiles#issues)
+6. [Contributing](https://git.sr.ht/~krathalan/apparmor-profiles#contributing)
 
 ## Notes about usage
 These AppArmor profiles have been tested on the following hardware:
