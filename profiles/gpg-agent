@@ -11,7 +11,7 @@ profile gpg-agent /usr/bin/gpg-agent {
 
   # Access user keys and config
   #include <abstractions/gnupg>
-  owner @{HOME}/.gnupg/private-keys*/ w,
+  owner @{HOME}/.gnupg/private-keys*/{,*} w,
   owner @{HOME}/.gnupg/private-keys*/* r,
 
   # Include user overrides for possible symlinked config files
