@@ -47,6 +47,7 @@ profile nvidia_modprobe /usr/bin/nvidia-modprobe {
 ```  
 
 Don't forget to enforce!  
+
 `$ sudo aa-enforce /etc/apparmor.d/nvidia_modprobe`
 
 You will also have to add `#include <abstractions/krathalans-hwaccel-nvidia>` to the Firefox, MPV, and VSCodium local profile override files in `/etc/apparmor.d/local`. Alternatively, you can simply copy all files from `local/nvidia` in this repository into `/etc/apparmor.d/local` and run `sudo systemctl reload apparmor.service`.
