@@ -1,6 +1,14 @@
 # apparmor-profiles
 AppArmor profiles for various programs and services on Arch Linux.
 
+Table of contents:  
+1. [Notes about usage](#notes-about-usage)
+2. [Abstractions](#abstractions)
+3. [Adding local changes](#adding-local-changes)
+4. [NVIDIA](#nvidia)
+5. [Issues](#issues)
+6. [Contributing](#contributing)
+
 ## Notes about usage
 These AppArmor profiles have been tested on the following hardware:
 
@@ -51,6 +59,9 @@ Don't forget to enforce!
 `$ sudo aa-enforce /etc/apparmor.d/nvidia_modprobe`
 
 You will also have to add `#include <abstractions/krathalans-hwaccel-nvidia>` to the Firefox, MPV, and VSCodium local profile override files in `/etc/apparmor.d/local`. Alternatively, you can simply copy all files from `local/nvidia` in this repository into `/etc/apparmor.d/local` and run `sudo systemctl reload apparmor.service`.
+
+## Issues
+Please file bug reports, requests, etc. at https://todo.sr.ht/~krathalan/apparmor-profiles
 
 ## Contributing
 Writing AppArmor profiles is fairly easy. "If you know how to use bash, chmod, and grep, you already understand AppArmor and you can probably reverse-engineer the policy by yourself," at 13:25 in the video: https://invidio.us/watch?v=k3kerBRYLhw
