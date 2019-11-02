@@ -73,6 +73,9 @@ profile pass /usr/bin/pass {
   /usr/bin/gpg mrix,
   owner @{HOME}/.gnupg/.* w,
 
+  # pass-otp extension
+  /usr/bin/oathtool rix,
+
   # Write to console
   /dev/tty rw,
 
