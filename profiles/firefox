@@ -18,7 +18,7 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
 
   # Hardware acceleration
   #include <abstractions/krathalans-hwaccel>
-  @{sys}/devices/pci[0-9]*/*/drm/ r,
+  @{sys}/devices/pci[0-9]*/**/drm/ r,
 
   # Include user overrides for krathalans-hwaccel-nvidia
   #include <local/firefox>
