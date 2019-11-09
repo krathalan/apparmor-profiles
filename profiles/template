@@ -1,5 +1,5 @@
 # AppArmor profile for 
-# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
 #include <tunables/global>
