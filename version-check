@@ -1,0 +1,95 @@
+#!/bin/bash
+#
+# Description: Checks installed versions of programs for which there is
+#              an apparmor profile for.
+#
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles
+#
+# Copyright (C) 2019 krathalan
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+# -----------------------------------------
+# -------------- Guidelines ---------------
+# -----------------------------------------
+
+# This script follows the Google Shell Style Guide: 
+# https://google.github.io/styleguide/shell.xml
+
+# This script uses shellcheck: https://www.shellcheck.net/
+
+# See https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
+set -Eeuo pipefail
+
+# -----------------------------------------
+# ----------- Program variables -----------
+# -----------------------------------------
+
+# Colors
+readonly GREEN=$(tput setaf 10)
+readonly RED=$(tput bold && tput setaf 1)
+readonly NC=$(tput sgr0) # No color/turn off all tput attributes
+
+readonly PROGRAMS=("bluez" "code" "evince" "firefox" "gnupg" "irssi" "iwd" "less" "lollypop" "mako" "mosh" "mpv" "networkmanager" "pass" "pulseaudio" "redshift" "rng-tools" "openssh" "streamlink" "swaybg" "syncthing" "transmission-cli" "waybar" "wpa_supplicant" "youtube-dl")
+
+# -----------------------------------------
+# ---------------- Script -----------------
+# -----------------------------------------
+
+# Print intro
+
+if [ "$(whoami)" = "root" ]; then
+  printf "This script should NOT be run as root (or sudo)!" >&2
+  exit 2
+fi
+
+for program in "${PROGRAMS[@]}"; do
+  # Remove repackaged version suffix from installed version
+  installedVersion="$(pacman -Qi "${program}" | grep Version | awk '{printf $3}')"
+  installedVersion="${installedVersion%%-*}"
+  installedVersion="${installedVersion%%p*}"
+  installedVersion="${installedVersion%%+*}"
+
+  profiledVersion="$(grep Version "profiles/${program}" 2> /dev/null | grep -v deny | awk '{print $NF}' || printf "(Problem printing info)")"
+
+  fixer=""
+
+  if [[ "${profiledVersion}" == "(Problem printing info)" ]]; then
+    case "${program}" in
+      bluez)
+        fixer="bluetoothd"
+        ;;
+      gnupg)
+        fixer="gpg-agent"
+        ;;
+      networkmanager)
+        fixer="NetworkManager"
+        ;;
+      rng-tools)
+        fixer="rngd"
+        ;;
+      openssh)
+        fixer="ssh"
+        ;;
+    esac
+
+    profiledVersion="$(grep Version "profiles/${fixer}" 2> /dev/null | grep -v deny | awk '{print $NF}' || printf "(Problem printing info)")"
+  fi
+
+  if [[ ! "${installedVersion}" == "${profiledVersion}" ]]; then
+    printf "%s%s %s installed; %s profiled%s\n" "${RED}" "${program}" "${installedVersion}" "${profiledVersion}" "${NC}"
+  else
+    printf "%s%s profile up to date%s\n" "${GREEN}" "${program}" "${NC}"
+  fi
+done
