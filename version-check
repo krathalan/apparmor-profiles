@@ -41,8 +41,6 @@ readonly GREEN=$(tput setaf 10)
 readonly RED=$(tput bold && tput setaf 1)
 readonly NC=$(tput sgr0) # No color/turn off all tput attributes
 
-readonly PROGRAMS=("bluez" "code" "evince" "firefox" "gnupg" "irssi" "iwd" "less" "lollypop" "mako" "mosh" "mpv" "networkmanager" "pass" "pulseaudio" "redshift" "rng-tools" "openssh" "streamlink" "swaybg" "syncthing" "transmission-cli" "waybar" "wpa_supplicant" "youtube-dl")
-
 # -----------------------------------------
 # ---------------- Script -----------------
 # -----------------------------------------
@@ -54,41 +52,49 @@ if [ "$(whoami)" = "root" ]; then
   exit 2
 fi
 
-for program in "${PROGRAMS[@]}"; do
-  # Remove repackaged version suffix from installed version
-  installedVersion="$(pacman -Qi "${program}" 2> /dev/null | grep Version | awk '{printf $3}' || printf "not")"
+for profile in profiles/*; do
+  # Remove "profiles/" prefix
+  profile="${profile##*/}"
+
+  if [[ "${profile}" == "template" ]]; then
+    continue
+  fi
+
+  profiledVersion="$(grep Version "profiles/${profile}" 2> /dev/null | grep -v deny | awk '{print $NF}' || printf "(Problem printing info)")"
+
+  # Fix some profile names being different than their package name
+  package="${profile}"
+
+  case "${profile}" in
+    bluetoothd)
+      package="bluez"
+      ;;
+    gpg-agent)
+      package="gnupg"
+      ;;
+    NetworkManager)
+      package="networkmanager"
+      ;;
+    rngd)
+      package="rng-tools"
+      ;;
+    ssh|ssh-agent)
+      package="openssh"
+      ;;
+  esac
+
+  installedVersion="$(pacman -Qi "${package}" 2> /dev/null | grep Version | awk '{printf $3}' || printf "not")"
+
+  # Remove package release suffix from installed version
   installedVersion="${installedVersion%%-*}"
   installedVersion="${installedVersion%%p*}"
   installedVersion="${installedVersion%%+*}"
 
-  # Fix some profile names being different than their package name
-  fixer="${program}"
-
-  case "${program}" in
-    bluez)
-      fixer="bluetoothd"
-      ;;
-    gnupg)
-      fixer="gpg-agent"
-      ;;
-    networkmanager)
-      fixer="NetworkManager"
-      ;;
-    rng-tools)
-      fixer="rngd"
-      ;;
-    openssh)
-      fixer="ssh"
-      ;;
-  esac
-
-  profiledVersion="$(grep Version "profiles/${fixer}" 2> /dev/null | grep -v deny | awk '{print $NF}' || printf "(Problem printing info)")"
-
   if [[ "${installedVersion}" == "not" ]]; then
-    printf "%s %s installed\n" "${program}" "${installedVersion}"
+    printf "%s %s installed\n" "${package}" "${installedVersion}"
   elif [[ ! "${installedVersion}" == "${profiledVersion}" ]]; then
-    printf "%s%s %s installed; %s profiled%s\n" "${RED}" "${program}" "${installedVersion}" "${profiledVersion}" "${NC}"
+    printf "%s%s %s installed; %s profiled%s\n" "${RED}" "${package}" "${installedVersion}" "${profiledVersion}" "${NC}"
   else
-    printf "%s%s profile up to date%s\n" "${GREEN}" "${program}" "${NC}"
+    printf "%s%s profile up to date%s\n" "${GREEN}" "${package}" "${NC}"
   fi
 done
