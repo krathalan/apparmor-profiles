@@ -1,5 +1,5 @@
 # AppArmor profile for VSCodium and VS Code editor
-# Version of VSCode/ium profiled: 1.39.1
+# Version of VSCode/ium profiled: 1.40.0
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -25,6 +25,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   # Needed to function at all
   /dev/shm/.org.chromium.Chromium.* rw,
   @{PROC}/ r,
+  owner @{PROC}/*/fd/ r,
   owner @{PROC}/*/comm w,
   owner /run/user/*/vscode*.sock w,
 
@@ -35,7 +36,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   # Chromium/Electron spawns and uses multiple processes
   @{system_share_dirs}/vscodium-bin/{,**} mr,
   /usr/lib/code/{,**} mr,
-  /usr/lib/electron4/electron rix,
+  /usr/lib/electron6/electron rix,
   /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code,code-oss,code.js,codium} rpx,
 
   # Needed to record open documents at shutdown and open them again at startup
@@ -141,12 +142,12 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   deny @{PROC}/version r,
   deny @{PROC}/vmstat r,
   deny @{PROC}/*/comm r,
-  deny @{PROC}/*/fd/ r,
   deny @{PROC}/*/mountinfo r,
   deny @{PROC}/*/oom_score_adj w,
   deny @{PROC}/*/stat r,
   deny @{PROC}/*/statm r,
   deny @{PROC}/*/task/ r,
+  deny @{PROC}/sys/fs/inotify/max_user_watches r,
   deny @{sys}/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
   deny @{system_share_dirs}/bash-completion/bash_completion r,
   deny @{HOME}/.cache/{,**} r,
