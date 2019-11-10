@@ -61,31 +61,28 @@ for program in "${PROGRAMS[@]}"; do
   installedVersion="${installedVersion%%p*}"
   installedVersion="${installedVersion%%+*}"
 
-  profiledVersion="$(grep Version "profiles/${program}" 2> /dev/null | grep -v deny | awk '{print $NF}' || printf "(Problem printing info)")"
+  # Fix some profile names being different than their package name
+  fixer="${program}"
 
-  fixer=""
+  case "${program}" in
+    bluez)
+      fixer="bluetoothd"
+      ;;
+    gnupg)
+      fixer="gpg-agent"
+      ;;
+    networkmanager)
+      fixer="NetworkManager"
+      ;;
+    rng-tools)
+      fixer="rngd"
+      ;;
+    openssh)
+      fixer="ssh"
+      ;;
+  esac
 
-  if [[ "${profiledVersion}" == "(Problem printing info)" ]]; then
-    case "${program}" in
-      bluez)
-        fixer="bluetoothd"
-        ;;
-      gnupg)
-        fixer="gpg-agent"
-        ;;
-      networkmanager)
-        fixer="NetworkManager"
-        ;;
-      rng-tools)
-        fixer="rngd"
-        ;;
-      openssh)
-        fixer="ssh"
-        ;;
-    esac
-
-    profiledVersion="$(grep Version "profiles/${fixer}" 2> /dev/null | grep -v deny | awk '{print $NF}' || printf "(Problem printing info)")"
-  fi
+  profiledVersion="$(grep Version "profiles/${fixer}" 2> /dev/null | grep -v deny | awk '{print $NF}' || printf "(Problem printing info)")"
 
   if [[ "${installedVersion}" == "not" ]]; then
     printf "%s %s installed\n" "${program}" "${installedVersion}"
