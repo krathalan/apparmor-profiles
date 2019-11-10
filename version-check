@@ -50,7 +50,7 @@ readonly PROGRAMS=("bluez" "code" "evince" "firefox" "gnupg" "irssi" "iwd" "less
 # Print intro
 
 if [ "$(whoami)" = "root" ]; then
-  printf "This script should NOT be run as root (or sudo)!" >&2
+  printf "%sThis script should NOT be run as root (or sudo)!%s\n" "${RED}" "${NC}" >&2
   exit 2
 fi
 
