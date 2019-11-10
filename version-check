@@ -56,7 +56,7 @@ fi
 
 for program in "${PROGRAMS[@]}"; do
   # Remove repackaged version suffix from installed version
-  installedVersion="$(pacman -Qi "${program}" | grep Version | awk '{printf $3}')"
+  installedVersion="$(pacman -Qi "${program}" 2> /dev/null | grep Version | awk '{printf $3}' || printf "not")"
   installedVersion="${installedVersion%%-*}"
   installedVersion="${installedVersion%%p*}"
   installedVersion="${installedVersion%%+*}"
@@ -87,7 +87,9 @@ for program in "${PROGRAMS[@]}"; do
     profiledVersion="$(grep Version "profiles/${fixer}" 2> /dev/null | grep -v deny | awk '{print $NF}' || printf "(Problem printing info)")"
   fi
 
-  if [[ ! "${installedVersion}" == "${profiledVersion}" ]]; then
+  if [[ "${installedVersion}" == "not" ]]; then
+    printf "%s %s installed\n" "${program}" "${installedVersion}"
+  elif [[ ! "${installedVersion}" == "${profiledVersion}" ]]; then
     printf "%s%s %s installed; %s profiled%s\n" "${RED}" "${program}" "${installedVersion}" "${profiledVersion}" "${NC}"
   else
     printf "%s%s profile up to date%s\n" "${GREEN}" "${program}" "${NC}"
