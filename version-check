@@ -93,7 +93,7 @@ for profile in profiles/*; do
   if [[ "${installedVersion}" == "not" ]]; then
     printf "%s %s installed\n" "${package}" "${installedVersion}"
   elif [[ ! "${installedVersion}" == "${profiledVersion}" ]]; then
-    printf "%s%s %s installed; %s profiled%s\n" "${RED}" "${package}" "${installedVersion}" "${profiledVersion}" "${NC}"
+    printf "%s%s %s installed; %s profiled%s\n" "${RED}" "${package}" "${installedVersion}" "${profiledVersion}" "${NC}" >&2
   else
     printf "%s%s profile up to date%s\n" "${GREEN}" "${package}" "${NC}"
   fi
