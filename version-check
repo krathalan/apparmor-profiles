@@ -41,31 +41,31 @@ readonly GREEN=$(tput setaf 10)
 readonly RED=$(tput bold && tput setaf 1)
 readonly NC=$(tput sgr0) # No color/turn off all tput attributes
 
+# Location of this script (where is the apparmor-profiles repo?)
+readonly DIR="$1"
+
 # -----------------------------------------
 # ---------------- Script -----------------
 # -----------------------------------------
 
 # Print intro
-
 if [ "$(whoami)" = "root" ]; then
   printf "%sThis script should NOT be run as root (or sudo)!%s\n" "${RED}" "${NC}" >&2
   exit 2
 fi
 
-for profile in profiles/*; do
-  # Remove "profiles/" prefix
-  profile="${profile##*/}"
-
-  if [[ "${profile}" == "template" ]]; then
+for profile in "${DIR}"/profiles/*; do
+  if [[ "${profile}" == *"template" ]]; then
     continue
   fi
 
-  profiledVersion="$(grep Version "profiles/${profile}" 2> /dev/null | grep -v deny | awk '{print $NF}' || printf "(Problem printing info)")"
+  profiledVersion="$(grep Version "${profile}" 2> /dev/null | grep -v deny | awk '{print $NF}' || printf "(Problem printing info)")"
 
   # Fix some profile names being different than their package name
-  package="${profile}"
+  # Remove "profiles/" prefix
+  package="${profile##*/}"
 
-  case "${profile}" in
+  case "${package}" in
     bluetoothd)
       package="bluez"
       ;;
