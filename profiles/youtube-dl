@@ -16,7 +16,7 @@ profile youtube-dl /usr/bin/youtube-dl {
   /usr/bin/ r,
   /usr/bin/ffmpeg mrix,
   /usr/bin/ffprobe mrix,
-  /usr/bin/python3.7 r,
+  /usr/bin/python3.[0-9] r,
   /usr/bin/youtube-dl r,
 
   # Needed to save files
@@ -32,6 +32,7 @@ profile youtube-dl /usr/bin/youtube-dl {
   # Silence unnecessary permissions
   deny @{PROC}/*/fd/ r,
   deny @{PROC}/*/mounts r,
+  deny /usr/bin/uname rx,
   # ffmpeg?
   deny @{sys}/devices/system/cpu/ r,
 }

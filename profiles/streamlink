@@ -25,7 +25,7 @@ profile streamlink /usr/bin/streamlink {
   /usr/bin/dash mrix,
   /usr/bin/file mrix,
   /usr/bin/ldconfig mrix,
-  /usr/bin/python3.7 r,
+  /usr/bin/python3.[0-9] r,
   /usr/bin/streamlink r,
   /usr/bin/uname mrix,
   @{system_share_dirs}/file/** r,
