@@ -1,5 +1,5 @@
 # Rules for denying some things allowed in other abstractions
-# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
   # General

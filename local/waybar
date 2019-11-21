@@ -1,4 +1,4 @@
-# Custom modules https://gitlab.com/krathalan/waybar-modules
+# Custom modules https://git.sr.ht/~krathalan/waybar-modules
 /usr/bin/wbm_{battery,vpn} rPx,
 
 # View a list of X windows
