@@ -116,5 +116,6 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   deny /usr/lib/firefox*/{,**} w,
   deny @{system_share_dirs}/applications/{,**} r,
   deny @{HOME}/Desktop/ w,
-  deny @{HOME}/.cache/thumbnails/** r,
+  deny @{HOME}/.cache/thumbnails/{,**} rw,
+  deny @{HOME}/.local/{,**} rw,
 }

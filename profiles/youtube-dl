@@ -11,6 +11,9 @@ profile youtube-dl /usr/bin/youtube-dl {
   # Networking
   #include <abstractions/krathalans-networking>
 
+  # MPV uses youtube-dl to watch internet videos natively
+  signal receive set=kill peer=mpv,
+
   # Executables
   #include <abstractions/python>
   /usr/bin/ r,
