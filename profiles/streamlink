@@ -34,6 +34,7 @@ profile streamlink /usr/bin/streamlink {
   /etc/mime.types r,
 
   # Silence unnecessary permissions
+  deny /usr/** w,
   deny @{system_share_dirs}/fonts/** w,
   deny @{PROC}/*/fd/ r,
   deny @{PROC}/*/mounts r,
