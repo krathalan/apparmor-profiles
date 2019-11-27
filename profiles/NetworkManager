@@ -1,5 +1,5 @@
 # AppArmor profile for NetworkManager
-# Version of NetworkManager profiled: 1.20.6
+# Version of NetworkManager profiled: 1.20.8
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -20,6 +20,9 @@ profile NetworkManager /usr/bin/NetworkManager {
 
   # NetworkManager runs as root anyways
   capability dac_override,
+
+  # May need to load driver modules (e.g. iwlwifi)
+  capability sys_module,
 
   # Helper programs
   /usr/bin/dash rix,

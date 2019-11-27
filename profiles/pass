@@ -71,7 +71,8 @@ profile pass /usr/bin/pass {
   # GPG
   #include <abstractions/gnupg>
   /usr/bin/gpg mrix,
-  owner @{HOME}/.gnupg/.* w,
+  owner @{HOME}/.gnupg/*lock* rwl,
+  owner @{HOME}/.gnupg/*lk* rwl,
 
   # pass-otp extension
   /usr/bin/oathtool rix,
