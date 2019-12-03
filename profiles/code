@@ -106,6 +106,9 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
     @{system_share_dirs}/vscodium-bin/{,**} r,
     owner @{HOME}/{D,d}ocuments/{,**} rw,
     owner @{HOME}/{G,g}it/{,**} rw,
+
+    # Deny unnecessary permissions
+    deny /dev/shm/.org.chromium.Chromium.* rw,
   }
 
   # Needed for shellcheck extension
