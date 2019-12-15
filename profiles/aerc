@@ -36,15 +36,15 @@ profile aerc /usr/bin/aerc {
   # Needed to view messages
   /dev/ptmx rw,
   /usr/bin/less rCx,
-  signal send set=kill peer=/usr/bin/aerc//less,
-
+  signal send set=kill peer=aerc//less,
+  
   profile less /usr/bin/less {
     #include <abstractions/base>
     #include <abstractions/bash>
     #include <abstractions/consoles>
 
     /usr/bin/less r,
-    signal receive set=kill peer=/usr/bin/aerc,
+    signal receive set=kill peer=aerc,
   }
 
   # View html messages
