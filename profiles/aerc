@@ -1,0 +1,69 @@
+# AppArmor profile for aerc TUI email client
+# Version of aerc profiled: 0.3.0
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile aerc /usr/bin/aerc {
+  #include <abstractions/base>
+  #include <abstractions/bash>
+  #include <abstractions/consoles>
+
+  # Helper programs
+  /usr/bin/aerc mr,
+  /usr/bin/{bash,dash,gawk,infocmp} mrix,
+
+  # Networking
+  #include <abstractions/ssl_certs>
+  #include <abstractions/ssl_keys>
+  #include <abstractions/krathalans-networking>
+  /etc/ca-certificates/extracted/cadir/{,*} r,
+  /etc/services r,
+  /proc/sys/net/core/somaxconn r,
+
+  # Save attachments
+  #include <abstractions/user-download>
+
+  # ?
+  /sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
+
+  # Configuration/program files
+  /usr/share/aerc/{,**} r,
+  owner @{HOME}/.config/aerc/{,*} rw,
+  owner /run/user/*/aerc.sock rw,
+
+  # Needed to view messages
+  /dev/ptmx rw,
+  /usr/bin/less rCx,
+  signal send set=kill peer=/usr/bin/aerc//less,
+
+  profile less /usr/bin/less {
+    #include <abstractions/base>
+    #include <abstractions/bash>
+    #include <abstractions/consoles>
+
+    /usr/bin/less r,
+    signal receive set=kill peer=/usr/bin/aerc,
+  }
+
+  # View html messages
+  /usr/share/aerc/filters/html rCx,
+
+  profile filter-html /usr/share/aerc/filters/html {
+    #include <abstractions/base>
+    #include <abstractions/bash>
+    #include <abstractions/consoles>
+    #include <abstractions/krathalans-networking>
+
+    /usr/share/aerc/filters/html r,
+    /usr/bin/{bash,dash} r,
+    /usr/bin/{tput,socksify,uname,w3m} rix,
+
+    owner /tmp/yaccenv-client* rw,
+    owner /tmp/w3m-*/{,*.html} w,
+
+    # Deny unnecessary permission
+    deny @{HOME}/.w3m/{,*} w,
+  }
+}
