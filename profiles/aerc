@@ -66,4 +66,30 @@ profile aerc /usr/bin/aerc {
     # Deny unnecessary permission
     deny @{HOME}/.w3m/{,*} w,
   }
+
+  # Compose messages with nano
+  owner /tmp/aerc-compose-*.eml rw,
+  /usr/bin/nano rCx,
+  signal send set=kill peer=aerc//nano,
+
+  profile nano /usr/bin/nano {
+    #include <abstractions/base>
+    #include <abstractions/bash>
+    #include <abstractions/consoles>
+
+    /usr/bin/nano mr,
+    signal receive set=kill peer=aerc,
+
+    # Message file
+    owner /tmp/aerc-compose-*.eml rw,
+
+    # Config files
+    /etc/nanorc r,
+    owner @{HOME}/.nanorc r,
+    owner @{HOME}/documents/config/nanorc r,
+
+    # Syntax highlighting
+    /usr/share/file/misc/magic.mgc r,
+    /usr/share/nano-syntax-highlighting/{,*} r,
+  }
 }
