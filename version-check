@@ -29,6 +29,9 @@
 
 # This script uses shellcheck: https://www.shellcheck.net/
 
+# This script creates a temporary folder and may fail halfway through
+#trap clean_up EXIT
+
 # See https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
 set -Eeuo pipefail
 
@@ -44,20 +47,38 @@ readonly NC=$(tput sgr0) # No color/turn off all tput attributes
 # Location of this script (where is the apparmor-profiles repo?)
 readonly DIR="$1"
 
+# For faster processing
+readonly SCRIPT_NAME=$(basename "$0")
+readonly TMPDIR="$(mktemp -d -t "${SCRIPT_NAME}_XXXXXXXX")"
+readonly OUTPUTFILEBAD="${TMPDIR}/version-check-bad.txt"
+readonly OUTPUTFILEGOOD="${TMPDIR}/version-check-good.txt"
+touch "${OUTPUTFILEBAD}" "${OUTPUTFILEGOOD}"
+
 # -----------------------------------------
-# ---------------- Script -----------------
+# ------------- User variables ------------
 # -----------------------------------------
 
-# Print intro
-if [ "$(whoami)" = "root" ]; then
-  printf "%sThis script should NOT be run as root (or sudo)!%s\n" "${RED}" "${NC}" >&2
-  exit 2
-fi
+quiet="false"
 
-for profile in "${DIR}"/profiles/*; do
-  if [[ "${profile}" == *"template" ]]; then
-    continue
-  fi
+# -----------------------------------------
+# --------------- Functions ---------------
+# -----------------------------------------
+
+#######################################
+# Checks the version of the AppArmor profile against the installed package
+# version.
+# Globals:
+#   Colors: GREEN, RED, NC
+#   OUTPUTFILEBAD
+#   OUTPUTFILEGOOD
+# Arguments:
+#   $1: AppArmor profile to check
+# Returns:
+#   none
+#######################################
+check_profile()
+{
+  local profile="$1"
 
   profiledVersion="$(grep Version "${profile}" 2> /dev/null | grep -v deny | awk '{print $NF}' || printf "(Problem printing info)")"
 
@@ -83,6 +104,7 @@ for profile in "${DIR}"/profiles/*; do
       ;;
   esac
 
+  local installedVersion
   installedVersion="$(pacman -Qi "${package}" 2> /dev/null | grep Version | awk '{printf $3}' || printf "not")"
 
   # Remove package release suffix from installed version
@@ -91,10 +113,59 @@ for profile in "${DIR}"/profiles/*; do
   installedVersion="${installedVersion%%+*}"
 
   if [[ "${installedVersion}" == "not" ]]; then
-    printf "%s %s installed\n" "${package}" "${installedVersion}"
+    printf "%s %s installed\n" "${package}" "${installedVersion}" >> "${OUTPUTFILEGOOD}"
   elif [[ ! "${installedVersion}" == "${profiledVersion}" ]]; then
-    printf "%s%s %s installed; %s profiled%s\n" "${RED}" "${package}" "${installedVersion}" "${profiledVersion}" "${NC}" >&2
+    printf "%s%s %s installed; %s profiled%s\n" "${RED}" "${package}" "${installedVersion}" "${profiledVersion}" "${NC}" >> "${OUTPUTFILEBAD}"
   else
-    printf "%s%s profile up to date%s\n" "${GREEN}" "${package}" "${NC}"
+    printf "%s%s profile up to date%s\n" "${GREEN}" "${package}" "${NC}" >> "${OUTPUTFILEGOOD}"
   fi
+}
+
+#######################################
+# Removes temporary folder before exit.
+# Globals:
+#   TMPDIR
+# Arguments:
+#   none
+# Returns:
+#   none
+#######################################
+clean_up()
+{
+    if [[ -d "${TMPDIR}" ]]; then
+        rm -rf "${TMPDIR}"
+    fi
+}
+
+# -----------------------------------------
+# ---------------- Script -----------------
+# -----------------------------------------
+
+# Print intro
+if [[ "$(whoami)" = "root" ]]; then
+  printf "%sThis script should NOT be run as root (or sudo)!%s\n" "${RED}" "${NC}" >&2
+  exit 2
+fi
+
+if [[ $# -gt 1 ]]; then
+  if [[ "$2" == "--quiet" ]] || [[ "$2" == "-q" ]]; then
+    quiet="true"
+  fi
+fi
+
+for profile in "${DIR}"/profiles/*; do
+  # Skip template
+  if [[ "${profile}" == *"template" ]]; then
+    continue
+  fi
+
+  check_profile "${profile}" &
 done
+
+wait
+
+if [[ "${quiet}" == "true" ]]; then
+  sort "${OUTPUTFILEBAD}"
+else
+  cat "${OUTPUTFILEBAD}" "${OUTPUTFILEGOOD}" | sort -
+fi
