@@ -30,7 +30,7 @@
 # This script uses shellcheck: https://www.shellcheck.net/
 
 # This script creates a temporary folder and may fail halfway through
-#trap clean_up EXIT
+trap clean_up EXIT
 
 # See https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
 set -Eeuo pipefail
