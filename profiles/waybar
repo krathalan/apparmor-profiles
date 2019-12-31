@@ -36,8 +36,4 @@ profile waybar /usr/bin/waybar {
 
   # Network module
   @{PROC}/*/net/netstat r,
-
-  # Tray module
-  # Needed to show icons for discord (flatpak)
-  owner @{HOME}/.var/app/com.discordapp.Discord/cache/** r,
 }
