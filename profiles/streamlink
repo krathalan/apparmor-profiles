@@ -22,7 +22,7 @@ profile streamlink /usr/bin/streamlink {
 
   # Subprocesses
   /usr/bin/ r,
-  /usr/bin/dash mrix,
+  /usr/bin/{bash,dash} mrix,
   /usr/bin/file mrix,
   /usr/bin/ldconfig mrix,
   /usr/bin/python3.[0-9] r,

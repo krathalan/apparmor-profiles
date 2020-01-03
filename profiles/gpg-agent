@@ -26,7 +26,7 @@ profile gpg-agent /usr/bin/gpg-agent {
   owner /etc/pacman.d/gnupg/{,**} rw,
 
   # Miscellaneous
-  /usr/bin/dash rix,
+  /usr/bin/{bash,dash} rix,
   @{system_share_dirs}/gnupg/* r,
 
   # I don't have hardware to test this

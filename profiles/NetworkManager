@@ -25,7 +25,7 @@ profile NetworkManager /usr/bin/NetworkManager {
   capability sys_module,
 
   # Helper programs
-  /usr/bin/dash rix,
+  /usr/bin/{bash,dash} rix,
 
   # Config
   owner /etc/NetworkManager/{,**} r,
@@ -61,7 +61,7 @@ profile NetworkManager /usr/bin/NetworkManager {
     #include <abstractions/base>
     #include <abstractions/krathalans-hardening>
 
-    /usr/bin/dash rix,
+    /usr/bin/{bash,dash} rix,
     /usr/bin/cp rix,
     /usr/bin/resolvconf r,
     /usr/bin/systemctl rCx,

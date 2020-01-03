@@ -50,8 +50,7 @@ profile lollypop /usr/bin/lollypop {
   owner @{user_share_dirs}/recently-used.xbel* rw,
 
   # Seems to work fine without access to a shell
-  deny /usr/bin/bash mrx,
-  deny /usr/bin/dash mrx,
+  deny /usr/bin/{bash,dash} mrx,
 
   # Don't allow executable mapping of arbitrary files
   # https://askubuntu.com/questions/336552/what-are-orcexec-files

@@ -13,8 +13,7 @@ profile less /usr/bin/less {
   /** r,
 
   # Source highlighting
-  /usr/bin/bash mrix,
-  /usr/bin/dash mrix,
+  /usr/bin/{bash,dash} mrix,
   /usr/bin/source-highlight mrix,
   /usr/bin/src-hilite-lesspipe.sh mrix,
 

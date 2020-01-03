@@ -68,7 +68,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
     #include <abstractions/base>
 
     # Helper programs
-    /usr/bin/{cut,dash,dbus-send,egrep,grep,head,sed,which,xdg-mime} rix,
+    /usr/bin/{cut,bash,dash,dbus-send,egrep,grep,head,sed,which,xdg-mime} rix,
     /usr/bin/xdg-open r,
 
     # Browsers -- only allow Firefox

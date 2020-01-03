@@ -16,7 +16,7 @@ profile pass /usr/bin/pass {
   # Various programs -- pass is a bash script, after all
   #include <abstractions/bash>
   /usr/bin/base64 mrix,
-  /usr/bin/bash mrix,
+  /usr/bin/{bash,dash} mrix,
   /usr/bin/getopt mrix,
   /usr/bin/head mrix,
   /usr/bin/pass r,

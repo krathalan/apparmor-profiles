@@ -73,7 +73,7 @@ profile mpv /usr/bin/mpv {
   deny /dev/tty rw,
   deny @{sys}/bus/pci/devices/ r,
   deny @{sys}/devices/system/node/ r,
-  deny /usr/bin/bash rx,
+  deny /usr/bin/{bash,dash} rx,
   deny /usr/bin/xdg-screensaver rx,
   deny @{system_share_dirs}/p11-kit/modules/ r,
 }
