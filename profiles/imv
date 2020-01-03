@@ -1,0 +1,39 @@
+# AppArmor profile for imv image viewer
+# Version of imv profiled: 4.1.0
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile imv /usr/bin/imv {
+  #include <abstractions/base>
+  #include <abstractions/bash>
+  #include <abstractions/dri-common>
+  #include <abstractions/fonts>
+  #include <abstractions/krathalans-common-gui>
+
+  # Helper programs
+  /usr/bin/{bash,dash} ix,
+  /usr/bin/imv r,
+  /usr/bin/imv-wayland mrix,
+
+  # Config
+  /etc/imv_config r,
+
+  # Graphics
+  /sys/devices/pci[0-9]*/*/{device,subsystem_device,subsystem_vendor,uevent,vendor} r,
+  @{system_share_dirs}/glvnd/egl_vendor.d/{,**} r,
+
+  # Needed to view photos
+  #include <abstractions/user-download>
+  owner @{HOME}/{P,p}ictures/{,**} r,
+  owner @{HOME}/{P,p}hotos/{,**} r,
+
+  # Socket
+  owner /run/user/*/imv*.sock w,
+
+  # Silence unnecessary permissions
+  deny /etc/nsswitch.conf r,
+  deny /sys/devices/system/cpu/ r,
+  deny owner @{HOME}/.cache/mesa_shader_cache/index rw,
+}
