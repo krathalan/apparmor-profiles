@@ -15,7 +15,7 @@ profile imv /usr/bin/imv {
   # Helper programs
   /usr/bin/{bash,dash} ix,
   /usr/bin/imv r,
-  /usr/bin/imv-wayland mrix,
+  /usr/bin/imv-{wayland,x11} mrix,
 
   # Config
   /etc/imv_config r,
@@ -33,6 +33,12 @@ profile imv /usr/bin/imv {
 
   # Socket
   owner /run/user/*/imv*.sock w,
+
+  # For nvidia
+  #include <local/imv>
+  deny @{PROC}/{,**} r,
+  deny /sys/bus/pci/devices/ r,
+  deny /tmp/* w,
 
   # Silence unnecessary permissions
   deny /etc/nsswitch.conf r,
