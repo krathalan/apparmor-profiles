@@ -9,6 +9,7 @@ profile mpv /usr/bin/mpv {
   #include <abstractions/base>
   #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
+  #include <abstractions/krathalans-hardening>
 
   # Hardware acceleration
   #include <abstractions/krathalans-hwaccel>

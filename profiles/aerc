@@ -9,6 +9,7 @@ profile aerc /usr/bin/aerc {
   #include <abstractions/base>
   #include <abstractions/bash>
   #include <abstractions/consoles>
+  #include <abstractions/krathalans-hardening>
 
   # Helper programs
   /usr/bin/aerc mr,
@@ -42,6 +43,7 @@ profile aerc /usr/bin/aerc {
     #include <abstractions/base>
     #include <abstractions/bash>
     #include <abstractions/consoles>
+    #include <abstractions/krathalans-hardening>
 
     /usr/bin/less r,
     signal receive set=kill peer=aerc,
@@ -55,6 +57,7 @@ profile aerc /usr/bin/aerc {
     #include <abstractions/bash>
     #include <abstractions/consoles>
     #include <abstractions/krathalans-networking>
+    #include <abstractions/krathalans-hardening>
 
     /usr/share/aerc/filters/html r,
     /usr/bin/{bash,dash} r,
@@ -76,6 +79,7 @@ profile aerc /usr/bin/aerc {
     #include <abstractions/base>
     #include <abstractions/bash>
     #include <abstractions/consoles>
+    #include <abstractions/krathalans-hardening>
 
     /usr/bin/nano mr,
     signal receive set=kill peer=aerc,

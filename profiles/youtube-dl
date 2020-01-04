@@ -7,6 +7,7 @@
 
 profile youtube-dl /usr/bin/youtube-dl {
   #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
 
   # Networking
   #include <abstractions/krathalans-networking>

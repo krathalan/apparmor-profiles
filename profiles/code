@@ -9,6 +9,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   #include <abstractions/base>
   #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
+  #include <abstractions/krathalans-hardening>
   #include <abstractions/krathalans-hwaccel>
 
   # Nvidia users
@@ -66,6 +67,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
 
   profile xdg-open /usr/bin/xdg-open {
     #include <abstractions/base>
+    #include <abstractions/krathalans-hardening>
 
     # Helper programs
     /usr/bin/{cut,bash,dash,dbus-send,egrep,grep,head,sed,which,xdg-mime} rix,
@@ -80,7 +82,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
     @{user_share_dirs}/applications/{,**} r,
 
     # Silence unnecessary permissions
-    deny /usr/bin/{gawk,uname} rx,
+    deny /usr/bin/{gawk,uname,xprop} rx,
   }
 
   # Needed for C/C++ Clang Command Adapter extension
@@ -93,6 +95,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   profile clang /usr/bin/clang-[0-9] {
     #include <abstractions/base>
     #include <abstractions/fonts>
+    #include <abstractions/krathalans-hardening>
 
     signal receive set=term peer=code,
     signal receive set=term peer=codium,

@@ -9,6 +9,7 @@ profile streamlink /usr/bin/streamlink {
   #include <abstractions/base>
   #include <abstractions/fonts>
   #include <abstractions/python>
+  #include <abstractions/krathalans-hardening>
 
   # Networking
   #include <abstractions/krathalans-networking>

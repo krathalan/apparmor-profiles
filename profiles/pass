@@ -53,6 +53,7 @@ profile pass /usr/bin/pass {
   profile nano /usr/bin/nano {
     #include <abstractions/base>
     #include <abstractions/bash>
+    #include <abstractions/krathalans-hardening>
 
     # Config files
     /etc/nanorc r,

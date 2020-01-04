@@ -8,6 +8,7 @@
 profile less /usr/bin/less {
   #include <abstractions/base>
   #include <abstractions/bash>
+  #include <abstractions/krathalans-hardening>
 
   / r,
   /** r,

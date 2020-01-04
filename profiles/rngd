@@ -7,6 +7,7 @@
 
 profile rngd /usr/bin/rngd {
   #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
 
   # Kind of dangerous; sys_admin is a huge capability
   capability sys_admin,

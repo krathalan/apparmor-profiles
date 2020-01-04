@@ -9,6 +9,7 @@ profile lollypop /usr/bin/lollypop {
   #include <abstractions/base>
   #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
+  #include <abstractions/krathalans-hardening>
   #include <abstractions/wayland>
 
   # Needed to listen to music

@@ -8,6 +8,7 @@
 profile irssi /usr/bin/irssi {
   #include <abstractions/base>
   #include <abstractions/bash>
+  #include <abstractions/krathalans-hardening>
 
   # Irssi has perl scripting
   #include <abstractions/perl>

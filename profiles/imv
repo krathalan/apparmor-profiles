@@ -11,6 +11,7 @@ profile imv /usr/bin/imv {
   #include <abstractions/dri-common>
   #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
+  #include <abstractions/krathalans-hardening>
 
   # Helper programs
   /usr/bin/{bash,dash} ix,

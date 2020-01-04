@@ -62,6 +62,8 @@ profile pulseaudio /usr/bin/pulseaudio {
   /usr/bin/gsettings-data-convert rCx,
 
   profile gsettings-data-convert /usr/bin/gsettings-data-convert {
+    #include <abstractions/krathalans-hardening>
+    
     @{system_share_dirs}/GConf/gsettings/{,**} r,
     @{user_share_dirs}/gsettings-data-convert* rw,
     @{HOME}/.config/gconf/{,**} rw,
