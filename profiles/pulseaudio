@@ -52,6 +52,9 @@ profile pulseaudio /usr/bin/pulseaudio {
   # Needed for audio in some games launched with Steam
   owner @{HOME}/.local/share/Steam/{,**} r,
 
+  # Intel audio
+  /opt/intel/mediasdk/lib/libmfx.so.* r,
+
   # Pavucontrol
   # https://askubuntu.com/questions/336552/what-are-orcexec-files
   owner /run/user/*/orcexec* mrw,

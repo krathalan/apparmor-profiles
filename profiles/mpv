@@ -25,6 +25,9 @@ profile mpv /usr/bin/mpv {
   /etc/asound.conf r,
   /usr/bin/pulseaudio rPx,
 
+  # Intel audio
+  /opt/intel/mediasdk/lib/libmfx.so.* mr,
+
   # Needed to view media with an AppArmor-enforced streamlink
   signal receive set=term peer=streamlink,
   
