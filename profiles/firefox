@@ -49,6 +49,9 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   # Telemetry reporter
   /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/pingsender rix,
 
+  # Intel audio
+  /opt/intel/mediasdk/lib/libmfx.so.* mr,
+
   # System access
   /dev/ r,
   /etc/udev/udev.conf r,

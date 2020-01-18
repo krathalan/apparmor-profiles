@@ -40,6 +40,9 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   /usr/lib/electron6/electron rix,
   /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code,code-oss,code.js,codium} rpx,
 
+  # Intel audio (won't open without this)
+  /opt/intel/mediasdk/lib/libmfx.so.* mr,
+
   # Needed to record open documents at shutdown and open them again at startup
   owner @{HOME}/.local/share/recently-used.xbel* rw,
 
