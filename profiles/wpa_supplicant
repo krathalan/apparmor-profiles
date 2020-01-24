@@ -14,7 +14,10 @@ profile wpa_supplicant /usr/bin/wpa_supplicant {
   capability sys_module,
 
   owner /dev/rfkill r,
+  owner /etc/libnl/classid r,
   owner /etc/ssl/openssl.cnf r,
+
+  owner /run/wpa_supplicant/{,**} rw,
 
   # Devices
   owner @{PROC}/sys/net/ipv{4,6}/conf/*/drop_{gratuitous_arp,unicast_in_l2_multicast,unsolicited_na} rw,
