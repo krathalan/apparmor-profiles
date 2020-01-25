@@ -44,7 +44,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   /opt/intel/mediasdk/lib/libmfx.so.* mr,
 
   # Needed to record open documents at shutdown and open them again at startup
-  owner @{HOME}/.local/share/recently-used.xbel* rw,
+  owner  @{user_share_dirs}/recently-used.xbel* rw,
 
   # Config
   owner "@{HOME}/.config/Code - OSS/{,**}" k,
@@ -134,8 +134,8 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   deny /usr/share/gvfs/remote-volume-monitors/ r,
 
   # Dconf -- disabling this doesn't affect VSCodium
-  deny owner /run/user/*/dconf/user rw,
   deny owner @{HOME}/.config/dconf/user r,
+  deny owner /run/user/*/dconf/user rw,
 
   # Use a separate terminal program
   deny /dev/ptmx rw,

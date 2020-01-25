@@ -1,0 +1,74 @@
+# AppArmor profile for signal-desktop messenger
+# Version of signal-desktop profiled: 1.29.6
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+/usr/bin/signal-desktop {
+  #include <abstractions/base>
+  #include <abstractions/fonts>
+  #include <abstractions/krathalans-common-gui>
+  #include <abstractions/krathalans-hardening>
+  #include <abstractions/krathalans-networking>
+  #include <abstractions/nameservice>
+
+  # Needed to function at all -- mostly needed for namespace containers
+  capability setgid,
+  capability setuid,
+  capability sys_chroot,
+  capability sys_admin,
+  @{PROC}/ r,
+  @{PROC}/sys/kernel/yama/ptrace_scope r,
+  owner @{PROC}/*/fd/ r,
+  owner @{PROC}/*/gid_map w,
+  owner @{PROC}/*/setgroups w,
+  owner @{PROC}/*/uid_map w,
+
+  # Helper programs
+  #include <abstractions/bash>
+  /usr/bin/{bash,dash} rix,
+  /usr/bin/{basename,cut,getconf,grep,ldd,readlink,which,xdg-settings} rix,
+
+  # Chromium/Electron spawns and uses multiple processes
+  owner {user_share_dirs}/.org.chromium.Chromium.* rw,
+  owner /dev/shm/.org.chromium.Chromium.* rw,
+  owner /tmp/.org.chromium.Chromium.* mrw,
+  owner /tmp/.org.chromium.Chromium.*/{,**} rw,
+  /usr/bin/signal-desktop r,
+  /usr/lib/electron/electron mrix,
+  /usr/lib/electron/chrome-sandbox mrix,
+
+  # Hardware acceleration
+  #include <abstractions/krathalans-hwaccel>
+  owner /dev/shm/shmfd-* rw,
+  @{sys}/bus/pci/devices/ r,
+  @{sys}/bus/pci/devices/[0-9]*/resource r,
+  @{sys}/devices/pci[0-9]*/**/{class,irq,resource} r,
+  @{sys}/devices/pci[0-9]*/[0-9]*/{class,device,irq,resource,subsystem_device,subsystem_vendor,uevent,vendor} r,
+
+  # Config
+  owner @{HOME}/.config/Signal/{,**} rwk,
+
+  # Allow access for downloads and uploads
+  #include <abstractions/user-download>
+
+  # File picker
+  @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
+  deny owner @{HOME}/.config/dconf/user r,
+  deny owner /run/user/*/dconf/user rw,
+  deny @{PROC}/*/mountinfo r,
+  deny @{user_share_dirs}/recently-used.xbel* rw,
+
+  # Deny unnecessary permissions
+  deny capability sys_ptrace,
+  deny /dev/pts/* rw,
+  deny @{HOME}/.cache/{,**} rw,
+  deny @{PROC}/*/stat r,
+  deny @{PROC}/*/task/{,**} r,
+  deny @{PROC}/sys/fs/inotify/max_user_watches r,
+  deny @{sys}/devices/system/cpu/{,**} r,
+  deny @{sys}/devices/virtual/tty/{,**} r,
+  deny /usr/bin/{dbus-send,uname,xprop} rx,
+  deny /usr/share/applications/ r,
+}
