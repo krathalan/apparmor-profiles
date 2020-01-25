@@ -1,11 +1,11 @@
 # AppArmor profile for signal-desktop messenger
-# Version of signal-desktop profiled: 1.29.6
+# Version of signal-desktop profiled: 1.30.0
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
 #include <tunables/global>
 
-/usr/bin/signal-desktop {
+profile signal-desktop /usr/bin/signal-desktop {
   #include <abstractions/base>
   #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
@@ -31,7 +31,7 @@
   /usr/bin/{basename,cut,getconf,grep,ldd,readlink,which,xdg-settings} rix,
 
   # Chromium/Electron spawns and uses multiple processes
-  owner {user_share_dirs}/.org.chromium.Chromium.* rw,
+  owner @{user_share_dirs}/.org.chromium.Chromium.* rw,
   owner /dev/shm/.org.chromium.Chromium.* rw,
   owner /tmp/.org.chromium.Chromium.* mrw,
   owner /tmp/.org.chromium.Chromium.*/{,**} rw,
