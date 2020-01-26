@@ -1,0 +1,38 @@
+# AppArmor profile for undervolt.py (https://github.com/georgewhewell/undervolt)
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile undervolt-py /usr/lib/undervolt/undervolt.py {
+  #include <abstractions/base>
+
+  # Python
+  #include <abstractions/python>
+  /usr/bin/python* rix,
+
+  # System access
+  capability dac_override,
+  capability dac_read_search,
+  capability sys_rawio,
+  owner /dev/cpu/ r,
+  owner /dev/cpu/[0-9]/msr rw,
+  owner @{sys}/class/power_supply/ r,
+
+  # Get kernel module information
+  /usr/bin/kmod rCx,
+  profile kmod /usr/bin/kmod {
+    #include <abstractions/base>
+
+    owner /usr/bin/kmod r,
+    capability sys_module,
+
+    owner /etc/modprobe.d/{,**} r,
+    owner @{PROC}/cmdline r,
+    owner @{sys}/module/msr/initstate r,
+  }
+
+  # Deny unnecessary permissions
+  deny /etc/{nsswitch.conf,passwd} r,
+  deny @{PROC}/{,**} rw,
+}
