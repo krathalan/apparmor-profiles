@@ -44,8 +44,13 @@ profile signal-desktop /usr/bin/signal-desktop {
   owner /dev/shm/shmfd-* rw,
   @{sys}/bus/pci/devices/ r,
   @{sys}/bus/pci/devices/[0-9]*/resource r,
-  @{sys}/devices/pci[0-9]*/**/{class,irq,resource} r,
-  @{sys}/devices/pci[0-9]*/[0-9]*/{class,device,irq,resource,subsystem_device,subsystem_vendor,uevent,vendor} r,
+  @{sys}/devices/pci[0-9]*/**/{class,config,irq,resource} r,
+  @{sys}/devices/pci[0-9]*/[0-9]*/{class,config,device,irq,resource,subsystem_device,subsystem_vendor,uevent,vendor} r,
+
+  # Nvidia users
+  #include <local/signal-desktop>
+  deny @{PROC}/modules r,
+  deny @{PROC}/*/comm r,
 
   # Config
   owner @{HOME}/.config/Signal/{,**} rwk,
@@ -63,6 +68,7 @@ profile signal-desktop /usr/bin/signal-desktop {
   # Deny unnecessary permissions
   deny capability sys_ptrace,
   deny /dev/pts/* rw,
+  deny /dev/tty* rw,
   deny @{HOME}/.cache/{,**} rw,
   deny @{PROC}/*/stat r,
   deny @{PROC}/*/task/{,**} r,
