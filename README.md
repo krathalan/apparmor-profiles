@@ -106,7 +106,7 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - [swaybg ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#swaybg)
 - [syncthing ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#syncthing)
 - [transmission-cli ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#transmission-cli)
-- [undervolt.py ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#undervolt.py)
+- [undervolt ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#undervolt)
 - [waybar ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#waybar)
 - wpa_supplicant
 - [youtube-dl ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#youtube-dl)
@@ -198,7 +198,7 @@ This profile assumes you only want to download files to `~/{D,d}ownlads/`.
 
 This profile applies to all `transmission-*` binaries, including `transmission-daemon` and `transmission-remote`.
 
-### undervolt.py
+### undervolt
 This profile is for an Intel CPU undervolt utility: https://github.com/georgewhewell/undervolt
 
 ### waybar
