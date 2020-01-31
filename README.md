@@ -80,11 +80,13 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 
 ⚠️ This symbol means you may/will need to add local changes for your specific configuration. You can find more information for the specific profile by clicking on its name or simply scrolling down. You may not have to add any local changes, however -- many profiles work with the default configurations for that program.
 
+- [aerc ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#aerc)
 - bluetoothd
 - [code ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#code)
 - [evince ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#evince)
 - [Firefox ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#firefox)
 - [gpg-agent ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#gpg-agent)
+- [imv ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#imv)
 - [irssi ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#irssi)
 - iwd
 - less
@@ -97,15 +99,22 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - pulseaudio
 - [redshift ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#redshift)
 - rngd
+- signal-desktop
 - [ssh ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#ssh)
 - [ssh-agent ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#ssh-agent)
 - [streamlink ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#streamlink)
 - [swaybg ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#swaybg)
 - [syncthing ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#syncthing)
 - [transmission-cli ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#transmission-cli)
+- [undervolt.py ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#undervolt.py)
 - [waybar ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#waybar)
 - wpa_supplicant
 - [youtube-dl ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#youtube-dl)
+
+### aerc
+This profile only has support for `nano` for composing emails. I don't use `vi`/`vim` or other terminal editors so pull requests are welcome.
+
+This profile assumes you only want to save/attach files from `~/{D,d}ownloads/`.
 
 ### code
 This profile will work with both the `code` repo package and the `vscodium-bin` AUR package.
@@ -131,6 +140,9 @@ This profile will only work with the `pinentry-curses` pinentry program. As per 
 `pinentry-program /usr/bin/pinentry-curses`
 
 You may need to add local changes to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg/`.
+
+### imv
+This profile assumes you only want to view images in `~/{D,d}ownloads/`, `~/{P,p}ictures/`, and `~/{P,p}hotos/`.
 
 ### irssi
 You may need to add local changes to allow `irssi` to access your configuration files, if they are symlinks to somewhere other than inside `~/.irssi/`.
@@ -185,6 +197,9 @@ You may need to add local changes to allow `transmission-cli` to access your con
 This profile assumes you only want to download files to `~/{D,d}ownlads/`.
 
 This profile applies to all `transmission-*` binaries, including `transmission-daemon` and `transmission-remote`.
+
+### undervolt.py
+This profile is for an Intel CPU undervolt utility: https://github.com/georgewhewell/undervolt
 
 ### waybar
 You may need to add local changes to allow `waybar` modules to work which I have not tested. I have tested the following modules to work: sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock, tray.
