@@ -6,4 +6,5 @@
 
 profile name path {
   #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
 }

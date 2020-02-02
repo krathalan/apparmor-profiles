@@ -9,6 +9,7 @@ profile mako /usr/bin/mako {
   #include <abstractions/base>
   #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
+  #include <abstractions/krathalans-hardening>
 
   # Include user overrides for possible symlinked config files
   #include <local/mako>

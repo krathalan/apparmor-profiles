@@ -6,6 +6,7 @@
 
 profile undervolt-py /usr/lib/undervolt/undervolt.py {
   #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
 
   # Python
   #include <abstractions/python>
