@@ -1,0 +1,12 @@
+# AppArmor profile for wob (wayland overlay bar)
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile wob /usr/bin/wob {
+  #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
+
+  owner /dev/shm/wob-* rw,
+}

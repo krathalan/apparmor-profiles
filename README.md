@@ -110,6 +110,7 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - [waybar ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#waybar)
 - wpa_supplicant
 - [youtube-dl ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#youtube-dl)
+- wob
 
 ### aerc
 This profile only has support for `nano` for composing emails. I don't use `vi`/`vim` or other terminal editors so pull requests are welcome.
