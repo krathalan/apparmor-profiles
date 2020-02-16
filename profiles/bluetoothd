@@ -12,10 +12,14 @@ profile bluetoothd /usr/lib/bluetooth/bluetoothd {
   capability net_admin,
   capability net_bind_service,
 
+  # Device access
   owner /dev/rfkill rw,
   owner /dev/uinput rw,
+  owner @{sys}/devices/pci[0-9]*/[0-9]*/**/bluetooth/**/rfkill[0-9]/name r,
+  owner @{sys}/devices/virtual/dmi/id/chassis_type r,
+
+  # Config
   owner /etc/bluetooth/ r,
   owner /etc/bluetooth/** r,
-  owner @{sys}/devices/virtual/dmi/id/chassis_type r,
   owner /var/lib/bluetooth/{,**} rw,
 }
