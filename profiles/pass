@@ -99,6 +99,9 @@ profile pass /usr/bin/pass {
   deny /usr/bin/git mrx,
 
   # Deny unnecessary permissions
+  deny /dev/pts/[0-9] rw,
+  deny @{HOME}/ r,
+  deny @{HOME}/.gnupg/*.tmp rw,
   # These only seem to happen when xclip is used
   deny /etc/nsswitch.conf r,
   deny /etc/passwd r,
