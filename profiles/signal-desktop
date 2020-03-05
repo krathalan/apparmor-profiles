@@ -1,5 +1,5 @@
 # AppArmor profile for signal-desktop messenger
-# Version of signal-desktop profiled: 1.31.0
+# Version of signal-desktop profiled: 1.32.0
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
@@ -58,6 +58,13 @@ profile signal-desktop /usr/bin/signal-desktop {
   # Allow access for downloads and uploads
   #include <abstractions/user-download>
 
+  # Sound
+  deny /etc/pulse/{,**} r,
+  deny /dev/shm/ r,
+  deny /run/user/*/pulse/{,**} rw,
+  deny /dev/snd/{,**} r,
+  deny /usr/share/alsa/{,**} r,
+
   # File picker
   @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
   deny owner @{HOME}/.config/dconf/user r,
@@ -70,6 +77,7 @@ profile signal-desktop /usr/bin/signal-desktop {
   deny /dev/pts/* rw,
   deny /dev/tty* rw,
   deny @{HOME}/.cache/{,**} rw,
+  deny @{HOME}/.config/Electron/{,**} rw,
   deny @{PROC}/*/stat r,
   deny @{PROC}/*/task/{,**} r,
   deny @{PROC}/sys/fs/inotify/max_user_watches r,

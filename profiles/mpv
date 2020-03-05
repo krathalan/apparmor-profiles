@@ -56,7 +56,7 @@ profile mpv /usr/bin/mpv {
 
   # Config
   /etc/mpv/** r,
-  owner @{HOME}/.config/mpv r,
+  owner @{HOME}/.config/mpv/{,**} rw,
 
   # Other
   /usr/bin/mpv r,
