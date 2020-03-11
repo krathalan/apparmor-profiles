@@ -37,6 +37,9 @@ profile NetworkManager /usr/bin/NetworkManager {
   @{PROC}/*/stat r,
   owner @{PROC}/*/fd/ r,
 
+  # Needed for nmtui to work for systemd-homed users
+  owner /{,var/}run/systemd/userdb/ r,
+
   # Devices (e.g. network adapters)
   owner /dev/rfkill rw,
   owner /{,var/}run/udev/data/** r,
