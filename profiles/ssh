@@ -32,9 +32,13 @@ profile ssh /usr/bin/ssh {
   # authenticity of new hosts
   /dev/tty rw,
 
+  # Needed to work for systemd-homed users
+  /etc/machine-id r,
+  /{,var/}run/systemd/userdb/ r,
+
   # Needed to record authenticity of new hosts
   owner @{HOME}/.ssh/known_hosts rw,
 
   # Silence unnecessary permissions
-  deny @{PROC}/@{pid}/fd/ r,
+  deny @{PROC}/{,**} r,
 }
