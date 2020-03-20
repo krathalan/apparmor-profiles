@@ -80,4 +80,5 @@ profile mpv /usr/bin/mpv {
   deny /usr/bin/{bash,dash} rx,
   deny /usr/bin/xdg-screensaver rx,
   deny @{system_share_dirs}/p11-kit/modules/ r,
+  deny /{,var/}run/systemd/userdb/ r,
 }
