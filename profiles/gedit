@@ -1,0 +1,46 @@
+# AppArmor profile for gedit editor
+# Version of gedit profiled: 3.36.0
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile gedit /usr/bin/gedit {
+  #include <abstractions/base>
+  #include <abstractions/fonts>
+  #include <abstractions/krathalans-common-gui>
+
+  #include <abstractions/enchant>
+  owner @{HOME}/.config/enchant/* rw,
+
+  # Local overrides
+  #include <local/gedit>
+
+  /usr/bin/gedit mr,
+  /usr/lib/gedit/{,**} r,
+  @{system_share_dirs}/gtksourceview-4/{,**} r,
+  @{system_share_dirs}/xml/iso-codes/* r,
+  @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
+
+  # Needed to edit documents
+  owner @{HOME}/{D,d}ocuments/{,**} rw,
+  owner @{HOME}/{G,g}it/{,**} rw,
+
+  # Needed to open recent files
+  owner @{user_share_dirs}/recently-used.xbel* rw,
+
+  # Config
+  owner @{HOME}/.config/gedit/{,**} rw,
+  owner @{user_share_dirs}/gedit/{,**} rw,
+
+  # Needed to load non default gtk themes
+  owner @{HOME}/.config/dconf/user r,
+  owner /{,var/}run/user/*/dconf/user rw,
+
+  # Deny unnecessary permissions
+  deny /usr/{,**} w,
+  deny /etc/nsswitch.conf r,
+  deny @{PROC}/*/mountinfo r,
+  deny @{PROC}/*/mounts r,
+  deny @{HOME}/.cache/{,**} rw,
+}
