@@ -38,7 +38,7 @@ profile aerc /usr/bin/aerc {
   /dev/ptmx rw,
   /usr/bin/less rCx,
   signal send set=kill peer=aerc//less,
-  
+
   profile less /usr/bin/less {
     #include <abstractions/base>
     #include <abstractions/bash>
@@ -95,5 +95,29 @@ profile aerc /usr/bin/aerc {
     # Syntax highlighting
     /usr/share/file/misc/magic.mgc r,
     /usr/share/nano-syntax-highlighting/{,*} r,
+  }
+
+  # Compose messages with micro
+  /usr/bin/micro rCx,
+  signal send set=kill peer=aerc//micro,
+
+  profile micro /usr/bin/micro {
+    #include <abstractions/base>
+    #include <abstractions/consoles>
+
+    /usr/bin/micro mr,
+    signal receive set=kill peer=aerc,
+
+    # ?
+    /sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
+
+    # Config
+    owner @{HOME}/.config/micro/{,**} rw,
+
+    # Message file
+    owner /tmp/aerc-compose-*.eml rw,
+
+    # Git functionality not required for a single message
+    deny /usr/bin/git rx,
   }
 }
