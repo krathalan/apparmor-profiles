@@ -30,7 +30,7 @@ profile mpv /usr/bin/mpv {
 
   # Needed to view media with an AppArmor-enforced streamlink
   signal receive set=term peer=streamlink,
-  
+
   # Needed to stream media with youtube-dl
   #include <abstractions/krathalans-networking>
   signal send set=kill peer=youtube-dl,

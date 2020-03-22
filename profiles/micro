@@ -1,0 +1,73 @@
+# AppArmor profile for micro text editor
+# Version of program profiled: 2.0.2
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile micro /usr/bin/micro {
+  #include <abstractions/base>
+  #include <abstractions/consoles>
+  #include <abstractions/krathalans-hardening>
+
+  /usr/bin/micro mr,
+
+  # Include machine-specific overrides
+  #include <local/micro>
+
+  # Config
+  owner @{HOME}/.config/micro/{,**} rw,
+
+  # Needed to edit documents
+  owner @{HOME}/{D,d}ocuments/{,**} rw,
+  owner @{HOME}/{G,g}it/{,**} rw,
+
+  # Needed to resolve ~
+  /etc/{machine-id,nsswitch.conf,passwd} r,
+  # systemd-homed
+  /{,var/}run/systemd/userdb/ r,
+
+  # sudoedit
+  owner /var/tmp/*.* rw,
+
+  # Go
+  /sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
+
+  # Copy/paste features
+  /usr/bin/xclip rCx,
+
+  profile xclip /usr/bin/xclip {
+    #include <abstractions/base>
+    #include <abstractions/krathalans-hardening>
+
+    /usr/bin/xclip mr,
+
+    owner @{HOME}/.Xauthority r,
+
+    deny /dev/tty rw,
+  }
+
+  # Git
+  /usr/bin/git rCx,
+
+  profile git /usr/bin/git {
+    #include <abstractions/base>
+    #include <abstractions/krathalans-hardening>
+
+    /usr/bin/git mr,
+
+    # Config
+    owner @{HOME}/.config/.git* r,
+    # Include machine-specific overrides for nonstandard configuration setups
+    #include <local/micro-git>
+
+    # Need to view directories files are in
+    owner @{HOME}/{D,d}ocuments/{,**} rw,
+    owner @{HOME}/{G,g}it/{,**} rw,
+
+    deny /dev/tty rw,
+  }
+
+  # Deny unnecessary permissions
+  deny /proc/sys/kernel/random/boot_id r,
+}

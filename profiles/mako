@@ -13,10 +13,10 @@ profile mako /usr/bin/mako {
 
   # Include user overrides for possible symlinked config files
   #include <local/mako>
- 
+
   # Shared memory
   owner /dev/shm/mako* rw,
-  
+
   # Config file
   owner @{HOME}/.config/mako/** r,
 }
