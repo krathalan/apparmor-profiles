@@ -1,5 +1,5 @@
 # AppArmor profile for discord proprietary chat program
-# Version of discord profiled: July 25, 2019
+# Version of discord profiled: March 22, 2020
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -25,6 +25,8 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
   #include <abstractions/krathalans-hardening>
+  #include <abstractions/krathalans-hwaccel>
+  #include <abstractions/krathalans-hwaccel-nvidia>
 
   # Networking
   #include <abstractions/krathalans-networking>
@@ -33,10 +35,23 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   # Subprocesses
   /usr/bin/dash mrix,
   /opt/discord/Discord mrix,
+  /opt/discord/chrome-sandbox mrix,
   owner /dev/shm/.org.chromium.Chromium.* rw,
 
   # Discord will not work at all without this
+  capability setgid,
+  capability setuid,
+  capability sys_chroot,
+  capability sys_admin,
   @{PROC}/ r,
+  owner @{PROC}/*/{gid_map,setgroups,uid_map} w,
+  owner @{PROC}/*/fd/ r,
+  owner /tmp/discord.sock w,
+  /sys/bus/pci/devices/ r,
+  /sys/bus/pci/devices/[0-9]*/{class,device,irq,resource,vendor} r,
+  /sys/devices/pci[0-9]*/{class,device,irq,resource,vendor} r,
+  /sys/devices/pci[0-9]*/[0-9]*/{class,device,irq,resource,vendor} r,
+  /sys/devices/pci[0-9]*/[0-9]*/[0-9]*/{class,device,irq,resource,vendor} r,
 
   # Miscellaneous
   /opt/discord/** r,
@@ -65,24 +80,14 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   deny capability sys_ptrace,
   deny ptrace,
 
-  # Deny all of /proc discord tries to access without breaking discord
-  deny @{PROC}/@{pid}/ r,
-  deny @{PROC}/@{pid}/** r,
-  deny @{PROC}/@{pid}/oom_score_adj w,  
-  deny @{PROC}/sys/** r,
-  deny @{PROC}/vmstat r,
-
-  # Deny various paths for hardware acceleration
-  deny /dev/dri/ r,
-  deny @{PROC}/driver/nvidia/params r,
-  deny @{sys}/** r,
-  deny @{system_share_dirs}/drirc.d/ r,
-
-  # Deny /tmp as this can contain sensitive files
-  deny /tmp/** rw,
-
-  # Silence unnecessary permissions
-  deny /dev/ r,
-  deny /dev/pts/* rw,
-  deny @{system_share_dirs}/fonts/** w,
+  # Deny unnecessary permissions
+  deny @{HOME}/.pki/ rw,
+  deny /dev/pts/[0-9] rw,
+  deny /dev/tty* rw,
+  deny "/tmp/Discord Crashes/" w,
+  deny /sys/devices/virtual/tty/tty0/active r,
+  deny /proc/*/{cmdline,oom_score_adj,stat,statm,comm} rw,
+  deny /proc/*/task/ r,
+  deny /proc/sys/fs/inotify/max_user_watches r,
+  deny /proc/sys/kernel/yama/ptrace_scope r,
 }
