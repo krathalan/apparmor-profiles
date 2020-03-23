@@ -51,6 +51,22 @@ profile micro /usr/bin/micro {
     deny /dev/tty rw,
   }
 
+  /usr/bin/wl-{copy,paste} rCx,
+  owner /tmp/wl-copy-buffer-*/ w,
+
+  profile wl-copy-paste /usr/bin/wl-{copy,paste} {
+    #include <abstractions/base>
+    #include <abstractions/krathalans-hardening>
+
+    /usr/bin/wl-{copy,paste} mr,
+    /usr/bin/{cat,rm} rix,
+
+    owner /tmp/wl-copy-buffer-*/{,stdin} rw,
+    /dev/tty rw,
+
+    deny /usr/bin/xdg-mime rx,
+  }
+
   # Git
   /usr/bin/git rCx,
 
