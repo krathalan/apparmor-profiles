@@ -31,6 +31,7 @@ profile micro /usr/bin/micro {
   owner /var/tmp/*.* rw,
 
   # View files in pager with aurutils
+  owner @{HOME}/.cache/aurutils/sync/{,**} rw,
   owner /tmp/view.*/* r,
 
   # Go
