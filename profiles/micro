@@ -30,6 +30,9 @@ profile micro /usr/bin/micro {
   # sudoedit
   owner /var/tmp/*.* rw,
 
+  # View files in pager with aurutils
+  owner /tmp/view.*/* r,
+
   # Go
   /sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
 
