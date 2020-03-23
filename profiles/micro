@@ -85,6 +85,9 @@ profile micro /usr/bin/micro {
     owner @{HOME}/{D,d}ocuments/{,**} rw,
     owner @{HOME}/{G,g}it/{,**} rw,
 
+    # View files in pager with aurutils
+    owner @{HOME}/.cache/aurutils/sync/{,**} rw,
+
     deny /dev/tty rw,
   }
 
