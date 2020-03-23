@@ -42,7 +42,7 @@ profile lollypop /usr/bin/lollypop {
   /usr/bin/lollypop r,
   @{system_share_dirs}/glib*/** r,
   @{system_share_dirs}/lollypop/** r,
-  
+
   owner @{HOME}/.cache/lollypop*/ rw,
   owner @{HOME}/.cache/lollypop*/** rwlk,
   owner @{HOME}/.config/user-dirs.dirs r,
@@ -61,6 +61,9 @@ profile lollypop /usr/bin/lollypop {
 
   # GVFS isn't tested :)
   deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
+
+  # No internet access
+  deny /etc/ssl/openssl.cnf r,
 
   # Silence unneeded permissions
   deny /dev/ rw,
