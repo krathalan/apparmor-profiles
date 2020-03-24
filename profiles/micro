@@ -91,6 +91,10 @@ profile micro /usr/bin/micro {
     deny /dev/tty rw,
   }
 
+  # Compose messages with aerc
+  owner /tmp/aerc-compose-*.eml rw,
+  signal receive set=kill peer=aerc,
+
   # Deny unnecessary permissions
   deny /proc/sys/kernel/random/boot_id r,
 }

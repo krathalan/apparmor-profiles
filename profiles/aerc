@@ -98,29 +98,6 @@ profile aerc /usr/bin/aerc {
   }
 
   # Compose messages with micro
-  /usr/bin/micro rCx,
-  signal send set=kill peer=aerc//micro,
-
-  profile micro /usr/bin/micro {
-    #include <abstractions/base>
-    #include <abstractions/consoles>
-
-    /usr/bin/micro mr,
-    signal receive set=kill peer=aerc,
-
-    # ?
-    /sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
-
-    # Config
-    owner @{HOME}/.config/micro/{,**} rw,
-
-    # Include machine specific overrides for non default config location
-    #include <local/aerc-micro>
-
-    # Message file
-    owner /tmp/aerc-compose-*.eml rw,
-
-    # Git functionality not required for a single message
-    deny /usr/bin/git rx,
-  }
+  /usr/bin/micro rPx,
+  signal send set=kill peer=micro,
 }
