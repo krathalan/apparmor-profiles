@@ -1,0 +1,2 @@
+@{HOME}/aur-dev/{,**} rw,
+owner /tmp/microv.*/* r,
