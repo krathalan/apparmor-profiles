@@ -114,6 +114,9 @@ profile aerc /usr/bin/aerc {
     # Config
     owner @{HOME}/.config/micro/{,**} rw,
 
+    # Include machine specific overrides for non default config location
+    #include <local/aerc-micro>
+
     # Message file
     owner /tmp/aerc-compose-*.eml rw,
 
