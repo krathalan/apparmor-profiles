@@ -84,6 +84,8 @@ profile micro /usr/bin/micro {
     # Need to view directories files are in
     owner @{HOME}/{D,d}ocuments/{,**} rw,
     owner @{HOME}/{G,g}it/{,**} rw,
+    # Include machine-specific overrides
+    #include <local/micro>
 
     # View files in pager with aurutils
     owner @{HOME}/.cache/aurutils/sync/{,**} rw,
