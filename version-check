@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Description: Checks installed versions of programs for which there is
 #              an apparmor profile for.
@@ -44,9 +44,6 @@ readonly GREEN=$(tput setaf 10)
 readonly RED=$(tput bold && tput setaf 1)
 readonly NC=$(tput sgr0) # No color/turn off all tput attributes
 
-# Location of this script (where is the apparmor-profiles repo?)
-readonly DIR="$1"
-
 # For faster processing
 readonly SCRIPT_NAME=$(basename "$0")
 readonly TMPDIR="$(mktemp -d -t "${SCRIPT_NAME}_XXXXXXXX")"
@@ -80,32 +77,37 @@ check_profile()
 {
   local profile="$1"
 
+  # Make sure we're only checking Krathalan's profiles
+  if ! grep --quiet --directories=skip "# AppArmor profile for" "${profile}"; then
+    exit
+  fi
+
   profiledVersion="$(grep Version "${profile}" 2> /dev/null | grep -v deny | awk '{print $NF}' || printf "(Problem printing info)")"
 
-  # Fix some profile names being different than their package name
-  # Remove "profiles/" prefix
-  package="${profile##*/}"
+  # Remove preceding directories prefix
+  profile="${profile##*/}"
 
-  case "${package}" in
+  # Fix some profile names being different than their profile name
+  case "${profile}" in
     bluetoothd)
-      package="bluez"
+      profile="bluez"
       ;;
     gpg-agent)
-      package="gnupg"
+      profile="gnupg"
       ;;
     NetworkManager)
-      package="networkmanager"
+      profile="networkmanager"
       ;;
     rngd)
-      package="rng-tools"
+      profile="rng-tools"
       ;;
     ssh|ssh-agent)
-      package="openssh"
+      profile="openssh"
       ;;
   esac
 
   local installedVersion
-  installedVersion="$(pacman -Qi "${package}" 2> /dev/null | grep Version | awk '{printf $3}' || printf "not")"
+  installedVersion="$(pacman -Qi "${profile}" 2> /dev/null | grep Version | awk '{printf $3}' || printf "not")"
 
   # Remove package release suffix from installed version
   installedVersion="${installedVersion%%-*}"
@@ -114,11 +116,11 @@ check_profile()
   installedVersion="${installedVersion%%.r*}"
 
   if [[ "${installedVersion}" == "not" ]]; then
-    printf "%s %s installed\n" "${package}" "${installedVersion}" >> "${OUTPUTFILEGOOD}"
+    printf "%s %s installed\n" "${profile}" "${installedVersion}" >> "${OUTPUTFILEGOOD}"
   elif [[ ! "${installedVersion}" == "${profiledVersion}" ]]; then
-    printf "%s%s %s installed; %s profiled%s\n" "${RED}" "${package}" "${installedVersion}" "${profiledVersion}" "${NC}" >> "${OUTPUTFILEBAD}"
+    printf "%s%s %s installed; %s profiled%s\n" "${RED}" "${profile}" "${installedVersion}" "${profiledVersion}" "${NC}" >> "${OUTPUTFILEBAD}"
   else
-    printf "%s%s profile up to date%s\n" "${GREEN}" "${package}" "${NC}" >> "${OUTPUTFILEGOOD}"
+    printf "%s%s profile up to date%s\n" "${GREEN}" "${profile}" "${NC}" >> "${OUTPUTFILEGOOD}"
   fi
 }
 
@@ -148,18 +150,13 @@ if [[ "$(whoami)" = "root" ]]; then
   exit 2
 fi
 
-if [[ $# -gt 1 ]]; then
-  if [[ "$2" == "--quiet" ]] || [[ "$2" == "-q" ]]; then
+if [[ $# -gt 0 ]]; then
+  if [[ "$1" == "--quiet" ]] || [[ "$1" == "-q" ]]; then
     quiet="true"
   fi
 fi
 
-for profile in "${DIR}"/profiles/*; do
-  # Skip template
-  if [[ "${profile}" == *"template" ]]; then
-    continue
-  fi
-
+for profile in /etc/apparmor.d/*; do
   check_profile "${profile}" &
 done
 
@@ -168,5 +165,5 @@ wait
 if [[ "${quiet}" == "true" ]]; then
   sort "${OUTPUTFILEBAD}"
 else
-  cat "${OUTPUTFILEBAD}" "${OUTPUTFILEGOOD}" | sort -
+  sort "${OUTPUTFILEBAD}" "${OUTPUTFILEGOOD}"
 fi
