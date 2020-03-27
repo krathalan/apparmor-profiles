@@ -24,7 +24,7 @@
 # -------------- Guidelines ---------------
 # -----------------------------------------
 
-# This script follows the Google Shell Style Guide: 
+# This script follows the Google Shell Style Guide:
 # https://google.github.io/styleguide/shell.xml
 
 # This script uses shellcheck: https://www.shellcheck.net/
@@ -111,6 +111,7 @@ check_profile()
   installedVersion="${installedVersion%%-*}"
   installedVersion="${installedVersion%%p*}"
   installedVersion="${installedVersion%%+*}"
+  installedVersion="${installedVersion%%.r*}"
 
   if [[ "${installedVersion}" == "not" ]]; then
     printf "%s %s installed\n" "${package}" "${installedVersion}" >> "${OUTPUTFILEGOOD}"
