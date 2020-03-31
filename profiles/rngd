@@ -13,9 +13,16 @@ profile rngd /usr/bin/rngd {
   capability sys_admin,
 
   # System access
+  owner /dev/ r,
   owner /dev/random rw,
+  owner /sys/bus/ r,
+  owner /sys/class/ r,
   owner @{PROC}/sys/kernel/random/* rw,
 
   # Config file
   owner /etc/conf.d/rngd r,
+
+  # Deny unnecessary permissions
+  deny /dev/bus/usb/ r,
+  deny /sys/bus/usb/devices/ r,
 }
