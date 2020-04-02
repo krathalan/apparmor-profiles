@@ -1,5 +1,5 @@
 # AppArmor profile for VSCodium and VS Code editor
-# Version of VSCode/ium profiled: 1.42.1
+# Version of VSCode/ium profiled: 1.43.2
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -37,11 +37,14 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   # Chromium/Electron spawns and uses multiple processes
   @{system_share_dirs}/vscodium-bin/{,**} mr,
   /usr/lib/code/{,**} mr,
-  /usr/lib/electron6/electron rix,
+  /usr/lib/electron[6-9]/electron rix,
   /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code,code-oss,code.js,codium} rpx,
 
   # Intel audio (won't open without this)
   /opt/intel/mediasdk/lib/libmfx.so.* mr,
+
+  # Intel (other)
+  /proc/sys/dev/i915/perf_stream_paranoid r,
 
   # Needed to record open documents at shutdown and open them again at startup
   owner  @{user_share_dirs}/recently-used.xbel* rw,
@@ -121,7 +124,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   # https://marketplace.visualstudio.com/items?itemName=timonwong.shellcheck
   # Extension is MIT Licensed: https://github.com/timonwong/vscode-shellcheck
   /usr/bin/shellcheck rix,
-  
+
   # Possibly needed for debugging? Use separate debugger program (e.g. gdb)
   deny @{PROC}/sys/kernel/yama/ptrace_scope r,
 
