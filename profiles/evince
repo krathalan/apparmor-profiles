@@ -20,6 +20,9 @@ profile evince /usr/{bin,lib}/evince{,d} {
   /usr/bin/gio-launch-desktop rix,
   /usr/bin/evince rPx,
 
+  # Needed to open multiple instances of evince
+  /usr/bin/{b,d}ash rix,
+
   # Needed to read documents
   owner @{HOME}/{D,d}ocuments/{,**} r,
   owner @{HOME}/{D,d}ownloads/{,**} r,
@@ -59,6 +62,7 @@ profile evince /usr/{bin,lib}/evince{,d} {
 
   # Silence unneeded permissions
   deny /etc/nsswitch.conf r,
+  deny /etc/ssl/openssl.cnf r,
   deny /dev/shm/ r,
   deny @{PROC}/@{pid}/fd/ r,
   deny @{PROC}/@{pid}/mountinfo r,
