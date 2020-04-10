@@ -87,6 +87,9 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   owner @{user_share_dirs}/applications/userapp-Nightly* w,
   owner @{user_share_dirs}/applications/userapp-Firefox* w,
 
+  # systemd-homed
+  /{,var/}run/systemd/userdb/ r,
+
   # Don't allow launching other applications to open files
   deny /usr/bin/gio-launch-desktop rx,
   deny /etc/mailcap r,
