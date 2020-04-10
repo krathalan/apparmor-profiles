@@ -19,4 +19,7 @@ profile mako /usr/bin/mako {
 
   # Config file
   owner @{HOME}/.config/mako/** r,
+
+  # Allow mako to view album covers from lollypop music player
+  owner @{HOME}/.cache/lollypop/*.jpg r,
 }
