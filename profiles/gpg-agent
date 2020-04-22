@@ -25,6 +25,13 @@ profile gpg-agent /usr/bin/gpg-agent {
   # Arch Linux keyring
   owner /etc/pacman.d/gnupg/{,**} rw,
 
+  # fwupd
+  capability dac_read_search,
+  capability dac_override,
+  owner /etc/nsswitch.conf r,
+  owner /etc/passwd r,
+  owner /var/lib/fwupd/gnupg/{,**} rw,
+
   # Miscellaneous
   /usr/bin/{bash,dash} rix,
   @{system_share_dirs}/gnupg/* r,
