@@ -96,7 +96,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   # Extension is MIT Licensed: https://github.com/mitaki28/vscode-clang
   signal send set=term peer=code//clang,
   signal send set=term peer=codium//clang,
-  /usr/bin/clang-[0-9]* rCx,
+  /usr/bin/clang* rCx,
 
   profile clang /usr/bin/clang-[0-9] {
     #include <abstractions/base>
