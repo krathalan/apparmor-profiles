@@ -32,6 +32,7 @@ profile aerc /usr/bin/aerc {
   # Configuration/program files
   /usr/share/aerc/{,**} r,
   owner @{HOME}/.config/aerc/{,*} rw,
+  owner @{user_share_dirs}/aerc/{,*} rw,
   owner /run/user/*/aerc.sock rw,
 
   # Needed to view messages

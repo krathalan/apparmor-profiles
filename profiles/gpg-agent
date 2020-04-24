@@ -32,6 +32,9 @@ profile gpg-agent /usr/bin/gpg-agent {
   owner /etc/passwd r,
   owner /var/lib/fwupd/gnupg/{,**} rw,
 
+  # aurutils
+  owner /var/lib/aurbuild/**/etc/pacman.d/gnupg/{,**} rw,
+
   # Miscellaneous
   /usr/bin/{bash,dash} rix,
   @{system_share_dirs}/gnupg/* r,
