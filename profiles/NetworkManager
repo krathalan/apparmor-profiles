@@ -1,5 +1,5 @@
 # AppArmor profile for NetworkManager
-# Version of NetworkManager profiled: 1.22.10
+# Version of NetworkManager profiled: 1.22.11dev
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -9,7 +9,7 @@ profile NetworkManager /usr/bin/NetworkManager {
   #include <abstractions/base>
   #include <abstractions/krathalans-hardening>
 
-  # Networking 
+  # Networking
   #include <abstractions/krathalans-networking>
   capability net_admin,
   capability net_bind_service,
@@ -29,7 +29,7 @@ profile NetworkManager /usr/bin/NetworkManager {
 
   # Config
   owner /etc/NetworkManager/{,**} r,
-  
+
   # Needed to record connection information (e.g. wifi passwords)
   owner /etc/NetworkManager/system-connections/{,**} w,
 
