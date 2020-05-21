@@ -1,5 +1,5 @@
 # AppArmor profile for evince document viewer
-# Version of evince profiled: 3.36.0
+# Version of evince profiled: 3.36.1
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -16,7 +16,7 @@ profile evince /usr/{bin,lib}/evince{,d} {
   #include <abstractions/dconf>
   owner /run/user/*/dconf/user w,
 
-  # Needed to open documents from the file picker 
+  # Needed to open documents from the file picker
   /usr/bin/gio-launch-desktop rix,
   /usr/bin/evince rPx,
 
@@ -52,7 +52,7 @@ profile evince /usr/{bin,lib}/evince{,d} {
   # GVFS isn't tested :)
   deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
 
-  # Silence denial about ~/.local/share/gvfs-metadata/home, this file can 
+  # Silence denial about ~/.local/share/gvfs-metadata/home, this file can
   # contain sensitive data
   deny @{user_share_dirs}/gvfs-metadata/** r,
 
