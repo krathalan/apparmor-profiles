@@ -1,5 +1,5 @@
 # AppArmor profile for ssh-agent
-# Version of ssh-agent (openssh) profiled: 8.2
+# Version of ssh-agent (openssh) profiled: 8.3
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
