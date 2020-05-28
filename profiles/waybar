@@ -26,6 +26,7 @@ profile waybar /usr/bin/waybar {
 
   # Misc
   @{system_share_dirs}/glib-[0-9]*/schemas/{,**} r,
+  /usr/share/terminfo/** r,
 
   # Executables
   /usr/bin/waybar mrPx,
@@ -36,4 +37,7 @@ profile waybar /usr/bin/waybar {
 
   # Network module
   @{PROC}/*/net/netstat r,
+
+  # Deny unnecessary permissions
+  deny /dev/tty* rw,
 }
