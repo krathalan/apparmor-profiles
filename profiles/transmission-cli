@@ -1,5 +1,5 @@
 # AppArmor profile for transmission-cli bittorrent client
-# Version of transmission-cli profiled: 2.94
+# Version of transmission-cli profiled: 3.00
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -20,7 +20,10 @@ profile transmission-cli /usr/bin/transmission* {
   # Config
   owner @{HOME}/.config/transmission*/ rw,
   owner @{HOME}/.config/transmission*/** rw,
-  
+
+  # IPC
+  owner /tmp/tr_session_id_* rw,
+
   # Silence unnecessary permissions
   deny @{PROC}/{,**} r,
 }
