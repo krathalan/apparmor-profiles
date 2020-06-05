@@ -1,5 +1,5 @@
 # AppArmor profile for firefox browser
-# Versions of firefox profiled: 76.0.1
+# Versions of firefox profiled: 77.0.1
 # This profile should work on Developer Edition and Nightly as well
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
@@ -103,6 +103,7 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
 
   # Deny unnecessary /proc
   deny @{PROC}/@{pid}/{,**} rw,
+  deny @{PROC}/sys/kernel/random/boot_id r,
 
   # Deny /var
   deny /var/** rw,
