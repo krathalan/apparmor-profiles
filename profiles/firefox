@@ -72,6 +72,9 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   /opt/firefox-nightly/ r,
   /opt/firefox-nightly/** mr,
 
+  # Wayland
+  owner /dev/shm/wayland.mozilla.ipc.* rw,
+
   # Miscellaneous
   owner /run/user/*/mozilla* rwlk,
 
