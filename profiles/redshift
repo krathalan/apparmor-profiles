@@ -9,7 +9,8 @@ profile redshift /usr/bin/redshift {
   #include <abstractions/base>
   #include <abstractions/krathalans-hardening>
 
-  # Config file 
+  # Config file
+  #include <local/redshift>
   owner @{HOME}/.config/redshift/redshift.conf r,
 
   # Miscellaneous
