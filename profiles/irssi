@@ -23,4 +23,9 @@ profile irssi /usr/bin/irssi {
 
   # Config
   owner @{HOME}/.irssi/* rw,
+  owner @{HOME}/.config/irssi/* rw,
+
+  # Deny unnecessary permissions
+  deny /etc/passwd r,
+  deny /{,var/}run/systemd/userdb/ r,
 }
