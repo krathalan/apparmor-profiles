@@ -1,0 +1,23 @@
+# AppArmor profile for mbsync/isync IMAP mailbox synchronizer
+# Version of program profiled: 1.3.1
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile mbsync /usr/bin/mbsync {
+  #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
+  #include <abstractions/krathalans-networking>
+
+  # Config
+  owner @{HOME}/.mbsyncrc r,
+
+  # Mail storage
+  owner @{HOME}/.local/share/mail/{,**} rw,
+  owner @{HOME}/.local/share/mail/{,**}/{.mbsyncstate.lock,.uidvalidity} k,
+
+  # Include user overrides for possible symlinked config files and different
+  # mail storage locations
+  #include <local/mbsync>
+}

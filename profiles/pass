@@ -10,7 +10,7 @@ profile pass /usr/bin/pass {
   #include <abstractions/krathalans-hardening>
   #include <abstractions/user-tmp>
 
-  # Include user overrides for different password or GNUPG directories 
+  # Include user overrides for different password or GNUPG directories
   #include <local/pass>
 
   # Various programs -- pass is a bash script, after all
@@ -45,7 +45,10 @@ profile pass /usr/bin/pass {
   # Needed for copying passwords
   /usr/bin/cp mrix,
 
-  # Needed for editing passwords (with nano!)
+  # Needed for editing passwords with micro
+  /usr/bin/micro rPx,
+
+  # Needed for editing passwords with nano
   /usr/bin/mktemp mrix,
   /usr/bin/nano rCx,
   owner /dev/shm/pass.*/{,*,**} rw,
@@ -55,11 +58,15 @@ profile pass /usr/bin/pass {
     #include <abstractions/bash>
     #include <abstractions/krathalans-hardening>
 
+    /usr/bin/nano mr,
+
     # Config files
     /etc/nanorc r,
-    /usr/bin/nano mr,
     owner @{HOME}/.nanorc r,
-    owner @{HOME}/documents/config/nanorc r,
+    owner @{HOME}/.config/nano/nanorc r,
+
+    # Include user overrides for possible symlinked config files
+    #include <local/pass-nano>
 
     # Syntax highlighting
     /usr/share/file/misc/magic.mgc r,
@@ -67,6 +74,9 @@ profile pass /usr/bin/pass {
 
     # Needed for pass to read the edited file
     owner /dev/shm/pass.*/{,*,**} rw,
+
+    # Deny unnecessary permissions
+    deny /dev/pts/* rw,
   }
 
   # GPG
