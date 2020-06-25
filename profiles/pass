@@ -30,7 +30,7 @@ profile pass /usr/bin/pass {
   /usr/bin/dirname mrix,
   /usr/bin/mkdir mrix,
   /usr/bin/tr mrix,
-  owner @{HOME}/.gnupg/random_seed k,
+  owner @{HOME}/{.gnupg,.local/share/gnupg}/random_seed k,
 
   # Needed for deleting passwords
   /usr/bin/rm mrix,
@@ -82,8 +82,8 @@ profile pass /usr/bin/pass {
   # GPG
   #include <abstractions/gnupg>
   /usr/bin/gpg mrix,
-  owner @{HOME}/.gnupg/*lock* rwl,
-  owner @{HOME}/.gnupg/*lk* rwl,
+  owner @{HOME}/{.gnupg,.local/share/gnupg}/*lock* rwl,
+  owner @{HOME}/{.gnupg,.local/share/gnupg}/*lk* rwl,
 
   # pass-otp extension
   /usr/bin/oathtool rix,

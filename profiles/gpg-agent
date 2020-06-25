@@ -11,9 +11,18 @@ profile gpg-agent /usr/bin/gpg-agent {
 
   # Access user keys and config
   #include <abstractions/gnupg>
-  owner @{HOME}/.gnupg/private-keys*/{,*} w,
-  owner @{HOME}/.gnupg/private-keys*/* r,
-  owner @{HOME}/.gnupg/sshcontrol rw,
+  owner @{HOME}/{.gnupg,.local/share/gnupg}/private-keys*/{,*} w,
+  owner @{HOME}/{.gnupg,.local/share/gnupg}/private-keys*/* r,
+  owner @{HOME}/{.gnupg,.local/share/gnupg}/sshcontrol rw,
+
+  # Copy <abstractions/gnupg> with XDG_DATA_HOME
+  owner @{HOME}/.local/share/gnupg/options     r,
+  owner @{HOME}/.local/share/gnupg/pubring.gpg r,
+  owner @{HOME}/.local/share/gnupg/pubring.kbx r,
+  owner @{HOME}/.local/share/gnupg/random_seed rw,
+  owner @{HOME}/.local/share/gnupg/secring.gpg r,
+  owner @{HOME}/.local/share/gnupg/so/*.x86_64 mr,
+  owner @{HOME}/.local/share/gnupg/trustdb.gpg rw,
 
   # Include user overrides for possible symlinked config files
   #include <local/gpg-agent>
@@ -22,6 +31,9 @@ profile gpg-agent /usr/bin/gpg-agent {
   /usr/bin/pinentry-curses rix,
   /dev/pts/* rw,
   @{system_share_dirs}/terminfo/** r,
+
+  # Socket
+  owner /run/user/*/gnupg/{,**} rw,
 
   # Arch Linux keyring
   owner /etc/pacman.d/gnupg/{,**} rw,
