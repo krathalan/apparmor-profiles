@@ -1,0 +1,93 @@
+# AppArmor profile for mutt mail client
+# Version of program profiled: 1.14.5
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile mutt /usr/bin/mutt {
+  #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
+  #include <abstractions/krathalans-networking>
+
+  # Config
+  /etc/Muttrc r,
+  owner @{HOME}/.muttrc r,
+  owner @{HOME}/.mutt/* r,
+  owner @{HOME}/.config/mutt/* r,
+
+  # Cache
+  owner @{HOME}/.cache/mutt rwk,
+  owner /tmp/{mutt,.mutt}*{,**} rwl,
+
+  # Mail storage
+  owner @{HOME}/.local/share/mail/{,**} rw,
+
+  # Include user overrides for possible symlinked config files and different
+  # cache/mail storage locations
+  #include <local/mutt>
+
+  # Viewing html messages with w3m
+  /usr/bin/{bash,dash} mrix,
+  /usr/bin/w3m rCx,
+
+  profile w3m /usr/bin/w3m {
+    #include <abstractions/base>
+    #include <abstractions/krathalans-hardening>
+
+    /usr/bin/w3m r,
+
+    # Mail storage
+    owner @{HOME}/.local/share/mail/{,**} rw,
+
+    # Include user overrides for possible symlinked config files and different
+    # cache/mail storage locations
+    #include <local/mutt>
+
+    owner /tmp/{mutt,.mutt}*{,**} rwl,
+
+    # Deny unnecessary permissions
+    deny @{HOME}/.w3m/{,*} w,
+  }
+
+  # Needed for composing messages with micro
+  /usr/bin/micro rPx,
+  
+  # Needed for composing messages with nano
+  /usr/bin/nano rCx,
+
+  profile nano /usr/bin/nano {
+    #include <abstractions/base>
+    #include <abstractions/bash>
+    #include <abstractions/krathalans-hardening>
+
+    /usr/bin/nano mr,
+
+    # Config files
+    /etc/nanorc r,
+    owner @{HOME}/.nanorc r,
+    owner @{HOME}/.config/nano/nanorc r,
+
+    # Include user overrides for possible symlinked config files
+    #include <local/mutt-nano>
+
+    owner /tmp/mutt-* rw,
+
+    # Syntax highlighting
+    /usr/share/file/misc/magic.mgc r,
+    /usr/share/nano-syntax-highlighting/{,*} r,
+
+    # Deny unnecessary permissions
+    deny /dev/pts/* rw,
+  }
+
+  # Miscellaneous
+  /usr/share/terminfo/{,**} r,
+  /etc/services r,
+
+  # Deny unnecessary permissions
+  deny /etc/group r,
+  deny /etc/passwd r,
+  deny /{,var/}run/systemd/userdb/ r,
+  deny /dev/tty r,
+}
