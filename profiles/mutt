@@ -21,7 +21,7 @@ profile mutt /usr/bin/mutt {
   owner /tmp/{mutt,.mutt}*{,**} rwl,
 
   # Mail storage
-  owner @{HOME}/.local/share/mail/{,**} rw,
+  owner @{HOME}/.local/share/mail/{,**} rwl,
 
   # Include user overrides for possible symlinked config files and different
   # cache/mail storage locations
@@ -52,7 +52,7 @@ profile mutt /usr/bin/mutt {
 
   # Needed for composing messages with micro
   /usr/bin/micro rPx,
-  
+
   # Needed for composing messages with nano
   /usr/bin/nano rCx,
 
