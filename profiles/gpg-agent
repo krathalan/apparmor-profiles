@@ -13,6 +13,7 @@ profile gpg-agent /usr/bin/gpg-agent {
   #include <abstractions/gnupg>
   owner @{HOME}/.gnupg/private-keys*/{,*} w,
   owner @{HOME}/.gnupg/private-keys*/* r,
+  owner @{HOME}/.gnupg/sshcontrol rw,
 
   # Include user overrides for possible symlinked config files
   #include <local/gpg-agent>
