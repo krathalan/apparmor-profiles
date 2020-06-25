@@ -95,6 +95,9 @@ check_profile()
     gpg-agent)
       profile="gnupg"
       ;;
+    mbsync)
+      profile="isync"
+      ;;
     NetworkManager)
       profile="networkmanager"
       ;;
