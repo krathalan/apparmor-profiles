@@ -45,6 +45,7 @@ profile mutt /usr/bin/mutt {
     #include <local/mutt>
 
     owner /tmp/{mutt,.mutt}*{,**} rwl,
+    owner /tmp/w3m*/{,**} rw,
 
     # Deny unnecessary permissions
     deny @{HOME}/.w3m/{,*} w,
