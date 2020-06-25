@@ -37,12 +37,12 @@ profile imv /usr/bin/imv {
 
   # For nvidia
   #include <local/imv>
-  deny @{PROC}/{,**} r,
   deny /sys/bus/pci/devices/ r,
   deny /tmp/* w,
 
   # Silence unnecessary permissions
   deny /etc/nsswitch.conf r,
   deny /sys/devices/system/cpu/ r,
+  deny @{PROC}/*/comm r,
   deny owner @{HOME}/.cache/mesa_shader_cache/index rw,
 }
