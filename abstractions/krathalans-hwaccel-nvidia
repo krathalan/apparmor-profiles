@@ -15,6 +15,7 @@
   deny /tmp/.gl* mrw,
   deny /tmp/*/.gl* mrw,
   deny @{HOME}/.nv/** mrw,
+  deny @{HOME}/.cache/.nv/** mrw,
 
   # Other files in @{sys}/devices/pci[0-9]*/ that aren't part of 
   # abstractions/dri-enumerate don't belong in this abstraction; allow on a

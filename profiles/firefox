@@ -116,7 +116,6 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   deny /tmp/.gl* mrw,
   deny @{HOME}/#* mrw,
   deny @{HOME}/.gl* mrw,
-  deny @{HOME}/.nv/* r,
 
   # Silence denial logs about permissions we don't need
   deny capability sys_admin,
