@@ -16,6 +16,9 @@ profile lollypop /usr/bin/lollypop {
   owner @{HOME}/{M,m}usic/ r,
   owner @{HOME}/{M,m}usic/** r,
 
+  # Include user overrides for different music directories
+  #include <local/lollypop>
+
   # Audio
   #include <abstractions/audio>
   /etc/alsa/conf.d/ r,
