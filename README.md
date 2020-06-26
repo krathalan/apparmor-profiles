@@ -33,14 +33,21 @@ These profiles strive to be fully functional with zero audit log warnings under 
 
 You should read through [the notes about each profile](https://git.sr.ht/~krathalan/apparmor-profiles#notes-about-each-profile) before using these profiles.
 
-## Abstractions
-Many profiles require access to common files: icons, themes, and fonts for GUI applications; hardware acceleration resources; networking resources; and so on. To ease the burden of maintenance and to reduce policy error, many rules have been put into abstractions. Copy all files in the `abstractions/` folder in this repository to `/etc/apparmor.d/abstractions/`, then run  
-`$ sudo systemctl reload apparmor.service`
+## Installation
+Releases are signed so you'll need to import my GPG key first:
+`02AA A23A BDF1 D538 BD88  9D25 1AAD E5E7 28FF C667`
 
-Many profiles WILL NOT WORK if you do not have all abstractions loaded.
+Then build and install the package:
+
+```
+$ git clone https://git.sr.ht/~krathalan/pkgbuilds
+$ cd pkgbuilds/krathalans-apparmor-profiles-git/
+$ nano --view PKGBUILD # Always inspect PKGBUILDS before running makepkg!
+$ makepkg -i
+```
 
 ## Adding local changes
-To add local changes without changing the file provided by this repository, use local overrides. See `less /etc/apparmor.d/local/README` for more details. You can see examples of local overrides in the `local/` directory in this repository.
+To add local changes without changing the file provided by this repository, use local overrides. See `less /etc/apparmor.d/local/README` for more details. You can see commented examples of local overrides in the `local/` directory in this repository.
 
 ## NVIDIA
 You may have issues with hardware acceleration on NVIDIA hardware. This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured incorrectly. Change the profile executable name at the top of the nvidia_modprobe profile file (`/etc/apparmor.d/nvidia_modprobe`) to "/usr/bin/nvidia-modprobe", so the top of the profile looks like this:  
@@ -80,7 +87,6 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 
 ⚠️ This symbol means you may/will need to add local changes for your specific configuration. You can find more information for the specific profile by clicking on its name or simply scrolling down. You may not have to add any local changes, however -- many profiles work with the default configurations for that program.
 
-- [aerc ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#aerc)
 - bluetoothd
 - [code ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#code)
 - [evince ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#evince)
@@ -92,14 +98,16 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - less
 - [Lollypop ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#lollypop)
 - [mako ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#mako)
+- [mbsync ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#mbsync)
+- [micro ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#micro)
 - mosh
 - [mpv ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#mpv)
+- [mutt ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#mutt)
 - NetworkManager
-- [pass ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#pass)
+- [pash ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#pash)
 - pulseaudio
 - [redshift ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#redshift)
 - rngd
-- signal-desktop
 - [ssh ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#ssh)
 - [ssh-agent ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#ssh-agent)
 - [streamlink ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#streamlink)
@@ -108,31 +116,28 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - [transmission-cli ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#transmission-cli)
 - [undervolt ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#undervolt)
 - [waybar ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#waybar)
+- wob
 - wpa_supplicant
 - [youtube-dl ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#youtube-dl)
-- wob
-
-### aerc
-This profile only has support for `nano` for composing emails. I don't use `vi`/`vim` or other terminal editors so pull requests are welcome.
-
-This profile assumes you only want to save/attach files from `~/{D,d}ownloads/`.
 
 ### code
+
+You will need to add local changes to edit files that are not:
+- in the base `~` directory (for files like `~/.bashrc`),
+- `~/.config/`,
+- `~/{D,d}ocuments/`,
+- and `~/{G,g}it/`.
+
+You will need to add local changes if your VSCode/ium configuration files are somewhere other than `~/.config/VSCodium/`, `~/.config/Code - OSS`, and `~/.vscode-oss`, or if you use extensions which require files outside of the profile.
+
 This profile will work with both the `code` repo package and the `vscodium-bin` AUR package.
-
-This profile assumes you only want to edit files in the base `~` directory (for files like `~/.bashrc`), `~/.config/`, `~/{D,d}ocuments/`, and `~/{G,g}it/`.
-
 This profile is only allowed to open an AppArmor-confined Firefox when opening a URL. 
 
-You will need to add local changes if your VSCodium configuration files are somewhere other than `~/.config/VSCodium/`, `~/.config/Code - OSS`, and `~/.vscode-oss`, or if you use extensions which require files outside of the profile.
-
 ### evince
-This profile assumes you only want to view documents in `~/{D,d}ocuments/` and `~/{D,d}ownloads/`. If you do not, add local changes. Evince does not need access to your whole home directory.
+You will need to add local changes if you wish to view documents that are not in `~/{D,d}ocuments/` or `~/{D,d}ownloads/`.
 
 ### Firefox
-This profile has been tested with the `firefox` and `firefox-developer-edition` repo packages and the `firefox-nightly` AUR package, and with OpenGL (default) and WebRender -- on the aforementioned hardware, on both Xorg and Sway. This single profile will apply to all Firefox versions.
-
-You will need to add local changes if your Firefox Nightly files are somewhere other than `/opt/firefox-nightly/` (e.g. if you just download the binary from Mozilla's website).
+This profile has been tested with the `firefox` and `firefox-developer-edition` repo packages, and with OpenGL (default) and WebRender -- on the aforementioned hardware, on both Xorg and Sway. This single profile will apply to all Firefox versions.
 
 The only directories in the home directory that Firefox is allowed to access are `~/{D,d}ownloads/` and `~/.mozilla/`. You won't be able to, for example, upload things to the web from your Documents directory. You'll need to copy the file to your downloads directory first.
 
@@ -143,18 +148,26 @@ This profile will only work with the `pinentry-curses` pinentry program. As per 
 You may need to add local changes to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg/`.
 
 ### imv
-This profile assumes you only want to view images in `~/{D,d}ownloads/`, `~/{P,p}ictures/`, and `~/{P,p}hotos/`.
+You will need to add local changes if you wish to view images that are not in `~/{D,d}ownloads/`, `~/{P,p}ictures/`, or `~/{P,p}hotos/`.
 
 ### irssi
-You may need to add local changes to allow `irssi` to access your configuration files, if they are symlinks to somewhere other than inside `~/.irssi/`.
+You may need to add local changes to allow `irssi` to access your configuration files, if they are symlinks to somewhere other than inside `~/.irssi/` or `~/.config/irssi/`.
 
 ### Lollypop
-This profile assumes you keep your music in `~/{M,m}usic/`. If you do not, add local changes. Lollypop does not need access to your whole home directory.
+You will need to add local changes if you wish to listen to music in directories other than `~/{M,m}usic/`.
 
 I have not tested the profile for any web features, so they probably will not work.
 
 ### mako
 You may need to add local changes to allow `mako` to access your configuration file, if it's a symlink to somewhere other than inside `~/.config/mako/`.
+
+### mbsync
+You may need to add local changes to allow `mbsync` to access your mail storage directories, if they're somewhere other than `~/.local/share/mail/`.
+
+### micro
+You may need to add local changes to allow `micro` to access your configuration files, if there are symlinks to somewhere other than inside `~/.config/micro/`.
+
+Additionally, you may add local changes to be able to view/edit files in directories other than `~/{D,d}ocuments/` and `~/{G,g}it/`.
 
 ### mpv
 You may need to add local changes to allow `mpv` to acces your configuration file, if it's a symlink to somehwere other than `~/.config/mpv/`.
@@ -165,8 +178,13 @@ This AppArmor profile also works when mpv is invoked by other programs like [str
 
 Use the command line flag `--gpu-context=wayland` for Wayland support. Use the command line flag `--hwdec=auto` for nvdec (NVIDIA) and VA-API (Intel) hardware decoding. You can also tell `mpv` to always use these options [through a config file](https://mpv.io/manual/master/).
 
-### pass
-You may need to add local changes to allow `pass` to access your password files and GNUPG files if they're somehwere other than `~/.password-store/` and `~/.gnupg/` respectively.
+### mutt
+You may need to add local changes to allow `mutt` to access your configuration files, if there are symlinks to somewhere other than inside `~/.config/mutt/`.
+
+This profile only has support for `micro` and `nano` for composing emails. Pull requests are welcome for other editors.
+
+### pash
+You may need to add local changes to allow `pash` to access your password files and GNUPG files if they're somehwere other than `~/.local/share/pash/` and `~/.gnupg/` respectively.
 
 ### redshift
 This profile has been tested to work correctly on Xorg with the `redshift` repo package and on Sway with the `redshift-wlr-gamma-control` AUR package.
@@ -174,9 +192,7 @@ This profile has been tested to work correctly on Xorg with the `redshift` repo 
 You may need to add local changes to allow `redshift` to access your configuration file, if it's a symlink to somewhere other than `~/.config/redshift/`.
 
 ### ssh
-This profile will work with [`mosh`, the mobile shell](https://mosh.org/), and with `git` for interacting with remote repositories.
-
-This profile will work using `ssh` in the traditional way to "ssh into" remote machines, but `mosh` will give you terminfo support for any terminal on the host without having to install it on the remote machine; not to mention better connection stability, connection through sleep/hibernate, etc. There's an AppArmor profile for `mosh` in this repository, and these profiles work together.
+This profile will work with [`mosh`, the mobile shell](https://mosh.org/), and with `git` for interacting with remote repositories. There's an AppArmor profile for `mosh` in this repository, and these profiles work together.
 
 You may need to add local changes to allow `ssh` to access your SSH keys, if you keep them somewhere other than `~/.ssh/`.
 
@@ -195,7 +211,7 @@ You *will* need to add local changes to allow `syncthing` to access your synced 
 ### transmission-cli
 You may need to add local changes to allow `transmission-cli` to access your configuration files, if you keep them somewhere other than `~/.config/transmission*/`.
 
-This profile assumes you only want to download files to `~/{D,d}ownlads/`.
+You will need to add local changes if you wish to download files to any directory other than `~/{D,d}ownloads/`.
 
 This profile applies to all `transmission-*` binaries, including `transmission-daemon` and `transmission-remote`.
 
@@ -206,4 +222,17 @@ This profile is for an Intel CPU undervolt utility: https://github.com/georgewhe
 You may need to add local changes to allow `waybar` modules to work which I have not tested. I have tested the following modules to work: sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock, tray.
 
 ### youtube-dl
-The only directory in the home directory youtube-dl is allowed to access is the `~/{D,d}ownloads/` directory. Add local changes if you prefer to download your videos elsewhere.
+You will need to add local changes if you wish to download videos to any directory other than `~/{D,d}ownloads/`.
+
+## Unmaintained profiles
+
+- aerc
+- Discord
+- Gedit
+- Hexchat
+- KeepassXC
+- pass
+- pipewire
+- signal-desktop
+
+These are profiles which I used to keep updated with their packaged versions, but now do not -- most likely because I have found an alternative program (e.g. Hexchat --> irssi) that I have a new AppArmor profile for. If you wish to maintain one of these profiles please submit patches!
