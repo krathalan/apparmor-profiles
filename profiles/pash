@@ -1,0 +1,69 @@
+# AppArmor profile for pash password manager
+# Version of program profiled: 2.3.0
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile pash /usr/bin/pash {
+  #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
+
+  /usr/bin/pash r,
+
+  # Default pash store location
+  owner @{user_share_dirs}/pash/{,**} rw,
+  # Include user overrides for different password or GNUPG directories
+  #include <local/pash>
+
+  # Various programs -- pash is a sh script
+  # Used to list passwords
+  /usr/bin/find rix,
+  /usr/bin/mkdir rix,
+  /usr/bin/sed rix,
+  /usr/bin/stty rix,
+  /usr/bin/tree rix,
+
+  # Used to generate passwords
+  /usr/bin/dd rix,
+  /usr/bin/tr rix,
+
+  # Used to delete passwords
+  /usr/bin/{rm,rmdir} rix,
+
+  # Used to copy passwords
+  /usr/bin/sleep rix,
+  /usr/bin/xclip rCx,
+
+  profile xclip /usr/bin/xclip {
+    #include <abstractions/base>
+
+    /usr/bin/xclip r,
+
+    owner @{HOME}/.Xauthority r,
+  }
+
+  # GPG
+  /usr/bin/gpg rCx,
+  signal send set=term peer=pash//gpg,
+
+  profile gpg /usr/bin/gpg {
+    #include <abstractions/base>
+    #include <abstractions/gnupg>
+    /usr/bin/gpg r,
+
+    signal receive set=term peer=pash,
+
+    owner @{HOME}/.gnupg/pubring.kbx.{lock,tmp} rwl,
+    owner @{HOME}/.gnupg/*lk* rwl,
+    owner @{HOME}/.gnupg/random_seed k,
+
+    # GPG needs access to the password store
+    owner @{user_share_dirs}/pash/{,**} rw,
+    # Include user overrides for different password or GNUPG directories
+    #include <local/pash>
+  }
+
+  # Deny unnecessary permissions
+  deny /dev/tty rw,
+}
