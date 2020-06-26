@@ -1,0 +1,2 @@
+# Config files at ~/.config/mutt/ are symlinks to files here
+owner @{HOME}/documents/config/home-config/.config/mutt/* r,

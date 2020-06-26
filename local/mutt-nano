@@ -1,0 +1,2 @@
+# Config file at ~/.config/nano/nanorc is a symlink to this file
+owner @{HOME}/documents/config/home-config/.config/nano/nanorc r,

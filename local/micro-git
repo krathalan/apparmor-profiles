@@ -1,0 +1,2 @@
+# Config file at ~/.config/git/config is a symlink to this file
+owner @{HOME}/documents/config/home-config/.config/git/config r,

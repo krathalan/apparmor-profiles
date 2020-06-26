@@ -1,0 +1,2 @@
+# I want to view files here
+owner /mnt/media/{,**} r,
