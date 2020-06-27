@@ -1,2 +1,7 @@
-# Config files at ~/.config/mutt/ are symlinks to files here
 owner @{HOME}/documents/config/home-config/.config/mutt/* r,
+
+# I want to read these files
+owner @{HOME}/git/{,**}.patch r,
+
+# I want to read these files and save other files here
+owner @{HOME}/{D,d}ownloads/{,**} rwl,
