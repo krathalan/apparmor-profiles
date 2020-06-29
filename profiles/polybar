@@ -22,7 +22,7 @@ profile polybar /usr/bin/polybar {
   # Audio module
   /usr/bin/pulseaudio rPx,
   /etc/pulse/client.conf r,
-  owner @{HOME}/.config/pulse/{,cookie} rw,
+  owner @{HOME}/.config/pulse/{,cookie} rwk,
   owner /run/user/*/pulse/ rw,
 
   # Config
