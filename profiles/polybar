@@ -1,0 +1,38 @@
+# AppArmor profile for polybar system bar for Xorg
+# Version of program profiled: 3.4.3
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile polybar /usr/bin/polybar {
+  #include <abstractions/base>
+  #include <abstractions/fonts>
+  #include <abstractions/krathalans-hardening>
+
+  # Misc
+  /usr/bin/{bash,dash} rix,
+  /usr/bin/i3 rUx,
+  /dev/shm/ r,
+  owner @{HOME}/.Xauthority r,
+
+  # Network module
+  /sys/devices/pci[0-9]*/**/net/*/operstate r,
+
+  # Audio module
+  /usr/bin/pulseaudio rPx,
+  /etc/pulse/client.conf r,
+  owner @{HOME}/.config/pulse/{,cookie} rw,
+  owner /run/user/*/pulse/ rw,
+
+  # Config
+  owner @{HOME}/.config/polybar/* r,
+  owner @{HOME}/.config/fontconfig/conf.d/* r,
+
+  # Include user overrides for possible symlinked config files
+  #include <local/polybar>
+
+  # Deny unnecessary permissions
+  deny /etc/machine-id r,
+  deny @{PROC}/*/fd/ r,
+}
