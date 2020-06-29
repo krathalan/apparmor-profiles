@@ -1,0 +1,20 @@
+# AppArmor profile for xob overlay bar
+# Version of program profiled: 0.2
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile xob /usr/bin/xob {
+  #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
+
+  owner @{HOME}/.Xauthority r,
+
+  # Config
+  owner @{HOME}/.config/xob/* r,
+  /etc/xob/styles.cfg r,
+
+  # Include user overrides for possible symlinked config file
+  #include <local/xob>
+}
