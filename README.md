@@ -105,6 +105,7 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - [mutt ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#mutt)
 - NetworkManager
 - [pash ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#pash)
+- [polybar ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#polybar)
 - pulseaudio
 - [redshift ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#redshift)
 - rngd
@@ -118,6 +119,7 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - [waybar ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#waybar)
 - wob
 - wpa_supplicant
+- [xob ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#xob)
 - [youtube-dl ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#youtube-dl)
 
 ### code
@@ -186,6 +188,11 @@ This profile only has support for `micro` and `nano` for composing emails. Pull 
 ### pash
 You may need to add local changes to allow `pash` to access your password files and GNUPG files if they're somehwere other than `~/.local/share/pash/` and `~/.gnupg/` respectively.
 
+### polybar
+You may need to add local changes to allow `polybar` to access your configuration files, if you keep them somewhere other than `~/.config/polybar/`.
+
+You may need to add local changes to allow `polybar` modules to work which I have not tested. I have tested the following modules to work: i3, xwindow, network, pulseaudio, cpu, date.
+
 ### redshift
 This profile has been tested to work correctly on Xorg with the `redshift` repo package and on Sway with the `redshift-wlr-gamma-control` AUR package.
 
@@ -219,7 +226,12 @@ This profile applies to all `transmission-*` binaries, including `transmission-d
 This profile is for an Intel CPU undervolt utility: https://github.com/georgewhewell/undervolt
 
 ### waybar
+You may need to add local changes to allow `waybar` to access your configuration files, if you keep them somewhere other than `~/.config/waybar/`.
+
 You may need to add local changes to allow `waybar` modules to work which I have not tested. I have tested the following modules to work: sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock, tray.
+
+### xob
+You may need to add local changes to allow `xob` to access your configuration files, if you keep them somewhere other than `~/.config/xob/`.
 
 ### youtube-dl
 You will need to add local changes if you wish to download videos to any directory other than `~/{D,d}ownloads/`.
