@@ -27,6 +27,36 @@ profile mutt /usr/bin/mutt {
   # cache/mail storage locations
   #include <local/mutt>
 
+  # GPG encrypting/decrypting/verifying messages
+  /usr/bin/pgpewrap rix,
+  owner /tmp/signature.asc rwl,
+
+  /usr/bin/gpg rCx,
+
+  profile gpg /usr/bin/gpg {
+    #include <abstractions/base>
+    #include <abstractions/gnupg>
+    #include <abstractions/krathalans-hardening>
+
+    /usr/bin/gpg r,
+
+    owner @{HOME}/.gnupg/random_seed k,
+    owner @{HOME}/.gnupg/.#lk* rwl,
+    owner @{HOME}/.gnupg/pubring.kbx.{lock,tmp} rwl,
+
+    # GPG needs access to mutt files
+    # Cache
+    owner @{HOME}/.cache/mutt rwk,
+    owner /tmp/{mutt,.mutt}*{,**} rwl,
+
+    # Mail storage
+    owner @{HOME}/.local/share/mail/{,**} rwl,
+
+    # Include user overrides for possible symlinked config files and different
+    # cache/mail storage locations
+    #include <local/mutt>
+  }
+
   # Viewing html messages with w3m
   /usr/bin/{bash,dash} mrix,
   /usr/bin/w3m rCx,
