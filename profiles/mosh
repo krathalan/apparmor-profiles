@@ -8,6 +8,7 @@
 profile mosh /usr/bin/mosh* {
   #include <abstractions/base>
   #include <abstractions/krathalans-hardening>
+  #include <abstractions/krathalans-networking>
   #include <abstractions/perl>
 
   # Binaries
