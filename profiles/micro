@@ -64,6 +64,9 @@ profile micro /usr/bin/micro {
     owner /tmp/wl-copy-buffer-*/{,stdin} rw,
     /dev/tty rw,
 
+    # Mutt
+    owner /tmp/mutt-* rw,
+
     deny /usr/bin/xdg-mime rx,
   }
 
@@ -84,6 +87,8 @@ profile micro /usr/bin/micro {
     # Need to view directories files are in
     owner @{HOME}/{D,d}ocuments/{,**} rw,
     owner @{HOME}/{G,g}it/{,**} rw,
+    # Mutt
+    owner /tmp/mutt-* rw,
     # Include machine-specific overrides
     #include <local/micro>
 
@@ -95,6 +100,9 @@ profile micro /usr/bin/micro {
 
   # Mutt
   owner /tmp/mutt-* rw,
+
+  # ASP https://wiki.archlinux.org/index.php/Asp
+  @{HOME}/.cache/asp/{,**} r,
 
   # Editing pass entries
   owner /dev/shm/pass*/* rw,

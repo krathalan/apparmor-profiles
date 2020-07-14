@@ -40,6 +40,8 @@ profile pash /usr/bin/pash {
 
     /usr/bin/xclip r,
 
+    /dev/tty rw,
+
     owner @{HOME}/.Xauthority r,
   }
 

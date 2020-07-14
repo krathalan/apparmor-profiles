@@ -1,5 +1,5 @@
 # AppArmor profile for mutt mail client
-# Version of program profiled: 1.14.5
+# Version of program profiled: 1.14.6
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
@@ -15,6 +15,7 @@ profile mutt /usr/bin/mutt {
   owner @{HOME}/.muttrc r,
   owner @{HOME}/.mutt/* r,
   owner @{HOME}/.config/mutt/* r,
+  owner @{HOME}/.config/mutt/Drafts w,
 
   # Cache
   owner @{HOME}/.cache/mutt rwk,
@@ -79,7 +80,7 @@ profile mutt /usr/bin/mutt {
     owner /tmp/w3m*/{,**} rw,
 
     # Deny unnecessary permissions
-    deny @{HOME}/.w3m/{,*} w,
+    deny @{HOME}/.w3m/{,**} rw,
   }
 
   # Needed for composing messages with micro

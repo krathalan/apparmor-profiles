@@ -43,13 +43,13 @@ profile mpv /usr/bin/mpv {
 
   # Protect sensitive files and folders
   deny owner @{HOME}/.bash_history rw,
-  deny owner @{HOME}/.gnupg** rw,
-  deny owner @{HOME}/.mozilla** rw,
-  deny owner @{HOME}/.ssh** rw,
+  deny owner @{HOME}/.gnupg/{,**} rw,
+  deny owner @{HOME}/.mozilla/{,**} rw,
+  deny owner @{HOME}/.ssh{,**} rw,
 
   # If you want to save screenshots, uncomment this. There are other
   # screenshot tools like grim and scrot
-  deny @{HOME}/mpv* w,
+  deny @{HOME}/**/mpv-shot* w,
 
   # Needed to view media on other drives
   owner /run/media/*/ r,
@@ -70,6 +70,7 @@ profile mpv /usr/bin/mpv {
   deny @{PROC}/*/cmdline r,
   deny @{PROC}/*/comm r,
   deny @{PROC}/sys/vm/mmap_min_addr r,
+  deny @{PROC}/*/task/{,**} rw,
 
   # Silence unneeded permissions
   deny capability chown,
