@@ -15,7 +15,6 @@ profile mutt /usr/bin/mutt {
   owner @{HOME}/.muttrc r,
   owner @{HOME}/.mutt/* r,
   owner @{HOME}/.config/mutt/* r,
-  owner @{HOME}/.config/mutt/Drafts w,
 
   # Cache
   owner @{HOME}/.cache/mutt rwk,
