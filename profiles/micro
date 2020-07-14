@@ -46,6 +46,9 @@ profile micro /usr/bin/micro {
 
     /usr/bin/xclip mr,
 
+    # Mutt
+    owner /tmp/mutt-* rw,
+
     owner @{HOME}/.Xauthority r,
 
     deny /dev/tty rw,
