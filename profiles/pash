@@ -56,6 +56,7 @@ profile pash /usr/bin/pash {
 
     signal receive set=term peer=pash,
 
+    owner @{HOME}/.gnupg/gpg.conf r,
     owner @{HOME}/.gnupg/pubring.kbx.{lock,tmp} rwl,
     owner @{HOME}/.gnupg/*lk* rwl,
     owner @{HOME}/.gnupg/random_seed k,

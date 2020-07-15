@@ -40,6 +40,7 @@ profile mutt /usr/bin/mutt {
 
     /usr/bin/gpg r,
 
+    owner @{HOME}/.gnupg/gpg.conf r,
     owner @{HOME}/.gnupg/random_seed k,
     owner @{HOME}/.gnupg/trustdb.gpg.lock rwl,
     owner @{HOME}/.gnupg/.#lk* rwl,

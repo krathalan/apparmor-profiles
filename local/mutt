@@ -1,6 +1,6 @@
 # Config files in ~/.config/mutt/ are symlinks to files here
 owner @{HOME}/documents/config/home-config/.config/mutt/* r,
-owner @{HOME}/documents/config/home-config/.config/mutt/Drafts w,
+owner @{HOME}/documents/config/home-config/.gnupg/gpg.conf r,
 
 # I want to read these files
 owner @{HOME}/git/{,**}.patch r,

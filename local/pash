@@ -1,2 +1,5 @@
+# Config file at ~/.gnupg/gpg.conf is symlink to this file
+owner @{HOME}/documents/config/home-config/.gnupg/gpg.conf r,
+
 # This is where my passwords are :)
 owner @{HOME}/documents/security/** rw,
