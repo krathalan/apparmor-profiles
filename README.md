@@ -50,9 +50,9 @@ $ makepkg -i
 To add local changes without changing the file provided by this repository, use local overrides. See `less /etc/apparmor.d/local/README` for more details. You can see commented examples of local overrides in the `local/` directory in this repository.
 
 ## NVIDIA
-You may have issues with hardware acceleration on NVIDIA hardware. This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured incorrectly. Change the profile executable name at the top of the nvidia_modprobe profile file (`/etc/apparmor.d/nvidia_modprobe`) to "/usr/bin/nvidia-modprobe", so the top of the profile looks like this:  
+You may have issues with hardware acceleration on NVIDIA hardware. This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured incorrectly. Change the profile executable name at the top of the nvidia_modprobe profile file (`/etc/apparmor.d/nvidia_modprobe`) to "/usr/bin/nvidia-modprobe", so the top of the profile looks like this:
 
-```  
+```
 # vim:syntax=apparmor
 
 #include <tunables/global>
@@ -60,10 +60,10 @@ You may have issues with hardware acceleration on NVIDIA hardware. This is becau
 profile nvidia_modprobe /usr/bin/nvidia-modprobe {
   #include <abstractions/base>
   ...
-  
-```  
 
-Don't forget to enforce!  
+```
+
+Don't forget to enforce!
 
 `$ sudo aa-enforce /etc/apparmor.d/nvidia_modprobe`
 
@@ -103,7 +103,6 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - mosh
 - [mpv ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#mpv)
 - [mutt ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#mutt)
-- NetworkManager
 - [pash ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#pash)
 - [polybar ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#polybar)
 - pulseaudio
@@ -118,7 +117,6 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - [undervolt ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#undervolt)
 - [waybar ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#waybar)
 - wob
-- wpa_supplicant
 - [xob ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#xob)
 - [youtube-dl ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#youtube-dl)
 
@@ -133,7 +131,7 @@ You will need to add local changes to edit files that are not:
 You will need to add local changes if your VSCode/ium configuration files are somewhere other than `~/.config/VSCodium/`, `~/.config/Code - OSS`, and `~/.vscode-oss`, or if you use extensions which require files outside of the profile.
 
 This profile will work with both the `code` repo package and the `vscodium-bin` AUR package.
-This profile is only allowed to open an AppArmor-confined Firefox when opening a URL. 
+This profile is only allowed to open an AppArmor-confined Firefox when opening a URL.
 
 ### evince
 You will need to add local changes if you wish to view documents that are not in `~/{D,d}ocuments/` or `~/{D,d}ownloads/`.
@@ -144,7 +142,7 @@ This profile has been tested with the `firefox` and `firefox-developer-edition` 
 The only directories in the home directory that Firefox is allowed to access are `~/{D,d}ownloads/` and `~/.mozilla/`. You won't be able to, for example, upload things to the web from your Documents directory. You'll need to copy the file to your downloads directory first.
 
 ### gpg-agent
-This profile will only work with the `pinentry-curses` pinentry program. As per the Arch Wiki (https://wiki.archlinux.org/index.php/GPG#pinentry), to use the curses pinentry, add the following to `~/.gnupg/gpg-agent.conf`:  
+This profile will only work with the `pinentry-curses` pinentry program. As per the Arch Wiki (https://wiki.archlinux.org/index.php/GPG#pinentry), to use the curses pinentry, add the following to `~/.gnupg/gpg-agent.conf`:
 `pinentry-program /usr/bin/pinentry-curses`
 
 You may need to add local changes to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg/`.
@@ -243,8 +241,10 @@ You will need to add local changes if you wish to download videos to any directo
 - Gedit
 - Hexchat
 - KeepassXC
+- NetworkManager
 - pass
 - pipewire
 - signal-desktop
+- wpa_supplicant
 
 These are profiles which I used to keep updated with their packaged versions, but now do not -- most likely because I have found an alternative program (e.g. Hexchat --> irssi) that I have a new AppArmor profile for. If you wish to maintain one of these profiles please submit patches!
