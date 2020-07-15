@@ -16,7 +16,9 @@ profile iwd /usr/lib/iwd/iwd {
 
   # Device access
   owner /dev/rfkill rw,
-  owner @{sys}/devices/** r,
+  owner @{sys}/devices/pci[0-9]*/**/net/* r,
+  owner @{sys}/devices/pci[0-9]*/**/phy[0-9]/** r,
+  owner @{sys}/devices/pci[0-9]*/**/modalias r,
 
   # Connection information (e.g. wifi passwords)
   owner /var/lib/iwd/{,**} rw,
