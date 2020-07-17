@@ -17,6 +17,25 @@ profile mbsync /usr/bin/mbsync {
   owner @{HOME}/.local/share/mail/{,**} rw,
   owner @{HOME}/.local/share/mail/{,**}/{.mbsyncstate.lock,.uidvalidity} k,
 
+  # GPG
+  /usr/bin/dash rix,
+  /usr/bin/gpg rCx,
+
+  profile gpg /usr/bin/gpg {
+    #include <abstractions/base>
+    #include <abstractions/gnupg>
+
+    /usr/bin/gpg r,
+
+    owner @{HOME}/.gnupg/gpg.conf r,
+    owner @{HOME}/.gnupg/pubring.kbx.{lock,tmp} rwl,
+    owner @{HOME}/.gnupg/*lk* rwl,
+    owner @{HOME}/.gnupg/random_seed k,
+
+    # Include user overrides for different GNUPG directories
+    #include <local/mbsync>
+  }
+
   # Include user overrides for possible symlinked config files and different
   # mail storage locations
   #include <local/mbsync>

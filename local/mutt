@@ -7,3 +7,6 @@ owner @{HOME}/git/{,**}.patch r,
 
 # I want to read these files and save other files here
 owner @{HOME}/{D,d}ownloads/{,**} rwl,
+
+# My email passwords are here :)
+owner @{HOME}/documents/security/anders-passwords/email/* r,

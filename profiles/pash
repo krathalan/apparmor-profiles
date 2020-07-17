@@ -52,6 +52,7 @@ profile pash /usr/bin/pash {
   profile gpg /usr/bin/gpg {
     #include <abstractions/base>
     #include <abstractions/gnupg>
+
     /usr/bin/gpg r,
 
     signal receive set=term peer=pash,
