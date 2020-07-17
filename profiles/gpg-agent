@@ -20,6 +20,7 @@ profile gpg-agent /usr/bin/gpg-agent {
 
   # Curses pinentry
   /usr/bin/pinentry-curses rix,
+  /dev/tty[0-9] rw,
   /dev/pts/* rw,
   @{system_share_dirs}/terminfo/** r,
 

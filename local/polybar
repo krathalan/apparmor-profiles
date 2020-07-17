@@ -3,7 +3,8 @@
 /usr/bin/wbm_vpn rPx,
 
 # One of the custom modules cats these files
-owner @{HOME}/.cache/{unread_mail,update_mailboxes_status} r,
+owner @{HOME}/.cache/update_mailboxes_status r,
+owner @{HOME}/.cache/unread_mail/{,**} r,
 
 # Config file at ~/.config/polybar/config is a symlink to this file
 owner @{HOME}/documents/config/xorg-config/.config/polybar/config r,
