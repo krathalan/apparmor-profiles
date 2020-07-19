@@ -1,0 +1,29 @@
+# AppArmor profile for postfix mail transport agent
+# Version of program profiled: 3.5.4
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile smtpd /usr/lib/postfix/bin/smtpd {
+  #include <abstractions/base>
+  #include <abstractions/postfix-common>
+  #include <abstractions/krathalans-nameservice>
+
+  capability dac_read_search,
+
+  /usr/lib/postfix/bin/smtpd r,
+  signal receive set=term peer=postfix,
+
+  # Networking
+  #include <abstractions/ssl_certs>
+  #include <abstractions/ssl_keys>
+  #include <abstractions/openssl>
+  # https://weakdh.org/sysadmin.html
+  /etc/krathalan/dhparams.pem r,
+
+  # Misc
+  /etc/aliases.db rk,
+  /var/spool/postfix/pid/inet.submission rwk,
+  /var/spool/postfix/pid/inet.smtp rwk,
+}

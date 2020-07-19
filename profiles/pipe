@@ -1,0 +1,22 @@
+# AppArmor profile for postfix mail transport agent
+# Version of program profiled: 3.5.4
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile pipe /usr/lib/postfix/bin/pipe {
+  #include <abstractions/base>
+  #include <abstractions/postfix-common>
+  #include <abstractions/krathalans-nameservice>
+
+  /usr/lib/postfix/bin/pipe r,
+
+  /usr/bin/spamc rPx,
+
+  # Misc
+  /var/spool/postfix/pid/unix.spamassassin rwk,
+
+  # Mail data
+  /var/spool/postfix/active/{,**} rwk,
+}

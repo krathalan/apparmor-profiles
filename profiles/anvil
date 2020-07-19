@@ -1,0 +1,14 @@
+# AppArmor profile for postfix mail transport agent
+# Version of program profiled: 3.5.4
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile anvil /usr/lib/postfix/bin/anvil {
+  #include <abstractions/base>
+  #include <abstractions/postfix-common>
+  #include <abstractions/krathalans-nameservice>
+
+  /usr/lib/postfix/bin/anvil r,
+}
