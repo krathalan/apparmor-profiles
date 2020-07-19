@@ -1,4 +1,5 @@
 # AppArmor profile for mosh mobile shell
+# Only meant to be used on clients -- NOT SERVERS!
 # Version of mosh profiled: 1.3.2
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
@@ -15,13 +16,6 @@ profile mosh /usr/bin/mosh* {
   /usr/bin/env r,
   /usr/bin/mosh r,
   /usr/bin/mosh-client mrPx,
-
-  # Consoles
-  #include <abstractions/consoles>
-  /dev/ptmx rw,
-
-  # Misc
-  #include <abstractions/krathalans-nameservice>
 
   # SSH
   /usr/bin/ssh Px,
