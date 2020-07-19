@@ -1,2 +1,3 @@
 # I want to view files here
 owner @{HOME}/dropbox/{,*} r,
+owner @{HOME}/documents/{,**} r,
