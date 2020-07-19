@@ -3,13 +3,13 @@ AppArmor profiles for various programs and services on Arch Linux.
 
 Table of contents:
 
-1. [Notes about usage](https://git.sr.ht/~krathalan/apparmor-profiles#notes-about-usage)
-2. [Abstractions](https://git.sr.ht/~krathalan/apparmor-profiles#abstractions)
-3. [Adding local changes](https://git.sr.ht/~krathalan/apparmor-profiles#adding-local-changes)
-4. [NVIDIA](https://git.sr.ht/~krathalan/apparmor-profiles#nvidia)
-5. [Issues](https://git.sr.ht/~krathalan/apparmor-profiles#issues)
-6. [Contributing](https://git.sr.ht/~krathalan/apparmor-profiles#contributing)
-7. [Notes about each profile](https://git.sr.ht/~krathalan/apparmor-profiles#notes-about-each-profile)
+1. [Notes about usage](#notes-about-usage)
+2. [Abstractions](#abstractions)
+3. [Adding local changes](#adding-local-changes)
+4. [NVIDIA](#nvidia)
+5. [Issues](#issues)
+6. [Contributing](#contributing)
+7. [Notes about each profile](#notes-about-each-profile)
 
 ## Notes about usage
 These AppArmor profiles have been tested on the following hardware:
@@ -31,7 +31,7 @@ I cannot guarantee that these profiles will work on any other hardware. All prof
 
 These profiles strive to be fully functional with zero audit log warnings under proper behavior. Functionality is not ignored. If functionality is not explicitly blocked, then it's probably a bug in the profile and should be fixed. Create an issue: https://todo.sr.ht/~krathalan/apparmor-profiles
 
-You should read through [the notes about each profile](https://git.sr.ht/~krathalan/apparmor-profiles#notes-about-each-profile) before using these profiles.
+You should read through [the notes about each profile](#notes-about-each-profile) before using these profiles.
 
 ## Installation
 Releases are signed so you'll need to import my GPG key first:
@@ -88,37 +88,38 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 ⚠️ This symbol means you may/will need to add local changes for your specific configuration. You can find more information for the specific profile by clicking on its name or simply scrolling down. You may not have to add any local changes, however -- many profiles work with the default configurations for that program.
 
 - bluetoothd
-- [code ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#code)
-- [evince ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#evince)
-- [Firefox ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#firefox)
-- [gpg-agent ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#gpg-agent)
-- [imv ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#imv)
-- [irssi ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#irssi)
+- [code ⚠️](#code)
+- [evince ⚠️](#evince)
+- [Firefox ⚠️](#firefox)
+- [gpg-agent ⚠️](#gpg-agent)
+- [imv ⚠️](#imv)
+- [irssi ⚠️](#irssi)
 - iwd
 - less
-- [Lollypop ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#lollypop)
-- [mako ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#mako)
-- [mbsync ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#mbsync)
-- [micro ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#micro)
+- [Lollypop ⚠️](#lollypop)
+- [mako ⚠️](#mako)
+- [mbsync ⚠️](#mbsync)
+- [micro ⚠️](#micro)
 - mosh
-- [mpv ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#mpv)
-- [mutt ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#mutt)
-- [pash ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#pash)
-- [polybar ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#polybar)
+- [mpv ⚠️](#mpv)
+- [mutt ⚠️](#mutt)
+- [nginx ⚠️](#nginx)
+- [pash ⚠️](#pash)
+- [polybar ⚠️](#polybar)
 - pulseaudio
-- [redshift ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#redshift)
+- [redshift ⚠️](#redshift)
 - rngd
-- [ssh ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#ssh)
-- [ssh-agent ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#ssh-agent)
-- [streamlink ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#streamlink)
-- [swaybg ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#swaybg)
-- [syncthing ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#syncthing)
-- [transmission-cli ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#transmission-cli)
-- [undervolt ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#undervolt)
-- [waybar ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#waybar)
+- [ssh ⚠️](#ssh)
+- [ssh-agent ⚠️](#ssh-agent)
+- [streamlink ⚠️](#streamlink)
+- [swaybg ⚠️](#swaybg)
+- [syncthing ⚠️](#syncthing)
+- [transmission-cli ⚠️](#transmission-cli)
+- [undervolt ⚠️](#undervolt)
+- [waybar ⚠️](#waybar)
 - wob
-- [xob ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#xob)
-- [youtube-dl ⚠️](https://git.sr.ht/~krathalan/apparmor-profiles#youtube-dl)
+- [xob ⚠️](#xob)
+- [youtube-dl ⚠️](#youtube-dl)
 
 ### code
 
@@ -182,6 +183,11 @@ Use the command line flag `--gpu-context=wayland` for Wayland support. Use the c
 You may need to add local changes to allow `mutt` to access your configuration files, if there are symlinks to somewhere other than inside `~/.config/mutt/`.
 
 This profile only has support for `micro` and `nano` for composing emails. Pull requests are welcome for other editors.
+
+### nginx
+You will need to add local changes to allow `nginx` to access your hosted files (e.g. `index.html`, etc.).
+
+This profile assumes you are running `nginx` as an unpriveleged user via systemd: https://wiki.archlinux.org/index.php/Nginx#Running_unprivileged_using_systemd
 
 ### pash
 You may need to add local changes to allow `pash` to access your password files and GNUPG files if they're somehwere other than `~/.local/share/pash/` and `~/.gnupg/` respectively.
