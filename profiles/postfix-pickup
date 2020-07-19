@@ -13,6 +13,9 @@ profile pickup /usr/lib/postfix/bin/pickup {
   /usr/lib/postfix/bin/pickup r,
   signal receive set=term peer=postfix,
 
+  # Misc
+  /proc/sys/kernel/random/boot_id r,
+
   # Mail data
   /var/spool/postfix/maildrop/{,**} rwk,
 }

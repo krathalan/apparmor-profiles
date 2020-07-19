@@ -12,4 +12,7 @@ profile anvil /usr/lib/postfix/bin/anvil {
 
   /usr/lib/postfix/bin/anvil r,
   signal receive set=term peer=postfix,
+
+  # Misc
+  /proc/sys/kernel/random/boot_id r,
 }

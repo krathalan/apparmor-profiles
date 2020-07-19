@@ -12,4 +12,7 @@ profile trivial-rewrite /usr/lib/postfix/bin/trivial-rewrite {
 
   /usr/lib/postfix/bin/trivial-rewrite r,
   signal receive set=term peer=postfix,
+
+  # Misc
+  /proc/sys/kernel/random/boot_id r,
 }

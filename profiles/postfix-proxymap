@@ -12,4 +12,7 @@ profile proxymap /usr/lib/postfix/bin/proxymap {
 
   /usr/lib/postfix/bin/proxymap r,
   signal receive set=term peer=postfix,
+
+  # Misc
+  /proc/sys/kernel/random/boot_id r,
 }
