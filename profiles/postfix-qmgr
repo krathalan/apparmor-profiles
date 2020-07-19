@@ -13,6 +13,9 @@ profile qmgr /usr/lib/postfix/bin/qmgr {
   /usr/lib/postfix/bin/qmgr r,
   signal receive set=term peer=postfix,
 
+  # Misc
+  /run/systemd/userdb/ r,
+
   # Mail data
   /var/spool/postfix/active/{,**} rwk,
   /var/spool/postfix/incoming/{,**} rw,
