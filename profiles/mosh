@@ -16,8 +16,12 @@ profile mosh /usr/bin/mosh* {
   /usr/bin/mosh r,
   /usr/bin/mosh-client mrPx,
 
-  # Misc
+  # Consoles
+  #include <abstractions/consoles>
   /dev/ptmx rw,
+
+  # Misc
+  #include <abstractions/krathalans-nameservice>
 
   # SSH
   /usr/bin/ssh Px,
