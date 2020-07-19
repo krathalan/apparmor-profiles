@@ -5,7 +5,7 @@
 
 #include <tunables/global>
 
-profile tlsmgr /usr/lib/postfix/bin/tlsmgr {
+profile postfix-tlsmgr /usr/lib/postfix/bin/tlsmgr {
   #include <abstractions/base>
   #include <abstractions/postfix-common>
   #include <abstractions/krathalans-nameservice>

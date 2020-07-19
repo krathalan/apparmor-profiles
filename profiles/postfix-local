@@ -5,7 +5,7 @@
 
 #include <tunables/global>
 
-profile local /usr/lib/postfix/bin/local {
+profile postfix-local /usr/lib/postfix/bin/local {
   #include <abstractions/base>
   #include <abstractions/postfix-common>
   #include <abstractions/krathalans-nameservice>

@@ -5,7 +5,7 @@
 
 #include <tunables/global>
 
-profile postfix /usr/lib/postfix/bin/master {
+profile postfix-master /usr/lib/postfix/bin/master {
   #include <abstractions/base>
   #include <abstractions/postfix-common>
   #include <abstractions/krathalans-nameservice>
@@ -27,15 +27,15 @@ profile postfix /usr/lib/postfix/bin/master {
   /usr/lib/postfix/bin/cleanup rPx,
   /usr/lib/postfix/bin/pipe rPx,
 
-  signal send set=term peer=anvil,
-  signal send set=term peer=qmgr,
-  signal send set=term peer=pickup,
-  signal send set=term peer=smtpd,
-  signal send set=term peer=trivial-rewrite,
-  signal send set=term peer=local,
-  signal send set=term peer=bounce,
-  signal send set=term peer=proxymap,
-  signal send set=term peer=tlsmgr,
+  signal send set=term peer=postfix-anvil,
+  signal send set=term peer=postfix-qmgr,
+  signal send set=term peer=postfix-pickup,
+  signal send set=term peer=postfix-smtpd,
+  signal send set=term peer=postfix-trivial-rewrite,
+  signal send set=term peer=postfix-local,
+  signal send set=term peer=postfix-bounce,
+  signal send set=term peer=postfix-proxymap,
+  signal send set=term peer=postfix-tlsmgr,
 
   # Networking
   capability net_bind_service,

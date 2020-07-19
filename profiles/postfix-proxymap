@@ -5,7 +5,7 @@
 
 #include <tunables/global>
 
-profile proxymap /usr/lib/postfix/bin/proxymap {
+profile postfix-proxymap /usr/lib/postfix/bin/proxymap {
   #include <abstractions/base>
   #include <abstractions/postfix-common>
   #include <abstractions/krathalans-nameservice>

@@ -5,7 +5,7 @@
 
 #include <tunables/global>
 
-profile anvil /usr/lib/postfix/bin/anvil {
+profile postfix-anvil /usr/lib/postfix/bin/anvil {
   #include <abstractions/base>
   #include <abstractions/postfix-common>
   #include <abstractions/krathalans-nameservice>

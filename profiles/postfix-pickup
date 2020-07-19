@@ -5,7 +5,7 @@
 
 #include <tunables/global>
 
-profile pickup /usr/lib/postfix/bin/pickup {
+profile postfix-pickup /usr/lib/postfix/bin/pickup {
   #include <abstractions/base>
   #include <abstractions/postfix-common>
   #include <abstractions/krathalans-nameservice>

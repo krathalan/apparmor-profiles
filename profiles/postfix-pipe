@@ -5,7 +5,7 @@
 
 #include <tunables/global>
 
-profile pipe /usr/lib/postfix/bin/pipe {
+profile postfix-pipe /usr/lib/postfix/bin/pipe {
   #include <abstractions/base>
   #include <abstractions/postfix-common>
   #include <abstractions/krathalans-nameservice>

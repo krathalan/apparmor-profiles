@@ -5,7 +5,7 @@
 
 #include <tunables/global>
 
-profile error /usr/lib/postfix/bin/error {
+profile postfix-error /usr/lib/postfix/bin/error {
   #include <abstractions/base>
   #include <abstractions/postfix-common>
   #include <abstractions/krathalans-nameservice>

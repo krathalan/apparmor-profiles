@@ -5,7 +5,7 @@
 
 #include <tunables/global>
 
-profile qmgr /usr/lib/postfix/bin/qmgr {
+profile postfix-qmgr /usr/lib/postfix/bin/qmgr {
   #include <abstractions/base>
   #include <abstractions/postfix-common>
   #include <abstractions/krathalans-nameservice>

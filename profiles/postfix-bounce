@@ -5,7 +5,7 @@
 
 #include <tunables/global>
 
-profile bounce /usr/lib/postfix/bin/bounce {
+profile postfix-bounce /usr/lib/postfix/bin/bounce {
   #include <abstractions/base>
   #include <abstractions/postfix-common>
   #include <abstractions/krathalans-nameservice>

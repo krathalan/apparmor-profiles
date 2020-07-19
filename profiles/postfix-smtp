@@ -5,7 +5,7 @@
 
 #include <tunables/global>
 
-profile smtp /usr/lib/postfix/bin/smtp {
+profile postfix-smtp /usr/lib/postfix/bin/smtp {
   #include <abstractions/base>
   #include <abstractions/postfix-common>
   #include <abstractions/krathalans-nameservice>
