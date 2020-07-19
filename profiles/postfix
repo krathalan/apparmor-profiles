@@ -27,6 +27,7 @@ profile postfix /usr/lib/postfix/bin/master {
   /usr/lib/postfix/bin/cleanup rPx,
   /usr/lib/postfix/bin/pipe rPx,
 
+  signal send set=term peer=anvil,
   signal send set=term peer=qmgr,
   signal send set=term peer=pickup,
   signal send set=term peer=smtpd,
@@ -34,6 +35,7 @@ profile postfix /usr/lib/postfix/bin/master {
   signal send set=term peer=local,
   signal send set=term peer=bounce,
   signal send set=term peer=proxymap,
+  signal send set=term peer=tlsmgr,
 
   # Networking
   capability net_bind_service,

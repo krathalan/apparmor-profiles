@@ -11,4 +11,5 @@ profile anvil /usr/lib/postfix/bin/anvil {
   #include <abstractions/krathalans-nameservice>
 
   /usr/lib/postfix/bin/anvil r,
+  signal receive set=term peer=postfix,
 }

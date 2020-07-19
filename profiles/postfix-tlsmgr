@@ -11,6 +11,7 @@ profile tlsmgr /usr/lib/postfix/bin/tlsmgr {
   #include <abstractions/krathalans-nameservice>
 
   /usr/lib/postfix/bin/tlsmgr r,
+  signal receive set=term peer=postfix,
 
   # Misc
   /var/lib/postfix/prng_exch rwk,
