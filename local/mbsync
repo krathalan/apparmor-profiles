@@ -1,6 +1,9 @@
 # Config file at ~/.config/mbsync/mbsyncrc is a symlink to this file
 owner @{HOME}/documents/config/home-config/.config/mbsync/mbsyncrc r,
 
+# Config file at ~/.gnupg/gpg.conf is symlink to this file
+owner @{HOME}/documents/config/home-config/.gnupg/gpg.conf r,
+
 # My email passwords are here :)
 owner @{HOME}/documents/security/anders-passwords/email/* r,
 
