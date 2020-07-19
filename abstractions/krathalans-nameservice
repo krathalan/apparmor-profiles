@@ -5,3 +5,4 @@
   /etc/group r,
   /etc/nsswitch.conf r,
   /etc/passwd r,
+  /run/systemd/userdb/ r,

@@ -16,9 +16,9 @@ profile smtpd /usr/lib/postfix/bin/smtpd {
   signal receive set=term peer=postfix,
 
   # Networking
+  #include <abstractions/krathalans-networking>
   #include <abstractions/ssl_certs>
   #include <abstractions/ssl_keys>
-  #include <abstractions/openssl>
   # https://weakdh.org/sysadmin.html
   /etc/krathalan/dhparams.pem r,
 
