@@ -87,7 +87,7 @@ check_profile()
   # Remove preceding directories prefix
   profile="${profile##*/}"
 
-  # Fix some profile names being different than their profile name
+  # Fix some profile names being different than their package name
   case "${profile}" in
     bluetoothd)
       profile="bluez"
@@ -150,7 +150,7 @@ clean_up()
 # Print intro
 if [[ "$(whoami)" = "root" ]]; then
   printf "%sThis script should NOT be run as root (or sudo)!%s\n" "${RED}" "${NC}" >&2
-  exit 2
+  exit 1
 fi
 
 if [[ $# -gt 0 ]]; then
