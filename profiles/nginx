@@ -17,14 +17,9 @@ profile nginx /usr/bin/nginx {
   /run/nginx/nginx.pid rw,
 
   # Networking
-  #include <abstractions/openssl>
+  #include <abstractions/krathalans-networking>
   capability net_bind_service,
   /etc/letsencrypt/{,**} r,
-  /etc/nsswitch.conf r,
-  /etc/host{s,.conf} r,
-  /run/systemd/resolve/resolv.conf r,
-  /etc/resolv.conf r,
-  /etc/gai.conf r,
 
   # Conf
   /etc/nginx/{,**} r,

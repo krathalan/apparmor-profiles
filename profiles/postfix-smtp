@@ -15,13 +15,12 @@ profile smtp /usr/lib/postfix/bin/smtp {
   /usr/lib/postfix/bin/smtp r,
 
   # Networking
+  #include <abstractions/krathalans-networking>
   #include <abstractions/ssl_certs>
-  #include <abstractions/openssl>
-  /etc/host{s,.conf} r,
-  /etc/resolv.conf r,
 
   # Misc
   /etc/services r,
+  /proc/sys/kernel/random/boot_id r,
   /var/spool/postfix/pid/inet.smtp rwk,
   /var/spool/postfix/pid/unix.smtp rwk,
 
