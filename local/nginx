@@ -1,0 +1,5 @@
+# dhparams, ocsp chain
+/etc/krathalan/* r,
+
+# Actual hosted files
+/var/www/{,**} r,
