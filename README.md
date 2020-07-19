@@ -106,9 +106,11 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - [nginx ⚠️](#nginx)
 - [pash ⚠️](#pash)
 - [polybar ⚠️](#polybar)
+- [postfix ⚠️](#postfix)
 - pulseaudio
 - [redshift ⚠️](#redshift)
 - rngd
+- spamc
 - [ssh ⚠️](#ssh)
 - [ssh-agent ⚠️](#ssh-agent)
 - [streamlink ⚠️](#streamlink)
@@ -196,6 +198,9 @@ You may need to add local changes to allow `pash` to access your password files 
 You may need to add local changes to allow `polybar` to access your configuration files, if you keep them somewhere other than `~/.config/polybar/`.
 
 You may need to add local changes to allow `polybar` modules to work which I have not tested. I have tested the following modules to work: i3, xwindow, network, pulseaudio, cpu, date.
+
+### postfix
+These profiles may not work depending on your configuration. Patches accepted.
 
 ### redshift
 This profile has been tested to work correctly on Xorg with the `redshift` repo package and on Sway with the `redshift-wlr-gamma-control` AUR package.
