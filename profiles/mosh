@@ -16,6 +16,9 @@ profile mosh /usr/bin/mosh* {
   /usr/bin/mosh r,
   /usr/bin/mosh-client mrPx,
 
+  # Misc
+  /dev/ptmx rw,
+
   # SSH
   /usr/bin/ssh Px,
   signal receive set=hup peer=/usr/bin/ssh,
