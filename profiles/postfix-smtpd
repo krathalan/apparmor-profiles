@@ -26,5 +26,6 @@ profile postfix-smtpd /usr/lib/postfix/bin/smtpd {
   /etc/aliases.db rk,
   /proc/sys/kernel/random/boot_id r,
   /var/spool/postfix/pid/inet.submission rwk,
+  /var/spool/postfix/pid/inet.smtp rwk,
   /var/spool/postfix/pid/inet.smtps rwk,
 }
