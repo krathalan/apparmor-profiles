@@ -11,4 +11,7 @@ profile spamc /usr/bin/vendor_perl/spamc {
   #include <abstractions/krathalans-nameservice>
 
   /usr/bin/vendor_perl/spamc r,
+  /usr/bin/sendmail rPx,
+
+  /etc/gai.conf r,
 }
