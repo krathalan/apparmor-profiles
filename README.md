@@ -75,7 +75,7 @@ Please file bug reports, requests, etc. at https://todo.sr.ht/~krathalan/apparmo
 ## Contributing
 Writing AppArmor profiles is fairly easy. "If you know how to use bash, chmod, and grep, you already understand AppArmor and you can probably reverse-engineer the policy by yourself," at 13:25 in the video: https://invidio.us/watch?v=k3kerBRYLhw
 
-Pull requests and issues are welcome. I cannot test for hardware I do not have access to (AMD), so those PRs would be most critical. Also, see [TODO.md](TODO.md).
+Pull requests and issues are welcome. I cannot test for hardware I do not have access to (AMD), so those PRs would be most critical.
 
 To get started writing AppArmor profiles, I highly recommend this video from openSUSE: https://invidio.us/watch?v=o2xa8JYcrmw
 
