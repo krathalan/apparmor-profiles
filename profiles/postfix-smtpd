@@ -25,5 +25,5 @@ profile smtpd /usr/lib/postfix/bin/smtpd {
   # Misc
   /etc/aliases.db rk,
   /var/spool/postfix/pid/inet.submission rwk,
-  /var/spool/postfix/pid/inet.smtp rwk,
+  /var/spool/postfix/pid/inet.smtps rwk,
 }
