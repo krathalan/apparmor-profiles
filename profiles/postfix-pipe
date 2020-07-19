@@ -12,7 +12,7 @@ profile postfix-pipe /usr/lib/postfix/bin/pipe {
 
   /usr/lib/postfix/bin/pipe r,
 
-  /usr/bin/spamc rPx,
+  /usr/bin/vendor_perl/spamc rPx,
 
   # Misc
   /var/spool/postfix/pid/unix.spamassassin rwk,
