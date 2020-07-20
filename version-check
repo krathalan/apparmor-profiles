@@ -101,6 +101,11 @@ check_profile()
     NetworkManager)
       profile="networkmanager"
       ;;
+    postfix*)
+      [[ "${profile}" != "postfix-master" ]] &&
+        exit
+      profile="postfix"
+      ;;
     rngd)
       profile="rng-tools"
       ;;
