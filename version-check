@@ -79,7 +79,7 @@ check_profile()
 
   # Make sure we're only checking Krathalan's profiles
   if ! grep --quiet --directories=skip "# AppArmor profile for" "${profile}"; then
-    exit
+    return
   fi
 
   profiledVersion="$(grep Version "${profile}" 2> /dev/null | grep -v deny | awk '{print $NF}' || printf "(Problem printing info)")"
@@ -103,7 +103,7 @@ check_profile()
       ;;
     postfix*)
       [[ "${profile}" != "postfix-master" ]] &&
-        exit
+        return
       profile="postfix"
       ;;
     rngd)
