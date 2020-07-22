@@ -1,3 +1,4 @@
+@{HOME}/aur/{,**} rw,
 @{HOME}/aur-dev/{,**} rw,
 @{HOME}/{D,d}ownloads/{,**} rw,
 @{HOME}/.config/{,**} rw,
