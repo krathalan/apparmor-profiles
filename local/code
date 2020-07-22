@@ -1,2 +1,2 @@
-# I want to edit files here
+owner @{HOME}/aur/{,**} rw,
 owner @{HOME}/aur-dev/{,**} rw,

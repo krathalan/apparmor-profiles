@@ -1,8 +1,7 @@
-# I want to edit files here
 @{HOME}/aur-dev/{,**} rw,
 @{HOME}/{D,d}ownloads/{,**} rw,
 @{HOME}/.config/{,**} rw,
 
 # Functions in my ~/.bashrc create files here that I want to edit
 owner /tmp/microv.*/* r,
-owner /tmp/pash_edit{,**} rw,
+owner /tmp/pash-edit{,**} rw,
