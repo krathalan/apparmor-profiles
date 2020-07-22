@@ -1,0 +1,21 @@
+# AppArmor profile for wl-copy wayland clipboard copy utility
+# Version of program profiled: 1:2.0.0
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile wl-copy /usr/bin/wl-copy {
+  #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
+
+  /usr/bin/wl-copy r,
+
+  # Needed to copy from pipe
+  /usr/bin/cat rix,
+  /usr/bin/rm rix,
+  owner /tmp/wl-copy-buffer-*/{,**} rw,
+
+  # Deny unnecessary permissions
+  deny /usr/bin/xdg-mime rx,
+}

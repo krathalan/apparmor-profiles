@@ -33,6 +33,7 @@ profile pash /usr/bin/pash {
 
   # Used to copy passwords
   /usr/bin/sleep rix,
+  /usr/bin/wl-copy rPx,
   /usr/bin/xclip rCx,
 
   profile xclip /usr/bin/xclip {
