@@ -112,6 +112,9 @@ check_profile()
     ssh|ssh-agent)
       profile="openssh"
       ;;
+    systemd*)
+      profile="systemd"
+      ;;
     wl-copy)
       profile="wl-clipboard"
       ;;
