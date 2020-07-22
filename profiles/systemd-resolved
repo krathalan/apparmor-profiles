@@ -1,0 +1,37 @@
+# AppArmor profile for
+# Version of program profiled:
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile systemd-resolved /usr/lib/systemd/systemd-resolved {
+  #include <abstractions/base>
+  #include <abstractions/krathalans-nameservice>
+  #include <abstractions/krathalans-networking>
+  #include <abstractions/krathalans-hardening>
+  #include <abstractions/p11-kit>
+  #include <abstractions/ssl_certs>
+
+  capability net_bind_service,
+  capability setpcap,
+
+  /usr/lib/systemd/systemd-resolved r,
+
+  # Runtime directories
+  /{,var/}run/systemd/netif/links/* r,
+  /{,var/}run/systemd/resolve/{,**} rw,
+
+  # Config
+  /etc/systemd/resolved.conf r,
+  /etc/systemd/resolved.conf.d/{,*} r,
+
+  # Proc
+  owner /proc/*/stat r,
+  /proc/cmdline r,
+  /proc/sys/kernel/hostname r,
+  /proc/sys/kernel/osrelease r,
+  /proc/sys/kernel/random/boot_id r,
+
+  /sys/firmware/efi/efivars/SecureBoot-8be4df61-93ca-11d2-aa0d-00e098032b8c r,
+}
