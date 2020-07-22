@@ -7,3 +7,8 @@
 # Config files in ~/.config/waybar/ are symlinks to these files
 owner @{HOME}/documents/config/wayland-config/.config/waybar/* r,
 owner @{HOME}/documents/config/wayland-config/.config/gtk-3.0/settings.ini r,
+
+# I want to cat files from here in a module
+/usr/bin/cat rix,
+owner @{HOME}/.cache/update_mailboxes_status r,
+owner @{HOME}/.cache/unread_mail/{,**} r,
