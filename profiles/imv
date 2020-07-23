@@ -35,7 +35,10 @@ profile imv /usr/bin/imv {
   # Socket
   owner /run/user/*/imv*.sock w,
 
-  # For nvidia
+  # Intel
+  @{PROC}/sys/dev/i915/perf_stream_paranoid r,
+
+  # Nvidia
   #include <local/imv>
   deny /sys/bus/pci/devices/ r,
   deny /tmp/* w,
