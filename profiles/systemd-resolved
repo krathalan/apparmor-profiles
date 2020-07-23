@@ -14,6 +14,7 @@ profile systemd-resolved /usr/lib/systemd/systemd-resolved {
   #include <abstractions/ssl_certs>
 
   capability net_bind_service,
+  capability net_raw,
   capability setpcap,
 
   /usr/lib/systemd/systemd-resolved r,
