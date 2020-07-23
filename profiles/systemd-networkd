@@ -1,0 +1,40 @@
+# AppArmor profile for systemd-networkd network manager
+# Version of program profiled: 245.6
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile systemd-networkd /usr/lib/systemd/systemd-networkd {
+  #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
+
+  capability net_admin,
+  capability net_bind_service,
+  capability net_raw,
+
+  /usr/lib/systemd/systemd-networkd r,
+
+  # Runtime dir
+  /{,var/}run/systemd/netif/{,**} rw,
+  /{,var/}run/udev/data/n[0-9] r,
+
+  # Config
+  /etc/machine-id r,
+  /etc/systemd/networkd.conf r,
+  /etc/systemd/network/{,*} r,
+
+  # Proc
+  owner @{PROC}/*/stat r,
+  @{PROC}/cmdline r,
+  @{PROC}@{sys}/kernel/osrelease r,
+  @{PROC}@{sys}/kernel/random/boot_id r,
+  @{PROC}@{sys}/net/ipv{4,6}/conf/*/* rw,
+  @{PROC}@{sys}/net/ipv{4,6}/route/* r,
+
+  # System access
+  @{sys}/devices/pci[0-9]*/**/net/*/{name_assign_type,uevent} r,
+  @{sys}/devices/virtual/net/*/uevent r,
+  @{sys}/devices/virtual/dmi/id/{bios_vendor,board_vendor,product_name,sys_vendor} r,
+  @{sys}/firmware/efi/efivars/SecureBoot-8be4df61-93ca-11d2-aa0d-00e098032b8c r,
+}

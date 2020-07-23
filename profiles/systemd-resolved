@@ -27,11 +27,12 @@ profile systemd-resolved /usr/lib/systemd/systemd-resolved {
   /etc/systemd/resolved.conf.d/{,*} r,
 
   # Proc
-  owner /proc/*/stat r,
-  /proc/cmdline r,
-  /proc/sys/kernel/hostname r,
-  /proc/sys/kernel/osrelease r,
-  /proc/sys/kernel/random/boot_id r,
+  owner @{PROC}/*/stat r,
+  @{PROC}/cmdline r,
+  @{PROC}@{sys}/kernel/hostname r,
+  @{PROC}@{sys}/kernel/osrelease r,
+  @{PROC}@{sys}/kernel/random/boot_id r,
 
-  /sys/firmware/efi/efivars/SecureBoot-8be4df61-93ca-11d2-aa0d-00e098032b8c r,
+  # System access
+  @{sys}/firmware/efi/efivars/SecureBoot-8be4df61-93ca-11d2-aa0d-00e098032b8c r,
 }
