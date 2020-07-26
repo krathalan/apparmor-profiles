@@ -14,6 +14,7 @@ profile systemd-resolved /usr/lib/systemd/systemd-resolved {
   #include <abstractions/ssl_certs>
 
   capability net_bind_service,
+  capability net_raw,
   capability setpcap,
 
   /usr/lib/systemd/systemd-resolved r,
@@ -29,9 +30,9 @@ profile systemd-resolved /usr/lib/systemd/systemd-resolved {
   # Proc
   owner @{PROC}/*/stat r,
   @{PROC}/cmdline r,
-  @{PROC}@{sys}/kernel/hostname r,
-  @{PROC}@{sys}/kernel/osrelease r,
-  @{PROC}@{sys}/kernel/random/boot_id r,
+  @{PROC}/sys/kernel/hostname r,
+  @{PROC}/sys/kernel/osrelease r,
+  @{PROC}/sys/kernel/random/boot_id r,
 
   # System access
   @{sys}/firmware/efi/efivars/SecureBoot-8be4df61-93ca-11d2-aa0d-00e098032b8c r,

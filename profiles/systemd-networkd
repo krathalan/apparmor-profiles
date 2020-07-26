@@ -27,10 +27,10 @@ profile systemd-networkd /usr/lib/systemd/systemd-networkd {
   # Proc
   owner @{PROC}/*/stat r,
   @{PROC}/cmdline r,
-  @{PROC}@{sys}/kernel/osrelease r,
-  @{PROC}@{sys}/kernel/random/boot_id r,
-  @{PROC}@{sys}/net/ipv{4,6}/conf/*/* rw,
-  @{PROC}@{sys}/net/ipv{4,6}/route/* r,
+  @{PROC}/sys/kernel/osrelease r,
+  @{PROC}/sys/kernel/random/boot_id r,
+  @{PROC}/sys/net/ipv{4,6}/conf/*/* rw,
+  @{PROC}/sys/net/ipv{4,6}/route/* r,
 
   # System access
   @{sys}/devices/pci[0-9]*/**/net/*/{name_assign_type,uevent} r,
