@@ -5,58 +5,75 @@
 
 #include <tunables/global>
 
-profile signal-desktop /usr/bin/signal-desktop {
+profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-desktop} {
   #include <abstractions/base>
   #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
   #include <abstractions/krathalans-hardening>
   #include <abstractions/krathalans-networking>
-  #include <abstractions/nameservice>
 
-  # Needed to function at all -- mostly needed for namespace containers
-  capability setgid,
-  capability setuid,
-  capability sys_chroot,
-  capability sys_admin,
-  @{PROC}/ r,
-  @{PROC}/sys/kernel/yama/ptrace_scope r,
+  # Needed to function at all
   owner @{PROC}/*/fd/ r,
-  owner @{PROC}/*/gid_map w,
-  owner @{PROC}/*/setgroups w,
-  owner @{PROC}/*/uid_map w,
+  @{PROC}/ r,
 
   # Helper programs
-  #include <abstractions/bash>
-  /usr/bin/{bash,dash} rix,
-  /usr/bin/{basename,cut,getconf,grep,ldd,readlink,which,xdg-settings} rix,
+  /usr/bin/getconf rix,
+  /usr/{,s}bin/xdg-settings rCx,
+
+  profile xdg-settings /usr/{,s}bin/xdg-settings {
+    #include <abstractions/base>
+
+    /usr/{,s}bin/xdg-settings r,
+
+    /usr/bin/{grep,basename,cut,which,readlink} rix,
+  }
 
   # Chromium/Electron spawns and uses multiple processes
+  /usr/{bin/signal-desktop,lib/signal-desktop/signal-desktop} rPx,
   owner @{user_share_dirs}/.org.chromium.Chromium.* rw,
   owner /dev/shm/.org.chromium.Chromium.* rw,
   owner /tmp/.org.chromium.Chromium.* mrw,
   owner /tmp/.org.chromium.Chromium.*/{,**} rw,
-  /usr/bin/signal-desktop r,
-  /usr/lib/electron/electron mrix,
-  /usr/lib/electron/chrome-sandbox mrix,
+
+  # Sandboxing
+  /usr/lib/signal-desktop/chrome-sandbox mrCx,
+
+  profile chrome-sandbox /usr/lib/signal-desktop/chrome-sandbox {
+    #include <abstractions/base>
+
+    /usr/lib/signal-desktop/chrome-sandbox r,
+    /usr/lib/signal-desktop/signal-desktop rPx,
+
+    capability setuid,
+    capability setgid,
+    capability sys_admin,
+    capability sys_chroot,
+  }
 
   # Hardware acceleration
   #include <abstractions/krathalans-hwaccel>
   owner /dev/shm/shmfd-* rw,
+  @{PROC}/sys/dev/i915/perf_stream_paranoid r,
   @{sys}/bus/pci/devices/ r,
   @{sys}/bus/pci/devices/[0-9]*/resource r,
   @{sys}/devices/pci[0-9]*/**/{class,config,irq,resource} r,
-  @{sys}/devices/pci[0-9]*/[0-9]*/{class,config,device,irq,resource,subsystem_device,subsystem_vendor,uevent,vendor} r,
 
   # Nvidia users
   #include <local/signal-desktop>
-  deny @{PROC}/modules r,
-  deny @{PROC}/*/comm r,
 
   # Config
   owner @{HOME}/.config/Signal/{,**} rwk,
 
   # Allow access for downloads and uploads
   #include <abstractions/user-download>
+
+  # File picker
+  @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
+  deny owner @{HOME}/.config/dconf/user r,
+  deny owner /run/user/*/dconf/user rw,
+  deny @{user_share_dirs}/recently-used.xbel* rw,
+
+  # Deny unnecessary permissions
 
   # Sound
   deny /etc/pulse/{,**} r,
@@ -65,24 +82,26 @@ profile signal-desktop /usr/bin/signal-desktop {
   deny /dev/snd/{,**} r,
   deny /usr/share/alsa/{,**} r,
 
-  # File picker
-  @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
-  deny owner @{HOME}/.config/dconf/user r,
-  deny owner /run/user/*/dconf/user rw,
+  # Proc
+  deny @{PROC}/modules r,
+  deny @{PROC}/sys/fs/inotify/max_user_watches r,
+  deny @{PROC}/sys/kernel/yama/ptrace_scope r,
+  deny @{PROC}/*/comm r,
   deny @{PROC}/*/mountinfo r,
-  deny @{user_share_dirs}/recently-used.xbel* rw,
+  deny @{PROC}/*/setgroups w,
+  deny @{PROC}/*/stat r,
+  deny @{PROC}/*/task/{,**} r,
 
-  # Deny unnecessary permissions
+  # Misc
   deny capability sys_ptrace,
   deny /dev/pts/* rw,
   deny /dev/tty* rw,
   deny @{HOME}/.cache/{,**} rw,
   deny @{HOME}/.config/Electron/{,**} rw,
-  deny @{PROC}/*/stat r,
-  deny @{PROC}/*/task/{,**} r,
-  deny @{PROC}/sys/fs/inotify/max_user_watches r,
   deny @{sys}/devices/system/cpu/{,**} r,
   deny @{sys}/devices/virtual/tty/{,**} r,
-  deny /usr/bin/{dbus-send,uname,xprop} rx,
+  deny /usr/bin/ r,
+  deny /usr/lib/ r,
+  deny /usr/bin/{dbus-send,ldd,uname,xprop} rx,
   deny /usr/share/applications/ r,
 }
