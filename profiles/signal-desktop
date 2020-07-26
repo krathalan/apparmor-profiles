@@ -30,7 +30,6 @@ profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-deskto
 
   # Chromium/Electron spawns and uses multiple processes
   /usr/{bin/signal-desktop,lib/signal-desktop/signal-desktop} rPx,
-  owner @{user_share_dirs}/.org.chromium.Chromium.* rw,
   owner /dev/shm/.org.chromium.Chromium.* rw,
   owner /tmp/.org.chromium.Chromium.* mrw,
   owner /tmp/.org.chromium.Chromium.*/{,**} rw,
