@@ -5,17 +5,21 @@
 
 #include <tunables/global>
 
-profile wl-copy /usr/bin/wl-copy {
+profile wl-copy-paste /usr/bin/wl-{copy,paste} {
   #include <abstractions/base>
   #include <abstractions/krathalans-hardening>
 
-  /usr/bin/wl-copy r,
+  /usr/bin/wl-{copy,paste} r,
 
   # Needed to copy from pipe
   /usr/bin/cat rix,
   /usr/bin/rm rix,
   owner /tmp/wl-copy-buffer-*/{,**} rw,
 
+  # Mutt
+  owner /tmp/mutt-* rw,
+
   # Deny unnecessary permissions
+  deny /dev/tty rw,
   deny /usr/bin/xdg-mime rx,
 }

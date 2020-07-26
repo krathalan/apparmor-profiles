@@ -89,6 +89,7 @@ profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-deskto
   deny @{PROC}/sys/kernel/yama/ptrace_scope r,
   deny @{PROC}/*/comm r,
   deny @{PROC}/*/mountinfo r,
+  deny @{PROC}/*/mounts r,
   deny @{PROC}/*/setgroups w,
   deny @{PROC}/*/stat r,
   deny @{PROC}/*/task/{,**} r,
