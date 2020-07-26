@@ -10,6 +10,7 @@ profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-deskto
   #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
   #include <abstractions/krathalans-hardening>
+  #include <abstractions/krathalans-nameservice>
   #include <abstractions/krathalans-networking>
 
   # Needed to function at all
