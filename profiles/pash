@@ -34,17 +34,7 @@ profile pash /usr/bin/pash {
   # Used to copy passwords
   /usr/bin/sleep rix,
   /usr/bin/wl-copy rPx,
-  /usr/bin/xclip rCx,
-
-  profile xclip /usr/bin/xclip {
-    #include <abstractions/base>
-
-    /usr/bin/xclip r,
-
-    /dev/tty rw,
-
-    owner @{HOME}/.Xauthority r,
-  }
+  /usr/bin/xclip rPx,
 
   # GPG
   /usr/bin/gpg rCx,

@@ -38,21 +38,7 @@ profile micro /usr/bin/micro {
   /sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
 
   # Copy/paste features
-  /usr/bin/xclip rCx,
-
-  profile xclip /usr/bin/xclip {
-    #include <abstractions/base>
-    #include <abstractions/krathalans-hardening>
-
-    /usr/bin/xclip mr,
-
-    # Mutt
-    owner /tmp/mutt-* rw,
-
-    owner @{HOME}/.Xauthority r,
-
-    deny /dev/tty rw,
-  }
+  /usr/bin/xclip rPx,
 
   /usr/bin/wl-{copy,paste} rCx,
   owner /tmp/wl-copy-buffer-*/ w,

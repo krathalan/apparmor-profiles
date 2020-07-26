@@ -1,0 +1,20 @@
+# AppArmor profile for xclip X11 clipboard tool
+# Version of program profiled: 0.13
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile xclip /usr/bin/xclip {
+  #include <abstractions/base>
+  #include <abstractions/krathalans-hardening>
+
+  /usr/bin/xclip r,
+
+  # Mutt
+  owner /tmp/mutt-* rw,
+
+  owner @{HOME}/.Xauthority r,
+
+  deny /dev/tty rw,
+}
