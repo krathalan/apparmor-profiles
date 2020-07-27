@@ -1,0 +1,2 @@
+# Config files at ~/.config/vdirsyncer/ are symlinks to files here
+owner @{HOME}/documents/config/home-config/.config/vdirsyncer/{,*} r,

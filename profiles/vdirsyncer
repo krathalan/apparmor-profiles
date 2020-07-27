@@ -1,0 +1,33 @@
+# AppArmor profile for vdirsyncer CalDav/CardDAV synchronization client
+# Version of program profiled: 0.16.8
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile vdirsyncer /usr/bin/vdirsyncer {
+  #include <abstractions/base>
+  #include <abstractions/python>
+  #include <abstractions/krathalans-hardening>
+  #include <abstractions/krathalans-networking>
+
+  /usr/bin/ r,
+  /usr/bin/python3.[0-9] r,
+  /usr/bin/vdirsyncer r,
+
+  # Config
+  owner @{HOME}/.config/vdirsyncer/* r,
+
+  # Contact storage location
+  owner @{HOME}/.local/share/contacts/{,**} rw,
+  # Include user overrides for possible symlinked config
+  # files/different contact storage locations
+  #include <local/vdirsyncer>
+
+  # Cache
+  owner @{HOME}/.cache/vdirsyncer-status/{,**} rwk,
+
+  # Deny unnecessary permissions
+  deny /usr/bin/uname rx,
+  deny @{PROC}/{,**} r,
+}
