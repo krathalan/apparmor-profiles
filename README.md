@@ -109,6 +109,7 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - [polybar ⚠️](#polybar)
 - [postfix ⚠️](#postfix)
 - pulseaudio
+- [radicale ⚠️](#radicale)
 - [redshift ⚠️](#redshift)
 - rngd
 - signal-desktop
@@ -195,6 +196,7 @@ This profile only has support for `micro` and `nano` for composing emails. Pull 
 
 ### nginx
 You will need to add local changes to allow `nginx` to access your hosted files (e.g. `index.html`, etc.).
+You may need to add local changes to allow `nginx` to access your HTTPS certificates, if you keep them somewhere other than `/etc/letsencrypt/`.
 
 This profile assumes you are running `nginx` as an unpriveleged user via systemd: https://wiki.archlinux.org/index.php/Nginx#Running_unprivileged_using_systemd
 
@@ -207,7 +209,14 @@ You may need to add local changes to allow `polybar` to access your configuratio
 You may need to add local changes to allow `polybar` modules to work which I have not tested. I have tested the following modules to work: i3, xwindow, network, pulseaudio, cpu, date.
 
 ### postfix
+You may need to add local changes to allow `postfix` to access your HTTPS certificates, if you keep them somewhere other than `/etc/letsencrypt/`.
+
 These profiles may not work depending on your configuration. Patches accepted.
+
+### radicale
+You may need to add local changes to allow `radicale` to access your `htpasswd` file, if you keep it somewhere other than `/etc/radicale/`.
+You may need to add local changes to allow `radicale` to access your storage directory, if you keep it somewhere other than `/var/lib/radicale/`.
+You may need to add local changes to allow `radicale` to access your HTTPS certificates, if you keep them somewhere other than `/etc/letsencrypt/`.
 
 ### redshift
 This profile has been tested to work correctly on Xorg with the `redshift` repo package and on Sway with the `redshift-wlr-gamma-control` AUR package.

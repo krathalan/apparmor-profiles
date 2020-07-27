@@ -1,0 +1,35 @@
+# AppArmor profile for radicale CalDAV/CardDAV server
+# Version of program profiled: 3.0.3
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile radicale /usr/bin/radicale {
+  #include <abstractions/base>
+  #include <abstractions/krathalans-nameservice>
+  #include <abstractions/krathalans-networking>
+  #include <abstractions/krathalans-hardening>
+  #include <abstractions/python>
+
+  /usr/bin/ r,
+  /usr/bin/python3.[0-9] r,
+  /usr/bin/radicale r,
+
+  # Config
+  /etc/radicale/{,*} r,
+
+  # Storage
+  /var/lib/radicale/{,**} rwk,
+
+  # HTTPS certs
+  /etc/letsencrypt/{,**} r,
+
+  # Include user overrides for different
+  # config/storage/cert directories
+  #include <local/radicale>
+
+  # Misc
+  /etc/httpd/{,**} r,
+  /etc/mime.types r,
+}
