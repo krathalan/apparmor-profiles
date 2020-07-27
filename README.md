@@ -95,6 +95,7 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - [imv ⚠️](#imv)
 - [irssi ⚠️](#irssi)
 - iwd
+- [khard ⚠️](#khard)
 - less
 - [Lollypop ⚠️](#lollypop)
 - [mako ⚠️](#mako)
@@ -110,6 +111,7 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - pulseaudio
 - [redshift ⚠️](#redshift)
 - rngd
+- signal-desktop
 - spamc
 - [ssh ⚠️](#ssh)
 - [ssh-agent ⚠️](#ssh-agent)
@@ -118,6 +120,7 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - [syncthing ⚠️](#syncthing)
 - [transmission-cli ⚠️](#transmission-cli)
 - [undervolt ⚠️](#undervolt)
+- [vdirsyncer ⚠️](#vdirsyncer)
 - [waybar ⚠️](#waybar)
 - wob
 - [xob ⚠️](#xob)
@@ -155,6 +158,10 @@ You will need to add local changes if you wish to view images that are not in `~
 
 ### irssi
 You may need to add local changes to allow `irssi` to access your configuration files, if they are symlinks to somewhere other than inside `~/.irssi/` or `~/.config/irssi/`.
+
+### khard
+You may need to add local changes to allow `khard` to access your configuration files, if you keep them somewhere other than `~/.config/khard/`.
+You may need to add local changes to allow `khard` to access your contact storage directory, if you keep it somewhere other than `~/.local/share/contacts`.
 
 ### Lollypop
 You will need to add local changes if you wish to listen to music in directories other than `~/{M,m}usic/`.
@@ -234,6 +241,10 @@ This profile applies to all `transmission-*` binaries, including `transmission-d
 ### undervolt
 This profile is for an Intel CPU undervolt utility: https://github.com/georgewhewell/undervolt
 
+### vdirsyncer
+You may need to add local changes to allow `vdirsyncer` to access your configuration files, if you keep them somewhere other than `~/.config/vdirsyncer/`.
+You may need to add local changes to allow `vdirsyncer` to access your contact storage directory, if you keep it somewhere other than `~/.local/share/contacts`.
+
 ### waybar
 You may need to add local changes to allow `waybar` to access your configuration files, if you keep them somewhere other than `~/.config/waybar/`.
 
@@ -255,7 +266,6 @@ You will need to add local changes if you wish to download videos to any directo
 - NetworkManager
 - pass
 - pipewire
-- signal-desktop
 - wpa_supplicant
 
 These are profiles which I used to keep updated with their packaged versions, but now do not -- most likely because I have found an alternative program (e.g. Hexchat --> irssi) that I have a new AppArmor profile for. If you wish to maintain one of these profiles please submit patches!
