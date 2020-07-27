@@ -114,6 +114,9 @@ profile mutt /usr/bin/mutt {
     deny /dev/pts/* rw,
   }
 
+  # Address books with khard
+  /usr/bin/khard rPx,
+
   # Miscellaneous
   /usr/share/terminfo/{,**} r,
   /etc/services r,
