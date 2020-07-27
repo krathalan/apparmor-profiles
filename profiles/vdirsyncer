@@ -20,6 +20,8 @@ profile vdirsyncer /usr/bin/vdirsyncer {
 
   # Contact storage location
   owner @{HOME}/.local/share/contacts/{,**} rw,
+  # Task storage location
+  owner @{HOME}/.local/share/tasks/{,**} rw,
   # Include user overrides for possible symlinked config
   # files/different contact storage locations
   #include <local/vdirsyncer>
