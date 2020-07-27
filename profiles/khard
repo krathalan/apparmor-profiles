@@ -19,6 +19,9 @@ profile khard /usr/bin/khard {
 
   # Contact storage location
   owner @{HOME}/.local/share/contacts/{,**} r,
+  # Include user overrides for possible symlinked config
+  # files/different contact storage locations
+  #include <local/khard>
 
   # Mutt integration
   owner /tmp/mutt-* rw,
