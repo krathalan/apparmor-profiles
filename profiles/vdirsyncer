@@ -19,7 +19,7 @@ profile vdirsyncer /usr/bin/vdirsyncer {
   owner @{HOME}/.config/vdirsyncer/* r,
 
   # Contact storage location
-  owner @{HOME}/.local/share/contacts/{,**} rw,
+  owner @{HOME}/.local/share/contacts/{,**} rwl,
   # Task storage location
   owner @{HOME}/.local/share/tasks/{,**} rwl,
   # Calendar storage location
