@@ -18,11 +18,42 @@ profile khard /usr/bin/khard {
   owner @{HOME}/.config/khard/* r,
 
   # Contact storage location
-  owner @{HOME}/.local/share/contacts/{,**} r,
+  owner @{HOME}/.local/share/contacts/{,**} rwl,
   # Include user overrides for possible symlinked config
   # files/different contact storage locations
   #include <local/khard>
 
   # Mutt integration
   owner /tmp/mutt-* rw,
+
+  # Needed to add new contact with nano
+  owner /tmp/* rw,
+  /usr/bin/nano rCx,
+
+  profile nano /usr/bin/nano {
+    #include <abstractions/base>
+    #include <abstractions/bash>
+    #include <abstractions/krathalans-hardening>
+
+    /usr/bin/nano r,
+
+    # Config files
+    /etc/nanorc r,
+    owner @{HOME}/.nanorc r,
+    owner @{HOME}/.config/nano/nanorc r,
+    # Include user overrides for possible symlinked config file
+    #include <local/khard-nano>
+
+    owner /tmp/* rw,
+
+    # Syntax highlighting
+    /usr/share/file/misc/magic.mgc r,
+    /usr/share/nano-syntax-highlighting/{,*} r,
+
+    # Deny unnecessary permissions
+    deny /dev/pts/* rw,
+  }
+
+  # Deny unnecessary permissions
+  deny @{PROC}/{,**} rw,
 }
