@@ -1,5 +1,5 @@
 # AppArmor profile for waybar system bar for Wayland
-# Version of waybar profiled: 0.9.2
+# Version of waybar profiled: 0.9.3
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -37,6 +37,9 @@ profile waybar /usr/bin/waybar {
 
   # Network module
   @{PROC}/*/net/netstat r,
+
+  # CPU module
+  @{PROC}/loadavg r,
 
   # Deny unnecessary permissions
   deny /dev/tty* rw,
