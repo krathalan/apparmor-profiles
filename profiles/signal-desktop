@@ -1,5 +1,5 @@
 # AppArmor profile for signal-desktop messenger
-# Version of signal-desktop profiled: 1.34.4
+# Version of signal-desktop profiled: 1.34.5
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
