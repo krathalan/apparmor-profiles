@@ -27,6 +27,9 @@ profile mutt /usr/bin/mutt {
   # cache/mail storage locations
   #include <local/mutt>
 
+  # View help (F1)
+  /usr/bin/less rPx,
+
   # GPG encrypting/decrypting/verifying messages
   /usr/bin/pgpewrap rix,
   owner /tmp/signature.asc rwl,
@@ -119,6 +122,7 @@ profile mutt /usr/bin/mutt {
 
   # Miscellaneous
   /usr/share/terminfo/{,**} r,
+  /etc/mime.types r,
   /etc/services r,
 
   # Deny unnecessary permissions
