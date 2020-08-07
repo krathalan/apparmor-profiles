@@ -2,24 +2,24 @@
 # Versions of firefox profiled: 79.0
 # This profile should work on Developer Edition and Nightly as well
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
-# Copyright 2019 (C) krathalan; Licensed under GPLv3
+# Copyright 2019-2020 (C) krathalan; Licensed under GPLv3
 
 # Forked from https://gitlab.com/madaidan/apparmor-profiles, provided without
 # license
 
 #include <tunables/global>
 
-profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
+profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   #include <abstractions/audio>
   #include <abstractions/base>
   #include <abstractions/fonts>
   #include <abstractions/krathalans-common-gui>
   #include <abstractions/krathalans-hardening>
-  #include <abstractions/user-tmp>
 
   # Hardware acceleration
   #include <abstractions/krathalans-hwaccel>
   @{sys}/devices/pci[0-9]*/**/drm/ r,
+  @{sys}/devices/pci[0-9]*/**/uevent r,
 
   # Include user overrides for krathalans-hwaccel-nvidia
   #include <local/firefox>
@@ -28,8 +28,6 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   #include <abstractions/user-download>
 
   # Dconf
-  #include <abstractions/dconf>
-  owner /run/user/*/dconf/ w,
   owner /run/user/*/dconf/user rw,
   owner @{HOME}/.config/dconf/user r,
 
@@ -43,12 +41,9 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   ptrace trace peer=firefox,
   /usr/bin/{bash,dash} rix,
   # Must be px to avoid env scrubbing for LD_PRELOAD libEGL.so, libmozsandbox.so
-  /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* mrpx,
+  /{usr/bin,usr/lib/firefox*}/firefox* mrpx,
   owner /dev/shm/shmfd-* rw,
   owner /dev/shm/org.{chromium,mozilla}.{,ipc.}* rw,
-
-  # Telemetry reporter
-  /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/pingsender rix,
 
   # Intel
   /proc/sys/dev/i915/perf_stream_paranoid r,
@@ -57,10 +52,9 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   # System access
   /dev/ r,
   /etc/udev/udev.conf r,
-  /{,var/}run/udev/data/+pci:* r,
-  @{sys}/devices/pci[0-9]*/**/uevent r,
+  /{,var/}run/udev/data/+pci:[0-9]* r,
   @{system_share_dirs}/ r,
-  /usr/lib/firefox/fonts/** rw,
+  /usr/lib/firefox*/{,**} r,
 
   # Gsettings https://developer.gnome.org/gio/stable/GSettings.html
   @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
@@ -68,27 +62,12 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   # Poppler is a PDF rendering library
   @{system_share_dirs}/poppler/{,**} r,
 
-  # For firefox-nightly AUR package
-  /opt/firefox-nightly/ r,
-  /opt/firefox-nightly/** mr,
-
   # Wayland
   owner /dev/shm/wayland.mozilla.ipc.* rw,
 
-  # Miscellaneous
-  owner /run/user/*/mozilla* rwlk,
-
-  # Firefox profiles
-  owner @{HOME}/.mozilla/ rwlk,
-  owner @{HOME}/.mozilla/** rwlk,
-  owner @{HOME}/.cache/mozilla/ rwlk,
-  owner @{HOME}/.cache/mozilla/** rwlk,
-
-  # Needed to set as default browser
-  owner @{HOME}/.config/mimeapps.list* rw,
-  owner @{user_share_dirs}/applications/{,**} r,
-  owner @{user_share_dirs}/applications/userapp-Nightly* w,
-  owner @{user_share_dirs}/applications/userapp-Firefox* w,
+  # Firefox profiles, cache
+  owner @{HOME}/.mozilla/{,**} rwlk,
+  owner @{HOME}/.cache/mozilla/{,**} rwlk,
 
   # systemd-homed
   /{,var/}run/systemd/userdb/ r,
@@ -97,10 +76,6 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   deny /usr/bin/gio-launch-desktop rx,
   deny /etc/mailcap r,
 
-  # Silence denials about some files; these can contain sensitive data
-  deny @{user_share_dirs}/gvfs-metadata/** r,
-  deny @{user_share_dirs}/recently-used.xbel* rw,
-
   # GVFS is unnecessary
   deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
 
@@ -108,19 +83,17 @@ profile firefox /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/firefox* {
   deny @{PROC}/@{pid}/{,**} rw,
   deny @{PROC}/sys/kernel/random/boot_id r,
 
-  # Deny /var
-  deny /var/** rw,
+  # Deny /var and /tmp
+  deny /tmp/{,**} mrw,
+  deny /var/{,**} rw,
 
   # Don't allow executable mapping of arbitrary files
-  deny /tmp/#* mrw,
-  deny /tmp/.gl* mrw,
   deny @{HOME}/#* mrw,
   deny @{HOME}/.gl* mrw,
 
   # Silence denial logs about permissions we don't need
   deny capability sys_admin,
-  deny /{opt/firefox-nightly,usr/bin,usr/lib/firefox*}/crashreporter rx,
-  deny /opt/firefox-nightly/{,**} w,
+  deny /usr/lib/firefox*/{crashreporter,pingsender} rx,
   deny @{sys}/bus/pci/devices/ r,
   deny @{sys}/devices/system/cpu/** r,
   deny /usr/bin/lsb_release rx,
