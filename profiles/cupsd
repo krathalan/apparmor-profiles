@@ -1,0 +1,181 @@
+# AppArmor profile for cups printing system
+# Version of program profiled: 2.3.3
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile cupsd /usr/bin/cupsd {
+  #include <abstractions/base>
+  #include <abstractions/krathalans-nameservice>
+  #include <abstractions/krathalans-networking>
+
+  capability chown,
+  capability dac_override,
+  capability fsetid,
+  capability kill,
+  capability net_bind_service,
+  /usr/bin/cupsd r,
+
+  # Cups dirs
+  /etc/cups/{,**} r,
+  /etc/cups/classes.conf* rw,
+  /usr/lib/cups/{,**} r,
+  @{system_share_dirs}/cups/{,**} r,
+  /var/{cache,log,spool}/cups/{,**} rw,
+  /run/cups/{,**} rw,
+
+  # Misc
+  /etc/papersize r,
+
+  # Needed for adding/deleting/changing printers
+  # Only root can add/delete/change printers by default
+  capability audit_write,
+  /etc/cups/ppd/{,**} rw,
+  /etc/cups/printers.conf* rw,
+  /etc/cups/subscriptions.conf* rw,
+  /etc/printcap w,
+  /etc/pam.d/* r,
+  /etc/login.defs r,
+  /etc/shadow r,
+
+  signal send set=term peer=cups-deviced,
+  signal send set=term peer=cups-driverd,
+  signal send set=term peer=cups-exec,
+  /usr/lib/cups/daemon/cups-exec rPx,
+
+
+  # Deny unnecessary permissions
+  deny /run/utmp rwk,
+  deny /proc/sys/kernel/random/boot_id r,
+}
+
+profile cups-exec /usr/lib/cups/daemon/cups-exec {
+  #include <abstractions/base>
+  #include <abstractions/krathalans-nameservice>
+
+  capability setgid,
+  capability setuid,
+  signal receive set=term peer=cupsd,
+  /usr/lib/cups/daemon/cups-exec r,
+
+  signal send set=term peer=cups-deviced,
+  /usr/lib/cups/daemon/cups-deviced rPx,
+
+  /usr/lib/cups/daemon/cups-driverd rPx,
+
+  /usr/bin/gsc rPx,
+
+  /usr/lib/cups/filter/* rix,
+  /usr/lib/cups/backend/* rix,
+
+  # snmp
+  /var/net-snmp/mib_indexes/{,**} r,
+  /usr/share/snmp/mibs/{,**} r,
+
+  # Cups dirs
+  /etc/cups/{,**} r,
+  /etc/hp/{,**} r,
+  /usr/share/hplip/{,**} r,
+  /usr/share/cups/data/{,**} r,
+  /var/spool/cups/{,**} r,
+
+  # Misc
+  /etc/papersize r,
+  /tmp/[0-9]* rw,
+
+  # Deny unnecessary permissions
+  deny /proc/sys/kernel/random/boot_id r,
+}
+
+profile cups-deviced /usr/lib/cups/daemon/cups-deviced {
+  #include <abstractions/base>
+  #include <abstractions/krathalans-nameservice>
+
+  capability setgid,
+  capability setuid,
+  signal receive set=term peer=cupsd,
+  /usr/lib/cups/daemon/cups-deviced r,
+
+  /usr/bin/smbspool rPx,
+  /usr/bin/ippfind rPx,
+  /usr/lib/cups/backend/* rix,
+  /usr/lib/cups/driver/driverless rix,
+  /usr/bin/python3.[0-9] rix,
+
+  /var/spool/cups/{,**} w,
+
+  # Misc
+  /etc/cups/snmp.conf r,
+  /etc/hp/hplip.conf r,
+  /etc/papersize r,
+  /usr/share/cups/usb/org.cups.usb-quirks r,
+  /usr/share/hplip/{,**} r,
+
+  # Possible printer connections
+  /dev/ r,
+  /dev/bus/usb/ r,
+  /sys/bus/ r,
+  /sys/bus/usb/devices/ r,
+  /sys/class/ r,
+  /sys/devices/pci[0-9]*/**/usb[0-9]/{,**/}{uevent,busnum,devnum,speed,descriptors} r,
+  /usr/share/cups/usb/ r,
+  /run/udev/data/+usb:* r,
+  /run/udev/data/c[0-9]* r,
+
+  # Deny unnecessary permissions
+  deny /proc/sys/kernel/random/boot_id r,
+}
+
+profile smbspool /usr/bin/smbspool {
+  #include <abstractions/base>
+
+  /usr/bin/smbspool r,
+
+  # Misc
+  /etc/papersize r,
+}
+
+profile ippfind /usr/bin/ippfind {
+  #include <abstractions/base>
+
+  /usr/bin/ippfind r,
+
+  # Misc
+  /etc/papersize r,
+}
+
+profile cups-driverd /usr/lib/cups/daemon/cups-driverd {
+  #include <abstractions/base>
+  #include <abstractions/perl>
+
+  signal receive set=term peer=cupsd,
+  /usr/lib/cups/daemon/cups-driverd r,
+
+  /usr/lib/cups/driver/driverless rix,
+  /usr/bin/foomatic-ppdfile rix,
+
+  /usr/bin/ippfind rPx,
+
+  # Misc
+  /etc/papersize r,
+  /usr/share/ppd/{,**} r,
+  /usr/share/cups/{,**} r,
+  /var/cache/cups/ppds.dat* rw,
+}
+
+profile gsc /usr/bin/gsc {
+  #include <abstractions/base>
+
+  /usr/bin/gsc r,
+
+  /usr/share/ghostscript/{,**} r,
+
+  # Needed to access files to process
+  /tmp/[0-9]* rw,
+  /tmp/gs* rw,
+
+  # Misc
+  /etc/papersize r,
+  /etc/cups/ppd/* r,
+}
