@@ -19,6 +19,7 @@ profile cupsd /usr/bin/cupsd {
 
   # Cups dirs
   /etc/cups/{,**} r,
+  /etc/cups/cupsd.conf* rw,
   /etc/cups/classes.conf* rw,
   /usr/lib/cups/{,**} r,
   @{system_share_dirs}/cups/{,**} r,
@@ -42,6 +43,7 @@ profile cupsd /usr/bin/cupsd {
   signal send set=term peer=cups-deviced,
   signal send set=term peer=cups-driverd,
   signal send set=term peer=cups-exec,
+  signal send set=term peer=cups-web,
   /usr/lib/cups/daemon/cups-exec rPx,
 
 
@@ -64,6 +66,8 @@ profile cups-exec /usr/lib/cups/daemon/cups-exec {
 
   /usr/lib/cups/daemon/cups-driverd rPx,
 
+  /usr/lib/cups/cgi-bin/* rPx,
+
   /usr/bin/gsc rPx,
 
   /usr/lib/cups/filter/* rix,
@@ -78,7 +82,7 @@ profile cups-exec /usr/lib/cups/daemon/cups-exec {
   /etc/hp/{,**} r,
   /usr/share/hplip/{,**} r,
   /usr/share/cups/data/{,**} r,
-  /var/spool/cups/{,**} r,
+  /var/spool/cups/{,**} rw,
 
   # Misc
   /etc/papersize r,
@@ -178,4 +182,26 @@ profile gsc /usr/bin/gsc {
   # Misc
   /etc/papersize r,
   /etc/cups/ppd/* r,
+}
+
+profile cups-web /usr/lib/cups/cgi-bin/* {
+  #include <abstractions/base>
+  #include <abstractions/krathalans-nameservice>
+  #include <abstractions/krathalans-networking>
+
+  signal receive set=term peer=cupsd,
+  /usr/lib/cups/cgi-bin/* r,
+
+  # Cups dirs
+  /etc/cups/{,**} r,
+  /usr/share/cups/{,**} r,
+  /var/spool/cups/{,**} r,
+
+  # Misc
+  /etc/papersize r,
+  /run/cups/certs/* r,
+
+  # Needed for editing config file
+  /var/cache/cups/{,**} rw,
+  /tmp/[0-9]* rw,
 }
