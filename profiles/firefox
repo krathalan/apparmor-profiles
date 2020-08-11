@@ -72,6 +72,9 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   # systemd-homed
   /{,var/}run/systemd/userdb/ r,
 
+  # Needed to install addons, export files from addons
+  owner /tmp/{,**} rwkl,
+
   # Don't allow launching other applications to open files
   deny /usr/bin/gio-launch-desktop rx,
   deny /etc/mailcap r,
@@ -84,7 +87,6 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   deny @{PROC}/sys/kernel/random/boot_id r,
 
   # Deny /var and /tmp
-  deny /tmp/{,**} mrw,
   deny /var/{,**} rw,
 
   # Don't allow executable mapping of arbitrary files
