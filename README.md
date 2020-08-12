@@ -21,11 +21,11 @@ These AppArmor profiles have been tested on the following hardware:
     - NVIDIA GeForce GTX 980 Ti with proprietary drivers
     - Intel 620 UHD Graphics
 - Network adapters:
-    - Intel Wireless-AC 9260 (iwd and wpa_supplicant)
-    - Broadcom BCM4360 (wpa_supplicant)
+    - Intel Wireless-AC 9260
+    - Intel Wi-Fi 6 AX200
 - Bluetooth adapters (bluetoothd):
     - Intel Wireless-AC 9260
-    - Broadcom BCM20702A0
+    - Intel Wi-Fi 6 AX200
 
 I cannot guarantee that these profiles will work on any other hardware. All profiles should work with Xorg on NVIDIA hardware and with Sway (and probably Xorg) on Intel hardware. However, it's very possible these profiles will still work with AMD graphics, as it seems AMD graphics share a lot of similar behavior with Intel graphics. If you own an NVIDIA card, please read the NVIDIA section below.
 
@@ -89,6 +89,8 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 
 - bluetoothd
 - [code ⚠️](#code)
+- [cupsd ⚠️](#cupsd)
+- Discord
 - [evince ⚠️](#evince)
 - [Firefox ⚠️](#firefox)
 - [gpg-agent ⚠️](#gpg-agent)
@@ -128,7 +130,6 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - [youtube-dl ⚠️](#youtube-dl)
 
 ### code
-
 You will need to add local changes to edit files that are not:
 - in the base `~` directory (for files like `~/.bashrc`),
 - `~/.config/`,
@@ -139,6 +140,9 @@ You will need to add local changes if your VSCode/ium configuration files are so
 
 This profile will work with both the `code` repo package and the `vscodium-bin` AUR package.
 This profile is only allowed to open an AppArmor-confined Firefox when opening a URL.
+
+### cupsd
+This profile has only been tested with a local wireless HP printer. Printers from other manufacturers or printers connected via a different interface (e.g. USB, SAMBA, etc.) may not work. Patches accepted.
 
 ### evince
 You will need to add local changes if you wish to view documents that are not in `~/{D,d}ocuments/` or `~/{D,d}ownloads/`.
@@ -268,7 +272,6 @@ You will need to add local changes if you wish to download videos to any directo
 ## Unmaintained profiles
 
 - aerc
-- Discord
 - Gedit
 - Hexchat
 - KeepassXC
