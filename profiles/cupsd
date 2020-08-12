@@ -66,8 +66,10 @@ profile cups-exec /usr/lib/cups/daemon/cups-exec {
 
   /usr/lib/cups/daemon/cups-driverd rPx,
 
+  # Web interface
   /usr/lib/cups/cgi-bin/* rPx,
 
+  # Processing files to print into ghostscript
   /usr/bin/gsc rPx,
 
   /usr/lib/cups/filter/* rix,
@@ -82,6 +84,7 @@ profile cups-exec /usr/lib/cups/daemon/cups-exec {
   /etc/hp/{,**} r,
   /usr/share/hplip/{,**} r,
   /usr/share/cups/data/{,**} r,
+  /var/cache/cups/*.snmp rw,
   /var/spool/cups/{,**} rw,
 
   # Misc
@@ -166,6 +169,7 @@ profile cups-driverd /usr/lib/cups/daemon/cups-driverd {
   /usr/share/ppd/{,**} r,
   /usr/share/cups/{,**} r,
   /var/cache/cups/ppds.dat* rw,
+  /var/spool/cups/tmp/{,**} rw,
 }
 
 profile gsc /usr/bin/gsc {
