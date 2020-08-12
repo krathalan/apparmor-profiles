@@ -1,20 +1,20 @@
 # AppArmor profile for discord proprietary chat program
-# Version of discord profiled: March 22, 2020
+# Version of discord profiled: 0.0.11
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
-# Copyright 2019 (C) krathalan; Licensed under GPLv3
+# Copyright 2019-2020 (C) krathalan; Licensed under GPLv3
 
-# This profile assumes you only want to upload files from `~/{D,d}ownloads`. 
-# If you do not, add local changes. Discord does not need access to your whole 
+# This profile assumes you only want to upload files from `~/{D,d}ownloads`.
+# If you do not, add local changes. Discord does not need access to your whole
 # home directory.
 
-# This profile intentionally does not enable hardware acceleration due to the 
-# deeper level of system access hardware acceleration requires, the [insecurity 
-# of modern graphics drivers, and the reluctance to give proprietary software 
+# This profile intentionally does not enable hardware acceleration due to the
+# deeper level of system access hardware acceleration requires, the insecurity
+# of modern graphics drivers, and the reluctance to give proprietary software
 # deeper system access than it truly needs.
 
-# Streamer mode and showing any currently playing games/music/etc. will not work 
-# as `ptrace` is completely disabled in this profile, as Discord tries to run 
-# `ptrace` on every program running on your machine. `ptrace` is an extremely 
+# Streamer mode and showing any currently playing games/music/etc. will not work
+# as `ptrace` is completely disabled in this profile, as Discord tries to run
+# `ptrace` on every program running on your machine. `ptrace` is an extremely
 # dangerous capability.
 
 #include <tunables/global>
@@ -27,26 +27,33 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   #include <abstractions/krathalans-hardening>
   #include <abstractions/krathalans-hwaccel>
   #include <abstractions/krathalans-hwaccel-nvidia>
-
-  # Networking
   #include <abstractions/krathalans-networking>
-  owner @{HOME}/.pki/nssdb/* rwk,
 
   # Subprocesses
-  /usr/bin/dash mrix,
   /opt/discord/Discord mrix,
-  /opt/discord/chrome-sandbox mrix,
   owner /dev/shm/.org.chromium.Chromium.* rw,
 
+  /opt/discord/chrome-sandbox mrCx,
+
+  profile chrome-sandbox /opt/discord/chrome-sandbox {
+    #include <abstractions/base>
+    /opt/discord/chrome-sandbox r,
+
+    capability setgid,
+    capability setuid,
+    capability sys_admin,
+
+    /{usr,opt}/{bin,discord}/{D,d}iscord rPx,
+  }
+
   # Discord will not work at all without this
-  capability setgid,
-  capability setuid,
-  capability sys_chroot,
   capability sys_admin,
+  capability sys_chroot,
   @{PROC}/ r,
   owner @{PROC}/*/{gid_map,setgroups,uid_map} w,
   owner @{PROC}/*/fd/ r,
   owner /tmp/discord.sock w,
+  owner /tmp/.org.chromium.Chromium.*/{,**} rw,
   /sys/bus/pci/devices/ r,
   /sys/bus/pci/devices/[0-9]*/{class,device,irq,resource,vendor} r,
   /sys/devices/pci[0-9]*/{class,device,irq,resource,vendor} r,
@@ -81,13 +88,16 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
   deny ptrace,
 
   # Deny unnecessary permissions
-  deny @{HOME}/.pki/ rw,
+  deny /usr/bin/{bash,dash} rx,
+  deny /usr/bin/lsb_release rx,
+  deny /dev/ r,
+  deny @{HOME}/.pki/{,**} rw,
   deny /dev/pts/[0-9] rw,
   deny /dev/tty* rw,
   deny "/tmp/Discord Crashes/" w,
   deny /sys/devices/virtual/tty/tty0/active r,
-  deny /proc/*/{cmdline,oom_score_adj,stat,statm,comm} rw,
-  deny /proc/*/task/ r,
-  deny /proc/sys/fs/inotify/max_user_watches r,
-  deny /proc/sys/kernel/yama/ptrace_scope r,
+  deny @{PROC}/*/{cmdline,oom_score_adj,stat,statm,comm} rw,
+  deny @{PROC}/*/task/ r,
+  deny @{PROC}/sys/fs/inotify/max_user_watches r,
+  deny @{PROC}/sys/kernel/yama/ptrace_scope r,
 }
