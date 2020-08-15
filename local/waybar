@@ -4,6 +4,16 @@
 # View a list of X windows
 /usr/bin/{gawk,xlsclients} rix,
 
+# Fix systemd-networkd issues
+owner @{HOME}/documents/config/scripts/waybar_network.sh r,
+@{PROC}/{,*/}net/wireless r,
+/usr/bin/rg rix,
+/usr/bin/bc rix,
+/usr/bin/iw rix,
+/usr/bin/iwctl rix,
+
+deny @{PROC}/*/cgroup r,
+
 # Config files in ~/.config/waybar/ are symlinks to these files
 owner @{HOME}/documents/config/wayland-config/.config/waybar/* r,
 owner @{HOME}/documents/config/wayland-config/.config/gtk-3.0/settings.ini r,
@@ -12,3 +22,6 @@ owner @{HOME}/documents/config/wayland-config/.config/gtk-3.0/settings.ini r,
 /usr/bin/cat rix,
 owner @{HOME}/.cache/update_mailboxes_status r,
 owner @{HOME}/.cache/unread_mail/{,**} r,
+
+# Deny ripgrep git config, not necessary
+deny @{HOME}/documents/config/home-config/.config/git/config r,
