@@ -17,14 +17,14 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
 
   # Helper programs
   #include <abstractions/bash>
-  /usr/bin/{bash,dash,dirname,git,grep,readlink,which} rix,
+  /usr/bin/{bash,dash,dirname,git,grep,readlink,rg,which} rix,
 
   # Needed to browse and download extensions
   #include <abstractions/krathalans-networking>
   #include <abstractions/user-tmp>
 
   # Needed to function at all
-  /dev/shm/.org.chromium.Chromium.* rw,
+  owner /dev/shm/.org.chromium.Chromium.* rw,
   @{PROC}/ r,
   owner @{PROC}/*/fd/ r,
   owner @{PROC}/*/comm w,
@@ -82,6 +82,41 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
 
     # Silence unnecessary permissions
     deny /usr/bin/{gawk,uname,xprop} rx,
+  }
+
+  # Needed for Rust extension
+  # https://marketplace.visualstudio.com/items?itemName=rust-lang.rust
+  # Extension is dual-licensed under Apache 2.0 and MIT terms:
+  #    https://github.com/rust-lang/vscode-rust/blob/master/COPYRIGHT
+  /usr/bin/rustc rCx,
+  /usr/bin/rls rCx,
+
+  profile rust /usr/bin/{rustc,rls} {
+    #include <abstractions/base>
+    #include <abstractions/fonts>
+    #include <abstractions/openssl>
+    #include <abstractions/krathalans-networking>
+
+    /usr/bin/{cargo,rustc,rls} rix,
+
+    # Libraries
+    /usr/lib/rustlib/{,**} r,
+
+    # Misc
+    owner /proc/*/statm r,
+    owner /dev/shm/.org.chromium.Chromium.* rw,
+    owner /tmp/rustc*/{,**} rw,
+
+    # Cargo cache
+    owner @{HOME}/.cargo/{,**} rwk,
+
+    # Rust needs access to the same directories as VSCodium to analyze and compile
+    owner @{HOME}/{D,d}ocuments/{,**} rw,
+    owner @{HOME}/{D,d}ocuments/{,**}/*.*lock rwk,
+    owner @{HOME}/{D,d}ocuments/{,**}/*.bin rwl,
+    owner @{HOME}/{G,g}it/{,**} rw,
+    owner @{HOME}/{G,g}it/{,**}/*.*lock rwk,
+    owner @{HOME}/{G,g}it/{,**}/*.bin rwl,
   }
 
   # Needed for C/C++ Clang Command Adapter extension
