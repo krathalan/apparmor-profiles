@@ -99,6 +99,17 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
 
     /usr/bin/{cargo,rustc,rls} rix,
 
+    # Needed to build some crates
+    /usr/bin/gcc rix,
+    /usr/lib/gcc/** r,
+    /usr/lib/gcc/**/{cc1,collect2} rix,
+    owner /tmp/cc*.{c,o,res,s} rw,
+    /usr/bin/ld rix,
+    owner @{HOME}/{D,d}ocuments/**/build/*/build-script-* rix,
+    owner @{HOME}/{G,g}it/**/build/*/build-script-* rix,
+    /usr/bin/pkgconf rix,
+    /usr/include/{,**} r,
+
     # Libraries
     /usr/lib/rustlib/{,**} r,
 
@@ -108,7 +119,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
     owner /tmp/rustc*/{,**} rw,
 
     # Cargo cache
-    owner @{HOME}/.cargo/{,**} rwk,
+    owner @{HOME}/.cargo/{,**} rwlk,
 
     # Rust needs access to the same directories as VSCodium to analyze and compile
     owner @{HOME}/{D,d}ocuments/{,**} rw,
