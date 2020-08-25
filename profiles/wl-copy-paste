@@ -21,5 +21,22 @@ profile wl-copy-paste /usr/bin/wl-{copy,paste} {
 
   # Deny unnecessary permissions
   deny /dev/tty rw,
-  deny /usr/bin/xdg-mime rx,
+  /usr/bin/xdg-mime rCx,
+
+  profile xdg-mime /usr/bin/xdg-mime {
+    #include <abstractions/base>
+
+    /usr/bin/xdg-mime r,
+    /usr/bin/{bash,dash} rix,
+
+    # Helper programs
+    /usr/bin/{readlink,grep,file} rix,
+
+    # Misc
+    /usr/share/file/misc/magic.mgc r,
+    owner /tmp/wl-copy-buffer-*/{,**} r,
+
+    # Deny unnecessary permissions
+    deny /usr/bin/{xprop,dbus-send,uname} rx,
+  }
 }
