@@ -19,8 +19,7 @@ profile wl-copy-paste /usr/bin/wl-{copy,paste} {
   # Mutt
   owner /tmp/mutt-* rw,
 
-  # Deny unnecessary permissions
-  deny /dev/tty rw,
+  # Allow piping images into clipboard
   /usr/bin/xdg-mime rCx,
 
   profile xdg-mime /usr/bin/xdg-mime {
@@ -39,4 +38,7 @@ profile wl-copy-paste /usr/bin/wl-{copy,paste} {
     # Deny unnecessary permissions
     deny /usr/bin/{xprop,dbus-send,uname} rx,
   }
+
+  # Deny unnecessary permissions
+  deny /dev/tty rw,
 }
