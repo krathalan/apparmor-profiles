@@ -71,6 +71,7 @@ profile micro /usr/bin/micro {
 
   # Mutt
   owner /tmp/mutt-* rw,
+  owner /tmp/neomutt-* rw,
 
   # ASP https://wiki.archlinux.org/index.php/Asp
   @{HOME}/.cache/asp/{,**} r,
