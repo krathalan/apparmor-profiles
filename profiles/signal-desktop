@@ -100,6 +100,7 @@ profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-deskto
   deny /dev/tty* rw,
   deny @{HOME}/.cache/{,**} rw,
   deny @{HOME}/.config/Electron/{,**} rw,
+  deny @{HOME}/.pki/{,**} rw,
   deny @{sys}/devices/system/cpu/{,**} r,
   deny @{sys}/devices/virtual/tty/{,**} r,
   deny /usr/bin/ r,
