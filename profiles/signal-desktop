@@ -17,6 +17,10 @@ profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-deskto
   owner @{PROC}/*/fd/ r,
   @{PROC}/ r,
 
+  # Program files
+  /usr/lib/signal-desktop/{,**} r,
+  /usr/lib/signal-desktop/resources/app.asar.unpacked/node_modules/{,**} mr,
+
   # Helper programs
   /usr/bin/getconf rix,
   /usr/{,s}bin/xdg-settings rCx,
