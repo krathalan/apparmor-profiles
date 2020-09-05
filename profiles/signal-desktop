@@ -91,6 +91,7 @@ profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-deskto
   deny @{PROC}/sys/fs/inotify/max_user_watches r,
   deny @{PROC}/sys/kernel/random/boot_id r,
   deny @{PROC}/sys/kernel/yama/ptrace_scope r,
+  deny @{PROC}/*/cgroup r,
   deny @{PROC}/*/comm r,
   deny @{PROC}/*/mountinfo r,
   deny @{PROC}/*/mounts r,
