@@ -1,5 +1,5 @@
 # AppArmor profile for VSCodium and VS Code editor
-# Version of VSCode/ium profiled: 1.48.2
+# Version of VSCode/ium profiled: 1.49.0
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019-2020 (C) krathalan; Licensed under GPLv3
 
@@ -37,7 +37,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   # Chromium/Electron spawns and uses multiple processes
   @{system_share_dirs}/vscodium-bin/{,**} mr,
   /usr/lib/code/{,**} mr,
-  /usr/lib/electron[6-9]/electron rix,
+  /usr/lib/electron/electron rix,
   /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code,code-oss,code.js,codium} rpx,
 
   # Intel audio (won't open without this)
@@ -51,7 +51,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
 
   # Config
   owner "@{HOME}/.config/Code - OSS/{,**}" rwk,
-  owner @{HOME}/.config/VSCodium/{,**} rwk,
+  owner @{HOME}/.config/{code-oss,Electron,VSCodium}/{,**} rwk,
   owner @{HOME}/.vscode-oss/{,**} rw,
 
   # Needed to edit documents (including config files)
@@ -151,7 +151,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   deny /usr/bin/{date,env,id,ip,tput,tty} rx,
   deny /dev/shm/ r,
   deny @{PROC}/{version,vmstat} r,
-  deny @{PROC}/*/{comm,mountinfo,oom_score_adj,stat,statm} r,
+  deny @{PROC}/*/{comm,cmdline,mountinfo,oom_score_adj,stat,statm} r,
   deny @{PROC}/*/task/ r,
   deny @{PROC}/sys/fs/inotify/max_user_watches r,
   deny @{sys}/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
