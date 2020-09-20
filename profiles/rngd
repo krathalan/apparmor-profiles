@@ -14,6 +14,7 @@ profile rngd /usr/bin/rngd {
 
   # System access
   owner /dev/ r,
+  owner /dev/hwrng r,
   owner /dev/random rw,
   owner /sys/bus/ r,
   owner /sys/class/ r,
