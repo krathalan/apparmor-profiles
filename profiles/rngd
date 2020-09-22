@@ -14,11 +14,14 @@ profile rngd /usr/bin/rngd {
 
   # System access
   owner /dev/ r,
-  owner /dev/hwrng r,
   owner /dev/random rw,
   owner /sys/bus/ r,
   owner /sys/class/ r,
   owner @{PROC}/sys/kernel/random/* rw,
+
+  # Hardware RNGs
+  owner /dev/hwrng r,
+  owner /sys/devices/virtual/misc/hw_random/rng_available r,
 
   # Config file
   owner /etc/conf.d/rngd r,
