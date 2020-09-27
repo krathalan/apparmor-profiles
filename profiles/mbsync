@@ -1,5 +1,5 @@
 # AppArmor profile for mbsync/isync IMAP mailbox synchronizer
-# Version of program profiled: 1.3.2
+# Version of program profiled: 1.3.3
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
