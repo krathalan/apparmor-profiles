@@ -91,6 +91,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   deny /usr/bin/xdg-settings rx,
   deny @{PROC}/*/{cmdline,comm,stat,statm} r,
   deny @{PROC}/*/{clear_refs,oom_score_adj,setgroups} w,
+  deny @{PROC}/sys/kernel/random/boot_id r,
   deny @{PROC}/sys/kernel/yama/ptrace_scope r,
   deny @{PROC}/sys/fs/inotify/max_user_watches r,
 }
