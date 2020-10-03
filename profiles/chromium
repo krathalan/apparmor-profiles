@@ -1,0 +1,91 @@
+# AppArmor profile for ungoogled-chromium browser
+# Version of program profiled: 85.0.4183.121
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2020 (C) krathalan; Licensed under GPLv3
+
+#include <tunables/global>
+
+profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
+  #include <abstractions/audio>
+  #include <abstractions/base>
+  #include <abstractions/fonts>
+  #include <abstractions/krathalans-common-gui>
+  #include <abstractions/krathalans-hardening>
+  #include <abstractions/krathalans-networking>
+
+  deny capability sys_admin,
+
+  # Chromium spawns multiple processes
+  /usr/bin/chromium r,
+  /usr/lib/chromium/chromium rPx,
+  owner /dev/shm/.org.chromium.Chromium.* rw,
+
+  /usr/lib/chromium/chrome-sandbox rCx,
+  profile chrome-sandbox /usr/lib/chromium/chrome-sandbox {
+    #include <abstractions/base>
+    #include <abstractions/krathalans-hardening>
+
+    capability setgid,
+    capability setuid,
+    capability sys_admin,
+    capability sys_chroot,
+    capability sys_ptrace,
+    ptrace read peer=ungoogled-chromium,
+
+    /usr/lib/chromium/chrome-sandbox r,
+
+    /usr/lib/chromium/chromium rPx,
+  }
+
+  /usr/lib/chromium/{,**} r,
+  deny /usr/lib/chromium/{,**} w,
+
+  # Hwaccel
+  #include <abstractions/krathalans-hwaccel>
+  /dev/ r,
+  /etc/libva.conf r,
+  @{sys}/bus/pci/devices/ r,
+  @{sys}/devices/pci[0-9]*/[0-9]*/{class,vendor} r,
+  @{sys}/devices/pci[0-9]*/[0-9]*/[0-9]*/{class,config} r,
+  @{sys}/devices/virtual/dmi/id/{sys_vendor,product_name} r,
+  @{sys}/devices/virtual/tty/tty0/active r,
+
+  # Include local overrides for nvidia users and/or other reasons
+  #include <local/chromium>
+
+  # Per-user files
+  owner @{HOME}/.cache/chromium/{,**} rw,
+  owner @{HOME}/.config/chromium/{,**} rwk,
+  owner @{HOME}/.local/share/chromium-extensions/{,**} r,
+
+  # Dconf
+  owner @{HOME}/.config/dconf/user r,
+  owner /run/user/*/dconf/user rw,
+
+  # Downloads
+  #include <abstractions/user-download>
+
+  # File picker
+  @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
+  deny @{HOME}/.local/share/recently-used.xbel* rw,
+  deny @{PROC}/*/mounts r,
+  deny @{PROC}/*/mountinfo r,
+
+  # Tmp files
+  owner /tmp/.org.chromium.Chromium.*/{,**} rw,
+
+  # Proc
+  @{PROC}/ r,
+  @{PROC}/*/fd/ r,
+
+  # Deny unnecessary permissions
+  deny @{HOME}/.config/ r,
+  deny @{HOME}/.pki/{,**} rw,
+  deny @{sys}/bus/ r,
+  deny @{sys}/class/ r,
+  deny /usr/bin/xdg-settings rx,
+  deny @{PROC}/*/{cmdline,comm,stat,statm} r,
+  deny @{PROC}/*/{clear_refs,oom_score_adj,setgroups} w,
+  deny @{PROC}/sys/kernel/yama/ptrace_scope r,
+  deny @{PROC}/sys/fs/inotify/max_user_watches r,
+}
