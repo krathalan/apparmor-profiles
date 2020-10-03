@@ -150,6 +150,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   deny signal send set=term peer=unconfined,
   deny /usr/bin/{date,env,id,ip,tput,tty} rx,
   deny /dev/shm/ r,
+  deny @{user_share_dirs}/{,**} rw,
   deny @{PROC}/{version,vmstat} r,
   deny @{PROC}/*/{comm,cmdline,mountinfo,oom_score_adj,stat,statm} r,
   deny @{PROC}/*/task/{,**} rw,

@@ -43,12 +43,14 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   # Hwaccel
   #include <abstractions/krathalans-hwaccel>
   /dev/ r,
+  owner /dev/shm/shmfd-* rw,
   /etc/libva.conf r,
   @{sys}/bus/pci/devices/ r,
   @{sys}/devices/pci[0-9]*/[0-9]*/{class,vendor} r,
   @{sys}/devices/pci[0-9]*/[0-9]*/[0-9]*/{class,config} r,
   @{sys}/devices/virtual/dmi/id/{sys_vendor,product_name} r,
   @{sys}/devices/virtual/tty/tty0/active r,
+  @{PROC}/sys/dev/i915/perf_stream_paranoid r,
 
   # Include local overrides for nvidia users and/or other reasons
   #include <local/chromium>
@@ -77,6 +79,9 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   # Proc
   @{PROC}/ r,
   @{PROC}/*/fd/ r,
+
+  # systemd-homed
+  /{,var/}run/systemd/userdb/ r,
 
   # Deny unnecessary permissions
   deny @{HOME}/.config/ r,
