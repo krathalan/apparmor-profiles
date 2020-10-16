@@ -7,13 +7,20 @@
 
 profile nginx /usr/bin/nginx {
   #include <abstractions/base>
+  #include <abstractions/krathalans-nameservice>
 
   #include <local/nginx>
+
+  capability dac_read_search,
+  capability dac_override,
+  capability net_admin,
+  deny capability chown,
 
   /usr/bin/nginx r,
   /usr/share/nginx/{,**} r,
 
   # Misc
+  /var/lib/nginx/{,**} rw,
   /run/nginx/nginx.pid rw,
 
   # Networking
