@@ -11,11 +11,6 @@ profile nginx /usr/bin/nginx {
 
   #include <local/nginx>
 
-  capability dac_read_search,
-  capability dac_override,
-  capability net_admin,
-  deny capability chown,
-
   /usr/bin/nginx r,
   /usr/share/nginx/{,**} r,
 
