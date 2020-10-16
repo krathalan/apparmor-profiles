@@ -8,7 +8,6 @@
 profile radicale /usr/bin/radicale {
   #include <abstractions/base>
   #include <abstractions/krathalans-nameservice>
-  #include <abstractions/krathalans-networking>
   #include <abstractions/krathalans-hardening>
   #include <abstractions/python>
 
@@ -22,14 +21,17 @@ profile radicale /usr/bin/radicale {
   # Storage
   /var/lib/radicale/{,**} rwk,
 
-  # HTTPS certs
-  /etc/letsencrypt/{,**} r,
-
   # Include user overrides for different
   # config/storage/cert directories
   #include <local/radicale>
 
   # Misc
+  /etc/gai.conf r,
+  /etc/host.conf r,
+  /etc/hosts r,
   /etc/httpd/{,**} r,
   /etc/mime.types r,
+
+  # Deny unnecessary permissions
+  deny /run/systemd/resolve/resolv.conf r,
 }
