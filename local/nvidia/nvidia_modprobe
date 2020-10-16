@@ -1,13 +1,9 @@
 # Additions and overrides for nvidia_modprobe
 
-# This seems to be missing from the base profile
-@{PROC}/driver/nvidia/params r,
-
 # Add rules for rootless Xorg
 # See https://wiki.archlinux.org/index.php/Xorg#Rootless_Xorg
 /dev/nvidiactl w,
 /dev/nvidia[0-9] w,
-/dev/nvidia-modeset w,
 
 # VSCodium hwaccel
 /usr/share/vscodium-bin/icudtl.dat r,
