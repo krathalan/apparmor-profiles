@@ -1,5 +1,5 @@
 # AppArmor profile for evince document viewer
-# Version of evince profiled: 3.36.7
+# Version of evince profiled: 3.38.0
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -31,6 +31,7 @@ profile evince /usr/{bin,lib}/evince{,d} {
   @{system_share_dirs}/thumbnailers/{,*} r,
   # For some reason evince/apparmor doesn't accept the tunable version
   /usr/share/thumbnailers/{,*} r,
+  owner @{user_share_dirs}/ r,
   owner @{user_share_dirs}/recently-used.xbel* rw,
   owner @{HOME}/.cache/thumbnails/{,**} rw,
 
