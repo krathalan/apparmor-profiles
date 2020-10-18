@@ -72,7 +72,7 @@ profile epiphany /usr/bin/epiphany {
     /etc/services r,
     @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
 
-    deny /proc/*/statm r,
+    deny @{PROC}/*/statm r,
   }
 
   /usr/lib/WebKitWebProcess rCx,
@@ -105,7 +105,7 @@ profile epiphany /usr/bin/epiphany {
     @{system_share_dirs}/X11/xkb/{,**} r,
     @{sys}/devices/virtual/dmi/id/chassis_type r,
     @{sys}/firmware/acpi/pm_profile r,
-    /proc/zoneinfo r,
+    @{PROC}/zoneinfo r,
     owner /var/tmp/WebKit-Media* rw,
 
     # Include local overrides for conf files or Nvidia users
@@ -113,16 +113,14 @@ profile epiphany /usr/bin/epiphany {
 
     # Deny unnecessary permissions
     deny @{HOME}/.cache/ r,
-    deny /proc/*/fd/ r,
-    deny /proc/*/cmdline r,
-    deny /proc/*/statm r,
-    deny /proc/*/smaps r,
+    deny @{PROC}/*/{cmdline,statm,smaps} r,
+    deny @{PROC}/*/fd/ r,
   }
 
   # Deny unnecessary permissions
-  deny /proc/sys/kernel/random/boot_id r,
-  deny /proc/*/fd/ r,
-  deny /proc/*/cgroup r,
-  deny /proc/*/cmdline r,
-  deny /proc/*/statm r,
+  deny @{user_share_dirs}/applications/{,**} r,
+  deny @{system_share_dirs}/applications/*.desktop r,
+  deny @{PROC}/sys/kernel/random/boot_id r,
+  deny @{PROC}/*/{cgroup,cmdline,statm} r,
+  deny @{PROC}/*/fd/ r,
 }
