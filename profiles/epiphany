@@ -20,24 +20,42 @@ profile epiphany /usr/bin/epiphany {
 
   /usr/bin/epiphany r,
 
+  # Allow access for downloads and uploads
+  include <abstractions/user-download>
+
+  # Audio
+  include <abstractions/audio>
+  /usr/bin/pulseaudio rPx,
+
+  # Xorg
+  owner @{HOME}/.Xauthority r,
+
   # User data
   owner @{HOME}/.cache/epiphany/{,**} rw,
   owner @{HOME}/.cache/mesa_shader_cache/index rw,
-  owner /run/user/*/dconf/user rw,
   owner @{HOME}/.config/dconf/user r,
   owner @{HOME}/.config/enchant/{,**} rw,
   owner @{HOME}/.config/fontconfig/conf.d/{,**} r,
-  owner @{user_share_dirs}/epiphany/{,**,.*} rw,
+  owner @{user_share_dirs}/epiphany/{,**,.*} rwk,
 
-  # Misc
+  # Runtime dir
+  owner /run/user/*/dconf/user rw,
+  owner /run/user/*/webkitgtk/{,**} w,
+
+  # System access
   /etc/services r,
   @{system_share_dirs}/applications/{,mimeinfo.cache} r,
   @{system_share_dirs}/glvnd/egl_vendor.d/{,**} r,
   @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
   @{sys}/devices/virtual/dmi/id/chassis_type r,
   @{sys}/firmware/acpi/pm_profile r,
+
+  # Misc
   @{PROC}/zoneinfo r,
+
+  # Tmp
   owner /tmp/epiphany*/{,**} rw,
+  owner /tmp/ContentRuleList* rw,
 
   # Include local overrides for conf files or Nvidia users
   include if exists <local/epiphany>
@@ -62,16 +80,20 @@ profile epiphany /usr/bin/epiphany {
 
     /usr/lib/WebKitNetworkProcess mr,
 
+    # Allow access for downloads and uploads
+    include <abstractions/user-download>
+
     # User data
     owner @{HOME}/.cache/epiphany/{,**} rw,
     owner /run/user/*/dconf/user rw,
     owner @{HOME}/.config/dconf/user rw,
     owner @{user_share_dirs}/epiphany/{,**,.*} rw,
 
-    # Misc
+    # System access
     /etc/services r,
     @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
 
+    # Deny unnecessary permissions
     deny @{PROC}/*/statm r,
   }
 
@@ -85,17 +107,22 @@ profile epiphany /usr/bin/epiphany {
 
     /usr/lib/WebKitWebProcess mr,
 
+    # Xorg
+    owner @{HOME}/.Xauthority r,
+
     # User data
     owner @{HOME}/.cache/epiphany/{,**} rw,
     owner @{HOME}/.cache/mesa_shader_cache/index rw,
     owner @{HOME}/.cache/gstreamer*/{,**} rw,
     owner @{HOME}/.config/fontconfig/conf.d/{,**} r,
-    owner /run/user/*/dconf/user rw,
     owner @{HOME}/.config/dconf/user r,
     owner @{user_share_dirs}/epiphany/{,**,.*} rw,
     owner @{user_share_dirs}/mime/{,**} rw,
 
-    # Misc
+    # Runtime dir
+    owner /run/user/*/dconf/user rw,
+
+    # System access
     @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
     @{system_share_dirs}/glvnd/egl_vendor.d/{,**} r,
     @{system_share_dirs}/gtk-3.0/settings.ini r,
@@ -106,7 +133,10 @@ profile epiphany /usr/bin/epiphany {
     @{sys}/devices/virtual/dmi/id/chassis_type r,
     @{sys}/firmware/acpi/pm_profile r,
     @{PROC}/zoneinfo r,
+
+    # Tmp
     owner /var/tmp/WebKit-Media* rw,
+    owner /tmp/ContentRuleList* rw,
 
     # Include local overrides for conf files or Nvidia users
     include if exists <local/epiphany>
