@@ -37,6 +37,7 @@ profile epiphany /usr/bin/epiphany {
   owner @{HOME}/.config/enchant/{,**} rw,
   owner @{HOME}/.config/fontconfig/conf.d/{,**} r,
   owner @{user_share_dirs}/epiphany/{,**,.*} rwk,
+  owner @{user_share_dirs}/recently-used.xbel* rw,
 
   # Runtime dir
   owner /run/user/*/dconf/user rw,
@@ -77,6 +78,7 @@ profile epiphany /usr/bin/epiphany {
     network inet dgram,
     network inet6 dgram,
     network inet stream,
+    network inet6 stream,
 
     /usr/lib/WebKitNetworkProcess mr,
 
@@ -151,6 +153,6 @@ profile epiphany /usr/bin/epiphany {
   deny @{user_share_dirs}/applications/{,**} r,
   deny @{system_share_dirs}/applications/*.desktop r,
   deny @{PROC}/sys/kernel/random/boot_id r,
-  deny @{PROC}/*/{cgroup,cmdline,statm} r,
+  deny @{PROC}/*/{cgroup,cmdline,mountinfo,mounts,statm} r,
   deny @{PROC}/*/fd/ r,
 }
