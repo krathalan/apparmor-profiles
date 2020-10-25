@@ -90,10 +90,12 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - bluetoothd
 - [code ⚠️](#code)
 - [cupsd ⚠️](#cupsd)
-- Discord
+- [Discord ⚠️](#discord)
+- [epiphany (GNOME Web) ⚠️](#epiphany)
 - [evince ⚠️](#evince)
 - [Firefox ⚠️](#firefox)
 - [gpg-agent ⚠️](#gpg-agent)
+- haveged
 - [imv ⚠️](#imv)
 - [irssi ⚠️](#irssi)
 - iwd
@@ -121,11 +123,14 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - [streamlink ⚠️](#streamlink)
 - [swaybg ⚠️](#swaybg)
 - [syncthing ⚠️](#syncthing)
+- systemd-networkd
+- systemd-resolved
 - [transmission-cli ⚠️](#transmission-cli)
-- [undervolt ⚠️](#undervolt)
 - [vdirsyncer ⚠️](#vdirsyncer)
 - [waybar ⚠️](#waybar)
+- wl-copy-paste
 - wob
+- xclip
 - [xob ⚠️](#xob)
 - [youtube-dl ⚠️](#youtube-dl)
 
@@ -143,6 +148,12 @@ This profile is only allowed to open an AppArmor-confined Firefox when opening a
 
 ### cupsd
 This profile has only been tested with a local wireless HP printer. Printers from other manufacturers or printers connected via a different interface (e.g. USB, SAMBA, etc.) may not work. Patches accepted.
+
+### Discord
+The only directory in the home directory that Discord is allowed to access is `~/{D,d}ownloads/`. You won't be able to, for example, upload things to the web from your Documents directory. You'll need to copy the file to your downloads directory first.
+
+### epiphany
+The only directory in the home directory that epiphany is allowed to access is `~/{D,d}ownloads/`. You won't be able to, for example, upload things to the web from your Documents directory. You'll need to copy the file to your downloads directory first.
 
 ### evince
 You will need to add local changes if you wish to view documents that are not in `~/{D,d}ocuments/` or `~/{D,d}ownloads/`.
@@ -251,9 +262,6 @@ You will need to add local changes if you wish to download files to any director
 
 This profile applies to all `transmission-*` binaries, including `transmission-daemon` and `transmission-remote`.
 
-### undervolt
-This profile is for an Intel CPU undervolt utility: https://github.com/georgewhewell/undervolt
-
 ### vdirsyncer
 You may need to add local changes to allow `vdirsyncer` to access your configuration files, if you keep them somewhere other than `~/.config/vdirsyncer/`.
 You may need to add local changes to allow `vdirsyncer` to access your contact storage directory, if you keep it somewhere other than `~/.local/share/contacts`.
@@ -278,6 +286,7 @@ You will need to add local changes if you wish to download videos to any directo
 - NetworkManager
 - pass
 - pipewire
+- undervolt-py
 - wpa_supplicant
 
 These are profiles which I used to keep updated with their packaged versions, but now do not -- most likely because I have found an alternative program (e.g. Hexchat --> irssi) that I have a new AppArmor profile for. If you wish to maintain one of these profiles please submit patches!
