@@ -33,28 +33,33 @@ profile electron /usr/lib/electron/electron {
 
 	# Hwaccel
 	include <abstractions/krathalans-hwaccel>
-	/sys/bus/pci/devices/ r,
-	/sys/devices/pci[0-9]*/[0-9]*/class r,
-	/sys/devices/pci[0-9]*/[0-9]*/[0-9]*/class r,
+	@{sys}/bus/pci/devices/ r,
+	@{sys}/devices/pci[0-9]*/[0-9]*/class r,
+	@{sys}/devices/pci[0-9]*/[0-9]*/[0-9]*/class r,
 
 	# For nvidia users
 	include if exists <local/discord-electron>
+
+	# User download/upload
+	owner @{HOME}/{D,d}ownloads/{,**} rw,
 	
 	/usr/lib/electron/electron rPx,
 
 	/usr/lib/electron/chrome-sandbox rPx,
 
+	# Discord files
 	/opt/discord/{,**} r,
 	owner @{HOME}/.config/discord/{,**} rwkm,
 	owner /run/user/*/discord-ipc-* rw,
 
+	# Electron uses multiple processes
 	owner /dev/shm/.org.chromium.Chromium.* rw,
 	owner /tmp/.org.chromium.Chromium.*/{,**} rw,
 
-	/proc/ r,
-	owner /proc/*/cmdline r,
-	owner /proc/*/setgroups w,
-	owner /proc/*/fd/ r,
+	# Necessary to function at all
+	@{PROC}/ r,
+	owner @{PROC}/*/{cmdline,setgroups} r,
+	owner @{PROC}/*/fd/ r,
 
 	# Deny unnecessary permissions
 	deny ptrace,
