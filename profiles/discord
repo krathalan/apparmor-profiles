@@ -1,103 +1,88 @@
-# AppArmor profile for discord proprietary chat program
-# Version of discord profiled: 0.0.11
-# Homepage: https://gitlab.com/krathalan/apparmor-profiles
+# AppArmor profile for discord(_arch_electron AUR version) proprietary chat program
+# Version of discord_arch_electron profiled: 0.0.12
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019-2020 (C) krathalan; Licensed under GPLv3
 
 # This profile assumes you only want to upload files from `~/{D,d}ownloads`.
 # If you do not, add local changes. Discord does not need access to your whole
 # home directory.
 
-# This profile intentionally does not enable hardware acceleration due to the
-# deeper level of system access hardware acceleration requires, the insecurity
-# of modern graphics drivers, and the reluctance to give proprietary software
-# deeper system access than it truly needs.
-
-# Streamer mode and showing any currently playing games/music/etc. will not work
-# as `ptrace` is completely disabled in this profile, as Discord tries to run
-# `ptrace` on every program running on your machine. `ptrace` is an extremely
-# dangerous capability.
-
-#include <tunables/global>
+include <tunables/global>
 
 profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
-  #include <abstractions/audio>
-  #include <abstractions/base>
-  #include <abstractions/fonts>
-  #include <abstractions/krathalans-common-gui>
-  #include <abstractions/krathalans-hardening>
-  #include <abstractions/krathalans-hwaccel>
-  #include <abstractions/krathalans-hwaccel-nvidia>
-  #include <abstractions/krathalans-networking>
+	include <abstractions/base>
+	/{usr,opt}/{bin,discord}/{D,d}iscord r,
 
-  # Subprocesses
-  /opt/discord/Discord mrix,
-  owner /dev/shm/.org.chromium.Chromium.* rw,
+	/usr/lib/electron/electron rPx,
 
-  /opt/discord/chrome-sandbox mrCx,
+	# Deny unnecessary permissions
+	deny /etc/ld.so.cache r,
+	deny /dev/tty rw,
+	deny /dev/pts/* rw,
+}
 
-  profile chrome-sandbox /opt/discord/chrome-sandbox {
-    #include <abstractions/base>
-    /opt/discord/chrome-sandbox r,
+profile electron /usr/lib/electron/electron {
+	include <abstractions/base>
+	include <abstractions/fonts>
+	include <abstractions/krathalans-common-gui>
+	include <abstractions/krathalans-networking>
 
-    capability setgid,
-    capability setuid,
-    capability sys_admin,
+	# Audio
+	include <abstractions/audio>
+	owner /run/user/*/pulse/{,**} rw,
 
-    /{usr,opt}/{bin,discord}/{D,d}iscord rPx,
-  }
+	# Hwaccel
+	include <abstractions/krathalans-hwaccel>
+	/sys/bus/pci/devices/ r,
+	/sys/devices/pci[0-9]*/[0-9]*/class r,
+	/sys/devices/pci[0-9]*/[0-9]*/[0-9]*/class r,
 
-  # Discord will not work at all without this
-  capability sys_admin,
-  capability sys_chroot,
-  @{PROC}/ r,
-  owner @{PROC}/*/{gid_map,setgroups,uid_map} w,
-  owner @{PROC}/*/fd/ r,
-  owner /tmp/discord.sock w,
-  owner /tmp/.org.chromium.Chromium.*/{,**} rw,
-  /sys/bus/pci/devices/ r,
-  /sys/bus/pci/devices/[0-9]*/{class,device,irq,resource,vendor} r,
-  /sys/devices/pci[0-9]*/{class,device,irq,resource,vendor} r,
-  /sys/devices/pci[0-9]*/[0-9]*/{class,device,irq,resource,vendor} r,
-  /sys/devices/pci[0-9]*/[0-9]*/[0-9]*/{class,device,irq,resource,vendor} r,
+	# For nvidia users
+	include if exists <local/discord-electron>
+	
+	/usr/lib/electron/electron rPx,
 
-  # Miscellaneous
-  /opt/discord/** r,
-  owner /run/user/*/discord* w,
+	/usr/lib/electron/chrome-sandbox rPx,
 
-  # Allow access to downloads folder for uploads ONLY (no downloads)
-  owner @{HOME}/{D,d}ownloads/ r,
-  owner @{HOME}/{D,d}ownloads/** r,
+	/opt/discord/{,**} r,
+	owner @{HOME}/.config/discord/{,**} rwkm,
+	owner /run/user/*/discord-ipc-* rw,
 
-  # Config -- even tho mw permissions are somewhat unfortunate, discord needs
-  # this to run as it downloads the actual application to this directory
-  owner @{HOME}/.config/discord/ rw,
-  owner @{HOME}/.config/discord/** mrwk,
+	owner /dev/shm/.org.chromium.Chromium.* rw,
+	owner /tmp/.org.chromium.Chromium.*/{,**} rw,
 
-  # Don't allow opening files with arbitrary programs
-  deny /usr/bin/xdg-mime x,
-  deny /usr/bin/xdg-open x,
+	/proc/ r,
+	owner /proc/*/cmdline r,
+	owner /proc/*/setgroups w,
+	owner /proc/*/fd/ r,
 
-  # File picker still works without these permissions
-  deny /etc/{fstab,machine-id} r,
-  deny /run/user/*/dconf/user rw,
-  deny @{HOME}/.cache/thumbnails/** rw,
-  deny @{HOME}/.config/dconf/user rw,
+	# Deny unnecessary permissions
+	deny ptrace,
+	deny capability sys_admin,
+	deny /usr/bin/bash rx,
+	deny /usr/bin/lsb_release rx,
+	deny /dev/ r,
+	deny /dev/pts/* rw,
+	deny @{PROC}/*/{comm,stat,statm} r,
+	deny @{PROC}/*/task/ r,
+	deny @{PROC}/sys/fs/inotify/max_user_watches r,
+	deny @{PROC}/sys/kernel/yama/ptrace_scope r,
+	deny @{sys}/devices/virtual/tty/{,**} r,
+	deny @{HOME}/.pki/{,**} rw,
+}
 
-  # Discord does this supposedly to look for OBS/games you're playing
-  deny capability sys_ptrace,
-  deny ptrace,
+profile chrome-sandbox /usr/lib/electron/chrome-sandbox {
+	include <abstractions/base>
+	
+	/usr/lib/electron/chrome-sandbox r,
+	
+	/usr/lib/electron/electron rPx,
 
-  # Deny unnecessary permissions
-  deny /usr/bin/{bash,dash} rx,
-  deny /usr/bin/lsb_release rx,
-  deny /dev/ r,
-  deny @{HOME}/.pki/{,**} rw,
-  deny /dev/pts/[0-9] rw,
-  deny /dev/tty* rw,
-  deny "/tmp/Discord Crashes/" w,
-  deny /sys/devices/virtual/tty/tty0/active r,
-  deny @{PROC}/*/{cmdline,oom_score_adj,stat,statm,comm} rw,
-  deny @{PROC}/*/task/ r,
-  deny @{PROC}/sys/fs/inotify/max_user_watches r,
-  deny @{PROC}/sys/kernel/yama/ptrace_scope r,
+	capability setgid,
+	capability setuid,
+	capability sys_admin,
+	capability sys_chroot,
+
+	# Deny unnecessary permissions
+	deny capability sys_ptrace,
 }
