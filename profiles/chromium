@@ -84,6 +84,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   /{,var/}run/systemd/userdb/ r,
 
   # Deny unnecessary permissions
+  deny @{HOME}/ r,
   deny @{HOME}/.config/ r,
   deny @{HOME}/.pki/{,**} rw,
   deny @{sys}/bus/ r,
