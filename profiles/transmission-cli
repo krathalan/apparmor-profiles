@@ -12,7 +12,7 @@ profile transmission-cli /usr/bin/transmission* {
   #include <abstractions/krathalans-networking>
 
   # Allow access for writing downloaded files
-  #include <abstractions/user-download>
+  #include <abstractions/krathalans-downloads>
 
   # Include user overrides for possible symlinked config files
   #include <local/transmission-cli>

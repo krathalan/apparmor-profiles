@@ -41,7 +41,7 @@ profile electron /usr/lib/electron/electron {
 	include if exists <local/discord-electron>
 
 	# User download/upload
-	owner @{HOME}/{D,d}ownloads/{,**} rw,
+	#include <abstractions/krathalans-downloads>
 	
 	/usr/lib/electron/electron rPx,
 

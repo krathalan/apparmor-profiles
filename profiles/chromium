@@ -65,7 +65,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   owner /run/user/*/dconf/user rw,
 
   # Downloads
-  #include <abstractions/user-download>
+  #include <abstractions/krathalans-downloads>
 
   # File picker
   @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,

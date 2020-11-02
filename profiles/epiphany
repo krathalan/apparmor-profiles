@@ -21,7 +21,7 @@ profile epiphany /usr/bin/epiphany {
   /usr/bin/epiphany r,
 
   # Allow access for downloads and uploads
-  include <abstractions/user-download>
+  #include <abstractions/krathalans-downloads>
 
   # Audio
   include <abstractions/audio>
@@ -83,7 +83,7 @@ profile epiphany /usr/bin/epiphany {
     /usr/lib/WebKitNetworkProcess mr,
 
     # Allow access for downloads and uploads
-    include <abstractions/user-download>
+    #include <abstractions/krathalans-downloads>
 
     # User data
     owner @{HOME}/.cache/epiphany/{,**} rw,

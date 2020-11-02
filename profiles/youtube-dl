@@ -24,7 +24,7 @@ profile youtube-dl /usr/bin/youtube-dl {
   /usr/bin/youtube-dl r,
 
   # Needed to save files
-  #include <abstractions/user-download>
+  #include <abstractions/krathalans-downloads>
   /usr/bin/file mrix,
   @{system_share_dirs}/file/** r,
   owner @{HOME}/.cache/youtube-dl/ rw,

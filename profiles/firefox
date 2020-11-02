@@ -25,7 +25,7 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   #include <local/firefox>
 
   # Allow access for downloads and uploads
-  #include <abstractions/user-download>
+  #include <abstractions/krathalans-downloads>
 
   # Dconf
   owner /run/user/*/dconf/user rw,

@@ -69,7 +69,7 @@ profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-deskto
   owner @{HOME}/.config/Signal/{,**} rwk,
 
   # Allow access for downloads and uploads
-  #include <abstractions/user-download>
+  #include <abstractions/krathalans-downloads>
 
   # File picker
   @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,

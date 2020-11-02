@@ -26,9 +26,7 @@ profile imv /usr/bin/imv {
   @{system_share_dirs}/glvnd/egl_vendor.d/{,**} r,
 
   # Needed to view photos
-  owner @{HOME}/{D,d}ownload{,s}/{,**} r,
-  owner "@{HOME}/My Downloads/{,**}" r,
-  owner @{HOME}/@{XDG_DOWNLOAD_DIR}/{,**} r,
+  #include <abstractions/krathalans-downloads>
   owner @{HOME}/{P,p}ictures/{,**} r,
   owner @{HOME}/{P,p}hotos/{,**} r,
 
