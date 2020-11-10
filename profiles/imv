@@ -30,6 +30,9 @@ profile imv /usr/bin/imv {
   owner @{HOME}/{P,p}ictures/{,**} r,
   owner @{HOME}/{P,p}hotos/{,**} r,
 
+  # Needed to view images from mutt
+  owner /tmp/* r,
+
   # Socket
   owner /run/user/*/imv*.sock w,
 
