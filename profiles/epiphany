@@ -31,12 +31,14 @@ profile epiphany /usr/bin/epiphany {
   owner @{HOME}/.Xauthority r,
 
   # User data
-  owner @{HOME}/.cache/epiphany/{,**} rw,
+  owner @{HOME}/.cache/epiphany/{,**} rwk,
   owner @{HOME}/.cache/mesa_shader_cache/index rw,
   owner @{HOME}/.config/dconf/user r,
   owner @{HOME}/.config/enchant/{,**} rw,
+  owner @{HOME}/.config/epiphany/{,**} rw,
   owner @{HOME}/.config/fontconfig/conf.d/{,**} r,
   owner @{user_share_dirs}/epiphany/{,**,.*} rwk,
+  owner @{user_share_dirs}/webkitgtk/{,**,.*} rwk,
   owner @{user_share_dirs}/recently-used.xbel* rw,
 
   # Runtime dir
