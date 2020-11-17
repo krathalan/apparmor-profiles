@@ -5,6 +5,9 @@
 /dev/nvidiactl w,
 /dev/nvidia[0-9] w,
 
+# Misc
+@{PROC}/driver/nvidia/{,**} r,
+
 # VSCodium hwaccel
 /usr/share/vscodium-bin/icudtl.dat r,
 

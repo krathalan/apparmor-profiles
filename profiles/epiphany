@@ -147,7 +147,8 @@ profile epiphany /usr/bin/epiphany {
 
     # Deny unnecessary permissions
     deny @{HOME}/.cache/ r,
-    deny @{PROC}/*/{cmdline,statm,smaps} r,
+    deny @{PROC}/*/{cmdline,comm,statm,smaps} r,
+    deny @{PROC}/*/task/*/comm rw,
     deny @{PROC}/*/fd/ r,
   }
 
@@ -155,6 +156,6 @@ profile epiphany /usr/bin/epiphany {
   deny @{user_share_dirs}/applications/{,**} r,
   deny @{system_share_dirs}/applications/*.desktop r,
   deny @{PROC}/sys/kernel/random/boot_id r,
-  deny @{PROC}/*/{cgroup,cmdline,mountinfo,mounts,statm} r,
+  deny @{PROC}/*/{cgroup,cmdline,comm,mountinfo,mounts,statm} r,
   deny @{PROC}/*/fd/ r,
 }
