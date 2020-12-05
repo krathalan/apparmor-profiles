@@ -1,5 +1,5 @@
 # AppArmor profile for ungoogled-chromium browser
-# Version of program profiled: 86.0.4240.183
+# Version of program profiled: 87.0.4280.66
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
@@ -46,7 +46,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   owner /dev/shm/shmfd-* rw,
   /etc/libva.conf r,
   @{sys}/bus/pci/devices/ r,
-  @{sys}/devices/pci[0-9]*/[0-9]*/{class,vendor} r,
+  @{sys}/devices/pci[0-9]*/**/{class,vendor} r,
   @{sys}/devices/pci[0-9]*/[0-9]*/[0-9]*/{class,config} r,
   @{sys}/devices/virtual/dmi/id/{sys_vendor,product_name} r,
   @{sys}/devices/virtual/tty/tty0/active r,
@@ -75,6 +75,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
 
   # Tmp files
   owner /tmp/.org.chromium.Chromium.*/{,**} rw,
+  owner /tmp/.org.chromium.Chromium.* rw,
 
   # Proc
   @{PROC}/ r,
