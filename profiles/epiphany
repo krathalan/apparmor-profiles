@@ -15,6 +15,10 @@ profile epiphany /usr/bin/epiphany {
   include <abstractions/krathalans-nameservice>
   include <abstractions/krathalans-networking>
 
+  network inet stream,
+  network inet dgram,
+  network inet6 stream,
+  network inet6 dgram,
   network netlink raw,
   network unix stream,
 
@@ -98,11 +102,14 @@ profile epiphany /usr/bin/epiphany {
     @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
 
     # Deny unnecessary permissions
+    deny @{user_share_dirs}/webkitgtk/serviceworkers/{,**} rw,
+    deny @{user_share_dirs}/webkitgtk/localstorage/{,**} rw,
     deny @{PROC}/*/statm r,
   }
 
   /usr/lib/WebKitWebProcess rCx,
   profile WebKitWebProcess /usr/lib/WebKitWebProcess {
+    include <abstractions/audio>
     include <abstractions/base>
     include <abstractions/fonts>
     include <abstractions/krathalans-hwaccel>
@@ -146,6 +153,13 @@ profile epiphany /usr/bin/epiphany {
     include if exists <local/epiphany>
 
     # Deny unnecessary permissions
+    deny network netlink raw,
+    deny /**/orcexec.* rw,
+    deny /dev/ r,
+    deny /etc/machine-id r,
+    deny /run/user/*/pulse/{,**} rw,
+    deny @{sys}/bus/ r,
+    deny @{sys}/class/ r,
     deny @{HOME}/.cache/ r,
     deny @{PROC}/*/{cmdline,comm,statm,smaps} r,
     deny @{PROC}/*/task/*/comm rw,
