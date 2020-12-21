@@ -1,5 +1,5 @@
 # AppArmor profile for VSCodium and VS Code editor
-# Version of VSCode/ium profiled: 1.51.1
+# Version of VSCode/ium profiled: 1.52.1
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019-2020 (C) krathalan; Licensed under GPLv3
 
