@@ -19,6 +19,7 @@ profile postfix-bounce /usr/lib/postfix/bin/bounce {
   /var/spool/postfix/pid/unix.bounce rwk,
 
   # Mail data
+  /var/spool/postfix/active/{,**} rwk,
   /var/spool/postfix/defer/{,**} rwk,
   /var/spool/postfix/bounce/{,**} rwk,
 }
