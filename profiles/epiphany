@@ -73,8 +73,8 @@ profile epiphany /usr/bin/epiphany {
     /usr/lib/epiphany/ephy-profile-migrator r,
   }
 
-  /usr/lib/WebKitNetworkProcess rCx,
-  profile WebKitNetworkProcess /usr/lib/WebKitNetworkProcess {
+  /usr/lib/webkit2gtk-4.0/WebKitNetworkProcess rCx,
+  profile WebKitNetworkProcess /usr/lib/webkit2gtk-4.0/WebKitNetworkProcess {
     include <abstractions/base>
     include <abstractions/krathalans-networking>
     include <abstractions/openssl>
@@ -86,7 +86,7 @@ profile epiphany /usr/bin/epiphany {
     network inet stream,
     network inet6 stream,
 
-    /usr/lib/WebKitNetworkProcess mr,
+    /usr/lib/webkit2gtk-4.0/WebKitNetworkProcess mr,
 
     # Allow access for downloads and uploads
     #include <abstractions/krathalans-downloads>
@@ -107,8 +107,8 @@ profile epiphany /usr/bin/epiphany {
     deny @{PROC}/*/statm r,
   }
 
-  /usr/lib/WebKitWebProcess rCx,
-  profile WebKitWebProcess /usr/lib/WebKitWebProcess {
+  /usr/lib/webkit2gtk-4.0/WebKitWebProcess rCx,
+  profile WebKitWebProcess /usr/lib/webkit2gtk-4.0/WebKitWebProcess {
     include <abstractions/audio>
     include <abstractions/base>
     include <abstractions/fonts>
@@ -116,7 +116,7 @@ profile epiphany /usr/bin/epiphany {
     include <abstractions/krathalans-nameservice>
     include <abstractions/openssl>
 
-    /usr/lib/WebKitWebProcess mr,
+    /usr/lib/webkit2gtk-4.0/WebKitWebProcess mr,
 
     # Xorg
     owner @{HOME}/.Xauthority r,
