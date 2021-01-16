@@ -58,7 +58,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   # Per-user files
   owner @{HOME}/.cache/chromium/{,**} rw,
   owner @{HOME}/.config/chromium/{,**} rwk,
-  owner @{HOME}/.local/share/chromium-extensions/{,**} r,
+  owner @{user_share_dirs}/chromium-extensions/{,**} r,
 
   # Dconf
   owner @{HOME}/.config/dconf/user r,
