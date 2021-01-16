@@ -13,7 +13,7 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
 	include <abstractions/base>
 	/{usr,opt}/{bin,discord}/{D,d}iscord r,
 
-	/usr/lib/electron/electron rPx,
+	/usr/lib/electron*/electron rPx,
 
 	# Deny unnecessary permissions
 	deny /etc/ld.so.cache r,
@@ -21,7 +21,7 @@ profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {
 	deny /dev/pts/* rw,
 }
 
-profile electron /usr/lib/electron/electron {
+profile electron10 /usr/lib/electron10/electron {
 	include <abstractions/base>
 	include <abstractions/fonts>
 	include <abstractions/krathalans-common-gui>
@@ -35,7 +35,7 @@ profile electron /usr/lib/electron/electron {
 	include <abstractions/krathalans-hwaccel>
 	@{sys}/bus/pci/devices/ r,
 	@{sys}/devices/pci[0-9]*/[0-9]*/class r,
-	@{sys}/devices/pci[0-9]*/[0-9]*/[0-9]*/class r,
+	@{sys}/devices/pci[0-9]*/[0-9]*/**/class r,
 
 	# For nvidia users
 	include if exists <local/discord-electron>
@@ -43,9 +43,9 @@ profile electron /usr/lib/electron/electron {
 	# User download/upload
 	#include <abstractions/krathalans-downloads>
 	
-	/usr/lib/electron/electron rPx,
+	/usr/lib/electron*/electron rPx,
 
-	/usr/lib/electron/chrome-sandbox rPx,
+	/usr/lib/electron*/chrome-sandbox rPx,
 
 	# Discord files
 	/opt/discord/{,**} r,
@@ -61,27 +61,36 @@ profile electron /usr/lib/electron/electron {
 	owner @{PROC}/*/{cmdline,setgroups} r,
 	owner @{PROC}/*/fd/ r,
 
+	# File picker
+	@{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
+
+	# Deny dconf perms from file picker; not necessary to function
+	deny @{HOME}/.config/dconf/user r,
+	deny /run/user/*/dconf/user r,
+
 	# Deny unnecessary permissions
 	deny ptrace,
 	deny capability sys_admin,
-	deny /usr/bin/bash rx,
+	deny /usr/bin/{bash,dash} rx,
 	deny /usr/bin/lsb_release rx,
 	deny /dev/ r,
 	deny /dev/pts/* rw,
-	deny @{PROC}/*/{comm,stat,statm} r,
+	deny @{PROC}/*/{comm,mountinfo,mounts,stat,statm} r,
+	deny @{PROC}/*/setgroups w,
 	deny @{PROC}/*/task/ r,
 	deny @{PROC}/sys/fs/inotify/max_user_watches r,
 	deny @{PROC}/sys/kernel/yama/ptrace_scope r,
 	deny @{sys}/devices/virtual/tty/{,**} r,
 	deny @{HOME}/.pki/{,**} rw,
+	deny @{user_share_dirs}/recently-used.xbel* rw,
 }
 
-profile chrome-sandbox /usr/lib/electron/chrome-sandbox {
+profile chrome-sandbox /usr/lib/electron*/chrome-sandbox {
 	include <abstractions/base>
 	
-	/usr/lib/electron/chrome-sandbox r,
+	/usr/lib/electron*/chrome-sandbox r,
 	
-	/usr/lib/electron/electron rPx,
+	/usr/lib/electron*/electron rPx,
 
 	capability setgid,
 	capability setuid,
