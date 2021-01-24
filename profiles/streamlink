@@ -13,6 +13,10 @@ profile streamlink /usr/bin/streamlink {
 
   # Networking
   include <abstractions/krathalans-networking>
+  network inet dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
 
   # Needed to open mpv media player and feed it data
   signal send set=term peer=mpv,
