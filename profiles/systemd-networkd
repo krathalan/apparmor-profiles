@@ -10,18 +10,20 @@ profile systemd-networkd /usr/lib/systemd/systemd-networkd {
   include <abstractions/base>
   network unix dgram,
   network unix stream,
-  network inet dgram,
-  network inet6 dgram,
-  network inet6 raw,
-  network netlink raw,
-  network packet raw,
-  network packet dgram,
 
   capability net_admin,
   capability net_bind_service,
   capability net_raw,
 
   /usr/lib/systemd/systemd-networkd r,
+
+  # Networking
+  network inet dgram,
+  network inet6 dgram,
+  network inet6 raw,
+  network netlink raw,
+  network packet raw,
+  network packet dgram,
 
   # Runtime dir
   /{,var/}run/systemd/netif/{,**} rw,

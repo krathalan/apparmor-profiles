@@ -9,26 +9,26 @@ include <tunables/global>
 profile syncthing /usr/bin/syncthing {
   include <abstractions/base>
   network unix stream,
-  network netlink raw,
-  network inet stream,
-  network inet dgram,
-  network inet6 stream,
-  network inet6 dgram,
 
   /usr/bin/syncthing rPx,
+
+  # Include user overrides for synced directories
+  include if exists <local/syncthing>
 
   # Networking
   include <abstractions/krathalans-networking>
   include <abstractions/ssl_certs>
   include <abstractions/ssl_keys>
+  network netlink raw,
+  network inet stream,
+  network inet dgram,
+  network inet6 stream,
+  network inet6 dgram,
   /etc/ca-certificates/extracted/cadir/* r,
   /etc/iproute2/rt_tables r,
   @{PROC}/sys/net/core/somaxconn r,
   @{PROC}/*/net/route r,
   /usr/bin/ip rix,
-
-  # Include user overrides for synced directories
-  include if exists <local/syncthing>
 
   # https://www.kernel.org/doc/Documentation/vm/transhuge.txt
   /sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,

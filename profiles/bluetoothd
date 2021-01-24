@@ -10,11 +10,14 @@ profile bluetoothd /usr/lib/bluetooth/bluetoothd {
   include <abstractions/base>
   network unix stream,
   network unix dgram,
-  network bluetooth raw,
-  network bluetooth seqpacket,
 
   capability net_admin,
   capability net_bind_service,
+
+  # Networking
+  network bluetooth raw,
+  network bluetooth seqpacket,
+  network bluetooth stream,
 
   # Device access
   owner /dev/rfkill rw,

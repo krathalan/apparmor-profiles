@@ -8,6 +8,8 @@ include <tunables/global>
 
 profile mbsync /usr/bin/mbsync {
   include <abstractions/base>
+
+  # Networking
   include <abstractions/krathalans-networking>
   network netlink raw,
   network inet dgram,

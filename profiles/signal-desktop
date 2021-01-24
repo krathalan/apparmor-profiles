@@ -12,15 +12,17 @@ profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-deskto
   include <abstractions/fonts>
   include <abstractions/krathalans-common-gui>
   include <abstractions/krathalans-nameservice>
+
+  # Needed to function at all
+  owner @{PROC}/*/fd/ r,
+  @{PROC}/ r,
+
+  # Networking
   include <abstractions/krathalans-networking>
   network inet dgram,
   network inet stream,
   network inet6 dgram,
   network netlink raw,
-
-  # Needed to function at all
-  owner @{PROC}/*/fd/ r,
-  @{PROC}/ r,
 
   # Program files
   /usr/lib/signal-desktop/{,**} r,

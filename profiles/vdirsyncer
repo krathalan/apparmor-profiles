@@ -9,6 +9,12 @@ include <tunables/global>
 profile vdirsyncer /usr/bin/vdirsyncer {
   include <abstractions/base>
   include <abstractions/python>
+
+  /usr/bin/ r,
+  /usr/bin/python3.[0-9] r,
+  /usr/bin/vdirsyncer r,
+
+  # Networking
   include <abstractions/krathalans-networking>
   network unix stream,
   network inet6 dgram,
@@ -16,10 +22,6 @@ profile vdirsyncer /usr/bin/vdirsyncer {
   network inet dgram,
   network inet stream,
   network netlink raw,
-
-  /usr/bin/ r,
-  /usr/bin/python3.[0-9] r,
-  /usr/bin/vdirsyncer r,
 
   # Config
   owner @{HOME}/.config/vdirsyncer/* r,

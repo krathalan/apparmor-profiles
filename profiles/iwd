@@ -8,11 +8,13 @@ include <tunables/global>
 
 profile iwd /usr/lib/iwd/iwd {
   include <abstractions/base>
-  network netlink dgram,
-  network alg seqpacket,
 
   capability net_admin,
   capability net_raw,
+
+  # Networking
+  network netlink dgram,
+  network alg seqpacket,
 
   # Config
   owner /etc/iwd/{,**} r,

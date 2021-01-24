@@ -11,7 +11,6 @@ profile waybar /usr/bin/waybar {
   include <abstractions/fonts>
   include <abstractions/krathalans-common-gui>
   network unix stream,
-  network netlink raw,
 
   # Dconf
   include <abstractions/dconf>
@@ -38,6 +37,7 @@ profile waybar /usr/bin/waybar {
   include <abstractions/audio>
 
   # Network module
+  network netlink raw,
   @{PROC}/*/net/netstat r,
 
   # CPU module

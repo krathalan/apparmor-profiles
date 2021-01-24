@@ -8,7 +8,6 @@ include <tunables/global>
 
 profile wlsunset /usr/bin/wlsunset {
   include <abstractions/base>
-
   network unix stream,
 
   owner /tmp/wlsunset-shared-* rw,

@@ -15,10 +15,6 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   include <abstractions/base>
   include <abstractions/fonts>
   include <abstractions/krathalans-common-gui>
-  network netlink raw,
-  network inet stream,
-  network inet dgram,
-  network inet6 stream,
 
   # Hardware acceleration
   include <abstractions/krathalans-hwaccel>
@@ -37,6 +33,10 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
 
   # Network
   include <abstractions/krathalans-networking>
+  network netlink raw,
+  network inet dgram,
+  network inet stream,
+  network inet6 stream,
 
   # Spell checking
   include <abstractions/enchant>

@@ -11,16 +11,10 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   include <abstractions/base>
   include <abstractions/fonts>
   include <abstractions/krathalans-common-gui>
-  include <abstractions/krathalans-networking>
-  network netlink raw,
-  network inet dgram,
-  network inet stream,
-  network inet6 dgram,
-
-  deny capability sys_admin,
 
   # Chromium spawns multiple processes
   /usr/bin/chromium r,
+  /usr/lib/chromium/{,**} r,
   /usr/lib/chromium/chromium rPx,
   owner /dev/shm/.org.chromium.Chromium.* rw,
 
@@ -40,12 +34,9 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
 
     /usr/lib/chromium/chromium rPx,
 
-    /proc/*/ r,
-    /proc/*/{oom_adj,oom_score_adj} w,
+    @{PROC}/*/ r,
+    @{PROC}/*/{oom_adj,oom_score_adj} w,
   }
-
-  /usr/lib/chromium/{,**} r,
-  deny /usr/lib/chromium/{,**} w,
 
   # Hwaccel
   include <abstractions/krathalans-hwaccel>
@@ -58,6 +49,13 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   @{sys}/devices/virtual/dmi/id/{sys_vendor,product_name} r,
   @{sys}/devices/virtual/tty/tty0/active r,
   @{PROC}/sys/dev/i915/perf_stream_paranoid r,
+
+  # Networking
+  include <abstractions/krathalans-networking>
+  network netlink raw,
+  network inet dgram,
+  network inet stream,
+  network inet6 dgram,
 
   # Include local overrides for nvidia users and/or other reasons
   include if exists <local/chromium>
@@ -74,12 +72,6 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   # Downloads
   include <abstractions/krathalans-downloads>
 
-  # File picker
-  @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
-  deny @{HOME}/.local/share/recently-used.xbel* rw,
-  deny @{PROC}/*/mounts r,
-  deny @{PROC}/*/mountinfo r,
-
   # Tmp files
   owner /tmp/.org.chromium.Chromium.*/{,**} rw,
   owner /tmp/.org.chromium.Chromium.* rw,
@@ -92,13 +84,21 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   # systemd-homed
   /{,var/}run/systemd/userdb/ r,
 
+  # File picker
+  @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
+  deny @{HOME}/.local/share/recently-used.xbel* rw,
+  deny @{PROC}/*/mounts r,
+  deny @{PROC}/*/mountinfo r,
+
   # Deny unnecessary permissions
+  deny capability sys_admin,
   deny @{HOME}/ r,
   deny @{HOME}/.config/ r,
   deny @{HOME}/.pki/{,**} rw,
   deny @{sys}/bus/ r,
   deny @{sys}/class/ r,
   deny /usr/bin/xdg-settings rx,
+  deny /usr/lib/chromium/{,**} w,
   deny @{PROC}/*/{cmdline,comm,stat,statm} r,
   deny @{PROC}/*/{clear_refs,oom_score_adj,setgroups} w,
   deny @{PROC}/sys/kernel/random/boot_id r,

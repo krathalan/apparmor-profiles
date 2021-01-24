@@ -9,9 +9,6 @@ include <tunables/global>
 profile youtube-dl /usr/bin/youtube-dl {
   include <abstractions/base>
 
-  # Networking
-  include <abstractions/krathalans-networking>
-
   # MPV uses youtube-dl to watch internet videos natively
   signal receive set=kill peer=mpv,
 
@@ -22,6 +19,9 @@ profile youtube-dl /usr/bin/youtube-dl {
   /usr/bin/ffprobe mrix,
   /usr/bin/python3.[0-9] r,
   /usr/bin/youtube-dl r,
+
+  # Networking
+  include <abstractions/krathalans-networking>
 
   # Needed to save files
   include <abstractions/krathalans-downloads>

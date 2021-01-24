@@ -10,21 +10,10 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   include <abstractions/base>
   include <abstractions/fonts>
   include <abstractions/krathalans-common-gui>
-  include <abstractions/krathalans-hwaccel>
-  network unix seqpacket,
-  network netlink raw,
-  network inet6 dgram,
-
-  # Nvidia users
-  include if exists <local/code>
 
   # Helper programs
   include <abstractions/bash>
   /usr/bin/{bash,dash,dirname,git,grep,readlink,rg,which} rix,
-
-  # Needed to browse and download extensions
-  include <abstractions/krathalans-networking>
-  include <abstractions/user-tmp>
 
   # Needed to function at all
   owner /dev/shm/.org.chromium.Chromium.* rw,
@@ -33,16 +22,29 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   owner @{PROC}/*/comm w,
   owner /run/user/*/vscode*.sock w,
 
-  # Needed to render
-  @{sys}/bus/pci/devices/ r,
-  @{sys}/devices/pci[0-9]*/** r,
-
   # Chromium/Electron spawns and uses multiple processes
   @{system_share_dirs}/vscodium-bin/{,**} mr,
   /usr/lib/code/{,**} mr,
   /usr/lib/electron/electron rix,
   /usr/lib/electron9/electron rix,
   /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code,code-oss,code.js,codium} rpx,
+
+  # Hwaccel
+  include <abstractions/krathalans-hwaccel>
+  @{sys}/bus/pci/devices/ r,
+  @{sys}/devices/pci[0-9]*/** r,
+  # Nvidia users
+  include if exists <local/code>
+
+  # Needed to browse and download extensions
+  include <abstractions/krathalans-networking>
+  include <abstractions/user-tmp>
+  network unix seqpacket,
+  network netlink raw,
+  network inet dgram,
+  network inet stream,
+  network inet6 dgram,
+  network inet6 stream,
 
   # Intel audio (won't open without this)
   /opt/intel/mediasdk/lib/libmfx.so.* mr,
@@ -58,7 +60,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   owner @{HOME}/.config/{code-oss,Electron,VSCodium}/{,**} rwk,
   owner @{HOME}/.vscode-oss/{,**} rw,
 
-  # Needed to edit documents (including config files)
+  # Needed to edit common documents
   owner @{HOME}/{D,d}ocuments/{,**} rw,
   owner @{HOME}/{G,g}it/{,**} rw,
 

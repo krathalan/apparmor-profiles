@@ -13,7 +13,6 @@ profile pulseaudio /usr/bin/pulseaudio {
   include <abstractions/user-tmp>
   network unix stream,
   network unix dgram,
-  network netlink raw,
 
   # Dconf
   include <abstractions/dconf>
@@ -23,6 +22,10 @@ profile pulseaudio /usr/bin/pulseaudio {
   # Subprocesses
   /usr/bin/pulseaudio mrix,
   /usr/lib/pulse/gsettings-helper mrix,
+
+  # "Networking"
+  network netlink raw,
+  network bluetooth seqpacket,
 
   # User data
   /{,var/}run/systemd/users/* r,

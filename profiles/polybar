@@ -17,6 +17,8 @@ profile polybar /usr/bin/polybar {
   owner @{HOME}/.Xauthority r,
 
   # Network module
+  network netlink raw,
+  network inet dgram,
   /sys/devices/pci[0-9]*/**/net/*/operstate r,
 
   # Audio module
