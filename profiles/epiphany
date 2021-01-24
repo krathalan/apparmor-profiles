@@ -13,17 +13,21 @@ profile epiphany /usr/bin/epiphany {
   include <abstractions/krathalans-common-gui>
   include <abstractions/krathalans-hwaccel>
   include <abstractions/krathalans-nameservice>
+
+  # Subprocesses
+  /usr/bin/epiphany r,
+  /usr/lib/webkit2gtk-4.0/WebKitNetworkProcess rPx,
+  /usr/lib/webkit2gtk-4.0/WebKitWebProcess rPx,
+
+  # Networking
   include <abstractions/krathalans-networking>
   include <abstractions/p11-kit>
-
   network inet stream,
   network inet dgram,
   network inet6 stream,
   network inet6 dgram,
   network netlink raw,
   network unix stream,
-
-  /usr/bin/epiphany r,
 
   # Allow access for downloads and uploads
   #include <abstractions/krathalans-downloads>
@@ -74,103 +78,115 @@ profile epiphany /usr/bin/epiphany {
     /usr/lib/epiphany/ephy-profile-migrator r,
   }
 
-  /usr/lib/webkit2gtk-4.0/WebKitNetworkProcess rCx,
-  profile WebKitNetworkProcess /usr/lib/webkit2gtk-4.0/WebKitNetworkProcess {
-    include <abstractions/base>
-    include <abstractions/krathalans-networking>
-    include <abstractions/openssl>
-    include <abstractions/p11-kit>
-
-    network netlink raw,
-    network inet dgram,
-    network inet6 dgram,
-    network inet stream,
-    network inet6 stream,
-
-    /usr/lib/webkit2gtk-4.0/WebKitNetworkProcess mr,
-
-    # Allow access for downloads and uploads
-    #include <abstractions/krathalans-downloads>
-
-    # User data
-    owner @{HOME}/.cache/epiphany/{,**} rw,
-    owner /run/user/*/dconf/user rw,
-    owner @{HOME}/.config/dconf/user rw,
-    owner @{user_share_dirs}/epiphany/{,**,.*} rw,
-
-    # System access
-    /etc/services r,
-    @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
-
-    # Deny unnecessary permissions
-    deny @{user_share_dirs}/webkitgtk/serviceworkers/{,**} rw,
-    deny @{user_share_dirs}/webkitgtk/localstorage/{,**} rw,
-    deny @{PROC}/*/statm r,
-  }
-
-  /usr/lib/webkit2gtk-4.0/WebKitWebProcess rCx,
-  profile WebKitWebProcess /usr/lib/webkit2gtk-4.0/WebKitWebProcess {
-    include <abstractions/audio>
-    include <abstractions/base>
-    include <abstractions/fonts>
-    include <abstractions/krathalans-hwaccel>
-    include <abstractions/krathalans-nameservice>
-    include <abstractions/openssl>
-
-    /usr/lib/webkit2gtk-4.0/WebKitWebProcess mr,
-
-    # Xorg
-    owner @{HOME}/.Xauthority r,
-
-    # User data
-    owner @{HOME}/.cache/epiphany/{,**} rw,
-    owner @{HOME}/.cache/mesa_shader_cache/index rw,
-    owner @{HOME}/.cache/gstreamer*/{,**} rw,
-    owner @{HOME}/.config/fontconfig/conf.d/{,**} r,
-    owner @{HOME}/.config/dconf/user r,
-    owner @{user_share_dirs}/epiphany/{,**,.*} rw,
-    owner @{user_share_dirs}/mime/{,**} rw,
-
-    # Runtime dir
-    owner /run/user/*/dconf/user rw,
-
-    # System access
-    @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
-    @{system_share_dirs}/glvnd/egl_vendor.d/{,**} r,
-    @{system_share_dirs}/gtk-3.0/settings.ini r,
-    @{system_share_dirs}/icons/{,**} r,
-    @{system_share_dirs}/mime/{,**} rw,
-    @{system_share_dirs}/themes/{,**} r,
-    @{system_share_dirs}/X11/xkb/{,**} r,
-    @{sys}/devices/virtual/dmi/id/chassis_type r,
-    @{sys}/firmware/acpi/pm_profile r,
-    @{PROC}/zoneinfo r,
-
-    # Tmp
-    owner /var/tmp/WebKit-Media* rw,
-    owner /tmp/ContentRuleList* rw,
-
-    # Include local overrides for conf files or Nvidia users
-    include if exists <local/epiphany>
-
-    # Deny unnecessary permissions
-    network netlink raw,
-    deny /**/orcexec.* rw,
-    deny /dev/ r,
-    deny /etc/machine-id r,
-    deny /run/user/*/pulse/{,**} rw,
-    deny @{sys}/bus/ r,
-    deny @{sys}/class/ r,
-    deny @{HOME}/.cache/ r,
-    deny @{PROC}/*/{cmdline,comm,statm,smaps} r,
-    deny @{PROC}/*/task/*/comm rw,
-    deny @{PROC}/*/fd/ r,
-  }
-
   # Deny unnecessary permissions
   deny @{user_share_dirs}/applications/{,**} r,
   deny @{system_share_dirs}/applications/*.desktop r,
   deny @{PROC}/sys/kernel/random/boot_id r,
   deny @{PROC}/*/{cgroup,cmdline,comm,mountinfo,mounts,statm} r,
+  deny @{PROC}/*/fd/ r,
+}
+
+profile WebKitNetworkProcess /usr/lib/webkit2gtk-4.0/WebKitNetworkProcess {
+  include <abstractions/base>
+  include <abstractions/openssl>
+
+  /usr/lib/webkit2gtk-4.0/WebKitNetworkProcess mr,
+
+  # Networking
+  include <abstractions/krathalans-networking>
+  include <abstractions/p11-kit>
+  network netlink raw,
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+
+  # Allow access for downloads and uploads
+  #include <abstractions/krathalans-downloads>
+
+  # User data
+  owner @{HOME}/.cache/epiphany/{,**} rw,
+  owner /run/user/*/dconf/user rw,
+  owner @{HOME}/.config/dconf/user rw,
+  owner @{user_share_dirs}/epiphany/{,**,.*} rw,
+
+  # Mime 
+  owner @{user_share_dirs}/mime/{,**} r,
+  @{system_share_dirs}/mime/{,**} r,
+
+  # System access
+  /etc/services r,
+  @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
+
+  # Deny unnecessary permissions
+  deny @{user_share_dirs}/webkitgtk/serviceworkers/{,**} rw,
+  deny @{user_share_dirs}/webkitgtk/localstorage/{,**} rw,
+  deny @{PROC}/*/statm r,
+}
+
+profile WebKitWebProcess /usr/lib/webkit2gtk-4.0/WebKitWebProcess {
+  include <abstractions/audio>
+  include <abstractions/base>
+  include <abstractions/fonts>
+  include <abstractions/krathalans-hwaccel>
+  include <abstractions/krathalans-nameservice>
+  include <abstractions/openssl>
+
+  /usr/lib/webkit2gtk-4.0/WebKitWebProcess mr,
+
+  # Xorg
+  owner @{HOME}/.Xauthority r,
+
+  # Media
+  /usr/lib/gstreamer-1.0/gst-plugin-scanner rCx,
+  profile gst-plugin-scanner /usr/lib/gstreamer-1.0/gst-plugin-scanner {
+    include <abstractions/base>
+
+    /usr/lib/gstreamer-1.0/gst-plugin-scanner r,
+  }
+
+  # User data
+  owner @{HOME}/.cache/epiphany/{,**} rw,
+  owner @{HOME}/.cache/mesa_shader_cache/index rw,
+  owner @{HOME}/.cache/gstreamer*/{,**} rw,
+  owner @{HOME}/.config/fontconfig/conf.d/{,**} r,
+  owner @{HOME}/.config/dconf/user r,
+  owner @{user_share_dirs}/epiphany/{,**,.*} rw,
+  owner @{user_share_dirs}/mime/{,**} rw,
+
+  # Runtime dir
+  owner /run/user/*/dconf/user rw,
+
+  # System access
+  @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
+  @{system_share_dirs}/glvnd/egl_vendor.d/{,**} r,
+  @{system_share_dirs}/gtk-3.0/settings.ini r,
+  @{system_share_dirs}/icons/{,**} r,
+  @{system_share_dirs}/mime/{,**} rw,
+  @{system_share_dirs}/themes/{,**} r,
+  @{system_share_dirs}/X11/xkb/{,**} r,
+  @{sys}/devices/virtual/dmi/id/chassis_type r,
+  @{sys}/firmware/acpi/pm_profile r,
+  @{PROC}/zoneinfo r,
+
+  # Tmp
+  owner /var/tmp/WebKit-Media* rw,
+  owner /tmp/ContentRuleList* rw,
+
+  # Include local overrides for conf files or Nvidia users
+  include if exists <local/epiphany>
+
+  # Deny unnecessary permissions
+  deny network netlink raw,
+  deny /usr/bin/{bash,dash} rx,
+  deny /**/orcexec.* rw,
+  deny /dev/ r,
+  deny /etc/machine-id r,
+  deny /run/user/*/pulse/{,**} rw,
+  deny @{sys}/bus/ r,
+  deny @{sys}/class/ r,
+  deny @{HOME}/.cache/ r,
+  deny @{PROC}/*/{cmdline,comm,statm,smaps} r,
+  deny @{PROC}/*/task/*/comm rw,
   deny @{PROC}/*/fd/ r,
 }
