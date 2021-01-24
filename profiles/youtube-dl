@@ -3,20 +3,20 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile youtube-dl /usr/bin/youtube-dl {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
 
   # Networking
-  #include <abstractions/krathalans-networking>
+  include <abstractions/krathalans-networking>
 
   # MPV uses youtube-dl to watch internet videos natively
   signal receive set=kill peer=mpv,
 
   # Executables
-  #include <abstractions/python>
+  include <abstractions/python>
   /usr/bin/ r,
   /usr/bin/ffmpeg mrix,
   /usr/bin/ffprobe mrix,
@@ -24,7 +24,7 @@ profile youtube-dl /usr/bin/youtube-dl {
   /usr/bin/youtube-dl r,
 
   # Needed to save files
-  #include <abstractions/krathalans-downloads>
+  include <abstractions/krathalans-downloads>
   /usr/bin/file mrix,
   @{system_share_dirs}/file/** r,
   owner @{HOME}/.cache/youtube-dl/ rw,

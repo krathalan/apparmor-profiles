@@ -3,34 +3,34 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile lollypop /usr/bin/lollypop {
-  #include <abstractions/base>
-  #include <abstractions/fonts>
-  #include <abstractions/krathalans-common-gui>
-  #include <abstractions/krathalans-hardening>
-  #include <abstractions/wayland>
+  include <abstractions/base>
+  include <abstractions/fonts>
+  include <abstractions/krathalans-common-gui>
+  include <abstractions/wayland>
 
   # Needed to listen to music
   owner @{HOME}/{M,m}usic/ r,
   owner @{HOME}/{M,m}usic/** r,
 
   # Include user overrides for different music directories
-  #include <local/lollypop>
+  include if exists <local/lollypop>
 
   # Audio
-  #include <abstractions/audio>
+  include <abstractions/audio>
   /etc/alsa/conf.d/ r,
   /etc/asound.conf r,
 
   # Dconf
-  #include <abstractions/dconf>
+  include <abstractions/dconf>
   owner /run/user/*/dconf/ w,
   owner /run/user/*/dconf/user rw,
 
   # Python
-  #include <abstractions/python>
+  include <abstractions/python>
   /usr/bin/ r,
   /usr/bin/python* rix,
   /usr/lib/python*/** r,

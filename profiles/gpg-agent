@@ -3,20 +3,21 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile gpg-agent /usr/bin/gpg-agent {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
+  network unix stream,
 
   # Access user keys and config
-  #include <abstractions/gnupg>
+  include <abstractions/gnupg>
   owner @{HOME}/.gnupg/private-keys*/{,*} w,
   owner @{HOME}/.gnupg/private-keys*/* r,
   owner @{HOME}/.gnupg/sshcontrol rw,
 
   # Include user overrides for possible symlinked config files
-  #include <local/gpg-agent>
+  include if exists <local/gpg-agent>
 
   # Curses pinentry
   /usr/bin/pinentry-curses rix,

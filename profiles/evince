@@ -3,17 +3,17 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile evince /usr/{bin,lib}/evince{,d} {
-  #include <abstractions/base>
-  #include <abstractions/fonts>
-  #include <abstractions/krathalans-common-gui>
-  #include <abstractions/krathalans-hardening>
-  #include <abstractions/wayland>
+  include <abstractions/base>
+  include <abstractions/fonts>
+  include <abstractions/krathalans-common-gui>
+  include <abstractions/wayland>
 
   # Dconf
-  #include <abstractions/dconf>
+  include <abstractions/dconf>
   owner /run/user/*/dconf/user w,
 
   # Needed to open documents from the file picker

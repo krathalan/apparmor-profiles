@@ -3,18 +3,24 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile syncthing /usr/bin/syncthing {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
+  network unix stream,
+  network netlink raw,
+  network inet stream,
+  network inet dgram,
+  network inet6 stream,
+  network inet6 dgram,
 
   /usr/bin/syncthing rPx,
 
   # Networking
-  #include <abstractions/krathalans-networking>
-  #include <abstractions/ssl_certs>
-  #include <abstractions/ssl_keys>
+  include <abstractions/krathalans-networking>
+  include <abstractions/ssl_certs>
+  include <abstractions/ssl_keys>
   /etc/ca-certificates/extracted/cadir/* r,
   /etc/iproute2/rt_tables r,
   @{PROC}/sys/net/core/somaxconn r,
@@ -22,7 +28,7 @@ profile syncthing /usr/bin/syncthing {
   /usr/bin/ip rix,
 
   # Include user overrides for synced directories
-  #include <local/syncthing>
+  include if exists <local/syncthing>
 
   # https://www.kernel.org/doc/Documentation/vm/transhuge.txt
   /sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,

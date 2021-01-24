@@ -7,35 +7,39 @@
 # Forked from https://gitlab.com/madaidan/apparmor-profiles, provided without
 # license
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
-  #include <abstractions/audio>
-  #include <abstractions/base>
-  #include <abstractions/fonts>
-  #include <abstractions/krathalans-common-gui>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/audio>
+  include <abstractions/base>
+  include <abstractions/fonts>
+  include <abstractions/krathalans-common-gui>
+  network netlink raw,
+  network inet stream,
+  network inet dgram,
+  network inet6 stream,
 
   # Hardware acceleration
-  #include <abstractions/krathalans-hwaccel>
+  include <abstractions/krathalans-hwaccel>
   @{sys}/devices/pci[0-9]*/**/drm/ r,
   @{sys}/devices/pci[0-9]*/**/uevent r,
 
   # Include user overrides for krathalans-hwaccel-nvidia
-  #include <local/firefox>
+  include if exists <local/firefox>
 
   # Allow access for downloads and uploads
-  #include <abstractions/krathalans-downloads>
+  include <abstractions/krathalans-downloads>
 
   # Dconf
   owner /run/user/*/dconf/user rw,
   owner @{HOME}/.config/dconf/user r,
 
   # Network
-  #include <abstractions/krathalans-networking>
+  include <abstractions/krathalans-networking>
 
   # Spell checking
-  #include <abstractions/enchant>
+  include <abstractions/enchant>
 
   # Firefox subprocesses
   ptrace trace peer=firefox,

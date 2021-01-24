@@ -3,16 +3,17 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile mako /usr/bin/mako {
-  #include <abstractions/base>
-  #include <abstractions/fonts>
-  #include <abstractions/krathalans-common-gui>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
+  include <abstractions/fonts>
+  include <abstractions/krathalans-common-gui>
+  network unix stream,
 
   # Include user overrides for possible symlinked config files
-  #include <local/mako>
+  include if exists <local/mako>
 
   # Shared memory
   owner /dev/shm/mako* rw,

@@ -3,16 +3,16 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile streamlink /usr/bin/streamlink {
-  #include <abstractions/base>
-  #include <abstractions/fonts>
-  #include <abstractions/python>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
+  include <abstractions/fonts>
+  include <abstractions/python>
 
   # Networking
-  #include <abstractions/krathalans-networking>
+  include <abstractions/krathalans-networking>
 
   # Needed to open mpv media player and feed it data
   signal send set=term peer=mpv,

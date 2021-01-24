@@ -3,15 +3,14 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile less /usr/bin/less {
-  #include <abstractions/base>
-  #include <abstractions/bash>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
+  include <abstractions/bash>
 
-  / r,
-  /** r,
+  /{,**} r,
 
   # Source highlighting
   /usr/bin/{bash,dash} mrix,
@@ -23,6 +22,5 @@ profile less /usr/bin/less {
   capability dac_override,
 
   # Silence unnecessary permissions
-  deny / w,
-  deny /** w,
+  deny /{,**} w,
 }

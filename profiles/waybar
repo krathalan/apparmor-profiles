@@ -3,23 +3,25 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile waybar /usr/bin/waybar {
-  #include <abstractions/base>
-  #include <abstractions/fonts>
-  #include <abstractions/krathalans-common-gui>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
+  include <abstractions/fonts>
+  include <abstractions/krathalans-common-gui>
+  network unix stream,
+  network netlink raw,
 
   # Dconf
-  #include <abstractions/dconf>
+  include <abstractions/dconf>
   owner /run/user/*/dconf/user rw,
 
   # Graphics
-  #include <abstractions/wayland>
+  include <abstractions/wayland>
 
   # Include user overrides for possible symlinked config files
-  #include <local/waybar>
+  include if exists <local/waybar>
 
   # Config
   owner @{HOME}/.config/waybar/** r,
@@ -33,7 +35,7 @@ profile waybar /usr/bin/waybar {
   /usr/bin/{bash,dash} rix,
 
   # Audio module
-  #include <abstractions/audio>
+  include <abstractions/audio>
 
   # Network module
   @{PROC}/*/net/netstat r,

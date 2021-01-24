@@ -3,15 +3,22 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile systemd-resolved /usr/lib/systemd/systemd-resolved {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-nameservice>
-  #include <abstractions/krathalans-networking>
-  #include <abstractions/krathalans-hardening>
-  #include <abstractions/p11-kit>
-  #include <abstractions/ssl_certs>
+  include <abstractions/base>
+  include <abstractions/krathalans-nameservice>
+  include <abstractions/krathalans-networking>
+  include <abstractions/p11-kit>
+  include <abstractions/ssl_certs>
+  network unix stream,
+  network unix dgram,
+  network inet stream,
+  network inet dgram,
+  network inet6 stream,
+  network inet6 dgram,
+  network netlink raw,
 
   capability net_bind_service,
   capability net_raw,

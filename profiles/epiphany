@@ -14,6 +14,7 @@ profile epiphany /usr/bin/epiphany {
   include <abstractions/krathalans-hwaccel>
   include <abstractions/krathalans-nameservice>
   include <abstractions/krathalans-networking>
+  include <abstractions/p11-kit>
 
   network inet stream,
   network inet dgram,
@@ -153,7 +154,7 @@ profile epiphany /usr/bin/epiphany {
     include if exists <local/epiphany>
 
     # Deny unnecessary permissions
-    deny network netlink raw,
+    network netlink raw,
     deny /**/orcexec.* rw,
     deny /dev/ r,
     deny /etc/machine-id r,

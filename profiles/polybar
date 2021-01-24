@@ -3,12 +3,12 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile polybar /usr/bin/polybar {
-  #include <abstractions/base>
-  #include <abstractions/fonts>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
+  include <abstractions/fonts>
 
   # Misc
   /usr/bin/{bash,dash} rix,
@@ -30,7 +30,7 @@ profile polybar /usr/bin/polybar {
   owner @{HOME}/.config/fontconfig/conf.d/* r,
 
   # Include user overrides for possible symlinked config files
-  #include <local/polybar>
+  include if exists <local/polybar>
 
   # Deny unnecessary permissions
   deny /etc/machine-id r,

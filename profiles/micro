@@ -3,17 +3,17 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile micro /usr/bin/micro {
-  #include <abstractions/base>
-  #include <abstractions/consoles>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
+  include <abstractions/consoles>
 
   /usr/bin/micro mr,
 
   # Include machine-specific overrides
-  #include <local/micro>
+  include if exists <local/micro>
 
   # Config
   owner @{HOME}/.config/micro/{,**} rw,
@@ -45,15 +45,14 @@ profile micro /usr/bin/micro {
   /usr/bin/git rCx,
 
   profile git /usr/bin/git {
-    #include <abstractions/base>
-    #include <abstractions/krathalans-hardening>
+    include <abstractions/base>
 
     /usr/bin/git mr,
 
     # Config
     owner @{HOME}/.config/.git* r,
     # Include machine-specific overrides for nonstandard configuration setups
-    #include <local/micro-git>
+    include if exists <local/micro-git>
 
     # Need to view directories files are in
     owner @{HOME}/{D,d}ocuments/{,**} rw,
@@ -61,7 +60,7 @@ profile micro /usr/bin/micro {
     # Mutt
     owner /tmp/mutt-* rw,
     # Include machine-specific overrides
-    #include <local/micro>
+    include if exists <local/micro>
 
     # View files in pager with aurutils
     owner @{HOME}/.cache/aurutils/sync/{,**} rw,

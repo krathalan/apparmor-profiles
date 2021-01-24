@@ -3,24 +3,24 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile mpv /usr/bin/mpv {
-  #include <abstractions/base>
-  #include <abstractions/fonts>
-  #include <abstractions/krathalans-common-gui>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
+  include <abstractions/fonts>
+  include <abstractions/krathalans-common-gui>
 
   # Hardware acceleration
-  #include <abstractions/krathalans-hwaccel>
+  include <abstractions/krathalans-hwaccel>
   /etc/libva.conf r,
   @{sys}/devices/pci[0-9]*/**/config r,
 
   # Include user overrides for krathalans-hwaccel-nvidia
-  #include <local/mpv>
+  include if exists <local/mpv>
 
   # Audio
-  #include <abstractions/audio>
+  include <abstractions/audio>
   /etc/alsa/conf.d/** r,
   /etc/asound.conf r,
   /usr/bin/pulseaudio rPx,
@@ -33,7 +33,7 @@ profile mpv /usr/bin/mpv {
   signal receive set=term peer=streamlink,
 
   # Needed to stream media with youtube-dl
-  #include <abstractions/krathalans-networking>
+  include <abstractions/krathalans-networking>
   signal send set=kill peer=youtube-dl,
   /usr/bin/youtube-dl rPx,
 

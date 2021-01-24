@@ -3,25 +3,28 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019-2020 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code,code-oss,code.js,codium} {
-  #include <abstractions/base>
-  #include <abstractions/fonts>
-  #include <abstractions/krathalans-common-gui>
-  #include <abstractions/krathalans-hardening>
-  #include <abstractions/krathalans-hwaccel>
+  include <abstractions/base>
+  include <abstractions/fonts>
+  include <abstractions/krathalans-common-gui>
+  include <abstractions/krathalans-hwaccel>
+  network unix seqpacket,
+  network netlink raw,
+  network inet6 dgram,
 
   # Nvidia users
-  #include <local/code>
+  include if exists <local/code>
 
   # Helper programs
-  #include <abstractions/bash>
+  include <abstractions/bash>
   /usr/bin/{bash,dash,dirname,git,grep,readlink,rg,which} rix,
 
   # Needed to browse and download extensions
-  #include <abstractions/krathalans-networking>
-  #include <abstractions/user-tmp>
+  include <abstractions/krathalans-networking>
+  include <abstractions/user-tmp>
 
   # Needed to function at all
   owner /dev/shm/.org.chromium.Chromium.* rw,
@@ -66,8 +69,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   /usr/bin/xdg-open rCx,
 
   profile xdg-open /usr/bin/xdg-open {
-    #include <abstractions/base>
-    #include <abstractions/krathalans-hardening>
+    include <abstractions/base>
 
     # Helper programs
     /usr/bin/{cut,bash,dash,dbus-send,egrep,grep,head,sed,which,xdg-mime} rix,
@@ -100,9 +102,8 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   /usr/bin/clang* rCx,
 
   profile clang /usr/bin/clang-[0-9] {
-    #include <abstractions/base>
-    #include <abstractions/fonts>
-    #include <abstractions/krathalans-hardening>
+    include <abstractions/base>
+    include <abstractions/fonts>
 
     signal receive set=term peer=code,
     signal receive set=term peer=codium,
@@ -155,6 +156,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   deny @{PROC}/{version,vmstat} r,
   deny @{PROC}/*/{comm,cmdline,mountinfo,oom_score_adj,stat,statm} r,
   deny @{PROC}/*/task/{,**} rw,
+  deny @{PROC}/*/oom_score_adj w,
   deny @{PROC}/sys/fs/inotify/max_user_watches r,
   deny @{sys}/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
   deny @{system_share_dirs}/bash-completion/bash_completion r,

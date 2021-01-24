@@ -3,21 +3,21 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile irssi /usr/bin/irssi {
-  #include <abstractions/base>
-  #include <abstractions/bash>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
+  include <abstractions/bash>
 
   # Irssi has perl scripting
-  #include <abstractions/perl>
+  include <abstractions/perl>
 
   # Include user overrides for possible symlinked config files
-  #include <local/irssi>
+  include if exists <local/irssi>
 
   # Networking
-  #include <abstractions/krathalans-networking>
+  include <abstractions/krathalans-networking>
 
   @{system_share_dirs}/irssi/** r,
 

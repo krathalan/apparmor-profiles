@@ -3,13 +3,19 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile vdirsyncer /usr/bin/vdirsyncer {
-  #include <abstractions/base>
-  #include <abstractions/python>
-  #include <abstractions/krathalans-hardening>
-  #include <abstractions/krathalans-networking>
+  include <abstractions/base>
+  include <abstractions/python>
+  include <abstractions/krathalans-networking>
+  network unix stream,
+  network inet6 dgram,
+  network inet6 stream,
+  network inet dgram,
+  network inet stream,
+  network netlink raw,
 
   /usr/bin/ r,
   /usr/bin/python3.[0-9] r,
@@ -26,7 +32,7 @@ profile vdirsyncer /usr/bin/vdirsyncer {
   owner @{HOME}/.local/share/calendar/{,**} rwl,
   # Include user overrides for possible symlinked config
   # files/different contact storage locations
-  #include <local/vdirsyncer>
+  include if exists <local/vdirsyncer>
 
   # Cache
   owner @{HOME}/.cache/vdirsyncer-status/{,**} rwk,

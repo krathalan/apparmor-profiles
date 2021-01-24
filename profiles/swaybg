@@ -3,14 +3,15 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile swaybg /usr/bin/swaybg {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
+  network unix stream,
 
   # Include user overrides for alternate wallpaper directories
-  #include <local/swaybg>
+  include if exists <local/swaybg>
 
   # Needed to display wallpaper
   @{system_share_dirs}/mime/** r,

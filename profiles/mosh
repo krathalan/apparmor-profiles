@@ -4,13 +4,13 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile mosh /usr/bin/mosh* {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-hardening>
-  #include <abstractions/krathalans-networking>
-  #include <abstractions/perl>
+  include <abstractions/base>
+  include <abstractions/krathalans-networking>
+  include <abstractions/perl>
 
   # Binaries
   /usr/bin/env r,

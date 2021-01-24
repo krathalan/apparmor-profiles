@@ -3,12 +3,12 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile ssh /usr/bin/ssh {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-hardening>
-  #include <abstractions/perl>
+  include <abstractions/base>
+  include <abstractions/perl>
 
   # Executables
   /usr/bin/{bash,dash} mrix,
@@ -20,7 +20,8 @@ profile ssh /usr/bin/ssh {
   signal send set=hup peer=mosh,
 
   # Networking
-  #include <abstractions/krathalans-networking>
+  include <abstractions/krathalans-networking>
+  network inet stream,
   /etc/{passwd,protocols,services} r,
   /etc/ssh/ssh_config r,
 

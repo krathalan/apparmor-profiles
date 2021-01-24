@@ -3,11 +3,12 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile xclip /usr/bin/xclip {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
+  network unix stream,
 
   /usr/bin/xclip r,
 

@@ -3,12 +3,12 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile mutt /usr/bin/mutt {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-hardening>
-  #include <abstractions/krathalans-networking>
+  include <abstractions/base>
+  include <abstractions/krathalans-networking>
 
   # Config
   /etc/Muttrc r,
@@ -25,7 +25,7 @@ profile mutt /usr/bin/mutt {
 
   # Include user overrides for possible symlinked config files and different
   # cache/mail storage locations
-  #include <local/mutt>
+  include if exists <local/mutt>
 
   # View help (F1)
   /usr/bin/less rPx,
@@ -37,9 +37,8 @@ profile mutt /usr/bin/mutt {
   /usr/bin/gpg rCx,
 
   profile gpg /usr/bin/gpg {
-    #include <abstractions/base>
-    #include <abstractions/gnupg>
-    #include <abstractions/krathalans-hardening>
+    include <abstractions/base>
+    include <abstractions/gnupg>
 
     /usr/bin/gpg r,
 
@@ -59,7 +58,7 @@ profile mutt /usr/bin/mutt {
 
     # Include user overrides for possible symlinked config files and different
     # cache/mail storage locations
-    #include <local/mutt>
+    include if exists <local/mutt>
   }
 
   # Viewing html messages with w3m
@@ -67,8 +66,7 @@ profile mutt /usr/bin/mutt {
   /usr/bin/w3m rCx,
 
   profile w3m /usr/bin/w3m {
-    #include <abstractions/base>
-    #include <abstractions/krathalans-hardening>
+    include <abstractions/base>
 
     /usr/bin/w3m r,
 
@@ -77,7 +75,7 @@ profile mutt /usr/bin/mutt {
 
     # Include user overrides for possible symlinked config files and different
     # cache/mail storage locations
-    #include <local/mutt>
+    include if exists <local/mutt>
 
     owner /tmp/{mutt,.mutt}*{,**} rwl,
     owner /tmp/w3m*/{,**} rw,
@@ -93,9 +91,8 @@ profile mutt /usr/bin/mutt {
   /usr/bin/nano rCx,
 
   profile nano /usr/bin/nano {
-    #include <abstractions/base>
-    #include <abstractions/bash>
-    #include <abstractions/krathalans-hardening>
+    include <abstractions/base>
+    include <abstractions/bash>
 
     /usr/bin/nano mr,
 
@@ -105,7 +102,7 @@ profile mutt /usr/bin/mutt {
     owner @{HOME}/.config/nano/nanorc r,
 
     # Include user overrides for possible symlinked config files
-    #include <local/mutt-nano>
+    include if exists <local/mutt-nano>
 
     owner /tmp/mutt-* rw,
 

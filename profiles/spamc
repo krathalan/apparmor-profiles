@@ -3,12 +3,12 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile spamc /usr/bin/vendor_perl/spamc {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-hardening>
-  #include <abstractions/krathalans-nameservice>
+  include <abstractions/base>
+  include <abstractions/krathalans-nameservice>
 
   /usr/bin/vendor_perl/spamc r,
   /usr/bin/sendmail rPx,

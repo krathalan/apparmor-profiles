@@ -3,11 +3,12 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile wl-copy-paste /usr/bin/wl-{copy,paste} {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
+  network unix stream,
 
   /usr/bin/wl-{copy,paste} r,
 
@@ -23,7 +24,7 @@ profile wl-copy-paste /usr/bin/wl-{copy,paste} {
   /usr/bin/xdg-mime rCx,
 
   profile xdg-mime /usr/bin/xdg-mime {
-    #include <abstractions/base>
+    include <abstractions/base>
 
     /usr/bin/xdg-mime r,
     /usr/bin/{bash,dash} rix,

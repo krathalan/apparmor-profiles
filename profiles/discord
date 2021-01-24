@@ -7,6 +7,7 @@
 # If you do not, add local changes. Discord does not need access to your whole
 # home directory.
 
+abi <abi/3.0>,
 include <tunables/global>
 
 profile discord /{usr,opt}/{bin,discord}/{D,d}iscord {

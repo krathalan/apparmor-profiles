@@ -6,10 +6,11 @@
 #           2020 krathalan
 # Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile haveged /usr/bin/haveged {
-  #include <abstractions/base>
+  include <abstractions/base>
 
   # Required for ioctl RNDADDENTROPY
   capability sys_admin,
@@ -26,5 +27,5 @@ profile haveged /usr/bin/haveged {
   /sys/devices/system/cpu/cpu*/cache/index*/{type,size,level} r,
   /usr/bin/haveged mr,
 
-  #include <local/haveged>
+  include if exists <local/haveged>
 }

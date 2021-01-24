@@ -3,15 +3,19 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
-  #include <abstractions/audio>
-  #include <abstractions/base>
-  #include <abstractions/fonts>
-  #include <abstractions/krathalans-common-gui>
-  #include <abstractions/krathalans-hardening>
-  #include <abstractions/krathalans-networking>
+  include <abstractions/audio>
+  include <abstractions/base>
+  include <abstractions/fonts>
+  include <abstractions/krathalans-common-gui>
+  include <abstractions/krathalans-networking>
+  network netlink raw,
+  network inet dgram,
+  network inet stream,
+  network inet6 dgram,
 
   deny capability sys_admin,
 
@@ -22,9 +26,9 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
 
   /usr/lib/chromium/chrome-sandbox rCx,
   profile chrome-sandbox /usr/lib/chromium/chrome-sandbox {
-    #include <abstractions/base>
-    #include <abstractions/krathalans-hardening>
+    include <abstractions/base>
 
+    capability dac_override,
     capability setgid,
     capability setuid,
     capability sys_admin,
@@ -35,13 +39,16 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
     /usr/lib/chromium/chrome-sandbox r,
 
     /usr/lib/chromium/chromium rPx,
+
+    /proc/*/ r,
+    /proc/*/{oom_adj,oom_score_adj} w,
   }
 
   /usr/lib/chromium/{,**} r,
   deny /usr/lib/chromium/{,**} w,
 
   # Hwaccel
-  #include <abstractions/krathalans-hwaccel>
+  include <abstractions/krathalans-hwaccel>
   /dev/ r,
   owner /dev/shm/shmfd-* rw,
   /etc/libva.conf r,
@@ -53,7 +60,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   @{PROC}/sys/dev/i915/perf_stream_paranoid r,
 
   # Include local overrides for nvidia users and/or other reasons
-  #include <local/chromium>
+  include if exists <local/chromium>
 
   # Per-user files
   owner @{HOME}/.cache/chromium/{,**} rw,
@@ -65,7 +72,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   owner /run/user/*/dconf/user rw,
 
   # Downloads
-  #include <abstractions/krathalans-downloads>
+  include <abstractions/krathalans-downloads>
 
   # File picker
   @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
@@ -80,6 +87,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   # Proc
   @{PROC}/ r,
   @{PROC}/*/fd/ r,
+  @{PROC}/sys/fs/inotify/max_user_watches r,
 
   # systemd-homed
   /{,var/}run/systemd/userdb/ r,
@@ -95,5 +103,4 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   deny @{PROC}/*/{clear_refs,oom_score_adj,setgroups} w,
   deny @{PROC}/sys/kernel/random/boot_id r,
   deny @{PROC}/sys/kernel/yama/ptrace_scope r,
-  deny @{PROC}/sys/fs/inotify/max_user_watches r,
 }

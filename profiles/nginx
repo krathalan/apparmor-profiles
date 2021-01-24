@@ -3,13 +3,14 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile nginx /usr/bin/nginx {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-nameservice>
+  include <abstractions/base>
+  include <abstractions/krathalans-nameservice>
 
-  #include <local/nginx>
+  include if exists <local/nginx>
 
   /usr/bin/nginx r,
   /usr/share/nginx/{,**} r,
@@ -19,7 +20,7 @@ profile nginx /usr/bin/nginx {
   /run/nginx/nginx.pid rw,
 
   # Networking
-  #include <abstractions/krathalans-networking>
+  include <abstractions/krathalans-networking>
   capability net_bind_service,
   /etc/letsencrypt/{,**} r,
 

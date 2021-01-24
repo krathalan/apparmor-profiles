@@ -3,10 +3,13 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile iwd /usr/lib/iwd/iwd {
-  #include <abstractions/base>
+  include <abstractions/base>
+  network netlink dgram,
+  network alg seqpacket,
 
   capability net_admin,
   capability net_raw,

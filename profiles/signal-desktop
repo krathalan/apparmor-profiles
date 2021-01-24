@@ -3,16 +3,20 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-desktop} {
-  #include <abstractions/audio>
-  #include <abstractions/base>
-  #include <abstractions/fonts>
-  #include <abstractions/krathalans-common-gui>
-  #include <abstractions/krathalans-hardening>
-  #include <abstractions/krathalans-nameservice>
-  #include <abstractions/krathalans-networking>
+  include <abstractions/audio>
+  include <abstractions/base>
+  include <abstractions/fonts>
+  include <abstractions/krathalans-common-gui>
+  include <abstractions/krathalans-nameservice>
+  include <abstractions/krathalans-networking>
+  network inet dgram,
+  network inet stream,
+  network inet6 dgram,
+  network netlink raw,
 
   # Needed to function at all
   owner @{PROC}/*/fd/ r,
@@ -27,7 +31,7 @@ profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-deskto
   /usr/{,s}bin/xdg-settings rCx,
 
   profile xdg-settings /usr/{,s}bin/xdg-settings {
-    #include <abstractions/base>
+    include <abstractions/base>
 
     /usr/{,s}bin/xdg-settings r,
 
@@ -56,7 +60,7 @@ profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-deskto
   }
 
   # Hardware acceleration
-  #include <abstractions/krathalans-hwaccel>
+  include <abstractions/krathalans-hwaccel>
   owner /dev/shm/shmfd-* rw,
   @{PROC}/sys/dev/i915/perf_stream_paranoid r,
   @{sys}/bus/pci/devices/ r,
@@ -64,13 +68,13 @@ profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-deskto
   @{sys}/devices/pci[0-9]*/**/{class,config,irq,resource} r,
 
   # Nvidia users
-  #include <local/signal-desktop>
+  include if exists <local/signal-desktop>
 
   # Config
   owner @{HOME}/.config/Signal/{,**} rwk,
 
   # Allow access for downloads and uploads
-  #include <abstractions/krathalans-downloads>
+  include <abstractions/krathalans-downloads>
 
   # File picker
   @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,

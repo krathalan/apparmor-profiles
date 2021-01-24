@@ -3,11 +3,11 @@
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile xob /usr/bin/xob {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-hardening>
+  include <abstractions/base>
 
   owner @{HOME}/.Xauthority r,
 
@@ -16,5 +16,5 @@ profile xob /usr/bin/xob {
   /etc/xob/styles.cfg r,
 
   # Include user overrides for possible symlinked config file
-  #include <local/xob>
+  include if exists <local/xob>
 }
