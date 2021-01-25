@@ -9,13 +9,18 @@ include <tunables/global>
 
 profile mosh /usr/bin/mosh* {
   include <abstractions/base>
-  include <abstractions/krathalans-networking>
   include <abstractions/perl>
 
   # Binaries
   /usr/bin/env r,
   /usr/bin/mosh r,
   /usr/bin/mosh-client mrPx,
+
+  # Networking
+  include <abstractions/krathalans-networking>
+  network netlink raw,
+  network inet dgram,
+  network inet stream,
 
   # SSH
   /usr/bin/ssh Px,
