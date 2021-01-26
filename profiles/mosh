@@ -21,6 +21,8 @@ profile mosh /usr/bin/mosh* {
   network netlink raw,
   network inet dgram,
   network inet stream,
+  network inet6 dgram,
+  network inet6 stream,
 
   # SSH
   /usr/bin/ssh Px,
