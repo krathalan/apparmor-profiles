@@ -13,4 +13,7 @@ profile postfix-sendmail /usr/bin/sendmail {
 
   /usr/bin/sendmail r,
   /usr/bin/postdrop rPx,
+
+  # Misc
+  /proc/sys/kernel/random/boot_id r,
 }

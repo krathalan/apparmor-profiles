@@ -1,0 +1,5 @@
+
+- Overhaul epiphany profile
+- Finish converting profiles to ABI 3: cupsd(1), postfix*, spamc
+
+(1) Wait for PAPPL to become more popular before devoting time to cupsd?

@@ -47,6 +47,7 @@ profile postfix-master /usr/lib/postfix/bin/master {
   capability dac_override,
   /etc/gai.conf r,
   /etc/services r,
+  /proc/sys/kernel/random/boot_id r,
   /var/lib/postfix/master.lock rwk,
   /var/spool/postfix/pid/master.pid rwk,
 

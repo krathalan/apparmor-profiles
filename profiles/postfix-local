@@ -17,6 +17,7 @@ profile postfix-local /usr/lib/postfix/bin/local {
 
   # Misc
   /etc/aliases.db rk,
+  /proc/sys/kernel/random/boot_id r,
   /var/spool/postfix/pid/unix.local rwk,
 
   # Mail data

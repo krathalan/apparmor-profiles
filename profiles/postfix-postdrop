@@ -13,6 +13,9 @@ profile postfix-postdrop /usr/bin/postdrop {
 
   /usr/bin/postdrop r,
 
+  # Misc
+  /proc/sys/kernel/random/boot_id r,
+
   # Mail data
   /var/spool/postfix/maildrop/{,**} rwk,
 }
