@@ -17,6 +17,8 @@ These AppArmor profiles have been tested on the following hardware:
 - CPUs:
     - Intel 4960K
     - Intel 8250U
+    - AMD Ryzen 3100
+    - AMD EPYC 7601
 - GPUs:
     - NVIDIA GeForce GTX 980 Ti with proprietary drivers
     - Intel 620 UHD Graphics
@@ -27,24 +29,25 @@ These AppArmor profiles have been tested on the following hardware:
     - Intel Wireless-AC 9260
     - Intel Wi-Fi 6 AX200
 
-I cannot guarantee that these profiles will work on any other hardware. All profiles should work with Xorg on NVIDIA hardware and with Sway (and probably Xorg) on Intel hardware. However, it's very possible these profiles will still work with AMD graphics, as it seems AMD graphics share a lot of similar behavior with Intel graphics. If you own an NVIDIA card, please read the NVIDIA section below.
+I cannot guarantee that these profiles will work on any other hardware. All profiles should work with Xorg on NVIDIA hardware, and with Sway (and probably Xorg) on Intel hardware. It's very possible these profiles will still work with AMD graphics, as it seems AMD graphics share a lot of similar behavior with Intel graphics. If you own an NVIDIA card, please read the NVIDIA section below.
 
 These profiles strive to be fully functional with zero audit log warnings under proper behavior. Functionality is not ignored. If functionality is not explicitly blocked, then it's probably a bug in the profile and should be fixed. Create an issue: https://todo.sr.ht/~krathalan/apparmor-profiles
 
 You should read through [the notes about each profile](#notes-about-each-profile) before using these profiles.
 
 ## Installation
-Releases are signed so you'll need to import my GPG key first:
-`02AA A23A BDF1 D538 BD88  9D25 1AAD E5E7 28FF C667`
-
-Then build and install the package:
+I keep a PKGBUILD for Arch Linux in a personal repository. Build and install the package with the following commands:
 
 ```
 $ git clone https://git.sr.ht/~krathalan/pkgbuilds
 $ cd pkgbuilds/krathalans-apparmor-profiles-git/
-$ nano --view PKGBUILD # Always inspect PKGBUILDS before running makepkg!
+$ cat PKGBUILD # Always inspect PKGBUILDS before running makepkg!
 $ makepkg -i
 ```
+
+For any other distro, simply copy the profiles in the `profiles/` folder of this repository to `/etc/apparmor.d/`.
+
+Don't forget to rebuild or recopy every so often :)
 
 ## Adding local changes
 To add local changes without changing the file provided by this repository, use local overrides. See `less /etc/apparmor.d/local/README` for more details. You can see commented examples of local overrides in the `local/` directory in this repository.
