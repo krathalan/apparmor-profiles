@@ -18,6 +18,12 @@ profile radicale /usr/bin/radicale {
   # Config
   /etc/radicale/{,*} r,
 
+  # Networking
+  network inet dgram,
+  network inet stream,
+  network inet6 dgram,
+  network inet6 stream,
+
   # Storage
   /var/lib/radicale/{,**} rwk,
 
