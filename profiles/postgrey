@@ -1,0 +1,22 @@
+# AppArmor profile for postgrey greylisting postfix policy server
+# Version of program profiled: 1.37
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2021 (C) krathalan; Licensed under GPLv3
+
+abi <abi/3.0>,
+include <tunables/global>
+
+profile postgrey /usr/bin/postgrey {
+  include <abstractions/base>
+  include <abstractions/krathalans-networking>
+  include <abstractions/krathalans-nameservice>
+  include <abstractions/perl>
+
+  /usr/bin/postgrey r,
+
+  /etc/postfix/postgrey* r,
+  /var/spool/postfix/postgrey/{,**} rwk,
+  /run/postgrey/* rw,
+
+  /proc/sys/kernel/random/boot_id r,
+}
