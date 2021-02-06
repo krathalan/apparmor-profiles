@@ -1,7 +1,7 @@
 # AppArmor profile for polybar system bar for Xorg
 # Version of program profiled: 3.5.4
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
-# Copyright 2020 (C) krathalan; Licensed under GPLv3
+# Copyright 2020 (C) krathalan, mortezadadgar; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>
@@ -9,6 +9,7 @@ include <tunables/global>
 profile polybar /usr/bin/polybar {
   include <abstractions/base>
   include <abstractions/fonts>
+  include <abstractions/krathalans-common-gui>
 
   # Misc
   /usr/bin/{bash,dash} rix,
@@ -19,13 +20,23 @@ profile polybar /usr/bin/polybar {
   # Network module
   network netlink raw,
   network inet dgram,
+  network inet stream,
   /sys/devices/pci[0-9]*/**/net/*/operstate r,
+
+  # Battery module
+  /sys/devices/LNXSYSTM:00/LNXSYBUS:00/**/power_supply/**/* r,
+
+  # Temperature module
+  /sys/devices/virtual/thermal/thermal_zone[0-9]*/* r,
 
   # Audio module
   /usr/bin/pulseaudio rPx,
   /etc/pulse/client.conf r,
   owner @{HOME}/.config/pulse/{,cookie} rwk,
   owner /run/user/*/pulse/ rw,
+
+  # Mpd module
+  /usr/bin/mpd rPx,
 
   # Config
   owner @{HOME}/.config/polybar/* r,
