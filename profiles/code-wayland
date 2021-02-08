@@ -1,0 +1,117 @@
+# AppArmor profile for code-wayland
+# Version of program profiled: 1.52.0
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2019 (C) krathalan; Licensed under GPLv3
+
+abi <abi/3.0>,
+include <tunables/global>
+
+profile code-wayland /usr/{bin,lib/code-wayland}/{code,code-wayland,code.js} {
+  include <abstractions/base>
+
+  /usr/{bin,lib/code-wayland}/{code,code-wayland,code.js} r,
+  /usr/lib/electron/electron rPx,
+
+  /usr/lib/code-wayland/{,**} r,
+
+  # Deny unnecessary permissions
+  deny /dev/tty rw,
+  deny /dev/pts/* rw,
+}
+
+profile electron /usr/lib/electron/electron {
+  include <abstractions/base>
+	include <abstractions/fonts>
+	include <abstractions/krathalans-common-gui>
+
+  # Electron spawns multiple processes
+  /usr/lib/electron/electron rPx,
+  owner /dev/shm/.org.chromium.Chromium.* rw,
+  owner /tmp/.org.chromium.Chromium.* rw,
+
+  # Networking
+	include <abstractions/krathalans-networking>
+	network netlink raw,
+	network inet dgram,
+	network inet stream,
+	network inet6 dgram,
+	network inet6 stream,
+
+	# Hwaccel
+	include <abstractions/krathalans-hwaccel>
+	@{sys}/bus/pci/devices/ r,
+	@{sys}/devices/pci[0-9]*/[0-9]*/class r,
+	@{sys}/devices/pci[0-9]*/[0-9]*/**/class r,
+
+	# Local overrides
+	include if exists <local/code-wayland>
+
+	# Necessary to function at all
+	@{PROC}/ r,
+	owner @{PROC}/*/{cmdline,setgroups} r,
+	owner @{PROC}/*/comm rw,
+	owner @{PROC}/*/fd/ r,
+	owner /run/user/*/vscode-*.sock w,
+
+  # Config files
+	owner @{HOME}/.config/Electron/{,**} rw,
+  owner @{HOME}/.config/gtk-3.0/settings.ini r,
+	owner @{HOME}/.config/dconf/user r,
+	owner /run/user/*/dconf/user rw,
+
+  # Code-wayland config files
+  owner @{HOME}/.vscode-wayland/{,**} rw,
+  owner @{HOME}/.config/code-oss/ w,
+  owner "@{HOME}/.config/Code - Wayland/{,**}" rwk,
+
+  # Basic files to edit
+  owner @{HOME}/{D,d}ocuments/{,**} rw,
+  owner @{HOME}/{G,g}it/{,**} rw,
+
+  # Git functionalities
+  /usr/bin/git rCx,
+  profile git /usr/bin/git {
+    include <abstractions/base>
+    include <abstractions/fonts>
+
+    /usr/bin/git r,
+
+    owner /dev/shm/.org.chromium.Chromium.* rw,
+    owner /tmp/.org.chromium.Chromium.* rw,
+
+  	# Local overrides
+  	include if exists <local/code-wayland>
+
+    # Git needs access to these files too
+    owner @{HOME}/{D,d}ocuments/{,**} r,
+    owner @{HOME}/{G,g}it/{,**} r,
+  }
+
+  # Misc
+  /usr/lib/code-wayland/node_modules.asar.unpacked/{,**} mr,
+	@{PROC}/sys/fs/inotify/max_user_watches r,
+	@{PROC}/sys/kernel/yama/ptrace_scope r,
+  owner @{user_share_dirs}/recently-used.xbel* rw,
+  owner /tmp/chromium-upload-* w,
+  owner /tmp/vscode-typescript1000/ w,
+
+	# File picker
+	@{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
+
+  # Deny unnecessary permissions
+  deny /dev/tty* rw,
+  deny /dev/pts/* rw,
+  deny /sys/devices/virtual/tty/tty*/active rw,
+	deny /run/systemd/userdb/ r,
+	deny @{PROC}/*/{mountinfo,mounts,oom_score_adj,stat,statm} rw,
+	deny @{PROC}/*/task/{,**} r,
+  deny @{HOME}/.cache/{,**} rw,
+	deny @{HOME}/.pki/{,**} rw,
+
+  ### Extensions ###
+
+  # Needed for shellcheck extension
+  # https://marketplace.visualstudio.com/items?itemName=timonwong.shellcheck
+  # Extension is MIT Licensed: https://github.com/timonwong/vscode-shellcheck
+  /usr/bin/shellcheck rix,
+}
