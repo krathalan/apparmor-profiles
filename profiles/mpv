@@ -1,7 +1,7 @@
 # AppArmor profile for mpv media player
 # Version of mpv profiled: 1:0.33.0
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
-# Copyright 2019 (C) krathalan; Licensed under GPLv3
+# Copyright 2019 (C) krathalan, mortezadadgar; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>
@@ -15,6 +15,7 @@ profile mpv /usr/bin/mpv {
   include <abstractions/krathalans-hwaccel>
   /etc/libva.conf r,
   @{sys}/devices/pci[0-9]*/**/config r,
+  @{sys}/devices/pci[0-9]*/**/drm/{,**} r,
 
   # Include user overrides for krathalans-hwaccel-nvidia
   include if exists <local/mpv>
@@ -43,6 +44,8 @@ profile mpv /usr/bin/mpv {
 
   # Protect sensitive files and folders
   deny owner @{HOME}/.bash_history rw,
+  deny owner @{HOME}/.histfile rw,
+  deny owner @{HOME}/zsh/.histfile rw,
   deny owner @{HOME}/.gnupg/{,**} rw,
   deny owner @{HOME}/.mozilla/{,**} rw,
   deny owner @{HOME}/.ssh{,**} rw,

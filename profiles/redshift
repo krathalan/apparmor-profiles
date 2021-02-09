@@ -1,13 +1,14 @@
 # AppArmor profile for redshift screen temperature adjuster
 # Version of redshift profiled: 1.12
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
-# Copyright 2019 (C) krathalan; Licensed under GPLv3
+# Copyright 2019 (C) krathalan, mortezadadgar; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>
 
 profile redshift /usr/bin/redshift {
   include <abstractions/base>
+  include <abstractions/krathalans-nameservice>
 
   # Config file
   include if exists <local/redshift>

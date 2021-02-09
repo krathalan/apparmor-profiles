@@ -2,7 +2,7 @@
 # Versions of firefox profiled: 84.0.2
 # This profile should work on Developer Edition and Nightly as well
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
-# Copyright 2019-2020 (C) krathalan; Licensed under GPLv3
+# Copyright 2019-2020 (C) krathalan, mortezadadgar; Licensed under GPLv3
 
 # Forked from https://gitlab.com/madaidan/apparmor-profiles, provided without
 # license
@@ -36,6 +36,7 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   network netlink raw,
   network inet dgram,
   network inet stream,
+  network inet6 dgram,
   network inet6 stream,
 
   # Spell checking
