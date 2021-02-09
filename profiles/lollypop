@@ -1,5 +1,5 @@
 # AppArmor profile for lollypop music player
-# Version of lollypop profiled: 1.4.9
+# Version of lollypop profiled: 1.4.15
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -66,6 +66,7 @@ profile lollypop /usr/bin/lollypop {
   deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
 
   # No internet access
+  deny network netlink raw,
   deny /etc/ssl/openssl.cnf r,
 
   # Silence unneeded permissions
