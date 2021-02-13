@@ -22,6 +22,9 @@ profile youtube-dl /usr/bin/youtube-dl {
 
   # Networking
   include <abstractions/krathalans-networking>
+  network netlink raw,
+  network inet dgram,
+  network inet stream,
 
   # Needed to save files
   include <abstractions/krathalans-downloads>
