@@ -1,5 +1,5 @@
 # AppArmor profile for youtube-dl Internet video downloader
-# Version of youtube-dl profiled: 2020.12.14
+# Version of youtube-dl profiled: 2020.02.10
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -25,6 +25,8 @@ profile youtube-dl /usr/bin/youtube-dl {
   network netlink raw,
   network inet dgram,
   network inet stream,
+  network inet6 dgram,
+  network inet6 stream,
 
   # Needed to save files
   include <abstractions/krathalans-downloads>
