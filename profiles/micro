@@ -41,6 +41,9 @@ profile micro /usr/bin/micro {
   /usr/bin/xclip rPx,
   /usr/bin/wl-{copy,paste} rPx,
 
+  # Misc
+  /usr/share/terminfo/{,**} r,
+
   # Git
   /usr/bin/git rCx,
 
