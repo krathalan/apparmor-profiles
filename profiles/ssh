@@ -1,5 +1,5 @@
-# AppArmor profile for ssh
-# Version of ssh (openssh) profiled: 8.4
+# AppArmor profile for openssh client (NOT SSHD!)
+# Version of ssh (openssh) profiled: 8.5
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -32,6 +32,7 @@ profile ssh /usr/bin/ssh {
   # SSH keys
   owner @{HOME}/.ssh/ rw,
   owner @{HOME}/.ssh/* r,
+  owner @{HOME}/.ssh/known_hosts* w,
 
   # Needed for ssh to prompt you for your key as well as to establish the
   # authenticity of new hosts
