@@ -99,6 +99,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   deny @{HOME}/.pki/{,**} rw,
   deny @{sys}/bus/ r,
   deny @{sys}/class/ r,
+  deny @{sys}/devices/**/usb*/{,**} r,
   deny /usr/bin/xdg-settings rx,
   deny /usr/lib/chromium/{,**} w,
   deny @{PROC}/*/{cmdline,comm,stat,statm} r,
