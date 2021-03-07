@@ -32,7 +32,7 @@ profile ssh /usr/bin/ssh {
   # SSH keys
   owner @{HOME}/.ssh/ rw,
   owner @{HOME}/.ssh/* r,
-  owner @{HOME}/.ssh/known_hosts* w,
+  owner @{HOME}/.ssh/known_hosts* wl,
 
   # Needed for ssh to prompt you for your key as well as to establish the
   # authenticity of new hosts
