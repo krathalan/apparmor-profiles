@@ -56,6 +56,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   network inet dgram,
   network inet stream,
   network inet6 dgram,
+  network inet6 stream,
 
   # Include local overrides for nvidia users and/or other reasons
   include if exists <local/chromium>
