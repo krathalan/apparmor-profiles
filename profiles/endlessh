@@ -1,0 +1,18 @@
+# AppArmor profile for endlessh ssh tarpit
+# Version of program profiled: git
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2021 (C) krathalan; Licensed under GPLv3
+
+abi <abi/3.0>,
+include <tunables/global>
+
+profile endlessh /usr/bin/endlessh {
+  include <abstractions/base>
+
+  /etc/endlessh.conf r,
+
+  # Networking
+  capability net_bind_service,
+  network inet stream,
+  network inet6 stream,
+}
