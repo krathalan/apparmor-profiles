@@ -18,6 +18,11 @@ profile irssi /usr/bin/irssi {
 
   # Networking
   include <abstractions/krathalans-networking>
+  network netlink raw,
+  network inet dgram,
+  network inet stream,
+  network inet6 dgram,
+  network inet6 stream,
 
   @{system_share_dirs}/irssi/** r,
 
