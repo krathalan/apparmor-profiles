@@ -11,6 +11,11 @@ profile transmission-cli /usr/bin/transmission* {
 
   # Networking
   include <abstractions/krathalans-networking>
+  network netlink raw,
+  network inet dgram,
+  network inet stream,
+  network inet6 dgram,
+  network inet6 stream,
 
   # Allow access for writing downloaded files
   include <abstractions/krathalans-downloads>
