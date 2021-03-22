@@ -12,12 +12,12 @@ Table of contents:
 7. [Notes about each profile](#notes-about-each-profile)
 
 ## Notes about usage
-These AppArmor profiles have been tested on the following hardware:
+These AppArmor profiles are tested on the following hardware:
 
 - CPUs:
     - Intel 4960K
     - Intel 8250U
-    - AMD Ryzen 3100
+    - AMD Ryzen 5600x
     - AMD EPYC 7601
 - GPUs:
     - NVIDIA GeForce GTX 980 Ti with proprietary drivers
@@ -25,7 +25,9 @@ These AppArmor profiles have been tested on the following hardware:
 - Network adapters:
     - Intel Wireless-AC 9260
     - Intel Wi-Fi 6 AX200
-- Bluetooth adapters (bluetoothd):
+    - Realtek RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
+    - Virtio virtual ethernet card
+- Bluetooth adapters:
     - Intel Wireless-AC 9260
     - Intel Wi-Fi 6 AX200
 
@@ -70,7 +72,7 @@ Don't forget to enforce!
 
 `$ sudo aa-enforce /etc/apparmor.d/nvidia_modprobe`
 
-You will also have to add `#include <abstractions/krathalans-hwaccel-nvidia>` to the Firefox, MPV, and VSCodium local profile override files in `/etc/apparmor.d/local`. Alternatively, you can simply copy all files from `local/nvidia` in this repository into `/etc/apparmor.d/local` and run `sudo systemctl reload apparmor.service`.
+You will also have to add `#include <abstractions/krathalans-hwaccel-nvidia>` to the `firefox`, `mpv`, and `code` local profile override files in `/etc/apparmor.d/local`. Alternatively, you can simply copy all files from `local/nvidia` in this repository into `/etc/apparmor.d/local` and run `sudo systemctl reload apparmor.service`.
 
 ## Issues
 Please file bug reports, requests, etc. at https://todo.sr.ht/~krathalan/apparmor-profiles
@@ -91,9 +93,11 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 ⚠️ This symbol means you may/will need to add local changes for your specific configuration. You can find more information for the specific profile by clicking on its name or simply scrolling down. You may not have to add any local changes, however -- many profiles work with the default configurations for that program.
 
 - bluetoothd
+- [chromium ⚠️](#chromium)
 - [code ⚠️](#code)
 - [cupsd ⚠️](#cupsd)
 - [Discord ⚠️](#discord)
+- endlessh
 - [epiphany (GNOME Web) ⚠️](#epiphany)
 - [evince ⚠️](#evince)
 - [Firefox ⚠️](#firefox)
@@ -110,12 +114,12 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - [micro ⚠️](#micro)
 - mosh
 - [mpv ⚠️](#mpv)
-- [mutt ⚠️](#mutt)
 - [nginx ⚠️](#nginx)
 - [pash ⚠️](#pash)
+- pipewire
 - [polybar ⚠️](#polybar)
 - [postfix ⚠️](#postfix)
-- pulseaudio
+- postgrey
 - [radicale ⚠️](#radicale)
 - [redshift ⚠️](#redshift)
 - rngd
@@ -132,10 +136,16 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - [vdirsyncer ⚠️](#vdirsyncer)
 - [waybar ⚠️](#waybar)
 - wl-copy-paste
+- wlsunset
 - wob
 - xclip
 - [xob ⚠️](#xob)
 - [youtube-dl ⚠️](#youtube-dl)
+
+### chromium
+This profile has been tested with the `ungoogled-chromium` AUR package ONLY, on both Xorg and Sway (with `--enable-features=UseOzonePlatform --ozone-platform=wayland`).
+
+The only directory in the home directory that chromium is allowed to access is `~/{D,d}ownloads/`. You won't be able to, for example, upload things to the web from your Documents directory. You'll need to copy the file to your downloads directory first.
 
 ### code
 You will need to add local changes to edit files that are not:
@@ -232,12 +242,15 @@ You may need to add local changes to allow `postfix` to access your HTTPS certif
 These profiles may not work depending on your configuration. Patches accepted.
 
 ### radicale
-You may need to add local changes to allow `radicale` to access your `htpasswd` file, if you keep it somewhere other than `/etc/radicale/`.
-You may need to add local changes to allow `radicale` to access your storage directory, if you keep it somewhere other than `/var/lib/radicale/`.
-You may need to add local changes to allow `radicale` to access your HTTPS certificates, if you keep them somewhere other than `/etc/letsencrypt/`.
+You may need to add local changes to allow `radicale` to access your:
+- `htpasswd` file, if you keep it somewhere other than `/etc/radicale/`.
+- storage directory, if you keep it somewhere other than `/var/lib/radicale/`.
+- or HTTPS certificates, if you keep them somewhere other than `/etc/letsencrypt/`.
+
+Make sure you check the user/group permissions on your `htpasswd` file!
 
 ### redshift
-This profile has been tested to work correctly on Xorg with the `redshift` repo package and on Sway with the `redshift-wlr-gamma-control` AUR package.
+This profile has been tested to work correctly on Xorg with the `redshift` repo package.
 
 You may need to add local changes to allow `redshift` to access your configuration file, if it's a symlink to somewhere other than `~/.config/redshift/`.
 
@@ -286,10 +299,13 @@ You will need to add local changes if you wish to download videos to any directo
 - Gedit
 - Hexchat
 - KeepassXC
+- mutt
 - NetworkManager
 - pass
-- pipewire
+- pulseaudio
 - undervolt-py
 - wpa_supplicant
 
 These are profiles which I used to keep updated with their packaged versions, but now do not -- most likely because I have found an alternative program (e.g. Hexchat --> irssi) that I have a new AppArmor profile for. If you wish to maintain one of these profiles please submit patches!
+
+Sometimes I will resurrect these profiles if I see fit (e.g. pipewire).
