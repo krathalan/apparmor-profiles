@@ -25,8 +25,7 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   # Chromium/Electron spawns and uses multiple processes
   @{system_share_dirs}/vscodium-bin/{,**} mr,
   /usr/lib/code/{,**} mr,
-  /usr/lib/electron/electron rix,
-  /usr/lib/electron9/electron rix,
+  /usr/lib/electron*/electron rix,
   /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code,code-oss,code.js,codium} rpx,
 
   # Hwaccel
