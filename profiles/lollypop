@@ -1,5 +1,5 @@
 # AppArmor profile for lollypop music player
-# Version of lollypop profiled: 1.4.17
+# Version of lollypop profiled: 1.4.18
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
@@ -45,6 +45,7 @@ profile lollypop /usr/bin/lollypop {
   /usr/bin/lollypop r,
   @{system_share_dirs}/glib*/** r,
   @{system_share_dirs}/lollypop/** r,
+  @{system_share_dirs}/ladspa/{,**} r,
 
   owner @{HOME}/.cache/lollypop*/ rw,
   owner @{HOME}/.cache/lollypop*/** rwlk,
