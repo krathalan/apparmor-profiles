@@ -1,0 +1,29 @@
+# AppArmor profile for nitter alternative twitter front-end
+# Version of program profiled: git
+# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright 2021 (C) krathalan; Licensed under GPLv3
+
+abi <abi/3.0>,
+include <tunables/global>
+
+profile nitter /usr/{bin/nitter,share/nitter/nitter} {
+  include <abstractions/base>
+
+  # Networking
+  include <abstractions/krathalans-networking>
+  network inet dgram,
+  network inet stream,
+  network inet6 dgram,
+  network inet6 stream,
+
+  # Nitter files
+  /usr/bin/nitter r,
+  @{system_share_dirs}/nitter/nitter rPx,
+  @{system_share_dirs}/nitter/{,**} r,
+
+  # Conf
+  /etc/nitter.conf r,
+
+  # Deny unnecessary permissions
+  deny @{PROC}/** r,
+}
