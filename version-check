@@ -126,7 +126,7 @@ check_profile()
   if [[ "${installedVersion}" == "not" ]]; then
     printf "%s %s installed\n" "${profile}" "${installedVersion}" >> "${OUTPUTFILEGOOD}"
   elif [[ "${profiledVersion}" == "git" ]]; then
-    printf "%s installed, %s version profiled (unknown)" "${profile}" "${profiledVersion}" >> "${OUTPUTFILEGOOD}"
+    printf "%s installed, %s version profiled (unknown)\n" "${profile}" "${profiledVersion}" >> "${OUTPUTFILEGOOD}"
   elif [[ ! "${installedVersion}" == "${profiledVersion}" ]]; then
     printf "%s%s %s installed; %s profiled%s\n" "${RED}" "${profile}" "${installedVersion}" "${profiledVersion}" "${NC}" >> "${OUTPUTFILEBAD}"
   else
