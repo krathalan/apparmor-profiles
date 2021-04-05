@@ -78,7 +78,7 @@ check_profile()
   local profile="$1"
 
   local profiledVersion
-  profiledVersion="$(grep "Version of program profiled" "/etc/apparmor.d/${profile}")"
+  profiledVersion="$(grep -E "Version of.*profiled" "/etc/apparmor.d/${profile}")"
   profiledVersion="${profiledVersion##* }"
 
   # Fix some profile names being different than their package name
