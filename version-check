@@ -145,9 +145,9 @@ check_profile()
 #######################################
 clean_up()
 {
-    if [[ -d "${TMPDIR}" ]]; then
-        rm -rf "${TMPDIR}"
-    fi
+  if [[ -d "${TMPDIR}" ]]; then
+    rm -rf "${TMPDIR}"
+  fi
 }
 
 # -----------------------------------------
