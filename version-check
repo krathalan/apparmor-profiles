@@ -77,15 +77,9 @@ check_profile()
 {
   local profile="$1"
 
-  # Make sure we're only checking Krathalan's profiles
-  if ! grep --quiet --directories=skip "# AppArmor profile for" "${profile}"; then
-    return
-  fi
-
-  profiledVersion="$(grep Version "${profile}" 2> /dev/null | grep -v deny | awk '{print $NF}' || printf "(Problem printing info)")"
-
-  # Remove preceding directories prefix
-  profile="${profile##*/}"
+  local profiledVersion
+  profiledVersion="$(grep "Version of program profiled" "/etc/apparmor.d/${profile}")"
+  profiledVersion="${profiledVersion##* }"
 
   # Fix some profile names being different than their package name
   case "${profile}" in
@@ -121,7 +115,7 @@ check_profile()
   esac
 
   local installedVersion
-  installedVersion="$(pacman -Qi "${profile}" 2> /dev/null | grep Version | awk '{printf $3}' || printf "not")"
+  installedVersion="$(pacman -Qi "${profile}" 2> /dev/null | grep Version | cut -d' ' -f11 || printf "not")"
 
   # Remove package release suffix from installed version
   installedVersion="${installedVersion%%-*}"
@@ -131,6 +125,8 @@ check_profile()
 
   if [[ "${installedVersion}" == "not" ]]; then
     printf "%s %s installed\n" "${profile}" "${installedVersion}" >> "${OUTPUTFILEGOOD}"
+  elif [[ "${profiledVersion}" == "git" ]]; then
+    printf "%s installed, %s version profiled (unknown)" "${profile}" "${profiledVersion}" >> "${OUTPUTFILEGOOD}"
   elif [[ ! "${installedVersion}" == "${profiledVersion}" ]]; then
     printf "%s%s %s installed; %s profiled%s\n" "${RED}" "${profile}" "${installedVersion}" "${profiledVersion}" "${NC}" >> "${OUTPUTFILEBAD}"
   else
@@ -170,8 +166,11 @@ if [[ $# -gt 0 ]]; then
   fi
 fi
 
-for profile in /etc/apparmor.d/*; do
-  check_profile "${profile}" &
+# Get list of my profiles :)
+mapfile -t list_of_profiles <<< "$(pacman -Qlq krathalans-apparmor-profiles-git | grep -vE 'usr|abstr|/$')"
+
+for profile in "${list_of_profiles[@]}"; do
+  check_profile "${profile##*/}" &
 done
 
 wait
