@@ -92,14 +92,6 @@ check_profile()
     mbsync)
       profile="isync"
       ;;
-    NetworkManager)
-      profile="networkmanager"
-      ;;
-    postfix*)
-      [[ "${profile}" != "postfix-master" ]] &&
-        return
-      profile="postfix"
-      ;;
     rngd)
       profile="rng-tools"
       ;;
