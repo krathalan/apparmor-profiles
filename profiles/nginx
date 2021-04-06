@@ -34,4 +34,8 @@ profile nginx /usr/bin/nginx {
 
   # Logs
   /var/log/nginx/{,**} rw,
+
+  # Deny unnecessary permissions
+  deny @{PROC}/cmdline r,
+  deny @{PROC}/sys/kernel/osrelease r,
 }
