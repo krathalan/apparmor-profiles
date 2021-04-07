@@ -51,46 +51,16 @@ profile NetworkManager /usr/bin/NetworkManager {
   owner /etc/machine-id r,
   owner /etc/passwd r,
   owner @{PROC}/sys/net/** rw,
-  owner /{,var/}run/NetworkManager/ w,
-  owner /{,var/}run/NetworkManager/** rw,
-  owner /var/lib/NetworkManager/ r,
-  owner /var/lib/NetworkManager/** rw,
+  owner /{,var/}run/NetworkManager/{,**} rw,
+  owner /var/lib/NetworkManager/{,**} rw,
 
   # Resolvconf
-  /usr/bin/systemctl rCx,
-  /usr/bin/resolvconf rCx,
-
-  profile resolvconf /usr/bin/resolvconf {
-    #include <abstractions/base>
-    #include <abstractions/krathalans-hardening>
-
-    /usr/bin/{bash,dash} rix,
-    /usr/bin/cp rix,
-    /usr/bin/resolvconf r,
-    /usr/bin/systemctl rCx,
-
-    # Helper programs
-    /usr/bin/{cat,rm,mkdir} rix,
-
-    # Needed to function
-    owner / r,
-    /etc/resolv* rw,
-    /{,var/}run/resolvconf/{,**} rw,
-  }
-
-  profile systemctl /usr/bin/systemctl {
-    #include <abstractions/base>
-    #include <abstractions/krathalans-hardening>
-
-    capability sys_resource,
-    ptrace read peer=unconfined,
-
-    owner @{PROC}/@{pid}/{,**} r,
-    owner @{PROC}/cmdline r,
-  }
+  owner /etc/resolv.conf* rw,
 
   # Silence unnecessary permissions
   deny / r,
+  deny /etc/ r,
+  deny @{PROC}/cmdline r,
   deny @{PROC}/sys/kernel/osrelease r,
   deny @{PROC}/sys/kernel/random/boot_id r,
 }
