@@ -58,6 +58,8 @@ profile NetworkManager /usr/bin/NetworkManager {
   owner /etc/resolv.conf* rw,
 
   # Silence unnecessary permissions
+  deny capability kill,
+  deny ptrace read peer=unconfined,
   deny / r,
   deny /etc/ r,
   deny @{PROC}/cmdline r,

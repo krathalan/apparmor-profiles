@@ -42,6 +42,9 @@ profile mbsync /usr/bin/mbsync {
 
     # Include user overrides for different GNUPG directories
     include if exists <local/mbsync>
+
+    # Deny unnecessary permissions
+    deny network inet6 stream,
   }
 
   # Include user overrides for possible symlinked config files and different

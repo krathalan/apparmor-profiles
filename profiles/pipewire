@@ -1,5 +1,5 @@
 # AppArmor profile for pipewire media processor
-# Version of pipewire profiled: 1:0.3.24
+# Version of pipewire profiled: 1:0.3.25
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
@@ -17,6 +17,7 @@ profile pipewire /usr/bin/pipewire {
   include if exists <local/pipewire>
 
   # Misc
+  ptrace read peer=unconfined,
   ptrace read peer=pipewire-media-session,
   ptrace read peer=pipewire-pulse,
   owner /run/user/*/pipewire*.lock rwk,
@@ -44,6 +45,7 @@ profile pipewire-pulse /usr/bin/pipewire-pulse {
   ptrace read peer=firefox,
   ptrace read peer=mpv,
   ptrace read peer=lollypop,
+  ptrace read peer=polybar,
   ptrace read peer=waybar,
   ptrace read peer=unconfined,
   ptrace read peer=ungoogled-chromium,

@@ -1,5 +1,5 @@
 # AppArmor profile for postfix mail transport agent
-# Version of program profiled: 3.5.9
+# Version of program profiled: 3.5.10
 # Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
@@ -96,7 +96,7 @@ profile postfix-cleanup /usr/lib/postfix/bin/cleanup {
 
   # Mail data
   /var/spool/postfix/incoming/{,**} rw,
-} 
+}
 
 profile postfix-error /usr/lib/postfix/bin/error {
   #include <abstractions/base>
