@@ -48,6 +48,7 @@ profile pipewire-pulse /usr/bin/pipewire-pulse {
   ptrace read peer=mpv,
   ptrace read peer=lollypop,
   ptrace read peer=polybar,
+  ptrace read peer=signal-desktop,
   ptrace read peer=waybar,
   ptrace read peer=unconfined,
   ptrace read peer=ungoogled-chromium,
