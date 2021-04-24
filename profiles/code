@@ -1,5 +1,5 @@
 # AppArmor profile for VSCodium and VS Code editor
-# Version of VSCode/ium profiled: 1.52.1
+# Version of VSCode/ium profiled: 1.55.2
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021-2020 (C) krathalan; Licensed under GPLv3
 
@@ -162,6 +162,6 @@ profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code
   deny @{sys}/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
   deny @{system_share_dirs}/bash-completion/bash_completion r,
   deny /{,var/}run/systemd/userdb/ r,
-  deny @{HOME}/.cache/{,**} r,
+  deny @{HOME}/.cache/{,**} rw,
   deny @{HOME}/.pki/{,**} rw,
 }
