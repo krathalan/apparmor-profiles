@@ -1,5 +1,5 @@
 # AppArmor profile for polybar system bar for Xorg
-# Version of program profiled: 3.5.4
+# Version of program profiled: 3.5.5
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2021 (C) krathalan, mortezadadgar; Licensed under GPLv3
 
