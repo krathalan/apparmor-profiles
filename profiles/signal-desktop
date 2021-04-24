@@ -1,5 +1,5 @@
 # AppArmor profile for signal-desktop messenger
-# Version of signal-desktop profiled: 1.40.1
+# Version of signal-desktop profiled: 5.0.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2021 (C) krathalan; Licensed under GPLv3
 
@@ -55,10 +55,16 @@ profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-deskto
     /usr/lib/signal-desktop/chrome-sandbox r,
     /usr/lib/signal-desktop/signal-desktop rPx,
 
+    capability dac_override,
     capability setuid,
     capability setgid,
     capability sys_admin,
     capability sys_chroot,
+    capability sys_ptrace,
+    ptrace read peer=signal-desktop,
+
+    @{PROC}/*/ r,
+    @{PROC}/*/{oom_adj,oom_score_adj} w,
   }
 
   # Hardware acceleration
@@ -92,11 +98,13 @@ profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-deskto
   deny @{PROC}/sys/kernel/random/boot_id r,
   deny @{PROC}/sys/kernel/yama/ptrace_scope r,
   deny @{PROC}/*/cgroup r,
+  deny @{PROC}/*/cmdline r,
   deny @{PROC}/*/comm r,
   deny @{PROC}/*/mountinfo r,
   deny @{PROC}/*/mounts r,
   deny @{PROC}/*/setgroups w,
   deny @{PROC}/*/stat r,
+  deny @{PROC}/*/statm r,
   deny @{PROC}/*/task/{,**} r,
 
   # Misc
