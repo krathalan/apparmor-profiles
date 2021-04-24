@@ -33,7 +33,7 @@ These AppArmor profiles are tested on the following hardware:
 
 I cannot guarantee that these profiles will work on any other hardware. All profiles should work with Xorg on NVIDIA hardware, and with Sway (and probably Xorg) on Intel hardware. It's very possible these profiles will still work with AMD graphics, as it seems AMD graphics share a lot of similar behavior with Intel graphics. If you own an NVIDIA card, please read the NVIDIA section below.
 
-These profiles strive to be fully functional with zero audit log warnings under proper behavior. Functionality is not ignored. If functionality is not explicitly blocked, then it's probably a bug in the profile and should be fixed. Create an issue: https://todo.sr.ht/~krathalan/apparmor-profiles
+These profiles strive to be fully functional with zero audit log warnings under proper behavior. Functionality is not ignored. If functionality is not explicitly blocked, then it's probably a bug in the profile and should be fixed. Create an issue: https://github.com/krathalan/apparmor-profiles/issues
 
 You should read through [the notes about each profile](#notes-about-each-profile) before using these profiles.
 
@@ -41,7 +41,7 @@ You should read through [the notes about each profile](#notes-about-each-profile
 I keep a PKGBUILD for Arch Linux in a personal repository. Build and install the package with the following commands:
 
 ```
-$ git clone https://git.sr.ht/~krathalan/pkgbuilds
+$ git clone https://github.com/krathalan/pkgbuilds
 $ cd pkgbuilds/krathalans-apparmor-profiles-git/
 $ cat PKGBUILD # Always inspect PKGBUILDS before running makepkg!
 $ makepkg -i
@@ -75,7 +75,7 @@ Don't forget to enforce!
 You will also have to add `#include <abstractions/krathalans-hwaccel-nvidia>` to the `firefox`, `mpv`, and `code` local profile override files in `/etc/apparmor.d/local`. Alternatively, you can simply copy all files from `local/nvidia` in this repository into `/etc/apparmor.d/local` and run `sudo systemctl reload apparmor.service`.
 
 ## Issues
-Please file bug reports, requests, etc. at https://todo.sr.ht/~krathalan/apparmor-profiles
+Please file bug reports, requests, etc. at https://github.com/krathalan/apparmor-profiles/issues
 
 ## Contributing
 Writing AppArmor profiles is fairly easy. "If you know how to use bash, chmod, and grep, you already understand AppArmor and you can probably reverse-engineer the policy by yourself," at 13:25 in the video: https://invidio.us/watch?v=k3kerBRYLhw
