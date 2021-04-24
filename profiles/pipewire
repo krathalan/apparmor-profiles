@@ -21,6 +21,7 @@ profile pipewire /usr/bin/pipewire {
   ptrace read peer=pipewire-media-session,
   ptrace read peer=pipewire-pulse,
   owner /run/user/*/pipewire*.lock rwk,
+  @{sys}/devices/virtual/dmi/id/* r,
 
   # Deny unnecessary permissions
   deny / r,
@@ -38,6 +39,7 @@ profile pipewire-pulse /usr/bin/pipewire-pulse {
 
   # Misc
   owner /run/user/*/pulse/{,**} rw,
+  @{sys}/devices/virtual/dmi/id/* r,
 
   # Necessary to control volume levels
   capability sys_ptrace,
@@ -63,6 +65,9 @@ profile pipewire-media-session /usr/bin/pipewire-media-session {
   /etc/pipewire/{,**} r,
   @{system_share_dirs}/alsa-card-profile/{,**} r,
   @{HOME}/.config/pipewire/{,**} rw,
+
+  # Misc
+  /run/systemd/users/* r,
 
   # Local overrides
   include if exists <local/pipewire>

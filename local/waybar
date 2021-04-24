@@ -2,7 +2,7 @@
 /usr/bin/wbm_{battery,vpn} rPx,
 
 # View a list of X windows
-/usr/bin/{gawk,xlsclients} rix,
+/usr/bin/{gawk,sed,xlsclients} rix,
 
 # Fix systemd-networkd issues
 owner @{HOME}/documents/config/scripts/waybar_network.sh r,
