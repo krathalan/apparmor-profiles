@@ -1,5 +1,5 @@
 # AppArmor profile for undervolt.py (https://github.com/georgewhewell/undervolt)
-# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
 #include <tunables/global>

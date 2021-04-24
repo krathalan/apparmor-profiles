@@ -1,6 +1,6 @@
 # AppArmor profile for haveged entropy harvesting daemon
 # Version of program profiled: 1.9.14
-# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2009-2012 Steve Kostecke <steve@debian.org>;
 #           2011-2014 Jérémy Bobbio <lunar@debian.org>;
 #           2020 krathalan

@@ -1,7 +1,7 @@
 # AppArmor profile for waybar system bar for Wayland
 # Version of waybar profiled: 0.9.7
-# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
-# Copyright 2019 (C) krathalan; Licensed under GPLv3
+# Homepage: https://github.com/krathalan/apparmor-profiles
+# Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>

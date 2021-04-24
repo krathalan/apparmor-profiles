@@ -1,7 +1,7 @@
 # AppArmor profile for micro text editor
 # Version of program profiled: 2.0.8
-# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
-# Copyright 2020 (C) krathalan; Licensed under GPLv3
+# Homepage: https://github.com/krathalan/apparmor-profiles
+# Copyright 2020-2021 (C) krathalan; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>

@@ -1,6 +1,6 @@
 # AppArmor profile for gedit editor
 # Version of gedit profiled: 3.36.0
-# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
 #include <tunables/global>

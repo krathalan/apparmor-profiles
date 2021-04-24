@@ -1,6 +1,6 @@
 # AppArmor profile for mutt mail client
 # Version of program profiled: 1.14.6
-# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
 abi <abi/3.0>,

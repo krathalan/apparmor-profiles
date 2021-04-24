@@ -1,8 +1,8 @@
 # AppArmor profile for firefox browser
 # Version of firefox profiled: 88.0
 # This profile should work on Developer Edition and Nightly as well
-# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
-# Copyright 2019-2020 (C) krathalan, mortezadadgar; Licensed under GPLv3
+# Homepage: https://github.com/krathalan/apparmor-profiles
+# Copyright 2019-2021-2020 (C) krathalan, mortezadadgar; Licensed under GPLv3
 
 # Forked from https://gitlab.com/madaidan/apparmor-profiles, provided without
 # license

@@ -1,7 +1,7 @@
 # AppArmor profile for discord(_arch_electron AUR version) proprietary chat program
 # Version of discord_arch_electron profiled: 0.0.12
-# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
-# Copyright 2019-2020 (C) krathalan; Licensed under GPLv3
+# Homepage: https://github.com/krathalan/apparmor-profiles
+# Copyright 2019-2021-2020 (C) krathalan; Licensed under GPLv3
 
 # This profile assumes you only want to upload files from `~/{D,d}ownloads`.
 # If you do not, add local changes. Discord does not need access to your whole

@@ -1,8 +1,8 @@
 # AppArmor profile for mosh mobile shell
 # Only meant to be used on clients -- NOT SERVERS!
 # Version of mosh profiled: 1.3.2
-# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
-# Copyright 2019 (C) krathalan; Licensed under GPLv3
+# Homepage: https://github.com/krathalan/apparmor-profiles
+# Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>

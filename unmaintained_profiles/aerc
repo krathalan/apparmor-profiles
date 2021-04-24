@@ -1,6 +1,6 @@
 # AppArmor profile for aerc TUI email client
 # Version of aerc profiled: 0.4.0
-# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles/
+# Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
 #include <tunables/global>
