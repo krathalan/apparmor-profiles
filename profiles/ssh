@@ -10,6 +10,9 @@ profile ssh /usr/bin/ssh {
   include <abstractions/base>
   include <abstractions/perl>
 
+  # Local overrides
+  include if exists <local/ssh>
+
   # Executables
   /usr/bin/{bash,dash} mrix,
   /usr/bin/env r,
