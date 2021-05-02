@@ -10,7 +10,7 @@ profile code-wayland /usr/{bin,lib/code-wayland}/{code,code-wayland,code.js} {
   include <abstractions/base>
 
   /usr/{bin,lib/code-wayland}/{code,code-wayland,code.js} r,
-  /usr/lib/electron/electron rPx,
+  /usr/{bin,lib/electron}/electron rPx,
 
   /usr/lib/code-wayland/{,**} r,
 
@@ -19,13 +19,14 @@ profile code-wayland /usr/{bin,lib/code-wayland}/{code,code-wayland,code.js} {
   deny /dev/pts/* rw,
 }
 
-profile electron /usr/lib/electron/electron {
+profile electron /usr/{bin,lib/electron}/electron {
   include <abstractions/base>
   include <abstractions/fonts>
   include <abstractions/krathalans-common-gui>
 
   # Electron spawns multiple processes
-  /usr/lib/electron/electron rPx,
+  /usr/bin/{bash,dash} rix,
+  /usr/{bin,lib/electron}/electron rPx,
   owner /dev/shm/.org.chromium.Chromium.* rw,
   owner /tmp/.org.chromium.Chromium.* rw,
 
