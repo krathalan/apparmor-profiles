@@ -135,15 +135,12 @@ You can find more information for the specific profile by clicking on its name. 
 
 - [chromium](#chromium)
 - [code](#code)
-- [Discord](#discord)
 - [evince](#evince)
 - [Firefox](#firefox)
 - [gpg-agent](#gpg-agent)
 - [imv](#imv)
-- [irssi](#irssi)
 - [khard](#khard)
 - [Lollypop](#lollypop)
-- [mako](#mako)
 - [mbsync](#mbsync)
 - [micro](#micro)
 - [mpv](#mpv)
@@ -152,7 +149,6 @@ You can find more information for the specific profile by clicking on its name. 
 - [polybar](#polybar)
 - [postfix](#postfix)
 - [radicale](#radicale)
-- [redshift](#redshift)
 - [ssh](#ssh)
 - [ssh-agent](#ssh-agent)
 - [streamlink](#streamlink)
@@ -161,7 +157,6 @@ You can find more information for the specific profile by clicking on its name. 
 - [transmission-cli](#transmission-cli)
 - [vdirsyncer](#vdirsyncer)
 - [waybar](#waybar)
-- [xob](#xob)
 
 ### chromium
 This profile has been tested with the `ungoogled-chromium` AUR package ONLY, on both Xorg and Sway (with `--enable-features=UseOzonePlatform --ozone-platform=wayland`).
