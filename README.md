@@ -34,16 +34,9 @@ These profiles strive to be fully functional with zero audit log warnings under 
 You should read through [the notes](#notes) before using these profiles.
 
 ## Installation
-I keep a PKGBUILD for Arch Linux in a personal repository. Build and install the package with the following commands:
+Get `krathalans-apparmor-profiles-git` from the AUR: https://aur.archlinux.org/packages/krathalans-apparmor-profiles-git/
 
-```
-$ git clone https://github.com/krathalan/pkgbuilds
-$ cd pkgbuilds/krathalans-apparmor-profiles-git/
-$ cat PKGBUILD # Always inspect PKGBUILDS before running makepkg!
-$ makepkg -i
-```
-
-For any other distro, simply copy the profiles in the `profiles/` folder of this repository to `/etc/apparmor.d/`.
+For any other distro, simply copy the files in the `profiles/` folder of this repository to `/etc/apparmor.d/`, and the files in the `abstractions/` folder of this repository to `/etc/apparmor.d/abstractions`.
 
 Don't forget to rebuild or recopy every so often :)
 
@@ -131,9 +124,10 @@ See [adding local overrides](#adding-local-overrides) for more information.
 The only directory (apart from program-specific config or data directories, such as those in `~/.config`) in the home directory that these profiles are allowed to read and write to is `~/{D,d}ownloads/`. You won't be able to, for example, upload things to the web from your `~/Documents` directory. You'll need to copy the file to your `~/{D,d}ownloads/` directory first, or [add local overrides](#adding-local-overrides).
 
 - chromium
-- youtube-dl
 - discord
+- firefox
 - transmission-cli
+- youtube-dl
 
 ## Other miscellaneous notes
 
