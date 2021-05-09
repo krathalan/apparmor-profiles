@@ -3,15 +3,15 @@ AppArmor profiles for various programs and services on Arch Linux.
 
 Table of contents:
 
-1. [Notes about usage](#notes-about-usage)
-2. [Abstractions](#abstractions)
-3. [Adding local overrides](#adding-local-changes)
+1. [Hardware](#hardware)
+2. [Installation](#installation)
+3. [Adding local overrides](#adding-local-overrides)
 4. [NVIDIA](#nvidia)
 5. [Issues](#issues)
 6. [Contributing](#contributing)
-7. [Notes about each profile](#notes-about-each-profile)
+7. [Notes](#notes)
 
-## Notes about usage
+## Hardware
 These AppArmor profiles are tested on the following hardware:
 
 - CPUs:
@@ -82,11 +82,9 @@ To get started writing AppArmor profiles, I highly recommend this video from ope
 
 You may also find this document incredibly helpful: https://gitlab.com/apparmor/apparmor/wikis/AppArmor_Core_Policy_Reference
 
----
-
 # Notes
 
-## Profiles that should work with zero configuration... always™
+## Profiles that should work with Zero Configuration™
 
 - bluetoothd
 - haveged
@@ -107,73 +105,87 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 
 ## Profiles which have config files that may be symlinks
 
-If you use a program like GNU `stow` to manage your dotfiles via symlinks, you may run in to issues using these AppArmor profiles. You will need to add local overrides to allow that program to access the real location of your config file(s) that the symlink(s) point to. For example, I keep my dotfiles at `~/documents/config/...` and use `stow` to keep them in `~/.config`. For the polybar profile, I have the file `/etc/apparmor/local/polybar` with the following snippet: 
+If you use a program like GNU `stow` to manage your dotfiles via symlinks, you may run in to issues using these AppArmor profiles. You will need to [add local overrides](#adding-local-overrides) to allow that program to access the real location of your config file(s) that the symlink(s) point to. For example, I keep my dotfiles at `~/documents/config/...` and use `stow` to keep them in `~/.config`. For the polybar profile, I have the file `/etc/apparmor/local/polybar` with the following snippet: 
 
 ```
 # Config file at ~/.config/polybar/config is a symlink to this file
 owner @{HOME}/documents/config/xorg-config/.config/polybar/config r,
 ```
 
+See [adding local overrides](#adding-local-overrides) for more information.
+
+- irssi
+- khard
+- mako
+- micro
+- mpv
+- polybar
+- redshift
+- transmission-cli
+- vdirsyncer
+- waybar
+- xob
+
 ## Profiles which only allow r/w in ~/{D,d}ownloads
 
-The only directory (apart from program-specific config or data directories, such as those in `~/.config`) in the home directory that these profiles are allowed to read and write to is `~/{D,d}ownloads/`. You won't be able to, for example, upload things to the web from your `~/Documents` directory. You'll need to copy the file to your `~/{D,d}ownloads/` directory first, or add local overrides.
+The only directory (apart from program-specific config or data directories, such as those in `~/.config`) in the home directory that these profiles are allowed to read and write to is `~/{D,d}ownloads/`. You won't be able to, for example, upload things to the web from your `~/Documents` directory. You'll need to copy the file to your `~/{D,d}ownloads/` directory first, or [add local overrides](#adding-local-overrides).
 
 - chromium
 - youtube-dl
 - discord
 - transmission-cli
 
-## Detailed notes about more complex profiles
+## Other miscellaneous notes
 
-⚠️ This symbol means you may/will need to add local overrides for your specific configuration. You can find more information for the specific profile by clicking on its name or simply scrolling down. You may not have to add any local overrides, however -- many profiles work with the default configurations for that program.
+You can find more information for the specific profile by clicking on its name. You may not have to add any local overrides, however -- many profiles work with the default configurations for that program.
 
-- [chromium ⚠️](#chromium)
-- [code ⚠️](#code)
-- [Discord ⚠️](#discord)
-- [evince ⚠️](#evince)
-- [Firefox ⚠️](#firefox)
-- [gpg-agent ⚠️](#gpg-agent)
-- [imv ⚠️](#imv)
-- [irssi ⚠️](#irssi)
-- [khard ⚠️](#khard)
-- [Lollypop ⚠️](#lollypop)
-- [mako ⚠️](#mako)
-- [mbsync ⚠️](#mbsync)
-- [micro ⚠️](#micro)
-- [mpv ⚠️](#mpv)
-- [nginx ⚠️](#nginx)
-- [pash ⚠️](#pash)
-- [polybar ⚠️](#polybar)
-- [postfix ⚠️](#postfix)
-- [radicale ⚠️](#radicale)
-- [redshift ⚠️](#redshift)
-- [ssh ⚠️](#ssh)
-- [ssh-agent ⚠️](#ssh-agent)
-- [streamlink ⚠️](#streamlink)
-- [swaybg ⚠️](#swaybg)
-- [syncthing ⚠️](#syncthing)
-- [transmission-cli ⚠️](#transmission-cli)
-- [vdirsyncer ⚠️](#vdirsyncer)
-- [waybar ⚠️](#waybar)
-- [xob ⚠️](#xob)
+- [chromium](#chromium)
+- [code](#code)
+- [Discord](#discord)
+- [evince](#evince)
+- [Firefox](#firefox)
+- [gpg-agent](#gpg-agent)
+- [imv](#imv)
+- [irssi](#irssi)
+- [khard](#khard)
+- [Lollypop](#lollypop)
+- [mako](#mako)
+- [mbsync](#mbsync)
+- [micro](#micro)
+- [mpv](#mpv)
+- [nginx](#nginx)
+- [pash](#pash)
+- [polybar](#polybar)
+- [postfix](#postfix)
+- [radicale](#radicale)
+- [redshift](#redshift)
+- [ssh](#ssh)
+- [ssh-agent](#ssh-agent)
+- [streamlink](#streamlink)
+- [swaybg](#swaybg)
+- [syncthing](#syncthing)
+- [transmission-cli](#transmission-cli)
+- [vdirsyncer](#vdirsyncer)
+- [waybar](#waybar)
+- [xob](#xob)
 
 ### chromium
 This profile has been tested with the `ungoogled-chromium` AUR package ONLY, on both Xorg and Sway (with `--enable-features=UseOzonePlatform --ozone-platform=wayland`).
 
 ### code
-You will need to add local overrides to edit files that are not:
+You will need to [add local overrides](#adding-local-overrides) to edit files that are not:
 - in the base `~` directory (for files like `~/.bashrc`),
 - `~/.config/`,
 - `~/{D,d}ocuments/`,
 - and `~/{G,g}it/`.
 
-You will need to add local overrides if your VSCode/ium configuration files are somewhere other than `~/.config/VSCodium/`, `~/.config/Code - OSS`, and `~/.vscode-oss`, or if you use extensions which require files outside of the profile.
+You will need to [add local overrides](#adding-local-overrides) if your VSCode/ium configuration files are somewhere other than `~/.config/VSCodium/`, `~/.config/Code - OSS`, and `~/.vscode-oss`, or if you use extensions which require files outside of the profile.
 
 This profile will work with both the `code` repo package and the `vscodium-bin` AUR package.
 This profile is only allowed to open an AppArmor-confined Firefox when opening a URL.
 
 ### evince
-You will need to add local overrides if you wish to view documents that are not in `~/{D,d}ocuments/` or `~/{D,d}ownloads/`.
+You will need to [add local overrides](#adding-local-overrides) if you wish to view documents that are not in `~/{D,d}ocuments/` or `~/{D,d}ownloads/`.
 
 ### Firefox
 This profile has been tested with the `firefox` and `firefox-developer-edition` repo packages, on WebRender -- on the aforementioned hardware, on both Xorg and Sway. This single profile will apply to all Firefox versions.
@@ -182,113 +194,84 @@ This profile has been tested with the `firefox` and `firefox-developer-edition` 
 This profile will only work with the `pinentry-curses` pinentry program. As per the Arch Wiki (https://wiki.archlinux.org/index.php/GPG#pinentry), to use the curses pinentry, add the following to `~/.gnupg/gpg-agent.conf`:
 `pinentry-program /usr/bin/pinentry-curses`
 
-You may need to add local overrides to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg/`.
+You may need to [add local overrides](#adding-local-overrides) to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg/`.
 
 ### imv
-You will need to add local overrides if you wish to view images that are not in `~/{D,d}ownloads/`, `~/{P,p}ictures/`, or `~/{P,p}hotos/`.
-
-### irssi
-You may need to add local overrides to allow `irssi` to access your configuration files, if they are symlinks to somewhere other than inside `~/.irssi/` or `~/.config/irssi/`.
+You will need to [add local overrides](#adding-local-overrides) if you wish to view images that are not in `~/{D,d}ownloads/`, `~/{P,p}ictures/`, or `~/{P,p}hotos/`.
 
 ### khard
-You may need to add local overrides to allow `khard` to access your configuration files, if you keep them somewhere other than `~/.config/khard/`.
-You may need to add local overrides to allow `khard` to access your contact storage directory, if you keep it somewhere other than `~/.local/share/contacts`.
+You may need to [add local overrides](#adding-local-overrides) to allow `khard` to access your contact storage directory, if you keep it somewhere other than `~/.local/share/contacts`.
 
 ### Lollypop
-You will need to add local overrides if you wish to listen to music in directories other than `~/{M,m}usic/`.
+You will need to [add local overrides](#adding-local-overrides) if you wish to listen to music in directories other than `~/{M,m}usic/`.
 
 I have disabled all internet connectivity in this profile, so either submit patches or do not use it if you want to use features which require an internet connection.
 
-### mako
-You may need to add local overrides to allow `mako` to access your configuration file, if it's a symlink to somewhere other than inside `~/.config/mako/`.
-
 ### mbsync
-You may need to add local overrides to allow `mbsync` to access your mail storage directories, if they're somewhere other than `~/.local/share/mail/`.
+You may need to [add local overrides](#adding-local-overrides) to allow `mbsync` to access your mail storage directories, if they're somewhere other than `~/.local/share/mail/`.
 
 ### micro
-You may need to add local overrides to allow `micro` to access your configuration files, if there are symlinks to somewhere other than inside `~/.config/micro/`.
 
-Additionally, you may add local overrides to be able to view/edit files in directories other than `~/{D,d}ocuments/` and `~/{G,g}it/`.
+Additionally, you may [add local overrides](#adding-local-overrides) to be able to view/edit files in directories other than `~/{D,d}ocuments/` and `~/{G,g}it/`.
 
 ### mpv
-You may need to add local overrides to allow `mpv` to acces your configuration file, if it's a symlink to somehwere other than `~/.config/mpv/`.
-
 This profile allows mpv to utilize `youtube-dl` to stream videos and confines it in the `youtube-dl` AppArmor profile in this project. You will need the separate `youtube-dl` profile enabled for this functionality.
 
 This AppArmor profile also works when mpv is invoked by other programs like [streamlink](https://streamlink.github.io/). A streamlink profile is also available.
 
 Use the command line flag `--gpu-context=wayland` for Wayland support. Use the command line flag `--hwdec=auto` for hardware decoding. You can also tell `mpv` to always use these options [through a config file](https://mpv.io/manual/master/).
 
-### mutt
-You may need to add local overrides to allow `mutt` to access your configuration files, if there are symlinks to somewhere other than inside `~/.config/mutt/`.
-
-This profile only has support for `micro` and `nano` for composing emails. Pull requests are welcome for other editors.
-
 ### nginx
-You will need to add local overrides to allow `nginx` to access your hosted files (e.g. `index.html`, etc.).
-You may need to add local overrides to allow `nginx` to access your HTTPS certificates, if you keep them somewhere other than `/etc/letsencrypt/`.
+You will need to [add local overrides](#adding-local-overrides) to allow `nginx` to access your hosted files (e.g. `index.html`, etc.).
+You may need to [add local overrides](#adding-local-overrides) to allow `nginx` to access your HTTPS certificates, if you keep them somewhere other than `/etc/letsencrypt/`.
 
 This profile assumes you are running `nginx` as an unprivileged user via systemd: https://wiki.archlinux.org/index.php/Nginx#Running_unprivileged_using_systemd
 
 ### pash
-You may need to add local overrides to allow `pash` to access your password files and GNUPG files if they're somehwere other than `~/.local/share/pash/` and `~/.gnupg/` respectively.
+You may need to [add local overrides](#adding-local-overrides) to allow `pash` to access your password files and GNUPG files if they're somehwere other than `~/.local/share/pash/` and `~/.gnupg/` respectively.
 
 ### polybar
-You may need to add local overrides to allow `polybar` to access your configuration files, if you keep them somewhere other than `~/.config/polybar/`.
-
-You may need to add local overrides to allow `polybar` modules to work which I have not tested. I have tested the following modules to work: i3, xwindow, network, pulseaudio, cpu, date.
+You may need to [add local overrides](#adding-local-overrides) to allow `polybar` modules to work which I have not tested. I have tested the following modules to work: i3, xwindow, network, pulseaudio, cpu, date.
 
 ### postfix
-You may need to add local overrides to allow `postfix` to access your HTTPS certificates, if you keep them somewhere other than `/etc/letsencrypt/`.
+You may need to [add local overrides](#adding-local-overrides) to allow `postfix` to access your HTTPS certificates, if you keep them somewhere other than `/etc/letsencrypt/`.
 
 These profiles may not work depending on your configuration. Patches accepted.
 
 ### radicale
-You may need to add local overrides to allow `radicale` to access your:
+You may need to [add local overrides](#adding-local-overrides) to allow `radicale` to access your:
 - `htpasswd` file, if you keep it somewhere other than `/etc/radicale/`.
 - storage directory, if you keep it somewhere other than `/var/lib/radicale/`.
 - or HTTPS certificates, if you keep them somewhere other than `/etc/letsencrypt/`.
 
 Make sure you check the user/group permissions on your `htpasswd` file!
 
-### redshift
-This profile has been tested to work correctly on Xorg with the `redshift` repo package.
-
-You may need to add local overrides to allow `redshift` to access your configuration file, if it's a symlink to somewhere other than `~/.config/redshift/`.
-
 ### ssh
 This profile will work with [`mosh`, the mobile shell](https://mosh.org/), and with `git` for interacting with remote repositories. There's an AppArmor profile for `mosh` in this repository, and these profiles work together.
 
-You may need to add local overrides to allow `ssh` to access your SSH keys, if you keep them somewhere other than `~/.ssh/`.
+You may need to [add local overrides](#adding-local-overrides) to allow `ssh` to access your SSH keys, if you keep them somewhere other than `~/.ssh/`.
 
 ### ssh-agent
-You may need to add local overrides to allow `ssh-agent` access to your SSH keys, if you keep them somewhere other than `~/.ssh/`.
+You may need to [add local overrides](#adding-local-overrides) to allow `ssh-agent` access to your SSH keys, if you keep them somewhere other than `~/.ssh/`.
 
 ### streamlink
 You will need to set either `mpv` or `vlc` as your default player. You must have the separate `mpv` AppArmor profile from this repository enabled.
 
 ### swaybg
-You may need to add local overrides to allow `swaybg` to access your specified wallpaper, if you keep it somewhere other than `~/{P,p}ictures/{W,w}allpapers/`.
+You may need to [add local overrides](#adding-local-overrides) to allow `swaybg` to access your specified wallpaper, if you keep it somewhere other than `~/{P,p}ictures/{W,w}allpapers/`.
 
 ### syncthing
-You *will* need to add local overrides to allow `syncthing` to access your synced directories.
+You *will* need to [add local overrides](#adding-local-overrides) to allow `syncthing` to access your synced directories.
 
 ### transmission-cli
-You may need to add local overrides to allow `transmission-cli` to access your configuration files, if you keep them somewhere other than `~/.config/transmission*/`.
 
 This profile applies to all `transmission-*` binaries, including `transmission-daemon` and `transmission-remote`.
 
 ### vdirsyncer
-You may need to add local overrides to allow `vdirsyncer` to access your configuration files, if you keep them somewhere other than `~/.config/vdirsyncer/`.
-You may need to add local overrides to allow `vdirsyncer` to access your contact storage directory, if you keep it somewhere other than `~/.local/share/contacts`.
+You may need to [add local overrides](#adding-local-overrides) to allow `vdirsyncer` to access your contact storage directory, if you keep it somewhere other than `~/.local/share/contacts`.
 
 ### waybar
-You may need to add local overrides to allow `waybar` to access your configuration files, if you keep them somewhere other than `~/.config/waybar/`.
-
-You may need to add local overrides to allow `waybar` modules to work which I have not tested. I have tested the following modules to work: sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock, tray.
-
-### xob
-You may need to add local overrides to allow `xob` to access your configuration files, if you keep them somewhere other than `~/.config/xob/`.
+You may need to [add local overrides](#adding-local-overrides) to allow `waybar` modules to work which I have not tested. I have tested the following modules to work: sway/workspaces, sway/mode, sway/window, network, pulseaudio, cpu, clock, tray.
 
 # Unmaintained profiles
 
