@@ -1,5 +1,5 @@
 # Rules for allowing some common nameservice rules
-# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles
+# Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
   /etc/group r,

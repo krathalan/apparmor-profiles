@@ -1,6 +1,6 @@
 # Rules needed for hardware acceleration/decoding (NVIDIA)
 # Only enable this if you need it -- this makes the application much less secure
-# Homepage: https://git.sr.ht/~krathalan/apparmor-profiles
+# Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019 (C) krathalan; Licensed under GPLv3
 
   # NVIDIA
