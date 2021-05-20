@@ -1,5 +1,5 @@
 # AppArmor profile for pipewire media processor
-# Version of pipewire profiled: 1:0.3.26
+# Version of pipewire profiled: 1:0.3.28
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019-2021-2021 (C) krathalan; Licensed under GPLv3
 
@@ -22,6 +22,7 @@ profile pipewire /usr/bin/pipewire {
   ptrace read peer=pipewire-pulse,
   owner /run/user/*/pipewire*.lock rwk,
   @{sys}/devices/virtual/dmi/id/* r,
+  @{system_share_dirs}/pipewire/{,**} r,
 
   # Deny unnecessary permissions
   deny / r,
@@ -40,6 +41,7 @@ profile pipewire-pulse /usr/bin/pipewire-pulse {
   # Misc
   owner /run/user/*/pulse/{,**} rw,
   @{sys}/devices/virtual/dmi/id/* r,
+  @{system_share_dirs}/pipewire/{,**} r,
 
   # Necessary to control volume levels
   capability sys_ptrace,
@@ -69,6 +71,7 @@ profile pipewire-media-session /usr/bin/pipewire-media-session {
 
   # Misc
   /run/systemd/users/* r,
+  @{system_share_dirs}/pipewire/{,**} r,
 
   # Local overrides
   include if exists <local/pipewire>

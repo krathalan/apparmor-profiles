@@ -1,5 +1,5 @@
 # AppArmor profile for ungoogled-chromium browser
-# Version of program profiled: 89.0.4389.128
+# Version of program profiled: 90.0.4430.212
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2021 (C) krathalan; Licensed under GPLv3
 
@@ -37,6 +37,10 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
     @{PROC}/*/ r,
     @{PROC}/*/{oom_adj,oom_score_adj} w,
   }
+
+  # Dconf
+  owner /run/user/*/dconf/user rw,
+  owner @{HOME}/.config/dconf/user r,
 
   # Hwaccel
   include <abstractions/krathalans-hwaccel>
