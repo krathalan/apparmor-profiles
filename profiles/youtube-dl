@@ -1,5 +1,5 @@
 # AppArmor profile for youtube-dl Internet video downloader
-# Version of youtube-dl profiled: 2021.04.17
+# Version of youtube-dl profiled: 2021.06.06
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 

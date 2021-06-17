@@ -1,5 +1,5 @@
 # AppArmor profile for signal-desktop messenger
-# Version of signal-desktop profiled: 5.0.0
+# Version of signal-desktop profiled: 5.5.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2021 (C) krathalan; Licensed under GPLv3
 
@@ -120,4 +120,5 @@ profile signal-desktop /usr/{bin/signal-desktop,lib/signal-desktop/signal-deskto
   deny /usr/lib/ r,
   deny /usr/bin/{dbus-send,ldd,uname,xprop} rx,
   deny /usr/share/applications/ r,
+  deny /usr/share/gvfs/{,**} r,
 }

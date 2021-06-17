@@ -1,5 +1,5 @@
 # AppArmor profile for code editor
-# Version of program profiled: 1.52.1
+# Version of program profiled: 1.56.2
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
@@ -106,6 +106,7 @@ profile electron /usr/{bin,lib/electron}/electron {
   deny /run/systemd/userdb/ r,
   deny @{PROC}/*/{mountinfo,mounts,oom_score_adj,stat,statm} rw,
   deny @{PROC}/*/task/{,**} r,
+  deny @{PROC}/loadavg r,
   deny @{HOME}/.cache/{,**} rw,
   deny @{HOME}/.pki/{,**} rw,
   deny @{user_share_dirs}/ r,
