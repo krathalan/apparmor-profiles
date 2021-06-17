@@ -155,6 +155,19 @@ fi
 if [[ $# -gt 0 ]]; then
   if [[ "$1" == "--quiet" ]] || [[ "$1" == "-q" ]]; then
     quiet="true"
+  elif [[ "$1" == "help" ]] || [[ "$1" == "help" ]] || [[ "$1" == "help" ]]; then
+    printf "%s" "\
+kapvc - Krathalan's Apparmor Profile Version Checker
+
+Compares the recorded supported program versions of
+all Krathalan's Apparmor profiles in /etc/apparmor.d/
+to the installed progam versions.
+
+Run with \`-q\` or \`--quiet\` to only show profiles
+for which their supported program version does not
+match the installed program version.
+"
+    exit
   fi
 fi
 

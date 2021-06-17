@@ -1,5 +1,5 @@
 # AppArmor profile for rngd entropy generator daemon
-# Version of rngd (rng-tools) profiled: 6.12
+# Version of rngd (rng-tools) profiled: 6.13
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
@@ -28,6 +28,7 @@ profile rngd /usr/bin/rngd {
   owner /etc/conf.d/rngd r,
 
   # Deny unnecessary permissions
+  deny network netlink raw,
   deny /dev/bus/usb/ r,
   deny /sys/bus/usb/devices/ r,
 }

@@ -1,5 +1,5 @@
 # AppArmor profile for gpg-agent
-# Version of gpg-agent (gnupg) profiled: 2.2.27
+# Version of gpg-agent (gnupg) profiled: 2.2.28
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
