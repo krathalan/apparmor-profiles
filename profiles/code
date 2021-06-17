@@ -1,167 +1,119 @@
-# AppArmor profile for VSCodium and VS Code editor
-# Version of VSCode/ium profiled: 1.55.2
+# AppArmor profile for code editor
+# Version of program profiled: 1.52.1
 # Homepage: https://github.com/krathalan/apparmor-profiles
-# Copyright 2019-2021-2020 (C) krathalan; Licensed under GPLv3
+# Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>
 
-profile code /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code,code-oss,code.js,codium} {
+profile code /usr/{bin,lib/code}/{code,code.js} {
+  include <abstractions/base>
+
+  /usr/{bin,lib/code}/{code,code.js} r,
+  /usr/{bin,lib/electron}/electron rPx,
+
+  /usr/lib/code/{,**} r,
+
+  # Deny unnecessary permissions
+  deny /dev/tty rw,
+  deny /dev/pts/* rw,
+}
+
+profile electron /usr/{bin,lib/electron}/electron {
   include <abstractions/base>
   include <abstractions/fonts>
   include <abstractions/krathalans-common-gui>
 
-  # Helper programs
-  include <abstractions/bash>
-  /usr/bin/{bash,dash,dirname,git,grep,readlink,rg,which} rix,
-
-  # Needed to function at all
+  # Electron spawns multiple processes
+  /usr/bin/{bash,dash} rix,
+  /usr/{bin,lib/electron}/electron rPx,
   owner /dev/shm/.org.chromium.Chromium.* rw,
-  @{PROC}/ r,
-  owner @{PROC}/*/fd/ r,
-  owner @{PROC}/*/comm w,
-  owner /run/user/*/vscode*.sock w,
+  owner /tmp/.org.chromium.Chromium.* rw,
 
-  # Chromium/Electron spawns and uses multiple processes
-  @{system_share_dirs}/vscodium-bin/{,**} mr,
-  /usr/lib/code/{,**} mr,
-  /usr/lib/electron*/electron rix,
-  /usr/{bin,lib/code,share/vscodium-bin,share/vscodium-bin/bin}/{code,code-oss,code.js,codium} rpx,
-
-  # Hwaccel
-  include <abstractions/krathalans-hwaccel>
-  @{sys}/bus/pci/devices/ r,
-  @{sys}/devices/pci[0-9]*/** r,
-  # Nvidia users
-  include if exists <local/code>
-
-  # Needed to browse and download extensions
+  # Networking
   include <abstractions/krathalans-networking>
-  include <abstractions/user-tmp>
-  network unix seqpacket,
   network netlink raw,
   network inet dgram,
   network inet stream,
   network inet6 dgram,
   network inet6 stream,
 
-  # Intel audio (won't open without this)
-  /opt/intel/mediasdk/lib/libmfx.so.* mr,
+  # Hwaccel
+  include <abstractions/krathalans-hwaccel>
+  @{sys}/bus/pci/devices/ r,
+  @{sys}/devices/pci[0-9]*/[0-9]*/class r,
+  @{sys}/devices/pci[0-9]*/[0-9]*/**/class r,
 
-  # Intel (other)
-  @{PROC}/sys/dev/i915/perf_stream_paranoid r,
+  # Local overrides
+  include if exists <local/code>
 
-  # Needed to record open documents at shutdown and open them again at startup
-  owner @{user_share_dirs}/recently-used.xbel* rw,
+  # Necessary to function at all
+  @{PROC}/ r,
+  owner @{PROC}/*/{cmdline,setgroups} r,
+  owner @{PROC}/*/comm rw,
+  owner @{PROC}/*/fd/ r,
+  owner /run/user/*/vscode-*.sock w,
 
-  # Config
-  owner "@{HOME}/.config/Code - OSS/{,**}" rwk,
-  owner @{HOME}/.config/{code-oss,Electron,VSCodium}/{,**} rwk,
+  # Config files
+  owner @{HOME}/.config/Electron/{,**} rw,
+  owner @{HOME}/.config/gtk-3.0/settings.ini r,
+  owner @{HOME}/.config/dconf/user r,
+  owner /run/user/*/dconf/user rw,
+
+  # Code config files
   owner @{HOME}/.vscode-oss/{,**} rw,
+  owner @{HOME}/.config/code-oss/ w,
+  owner "@{HOME}/.config/Code - OSS/{,**}" rwk,
 
-  # Needed to edit common documents
+  # Basic files to edit
   owner @{HOME}/{D,d}ocuments/{,**} rw,
   owner @{HOME}/{G,g}it/{,**} rw,
 
-  # File picker
-  @{system_share_dirs}/glib-[0-9]*/schemas/gschemas.compiled r,
-
-  # Needed to open links in Firefox
-  /usr/bin/xdg-open rCx,
-
-  profile xdg-open /usr/bin/xdg-open {
-    include <abstractions/base>
-
-    # Helper programs
-    /usr/bin/{cut,bash,dash,dbus-send,egrep,grep,head,sed,which,xdg-mime} rix,
-    /usr/bin/xdg-open r,
-
-    # Browsers -- only allow Firefox
-    /{usr/bin,usr/lib/firefox*}/firefox* rPx,
-    deny /usr/bin/lynx rx,
-
-    # Config
-    @{system_share_dirs}/applications/{,**} r,
-    @{user_share_dirs}/applications/{,**} r,
-
-    # Silence unnecessary permissions
-    deny /usr/bin/{gawk,uname,xprop} rx,
-  }
-
-  # Needed for Rust extension
-  # https://marketplace.visualstudio.com/items?itemName=rust-lang.rust
-  # Extension is dual-licensed under Apache 2.0 and MIT terms:
-  #    https://github.com/rust-lang/vscode-rust/blob/master/COPYRIGHT
-  /usr/bin/rustc rUx,
-  /usr/bin/rls rUx,
-
-  # Needed for C/C++ Clang Command Adapter extension
-  # https://marketplace.visualstudio.com/items?itemName=mitaki28.vscode-clang
-  # Extension is MIT Licensed: https://github.com/mitaki28/vscode-clang
-  signal send set=term peer=code//clang,
-  signal send set=term peer=codium//clang,
-  /usr/bin/clang* rCx,
-
-  profile clang /usr/bin/clang-[0-9] {
+  # Git functionalities
+  /usr/bin/git rCx,
+  profile git /usr/bin/git {
     include <abstractions/base>
     include <abstractions/fonts>
 
-    signal receive set=term peer=code,
-    signal receive set=term peer=codium,
-    /usr/bin/clang-[0-9] rix,
+    /usr/bin/git r,
 
-    # This is where all header files are
-    /usr/include/{,**} r,
+    owner /dev/shm/.org.chromium.Chromium.* rw,
+    owner /tmp/.org.chromium.Chromium.* rw,
 
-    # Clang needs access to the same directories as VSCodium to analyze and compile
-    @{system_share_dirs}/vscodium-bin/{,**} r,
-    owner @{HOME}/{D,d}ocuments/{,**} rw,
-    owner @{HOME}/{G,g}it/{,**} rw,
+    # Local overrides
+    include if exists <local/code>
 
-    # Deny unnecessary permissions
-    deny /dev/shm/.org.chromium.Chromium.* rw,
+    # Git needs access to these files too
+    owner @{HOME}/{D,d}ocuments/{,**} r,
+    owner @{HOME}/{G,g}it/{,**} r,
   }
+
+  # Misc
+  /usr/lib/code/node_modules.asar.unpacked/{,**} mr,
+  @{PROC}/sys/fs/inotify/max_user_watches r,
+  @{PROC}/sys/kernel/yama/ptrace_scope r,
+  owner @{user_share_dirs}/recently-used.xbel* rw,
+  owner /tmp/chromium-upload-* w,
+  owner /tmp/vscode-type*/{,**} rw,
+
+  # File picker
+  @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
+
+  # Deny unnecessary permissions
+  deny /dev/tty* rw,
+  deny /dev/pts/* rw,
+  deny /sys/devices/virtual/tty/tty*/active rw,
+  deny /run/systemd/userdb/ r,
+  deny @{PROC}/*/{mountinfo,mounts,oom_score_adj,stat,statm} rw,
+  deny @{PROC}/*/task/{,**} r,
+  deny @{HOME}/.cache/{,**} rw,
+  deny @{HOME}/.pki/{,**} rw,
+  deny @{user_share_dirs}/ r,
+
+  ### Extensions ###
 
   # Needed for shellcheck extension
   # https://marketplace.visualstudio.com/items?itemName=timonwong.shellcheck
   # Extension is MIT Licensed: https://github.com/timonwong/vscode-shellcheck
   /usr/bin/shellcheck rix,
-
-  # Possibly needed for debugging? Use separate debugger program (e.g. gdb)
-  deny @{PROC}/sys/kernel/yama/ptrace_scope r,
-
-  # An editor doesn't need audio
-  deny /usr/bin/pulseaudio rx,
-  deny /etc/pulse/client.conf r,
-  deny /run/user/*/pulse/ rw,
-
-  # GVFS isn't necessary
-  deny /usr/share/gvfs/remote-volume-monitors/ r,
-
-  # Dconf -- disabling this doesn't affect VSCodium
-  deny @{HOME}/.config/dconf/user r,
-  deny /run/user/*/dconf/user rw,
-
-  # Use a separate terminal program
-  deny /dev/ptmx rw,
-  deny /dev/pts/[0-9] rw,
-  deny /dev/tty rw,
-  deny /dev/tty[0-9] rw,
-  deny /sys/devices/virtual/tty/** r,
-
-  # Silence unnecessary permissions
-  deny signal send set=term peer=unconfined,
-  deny /usr/bin/{date,env,id,ip,tput,tty} rx,
-  deny /dev/shm/ r,
-  deny @{user_share_dirs}/{,**} rw,
-  deny @{PROC}/{version,vmstat} r,
-  deny @{PROC}/*/{comm,cmdline,mountinfo,oom_score_adj,stat,statm} r,
-  deny @{PROC}/*/task/{,**} rw,
-  deny @{PROC}/*/oom_score_adj w,
-  deny @{PROC}/sys/fs/inotify/max_user_watches r,
-  deny @{sys}/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq r,
-  deny @{system_share_dirs}/bash-completion/bash_completion r,
-  deny /{,var/}run/systemd/userdb/ r,
-  deny @{HOME}/.cache/{,**} rw,
-  deny @{HOME}/.pki/{,**} rw,
 }
