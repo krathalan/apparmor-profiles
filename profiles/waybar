@@ -45,4 +45,5 @@ profile waybar /usr/bin/waybar {
 
   # Deny unnecessary permissions
   deny /dev/tty* rw,
+  deny /dev/rfkill r,
 }

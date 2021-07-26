@@ -1,5 +1,5 @@
 # AppArmor profile for mako notification daemon for Wayland
-# Version of mako profiled: 1.5
+# Version of mako profiled: 1.6
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
