@@ -1,5 +1,5 @@
 # AppArmor profile for pipewire media processor
-# Version of pipewire profiled: 1:0.3.32
+# Version of pipewire profiled: 1:0.3.33
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
 # Copyright 2019-2021-2021 (C) krathalan; Licensed under GPLv3
 
@@ -77,7 +77,10 @@ profile pipewire-media-session /usr/bin/pipewire-media-session {
   include if exists <local/pipewire>
 
   # Sound device(s)
+  /dev/ r,
+  /dev/bus/usb/ r,
   /sys/bus/ r,
+  /sys/bus/usb/devices/ r,
   /sys/class/ r,
   /sys/class/sound/ r,
   /sys/class/video4linux/ r,
