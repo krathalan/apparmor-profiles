@@ -1,5 +1,5 @@
 # AppArmor profile for openssh client (NOT SSHD!)
-# Version of ssh (openssh) profiled: 8.6
+# Version of ssh (openssh) profiled: 8.7
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
