@@ -84,26 +84,21 @@ check_profile()
   # Fix some profile names being different than their package name
   case "${profile}" in
     bluetoothd)
-      profile="bluez"
-      ;;
+      profile="bluez" ;;
     gpg-agent)
-      profile="gnupg"
-      ;;
+      profile="gnupg" ;;
     mbsync)
-      profile="isync"
-      ;;
+      profile="isync" ;;
+    NetworkManager)
+      profile="networkmanager" ;;
     rngd)
-      profile="rng-tools"
-      ;;
+      profile="rng-tools" ;;
     ssh|ssh-agent)
-      profile="openssh"
-      ;;
+      profile="openssh" ;;
     systemd*)
-      profile="systemd"
-      ;;
+      profile="systemd" ;;
     wl-copy)
-      profile="wl-clipboard"
-      ;;
+      profile="wl-clipboard" ;;
   esac
 
   local installedVersion
@@ -160,7 +155,7 @@ if [[ $# -gt 0 ]]; then
 kapvc - Krathalan's Apparmor Profile Version Checker
 
 Compares the recorded supported program versions of
-all Krathalan's Apparmor profiles in /etc/apparmor.d/
+all of Krathalan's Apparmor profiles in /etc/apparmor.d/
 to the installed progam versions.
 
 Run with \`-q\` or \`--quiet\` to only show profiles
