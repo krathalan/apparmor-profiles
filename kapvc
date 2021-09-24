@@ -155,7 +155,7 @@ fi
 if [[ $# -gt 0 ]]; then
   if [[ "$1" == "--quiet" ]] || [[ "$1" == "-q" ]]; then
     quiet="true"
-  elif [[ "$1" == "help" ]] || [[ "$1" == "help" ]] || [[ "$1" == "help" ]]; then
+  elif [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]] || [[ "$1" == "help" ]]; then
     printf "%s" "\
 kapvc - Krathalan's Apparmor Profile Version Checker
 
