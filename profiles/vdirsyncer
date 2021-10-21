@@ -38,6 +38,9 @@ profile vdirsyncer /usr/bin/vdirsyncer {
 
   # Cache
   owner @{HOME}/.cache/vdirsyncer-status/{,**} rwk,
+  
+  # Misc
+  owner /var/tmp/etilqs* rw,
 
   # Deny unnecessary permissions
   deny /usr/bin/uname rx,
