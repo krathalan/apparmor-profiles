@@ -35,6 +35,7 @@ profile postfix-master /usr/lib/postfix/bin/master {
   signal send set=term peer=postfix-local,
   signal send set=term peer=postfix-bounce,
   signal send set=term peer=postfix-proxymap,
+  signal send set=term peer=postfix-smtp,
   signal send set=term peer=postfix-tlsmgr,
   signal send set=term peer=postfix-pipe,
   signal send set=term peer=postfix-cleanup,
