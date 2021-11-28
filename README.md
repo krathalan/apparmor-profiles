@@ -174,7 +174,7 @@ This profile will work with both the `code` repo package and the `vscodium-bin` 
 This profile is only allowed to open an AppArmor-confined Firefox when opening a URL.
 
 ### evince
-You will need to [add local overrides](#adding-local-overrides) if you wish to view documents that are not in `~/{D,d}ocuments/` or `~/{D,d}ownloads/`.
+You will need to [add local overrides](#adding-local-overrides) if you wish to view documents that are not in `~/{D,d}ocuments/` or `~/{D,d}ownloads/`. You will also need to add overrides if you wish to edit or save documents.
 
 ### Firefox
 This profile has been tested with the `firefox` and `firefox-developer-edition` repo packages, on WebRender -- on the aforementioned hardware, on both Xorg and Sway. This single profile will apply to all Firefox versions.

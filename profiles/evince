@@ -24,8 +24,8 @@ profile evince /usr/{bin,lib}/evince{,d} {
   /usr/bin/{b,d}ash rix,
 
   # Needed to read and edit documents
-  owner @{HOME}/{D,d}ocuments/{,**} rw,
-  owner @{HOME}/{D,d}ownloads/{,**} rw,
+  owner @{HOME}/{D,d}ocuments/{,**} r,
+  owner @{HOME}/{D,d}ownloads/{,**} r,
 
   # Recently opened files are shown at application startup
   @{system_share_dirs}/thumbnailers/{,*} r,
