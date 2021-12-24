@@ -1,34 +1,37 @@
 # AppArmor profile for code editor
-# Version of program profiled: 1.61.0
+# Version of program profiled: 1.62.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>
 
-profile code /usr/{bin,lib/code}/{code,code.js} {
+profile code /usr/{bin,lib/code}/{code,code-oss,code.js} {
   include <abstractions/base>
 
-  /usr/{bin,lib/code}/{code,code.js} r,
-  /usr/{bin,lib/electron}/electron rPx,
+  /usr/{bin,lib/code}/{code,code-oss,code.js} r,
+  /usr/{bin,lib/electron13}/{electron,electron13} rPx,
 
   /usr/lib/code/{,**} r,
 
   # Deny unnecessary permissions
-  deny /dev/tty rw,
+  deny /dev/tty* rw,
   deny /dev/pts/* rw,
 }
 
-profile electron /usr/{bin,lib/electron}/electron {
+profile electron13 /usr/{bin,lib/electron13}/{electron,electron13} {
   include <abstractions/base>
   include <abstractions/fonts>
   include <abstractions/krathalans-common-gui>
 
   # Electron spawns multiple processes
   /usr/bin/{bash,dash} rix,
-  /usr/{bin,lib/electron}/electron rPx,
+  /usr/{bin,lib/electron13}/{electron,electron13} rPx,
   owner /dev/shm/.org.chromium.Chromium.* rw,
   owner /tmp/.org.chromium.Chromium.* rw,
+  
+  # Sandbox
+  /usr/lib/electron13/chrome-sandbox rPx,
 
   # Networking
   include <abstractions/krathalans-networking>
@@ -42,6 +45,7 @@ profile electron /usr/{bin,lib/electron}/electron {
   include <abstractions/krathalans-hwaccel>
   @{sys}/bus/pci/devices/ r,
   @{sys}/devices/pci[0-9]*/[0-9]*/class r,
+  @{sys}/devices/pci[0-9]*/[0-9]*/config r,
   @{sys}/devices/pci[0-9]*/[0-9]*/**/class r,
 
   # Local overrides
@@ -49,7 +53,7 @@ profile electron /usr/{bin,lib/electron}/electron {
 
   # Necessary to function at all
   @{PROC}/ r,
-  owner @{PROC}/*/{cmdline,setgroups} r,
+  owner @{PROC}/*/{cmdline,setgroups} rw,
   owner @{PROC}/*/comm rw,
   owner @{PROC}/*/fd/ r,
   owner /run/user/*/vscode-*.sock w,
@@ -79,6 +83,9 @@ profile electron /usr/{bin,lib/electron}/electron {
 
     owner /dev/shm/.org.chromium.Chromium.* rw,
     owner /tmp/.org.chromium.Chromium.* rw,
+    
+    # Misc
+    owner "@{HOME}/.config/Code - OSS/{,**}" ra,
 
     # Local overrides
     include if exists <local/code>
@@ -100,6 +107,7 @@ profile electron /usr/{bin,lib/electron}/electron {
   @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
 
   # Deny unnecessary permissions
+  deny capability sys_admin,
   deny /dev/tty* rw,
   deny /dev/pts/* rw,
   deny /sys/devices/virtual/tty/tty*/active rw,
@@ -117,4 +125,22 @@ profile electron /usr/{bin,lib/electron}/electron {
   # https://marketplace.visualstudio.com/items?itemName=timonwong.shellcheck
   # Extension is MIT Licensed: https://github.com/timonwong/vscode-shellcheck
   /usr/bin/shellcheck rix,
+}
+
+profile chrome-sandbox-electron13 /usr/lib/electron13/chrome-sandbox {
+  include <abstractions/base>
+
+  capability dac_override,
+  capability setgid,
+  capability setuid,
+  capability sys_admin,
+  capability sys_chroot,
+  capability sys_ptrace,
+  ptrace read peer=electron13,
+  
+  /usr/lib/electron13/chrome-sandbox r,
+  /usr/lib/electron13/electron rPx,
+
+  @{PROC}/*/ r,
+  @{PROC}/*/{oom_adj,oom_score_adj} w,
 }
