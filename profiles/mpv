@@ -1,5 +1,5 @@
 # AppArmor profile for mpv media player
-# Version of mpv profiled: 1:0.33.1
+# Version of mpv profiled: 1:0.34.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan, mortezadadgar; Licensed under GPLv3
 
@@ -84,6 +84,7 @@ profile mpv /usr/bin/mpv {
   deny capability chown,
   deny capability mknod,
   deny capability syslog,
+  deny /etc/igfx_user_feature.txt w,
   deny /dev/tty rw,
   deny @{sys}/bus/pci/devices/ r,
   deny @{sys}/devices/system/node/ r,

@@ -1,3 +1,5 @@
+# Not being maintained UNTIL pipewire becomes stable
+
 # AppArmor profile for pipewire media processor
 # Version of pipewire profiled: 1:0.3.33
 # Homepage: https://gitlab.com/krathalan/apparmor-profiles
