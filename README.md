@@ -127,7 +127,6 @@ The only directory (apart from program-specific config or data directories, such
 - discord
 - firefox
 - transmission-cli
-- youtube-dl
 
 ## Other miscellaneous notes
 
@@ -272,8 +271,10 @@ You may need to [add local overrides](#adding-local-overrides) to allow `waybar`
 - KeepassXC
 - mutt
 - pass
+- pipewire (until it is stable)
 - pulseaudio
 - wpa_supplicant
+- youtube-dl (soon to be replaced by a `yt-dlp` profile)
 
 These are profiles which I used to keep updated with their packaged versions, but now do not -- most likely because:
 
