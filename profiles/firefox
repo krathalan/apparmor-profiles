@@ -45,7 +45,7 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   # Firefox subprocesses
   ptrace trace peer=firefox,
   /usr/bin/{bash,dash} rix,
-  # Must be px to avoid env scrubbing for LD_PRELOAD libEGL.so, libmozsandbox.so
+  # Use px instead of Px to avoid env scrubbing for LD_PRELOAD libEGL.so, libmozsandbox.so
   /{usr/bin,usr/lib/firefox*}/firefox* mrpx,
   owner /dev/shm/shmfd-* rw,
   owner /dev/shm/org.{chromium,mozilla}.{,ipc.}* rw,
