@@ -1,5 +1,5 @@
 # AppArmor profile for postfix mail transport agent
-# Version of program profiled: 3.6.3
+# Version of program profiled: 3.6.4
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2021 (C) krathalan; Licensed under GPLv3
 

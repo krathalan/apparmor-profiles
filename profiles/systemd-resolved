@@ -42,6 +42,7 @@ profile systemd-resolved /usr/lib/systemd/systemd-resolved {
   @{PROC}/sys/kernel/hostname r,
   @{PROC}/sys/kernel/osrelease r,
   @{PROC}/sys/kernel/random/boot_id r,
+  @{PROC}/sys/net/ipv6/conf/all/disable_ipv6 r,
 
   # System access
   @{sys}/firmware/efi/efivars/SecureBoot-8be4df61-93ca-11d2-aa0d-00e098032b8c r,
