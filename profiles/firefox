@@ -28,6 +28,7 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   include <abstractions/krathalans-downloads>
 
   # Dconf
+  owner /run/user/*/dconf/ w,
   owner /run/user/*/dconf/user rw,
   owner @{HOME}/.config/dconf/user r,
 

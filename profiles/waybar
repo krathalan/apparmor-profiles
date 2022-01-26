@@ -14,6 +14,7 @@ profile waybar /usr/bin/waybar {
 
   # Dconf
   include <abstractions/dconf>
+  owner /run/user/*/dconf/ w,
   owner /run/user/*/dconf/user rw,
 
   # Graphics

@@ -61,6 +61,7 @@ profile electron13 /usr/{bin,lib/electron13}/{electron,electron13} {
   # Config files
   owner @{HOME}/.config/Electron/{,**} rw,
   owner @{HOME}/.config/gtk-3.0/settings.ini r,
+  owner /run/user/*/dconf/ w,
   owner @{HOME}/.config/dconf/user r,
   owner /run/user/*/dconf/user rw,
 
