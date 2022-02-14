@@ -1,5 +1,5 @@
 # AppArmor profile for rngd entropy generator daemon
-# Version of rngd (rng-tools) profiled: 6.14
+# Version of rngd (rng-tools) profiled: 6.15
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
