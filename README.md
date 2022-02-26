@@ -139,7 +139,6 @@ You can find more information for the specific profile by clicking on its name. 
 - [gpg-agent](#gpg-agent)
 - [imv](#imv)
 - [khard](#khard)
-- [Lollypop](#lollypop)
 - [mbsync](#mbsync)
 - [micro](#micro)
 - [mpv](#mpv)
@@ -190,11 +189,6 @@ You will need to [add local overrides](#adding-local-overrides) if you wish to v
 ### khard
 You may need to [add local overrides](#adding-local-overrides) to allow `khard` to access your contact storage directory, if you keep it somewhere other than `~/.local/share/contacts`.
 
-### Lollypop
-You will need to [add local overrides](#adding-local-overrides) if you wish to listen to music in directories other than `~/{M,m}usic/`.
-
-I have disabled all internet connectivity in this profile, so either submit patches or do not use it if you want to use features which require an internet connection.
-
 ### mbsync
 You may need to [add local overrides](#adding-local-overrides) to allow `mbsync` to access your mail storage directories, if they're somewhere other than `~/.local/share/mail/`.
 
@@ -203,7 +197,7 @@ You may need to [add local overrides](#adding-local-overrides) to allow `mbsync`
 Additionally, you may [add local overrides](#adding-local-overrides) to be able to view/edit files in directories other than `~/{D,d}ocuments/` and `~/{G,g}it/`.
 
 ### mpv
-This profile allows mpv to utilize `youtube-dl` to stream videos and confines it in the `youtube-dl` AppArmor profile in this project. You will need the separate `youtube-dl` profile enabled for this functionality.
+This profile allows mpv to utilize `yt-dlp` to stream videos.
 
 This AppArmor profile also works when mpv is invoked by other programs like [streamlink](https://streamlink.github.io/). A streamlink profile is also available.
 
@@ -269,6 +263,7 @@ You may need to [add local overrides](#adding-local-overrides) to allow `waybar`
 - Gedit
 - Hexchat
 - KeepassXC
+- Lollypop
 - mutt
 - pass
 - pipewire (until it is stable)
