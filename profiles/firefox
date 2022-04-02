@@ -1,5 +1,5 @@
 # AppArmor profile for firefox browser
-# Version of firefox profiled: 96.0
+# Version of firefox profiled: 99.0b8
 # This profile should work on Developer Edition and Nightly as well
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021-2020 (C) krathalan, mortezadadgar; Licensed under GPLv3
@@ -19,7 +19,7 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   # Hardware acceleration
   include <abstractions/krathalans-hwaccel>
   @{sys}/devices/pci[0-9]*/**/drm/ r,
-  @{sys}/devices/pci[0-9]*/**/uevent r,
+  @{sys}/devices/pci[0-9]*/**/{revision,config,uevent} r,
 
   # Include user overrides for krathalans-hwaccel-nvidia
   include if exists <local/firefox>

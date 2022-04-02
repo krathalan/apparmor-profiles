@@ -1,5 +1,5 @@
 # AppArmor profile for wob (wayland overlay bar)
-# Version of wob profiled: 0.12
+# Version of wob profiled: 0.13
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2021 (C) krathalan; Licensed under GPLv3
 

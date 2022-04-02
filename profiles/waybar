@@ -1,5 +1,5 @@
 # AppArmor profile for waybar system bar for Wayland
-# Version of waybar profiled: 0.9.9
+# Version of waybar profiled: 0.9.12
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
@@ -28,7 +28,8 @@ profile waybar /usr/bin/waybar {
 
   # Misc
   @{system_share_dirs}/glib-[0-9]*/schemas/{,**} r,
-  /usr/share/terminfo/** r,
+  @{system_share_dirs}/terminfo/** r,
+  @{system_share_dirs}/applications/*.desktop r,
 
   # Executables
   /usr/bin/waybar mrPx,
