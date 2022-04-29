@@ -1,5 +1,5 @@
 # AppArmor profile for code editor
-# Version of program profiled: 1.62.0
+# Version of program profiled: 1.66.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
@@ -10,7 +10,7 @@ profile code /usr/{bin,lib/code}/{code,code-oss,code.js} {
   include <abstractions/base>
 
   /usr/{bin,lib/code}/{code,code-oss,code.js} r,
-  /usr/{bin,lib/electron13}/{electron,electron13} rPx,
+  /usr/{bin,lib/electron17}/{electron,electron17} rPx,
 
   /usr/lib/code/{,**} r,
 
@@ -19,19 +19,19 @@ profile code /usr/{bin,lib/code}/{code,code-oss,code.js} {
   deny /dev/pts/* rw,
 }
 
-profile electron13 /usr/{bin,lib/electron13}/{electron,electron13} {
+profile electron17 /usr/{bin,lib/electron17}/{electron,electron17} {
   include <abstractions/base>
   include <abstractions/fonts>
   include <abstractions/krathalans-common-gui>
 
   # Electron spawns multiple processes
   /usr/bin/{bash,dash} rix,
-  /usr/{bin,lib/electron13}/{electron,electron13} rPx,
+  /usr/{bin,lib/electron17}/{electron,electron17} rPx,
   owner /dev/shm/.org.chromium.Chromium.* rw,
   owner /tmp/.org.chromium.Chromium.* rw,
   
   # Sandbox
-  /usr/lib/electron13/chrome-sandbox rPx,
+  /usr/lib/electron17/chrome-sandbox rPx,
 
   # Networking
   include <abstractions/krathalans-networking>
@@ -44,8 +44,7 @@ profile electron13 /usr/{bin,lib/electron13}/{electron,electron13} {
   # Hwaccel
   include <abstractions/krathalans-hwaccel>
   @{sys}/bus/pci/devices/ r,
-  @{sys}/devices/pci[0-9]*/[0-9]*/class r,
-  @{sys}/devices/pci[0-9]*/[0-9]*/config r,
+  @{sys}/devices/pci[0-9]*/[0-9]*/{class,config,revision} r,
   @{sys}/devices/pci[0-9]*/[0-9]*/**/class r,
 
   # Local overrides
@@ -75,26 +74,7 @@ profile electron13 /usr/{bin,lib/electron13}/{electron,electron13} {
   owner @{HOME}/{G,g}it/{,**} rw,
 
   # Git functionalities
-  /usr/bin/git rCx,
-  profile git /usr/bin/git {
-    include <abstractions/base>
-    include <abstractions/fonts>
-
-    /usr/bin/git r,
-
-    owner /dev/shm/.org.chromium.Chromium.* rw,
-    owner /tmp/.org.chromium.Chromium.* rw,
-    
-    # Misc
-    owner "@{HOME}/.config/Code - OSS/{,**}" ra,
-
-    # Local overrides
-    include if exists <local/code>
-
-    # Git needs access to these files too
-    owner @{HOME}/{D,d}ocuments/{,**} r,
-    owner @{HOME}/{G,g}it/{,**} r,
-  }
+  /usr/bin/git rUx,
 
   # Misc
   /usr/lib/code/node_modules.asar.unpacked/{,**} mr,
@@ -111,7 +91,8 @@ profile electron13 /usr/{bin,lib/electron13}/{electron,electron13} {
   deny capability sys_admin,
   deny /dev/tty* rw,
   deny /dev/pts/* rw,
-  deny /sys/devices/virtual/tty/tty*/active rw,
+  deny /etc/shells r,
+  deny @{sys}/devices/virtual/tty/tty*/active rw,
   deny /run/systemd/userdb/ r,
   deny @{PROC}/*/{mountinfo,mounts,oom_score_adj,stat,statm} rw,
   deny @{PROC}/*/task/{,**} r,
@@ -128,7 +109,7 @@ profile electron13 /usr/{bin,lib/electron13}/{electron,electron13} {
   /usr/bin/shellcheck rix,
 }
 
-profile chrome-sandbox-electron13 /usr/lib/electron13/chrome-sandbox {
+profile chrome-sandbox-electron17 /usr/lib/electron17/chrome-sandbox {
   include <abstractions/base>
 
   capability dac_override,
@@ -137,10 +118,10 @@ profile chrome-sandbox-electron13 /usr/lib/electron13/chrome-sandbox {
   capability sys_admin,
   capability sys_chroot,
   capability sys_ptrace,
-  ptrace read peer=electron13,
+  ptrace read peer=electron17,
   
-  /usr/lib/electron13/chrome-sandbox r,
-  /usr/lib/electron13/electron rPx,
+  /usr/lib/electron17/chrome-sandbox r,
+  /usr/lib/electron17/electron rPx,
 
   @{PROC}/*/ r,
   @{PROC}/*/{oom_adj,oom_score_adj} w,

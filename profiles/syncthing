@@ -1,5 +1,5 @@
 # AppArmor profile for syncthing synchronization program
-# Version of syncthing profiled: 1.19.0
+# Version of syncthing profiled: 1.19.2
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
@@ -39,4 +39,5 @@ profile syncthing /usr/bin/syncthing {
 
   # Miscellaneous
   /etc/mime.types r,
+  @{system_share_dirs}/mime/globs2 r, 
 }

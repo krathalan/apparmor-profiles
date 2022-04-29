@@ -1,5 +1,5 @@
 # AppArmor profile for systemd-resolved network name resolution manager
-# Version of program profiled: 250.4
+# Version of program profiled: 250.5
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2021 (C) krathalan; Licensed under GPLv3
 
