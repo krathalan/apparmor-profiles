@@ -14,7 +14,7 @@ profile mpv /usr/bin/mpv {
   # Hardware acceleration
   include <abstractions/krathalans-hwaccel>
   /etc/libva.conf r,
-  /etc/igfx_user_feature_next.txt r,
+  /etc/igfx_* r,
   @{sys}/devices/pci[0-9]*/**/{config,irq,revision,resource} r,
   @{sys}/devices/pci[0-9]*/**/drm/{,**} r,
 
@@ -85,7 +85,7 @@ profile mpv /usr/bin/mpv {
   deny capability chown,
   deny capability mknod,
   deny capability syslog,
-  deny /etc/igfx_user_feature.txt w,
+  deny /etc/igfx_* w,
   deny /dev/tty rw,
   deny @{sys}/bus/pci/devices/ r,
   deny @{sys}/devices/system/node/ r,
