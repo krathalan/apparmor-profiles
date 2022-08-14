@@ -1,5 +1,5 @@
 # AppArmor profile for radicale CalDAV/CardDAV server
-# Version of program profiled: 3.1.7
+# Version of program profiled: 3.1.8
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2021 (C) krathalan; Licensed under GPLv3
 

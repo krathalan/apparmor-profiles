@@ -17,6 +17,7 @@ profile mpv /usr/bin/mpv {
   /etc/igfx_* r,
   @{sys}/devices/pci[0-9]*/**/{config,irq,revision,resource} r,
   @{sys}/devices/pci[0-9]*/**/drm/{,**} r,
+  @{sys}/devices/system/cpu/possible r,
 
   # Include user overrides for krathalans-hwaccel-nvidia
   include if exists <local/mpv>
