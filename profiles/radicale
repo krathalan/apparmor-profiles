@@ -19,6 +19,7 @@ profile radicale /usr/bin/radicale {
   /etc/radicale/{,*} r,
 
   # Networking
+  include <abstractions/openssl>
   network inet dgram,
   network inet stream,
   network inet6 dgram,

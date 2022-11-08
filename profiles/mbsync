@@ -10,6 +10,7 @@ profile mbsync /usr/bin/mbsync {
   include <abstractions/base>
 
   # Networking
+  include <abstractions/ssl_certs>
   include <abstractions/krathalans-networking>
   network netlink raw,
   network inet dgram,

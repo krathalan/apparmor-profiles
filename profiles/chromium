@@ -1,5 +1,5 @@
 # AppArmor profile for ungoogled-chromium browser
-# Version of program profiled: 104.0.5112.79
+# Version of program profiled: 107.0.5304.87
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2022 (C) krathalan; Licensed under GPLv3
 
@@ -110,6 +110,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   deny @{sys}/bus/ r,
   deny @{sys}/class/ r,
   deny @{sys}/devices/**/usb*/{,**} r,
+  deny @{sys}/devices/virtual/dmi/id/* r,
   deny /usr/bin/xdg-settings rx,
   deny /usr/lib/chromium/{,**} w,
   deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
