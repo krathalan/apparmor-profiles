@@ -124,7 +124,6 @@ See [adding local overrides](#adding-local-overrides) for more information.
 The only directory (apart from program-specific config or data directories, such as those in `~/.config`) in the home directory that these profiles are allowed to read and write to is `~/{D,d}ownloads/`. You won't be able to, for example, upload things to the web from your `~/Documents` directory. You'll need to copy the file to your `~/{D,d}ownloads/` directory first, or [add local overrides](#adding-local-overrides).
 
 - chromium
-- discord
 - firefox
 - transmission-cli
 
@@ -259,6 +258,7 @@ You may need to [add local overrides](#adding-local-overrides) to allow `waybar`
 
 - aerc
 - cupsd
+- discord (-> use flatpak version + flatseal)
 - epiphany
 - Gedit
 - Hexchat
@@ -269,7 +269,7 @@ You may need to [add local overrides](#adding-local-overrides) to allow `waybar`
 - pipewire (until it is stable)
 - pulseaudio
 - wpa_supplicant
-- youtube-dl (soon to be replaced by a `yt-dlp` profile)
+- youtube-dl
 
 These are profiles which I used to keep updated with their packaged versions, but now do not -- most likely because:
 
