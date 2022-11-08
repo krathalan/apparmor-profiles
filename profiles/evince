@@ -1,5 +1,5 @@
 # AppArmor profile for evince document viewer
-# Version of evince profiled: 42.3
+# Version of evince profiled: 43.1
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
@@ -64,10 +64,12 @@ profile evince /usr/{bin,lib}/evince{,d} {
   # contain sensitive data
   deny @{user_share_dirs}/gvfs-metadata/** r,
 
-  # Silence denials about pulseaudio, no idea where these are from
+  # Silence denials about audio, no idea where these are from
   deny /etc/pulse/client.conf r,
   deny /run/user/*/pulse/ rw,
   deny /usr/bin/pulseaudio rx,
+  deny @{system_share_dirs}/sounds/freedesktop/index.theme r,
+  deny @{HOME}/.cache/event-sound* rw,
 
   # Silence unneeded permissions
   deny /etc/nsswitch.conf r,
