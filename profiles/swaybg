@@ -1,5 +1,5 @@
 # AppArmor profile for swaybg background setter for Sway
-# Version of swaybg profiled: 1.1.1
+# Version of swaybg profiled: 1.2.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
@@ -16,6 +16,7 @@ profile swaybg /usr/bin/swaybg {
   # Needed to display wallpaper
   @{system_share_dirs}/mime/** r,
   owner @{user_share_dirs}/mime/** r,
+  owner /dev/shm/swaybg-* rw,
   owner /run/user/*/sway-client* rw,
 
   # Default background
