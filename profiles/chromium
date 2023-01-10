@@ -84,13 +84,22 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   # Proc
   @{PROC}/ r,
   @{PROC}/@{pid}/fd/ r,
+  @{PROC}/@{pid}/{clear_refs,oom_score_adj} w,
   @{PROC}/sys/fs/inotify/max_user_watches r,
+  
+  # Miscellaneous system
+  @{sys}/devices/system/cpu/{kernel_max,present} r,
 
   # systemd-homed
   /{,var/}run/systemd/userdb/ r,
   
   # Let chromium see it is using Ptrace Protection with Yama LSM
   @{PROC}/sys/kernel/yama/ptrace_scope r,
+  
+  # Necessary for "Namespace" Layer 1 Sandbox (instead of SUID)
+  capability sys_admin,
+  capability sys_chroot,
+  @{PROC}/@{pid}/{gid_map,uid_map,setgroups} w,
 
   # File picker
   @{system_share_dirs}/glib-2.0/schemas/gschemas.compiled r,
@@ -102,7 +111,6 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   deny /dev/video* r,
 
   # Deny unnecessary permissions
-  deny capability sys_admin,
   deny @{HOME}/ r,
   deny @{HOME}/.config/ r,
   deny @{HOME}/.pki/{,**} rw,
@@ -111,11 +119,9 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   deny @{sys}/class/ r,
   deny @{sys}/devices/**/usb*/{,**} r,
   deny @{sys}/devices/virtual/dmi/id/* r,
-  deny @{sys}/devices/system/cpu/{kernel_max,present} r,
   deny /usr/bin/xdg-settings rx,
   deny /usr/lib/chromium/{,**} w,
   deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
   deny @{PROC}/*/{cmdline,comm,stat,statm} r,
-  deny @{PROC}/*/{clear_refs,oom_score_adj,setgroups} w,
   deny @{PROC}/sys/kernel/random/boot_id r,
 }
