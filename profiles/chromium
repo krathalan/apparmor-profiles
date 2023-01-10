@@ -34,8 +34,8 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
 
     /usr/lib/chromium/chromium rPx,
 
-    @{PROC}/*/ r,
-    @{PROC}/*/{oom_adj,oom_score_adj} w,
+    @{PROC}/@{pid}/ r,
+    @{PROC}/@{pid}/{oom_adj,oom_score_adj} w,
   }
 
   # Dconf
@@ -83,7 +83,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
 
   # Proc
   @{PROC}/ r,
-  @{PROC}/*/fd/ r,
+  @{PROC}/@{pid}/fd/ r,
   @{PROC}/sys/fs/inotify/max_user_watches r,
 
   # systemd-homed

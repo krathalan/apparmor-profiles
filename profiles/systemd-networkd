@@ -35,7 +35,7 @@ profile systemd-networkd /usr/lib/systemd/systemd-networkd {
   /etc/systemd/network/{,*} r,
 
   # Proc
-  owner @{PROC}/*/stat r,
+  owner @{PROC}/@{pid}/stat r,
   @{PROC}/cmdline r,
   @{PROC}/sys/kernel/osrelease r,
   @{PROC}/sys/kernel/random/boot_id r,

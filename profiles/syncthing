@@ -27,7 +27,7 @@ profile syncthing /usr/bin/syncthing {
   /etc/ca-certificates/extracted/cadir/* r,
   /etc/iproute2/rt_tables r,
   @{PROC}/sys/net/core/somaxconn r,
-  @{PROC}/*/net/route r,
+  @{PROC}/@{pid}/net/route r,
   /usr/bin/ip rix,
 
   # https://www.kernel.org/doc/Documentation/vm/transhuge.txt

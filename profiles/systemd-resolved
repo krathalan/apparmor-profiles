@@ -37,7 +37,7 @@ profile systemd-resolved /usr/lib/systemd/systemd-resolved {
   /etc/systemd/resolved.conf.d/{,*} r,
 
   # Proc
-  owner @{PROC}/*/stat r,
+  owner @{PROC}/@{pid}/stat r,
   @{PROC}/cmdline r,
   @{PROC}/sys/kernel/hostname r,
   @{PROC}/sys/kernel/osrelease r,

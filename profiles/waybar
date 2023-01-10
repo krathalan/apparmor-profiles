@@ -40,7 +40,7 @@ profile waybar /usr/bin/waybar {
 
   # Network module
   network netlink raw,
-  @{PROC}/*/net/netstat r,
+  @{PROC}/@{pid}/net/netstat r,
 
   # CPU module
   @{PROC}/loadavg r,

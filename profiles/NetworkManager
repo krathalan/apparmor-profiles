@@ -34,7 +34,7 @@ profile NetworkManager /usr/bin/NetworkManager {
   owner /etc/NetworkManager/system-connections/{,**} w,
 
   # Needed for nmtui to function properly
-  @{PROC}/*/stat r,
+  @{PROC}/@{pid}/stat r,
   owner @{PROC}/*/fd/ r,
 
   # Needed for nmtui to work for systemd-homed users
