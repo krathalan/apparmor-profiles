@@ -1,7 +1,7 @@
 # AppArmor profile for mpv media player
 # Version of mpv profiled: 1:0.35.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
-# Copyright 2019-2021 (C) krathalan, mortezadadgar; Licensed under GPLv3
+# Copyright 2019-2023 (C) krathalan, mortezadadgar; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>
@@ -25,6 +25,7 @@ profile mpv /usr/bin/mpv {
   # Audio
   include <abstractions/audio>
   @{system_share_dirs}/pipewire/client.conf r,
+  /etc/pipewire/{,**} r,
   /etc/alsa/conf.d/** r,
   /etc/asound.conf r,
   /usr/bin/pulseaudio rPx,

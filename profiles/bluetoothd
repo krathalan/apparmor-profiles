@@ -1,7 +1,7 @@
 # AppArmor profile for bluetoothd
-# Version of bluetoothd (bluez) profiled: 5.65
+# Version of bluetoothd (bluez) profiled: 5.66
 # Homepage: https://github.com/krathalan/apparmor-profiles
-# Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
+# Copyright 2019-2023 (C) krathalan; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>
@@ -24,7 +24,8 @@ profile bluetoothd /usr/lib/bluetooth/bluetoothd {
   owner /dev/rfkill rw,
   owner /dev/uhid rw,
   owner /dev/uinput rw,
-  owner @{sys}/devices/pci[0-9]*/[0-9]*/**/bluetooth/**/rfkill[0-9]/name r,
+  owner @{sys}/devices/pci[0-9]*/**/ieee80211/**/name r,
+  owner @{sys}/devices/pci[0-9]*/**/bluetooth/**/rfkill[0-9]*/name r,
   owner @{sys}/devices/platform/thinkpad_acpi/rfkill/rfkill[0-9]/name r,
   owner @{sys}/devices/virtual/dmi/id/chassis_type r,
 

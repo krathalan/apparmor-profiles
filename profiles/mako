@@ -1,7 +1,7 @@
 # AppArmor profile for mako notification daemon for Wayland
 # Version of mako profiled: 1.7.1
 # Homepage: https://github.com/krathalan/apparmor-profiles
-# Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
+# Copyright 2019-2023 (C) krathalan; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>
@@ -23,4 +23,7 @@ profile mako /usr/bin/mako {
 
   # Allow mako to view album covers from lollypop music player
   owner @{HOME}/.cache/lollypop/*.jpg r,
+  
+  # Allow mako to show icons for calbire notifications
+  @{system_share_dirs}/calibre/images/* r,
 }

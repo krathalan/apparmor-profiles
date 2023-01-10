@@ -1,3 +1,5 @@
+NOTE: I no longer recommend using this profile as it can mess with some Arch Linux keyring updates and I do not want to update this profile for such things as they may change at any time and break your system.
+
 # AppArmor profile for gpg-agent
 # Version of gpg-agent (gnupg) profiled: 2.2.40
 # Homepage: https://github.com/krathalan/apparmor-profiles

@@ -1,7 +1,7 @@
 # AppArmor profile for irssi IRC client
-# Version of irssi profiled: 1.2.3
+# Version of irssi profiled: 1.4.3
 # Homepage: https://github.com/krathalan/apparmor-profiles
-# Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
+# Copyright 2019-2023 (C) krathalan; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>
@@ -17,6 +17,7 @@ profile irssi /usr/bin/irssi {
   include if exists <local/irssi>
 
   # Networking
+  include <abstractions/ssl_certs>
   include <abstractions/krathalans-networking>
   network netlink raw,
   network inet dgram,

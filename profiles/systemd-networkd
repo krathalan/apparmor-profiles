@@ -1,7 +1,7 @@
 # AppArmor profile for systemd-networkd network manager
-# Version of program profiled: 251.7
+# Version of program profiled: 252.4
 # Homepage: https://github.com/krathalan/apparmor-profiles
-# Copyright 2020-2022 (C) krathalan; Licensed under GPLv3
+# Copyright 2020-2023 (C) krathalan; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>
@@ -43,8 +43,8 @@ profile systemd-networkd /usr/lib/systemd/systemd-networkd {
   @{PROC}/sys/net/ipv{4,6}/route/* r,
 
   # System access
-  @{sys}/devices/pci[0-9]*/**/net/*/{name_assign_type,uevent} r,
-  @{sys}/devices/virtual/net/*/uevent r,
+  @{sys}/devices/pci[0-9]*/**/net/*/{dev_port,name_assign_type,uevent} r,
+  @{sys}/devices/virtual/net/*/{dev_port,uevent} r,
   @{sys}/devices/virtual/dmi/id/{bios_vendor,board_vendor,product_name,product_version,sys_vendor} r,
   @{sys}/firmware/efi/efivars/SecureBoot-8be4df61-93ca-11d2-aa0d-00e098032b8c r,
 }

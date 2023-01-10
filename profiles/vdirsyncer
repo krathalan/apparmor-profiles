@@ -1,5 +1,5 @@
 # AppArmor profile for vdirsyncer CalDav/CardDAV synchronization client
-# Version of program profiled: 0.18.0
+# Version of program profiled: 0.19.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2021 (C) krathalan; Licensed under GPLv3
 
@@ -15,6 +15,7 @@ profile vdirsyncer /usr/bin/vdirsyncer {
   /usr/bin/vdirsyncer r,
 
   # Networking
+  include <abstractions/ssl_certs>
   include <abstractions/krathalans-networking>
   network unix stream,
   network inet6 dgram,

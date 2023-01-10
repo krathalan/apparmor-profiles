@@ -1,3 +1,5 @@
+As VS Code gets more and more mature, it also gets more complex and closer to a true IDE. Many reasons people may use VS Code will not function properly with the use of this profile. As such I have decided to abandon it.
+
 # AppArmor profile for code editor
 # Version of program profiled: 1.66.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
