@@ -1,5 +1,5 @@
 # AppArmor profile for rngd entropy generator daemon
-# Version of rngd (rng-tools) profiled: 6.15
+# Version of rngd (rng-tools) profiled: 6.16
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2023 (C) krathalan; Licensed under GPLv3
 
@@ -26,9 +26,12 @@ profile rngd /usr/bin/rngd {
 
   # Config file
   owner /etc/conf.d/rngd r,
+  
+  # Jitter support
+  network netlink raw,
 
-  # Deny unnecessary permissions
-  deny network netlink raw,
+  # Seems to be necessary for rtlsdr/smart cards,
+  # I don't have any so I can't test this
   deny /etc/ssl/openssl.cnf r,
   deny /dev/bus/usb/ r,
   deny /sys/bus/usb/devices/ r,
