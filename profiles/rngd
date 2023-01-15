@@ -29,10 +29,10 @@ profile rngd /usr/bin/rngd {
   
   # Jitter support
   network netlink raw,
+  /etc/ssl/openssl.cnf r,
 
   # Seems to be necessary for rtlsdr/smart cards,
   # I don't have any so I can't test this
-  deny /etc/ssl/openssl.cnf r,
   deny /dev/bus/usb/ r,
   deny /sys/bus/usb/devices/ r,
 }
