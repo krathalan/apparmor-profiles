@@ -5,8 +5,8 @@
 /usr/bin/{gawk,sed,xlsclients} rix,
 
 # Config files in ~/.config/waybar/ are symlinks to these files
-owner @{HOME}/documents/config/wayland-config/.config/waybar/* r,
-owner @{HOME}/documents/config/wayland-config/.config/gtk-3.0/settings.ini r,
+owner @{HOME}/documents/config/{desktop,laptop}-config/.config/waybar/* r,
+owner @{HOME}/documents/config/{desktop,laptop}-config/.config/gtk-3.0/settings.ini r,
 
 # I want to cat files from here in a module
 /usr/bin/cat rix,
