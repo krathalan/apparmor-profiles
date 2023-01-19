@@ -1,3 +1,0 @@
-# Config file at ~/.config/redshift/redshift.conf is a symlink to this file
-owner @{HOME}/documents/config/xorg-config/.config/redshift/redshift.conf r,
-owner @{HOME}/documents/config/wayland-config/.config/redshift/redshift.conf r,

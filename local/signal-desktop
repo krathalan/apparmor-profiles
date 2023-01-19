@@ -1,3 +1,0 @@
-# Config files at ~/.config/gtk-3.0/ are symlinks to files here
-owner @{HOME}/documents/config/xorg-config/.config/gtk-3.0/{,*} r,
-owner @{HOME}/documents/config/wayland-config/.config/gtk-3.0/{,*} r,

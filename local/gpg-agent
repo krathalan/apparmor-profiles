@@ -1,5 +1,0 @@
-# Config file at ~/.gnupg/gpg-agent.conf is a symlink to this file
-owner @{HOME}/documents/config/home-config/.gnupg/gpg-agent.conf r,
-
-# My personal chroot for makechrootpkg
-owner /var/lib/makechrootpkg/**/etc/pacman.d/gnupg/{,**} rw,

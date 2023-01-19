@@ -15,19 +15,19 @@ Table of contents:
 These AppArmor profiles are tested on the following hardware:
 
 - CPUs:
-    - Intel 4960K/8250U
-    - AMD Ryzen 5600x/EPYC 7601
+    - Intel 4960K, 8250U
+    - AMD Ryzen 5600x, EPYC 7601
 - GPUs:
-    - NVIDIA GeForce GTX 980 Ti with proprietary drivers
+    - AMD 7900 XTX with amdgpu mesa/kernel driver
     - Intel 620 UHD Graphics
 - Network adapters:
-    - Intel Wireless-AC 9260/Wi-Fi 6 AX200
+    - Intel Wireless-AC 9260, Wi-Fi 6 AX200
     - Realtek RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
     - Virtio virtual ethernet card
 - Bluetooth adapters:
-    - Intel Wireless-AC 9260/Wi-Fi 6 AX200
+    - Intel Wireless-AC 9260, Wi-Fi 6 AX200
 
-I cannot guarantee that these profiles will work on any other hardware. All profiles should work with Xorg on NVIDIA hardware, and with Sway (and probably Xorg) on Intel hardware. It's very possible these profiles will still work with AMD graphics, as it seems AMD graphics share a lot of similar behavior with Intel graphics. If you own an NVIDIA card, please read the NVIDIA section below.
+I cannot guarantee that these profiles will work on any other hardware. All profiles should work with Sway on AMD and Intel hardware. At this time I no longer have access to NVIDIA hardware nor the desire to maintain support for their proprietary driver.
 
 These profiles strive to be fully functional with zero audit log warnings under normal usage. Functionality is not ignored. If functionality is not explicitly blocked, then it's probably a bug in the profile and should be fixed. Create an issue: https://github.com/krathalan/apparmor-profiles/issues
 
@@ -36,32 +36,8 @@ You should read through [the notes](#notes) before using these profiles.
 ## Installation
 Get `krathalans-apparmor-profiles-git` from the AUR: https://aur.archlinux.org/packages/krathalans-apparmor-profiles-git/
 
-For any other distro, simply copy the files in the `profiles/` folder of this repository to `/etc/apparmor.d/`, and the files in the `abstractions/` folder of this repository to `/etc/apparmor.d/abstractions`.
-
-Don't forget to rebuild or recopy every so often :)
-
 ## Adding local overrides
-To add local overrides without changing the files provided by this repository, use local overrides. See `less /etc/apparmor.d/local/README` for more details. You can see commented examples of local overrides in the `local/` directory in this repository.
-
-## NVIDIA
-You may have issues with hardware acceleration on NVIDIA hardware. This is because the nvidia_modprobe profile in /etc/apparmor.d/ is configured incorrectly. Change the profile executable name at the top of the nvidia_modprobe profile file (`/etc/apparmor.d/nvidia_modprobe`) to "/usr/bin/nvidia-modprobe", so the top of the profile looks like this:
-
-```
-# vim:syntax=apparmor
-
-#include <tunables/global>
-
-profile nvidia_modprobe /usr/bin/nvidia-modprobe {
-  #include <abstractions/base>
-  ...
-
-```
-
-Don't forget to enforce!
-
-`$ sudo aa-enforce /etc/apparmor.d/nvidia_modprobe`
-
-You will also have to add `#include <abstractions/krathalans-hwaccel-nvidia>` to the `firefox`, `mpv`, and `code` local profile override files in `/etc/apparmor.d/local`. Alternatively, you can simply copy all files from `local/nvidia` in this repository into `/etc/apparmor.d/local` and run `sudo systemctl reload apparmor.service`.
+To add rules to the profiles without changing the files provided by this repository, use local overrides. See `less /etc/apparmor.d/local/README` for more details. You can see commented examples of local overrides in the `local/` directory in this repository.
 
 ## Issues
 Please file bug reports, requests, etc. at https://github.com/krathalan/apparmor-profiles/issues
@@ -94,7 +70,6 @@ You may also find this document incredibly helpful: https://gitlab.com/apparmor/
 - wl-copy-paste
 - wlsunset
 - wob
-- xclip
 
 ## Profiles which have config files that may be symlinks
 
@@ -112,12 +87,9 @@ See [adding local overrides](#adding-local-overrides) for more information.
 - mako
 - micro
 - mpv
-- polybar
-- redshift
 - transmission-cli
 - vdirsyncer
 - waybar
-- xob
 
 ## Profiles which only allow r/w in ~/{D,d}ownloads
 
@@ -132,10 +104,8 @@ The only directory (apart from program-specific config or data directories, such
 You can find more information for the specific profile by clicking on its name. You may not have to add any local overrides, however -- many profiles work with the default configurations for that program.
 
 - [chromium](#chromium)
-- [code](#code)
 - [evince](#evince)
 - [Firefox](#firefox)
-- [gpg-agent](#gpg-agent)
 - [imv](#imv)
 - [khard](#khard)
 - [mbsync](#mbsync)
@@ -143,7 +113,6 @@ You can find more information for the specific profile by clicking on its name. 
 - [mpv](#mpv)
 - [nginx](#nginx)
 - [pash](#pash)
-- [polybar](#polybar)
 - [postfix](#postfix)
 - [radicale](#radicale)
 - [ssh](#ssh)
@@ -158,29 +127,11 @@ You can find more information for the specific profile by clicking on its name. 
 ### chromium
 This profile has been tested with the `ungoogled-chromium` AUR package ONLY, on both Xorg and Sway (with `--enable-features=UseOzonePlatform --ozone-platform=wayland`).
 
-### code
-You will need to [add local overrides](#adding-local-overrides) to edit files that are not:
-- in the base `~` directory (for files like `~/.bashrc`),
-- `~/.config/`,
-- `~/{D,d}ocuments/`,
-- and `~/{G,g}it/`.
-
-You will need to [add local overrides](#adding-local-overrides) if your VSCode/ium configuration files are somewhere other than `~/.config/VSCodium/`, `~/.config/Code - OSS`, and `~/.vscode-oss`, or if you use extensions which require files outside of the profile.
-
-This profile will work with both the `code` repo package and the `vscodium-bin` AUR package.
-This profile is only allowed to open an AppArmor-confined Firefox when opening a URL.
-
 ### evince
 You will need to [add local overrides](#adding-local-overrides) if you wish to view documents that are not in `~/{D,d}ocuments/` or `~/{D,d}ownloads/`. You will also need to add overrides if you wish to edit or save documents.
 
 ### Firefox
 This profile has been tested with the `firefox` and `firefox-developer-edition` repo packages, on WebRender -- on the aforementioned hardware, on both Xorg and Sway. This single profile will apply to all Firefox versions.
-
-### gpg-agent
-This profile will only work with the `pinentry-curses` pinentry program. As per the Arch Wiki (https://wiki.archlinux.org/index.php/GPG#pinentry), to use the curses pinentry, add the following to `~/.gnupg/gpg-agent.conf`:
-`pinentry-program /usr/bin/pinentry-curses`
-
-You may need to [add local overrides](#adding-local-overrides) to allow access to your GPG keys, if you keep them somewhere other than `~/.gnupg/`.
 
 ### imv
 You will need to [add local overrides](#adding-local-overrides) if you wish to view images that are not in `~/{D,d}ownloads/`, `~/{P,p}ictures/`, or `~/{P,p}hotos/`.
@@ -210,9 +161,6 @@ This profile assumes you are running `nginx` as an unprivileged user via systemd
 
 ### pash
 You may need to [add local overrides](#adding-local-overrides) to allow `pash` to access your password files and GNUPG files if they're somehwere other than `~/.local/share/pash/` and `~/.gnupg/` respectively.
-
-### polybar
-You may need to [add local overrides](#adding-local-overrides) to allow `polybar` modules to work which I have not tested. I have tested the following modules to work: i3, xwindow, network, pulseaudio, cpu, date.
 
 ### postfix
 You may need to [add local overrides](#adding-local-overrides) to allow `postfix` to access your HTTPS certificates, if you keep them somewhere other than `/etc/letsencrypt/`.
@@ -245,7 +193,6 @@ You may need to [add local overrides](#adding-local-overrides) to allow `swaybg`
 You *will* need to [add local overrides](#adding-local-overrides) to allow `syncthing` to access your synced directories.
 
 ### transmission-cli
-
 This profile applies to all `transmission-*` binaries, including `transmission-daemon` and `transmission-remote`.
 
 ### vdirsyncer
@@ -257,24 +204,32 @@ You may need to [add local overrides](#adding-local-overrides) to allow `waybar`
 # Unmaintained profiles
 
 - aerc
+- code
 - cupsd
 - discord (-> use flatpak version + flatseal)
 - epiphany
 - Gedit
+- gpg-agent
 - Hexchat
 - KeepassXC
 - Lollypop
 - mutt
 - pass
 - pipewire (until it is stable)
+- polybar
 - pulseaudio
+- redshift
+- signal-desktop
 - wpa_supplicant
+- xclip
+- xob
 - youtube-dl
 
 These are profiles which I used to keep updated with their packaged versions, but now do not -- most likely because:
 
-1. I have found an alternative program (e.g. Hexchat -> irssi, pulseaudio -> pipewire) that I have a new AppArmor profile for, or
-2. I find extremely cumbersome and difficult to maintain an AppArmor profile of, either because the program is extremely complex (e.g. cupsd), or because of other reasons (e.g. epiphany, because it cannot be AppArmor-ed with the WebKit sandbox enabled, and because it changes so frequently and so bizarrely that I find it difficult to keep up)
+1. They are only used on Xorg and I have moved all of my machines to Wayland, or
+2. I have found an alternative program (e.g. Hexchat -> irssi) that I have a new AppArmor profile for, or
+3. I find extremely cumbersome and difficult to maintain an AppArmor profile of, either because the program is extremely complex (e.g. cupsd), or because of other reasons (e.g. epiphany, because it cannot be AppArmor-ed with the WebKit sandbox enabled, and because it changes so frequently and so bizarrely that I find it difficult to keep up)
 
 If you wish to maintain one of these profiles please submit patches!
 
