@@ -19,7 +19,8 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   # Hardware acceleration
   include <abstractions/krathalans-hwaccel>
   /etc/libva.conf r,
-  @{sys}/devices/pci[0-9]*/[0-9]*/ r,
+  @{system_share_dirs}/libdrm/amdgpu.ids r,
+  @{sys}/devices/pci[0-9]*/[0-9]*/**/[0-9]*/ r,
   @{sys}/devices/pci[0-9]*/**/drm/{,**} r,
   @{sys}/devices/pci[0-9]*/**/{irq,resource,revision,config,uevent} r,
 
