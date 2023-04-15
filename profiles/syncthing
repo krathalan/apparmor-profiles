@@ -1,5 +1,5 @@
 # AppArmor profile for syncthing synchronization program
-# Version of syncthing profiled: 1.23.0
+# Version of syncthing profiled: 1.23.4
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2022 (C) krathalan; Licensed under GPLv3
 
@@ -27,11 +27,15 @@ profile syncthing /usr/bin/syncthing {
   /etc/ca-certificates/extracted/cadir/* r,
   /etc/iproute2/rt_tables r,
   @{PROC}/sys/net/core/somaxconn r,
-  @{PROC}/@{pid}/net/route r,
+  owner @{PROC}/@{pid}/net/route r,
+  owner @{PROC}/@{pid}/cgroup r,
   /usr/bin/ip rix,
 
   # https://www.kernel.org/doc/Documentation/vm/transhuge.txt
   /sys/kernel/mm/transparent_hugepage/hpage_pmd_size r,
+  
+  # Probably for usage reporting?
+  @{PROC}/sys/kernel/osrelease r,
 
   # Config
   owner @{HOME}/.config/syncthing/{,**} rwk,

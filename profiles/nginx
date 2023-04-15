@@ -1,5 +1,5 @@
 # AppArmor profile for nginx web server
-# Version of program profiled: 1.23.3
+# Version of program profiled: 1.24.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2023 (C) krathalan; Licensed under GPLv3
 
