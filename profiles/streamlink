@@ -1,5 +1,5 @@
 # AppArmor profile for streamlink online video streamer
-# Version of streamlink profiled: 5.3.1
+# Version of streamlink profiled: 5.4.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2023 (C) krathalan; Licensed under GPLv3
 
