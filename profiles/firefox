@@ -1,5 +1,5 @@
 # AppArmor profile for firefox browser
-# Version of firefox profiled: 109.0b9
+# Version of firefox profiled: 114.0b4
 # This profile should work on Developer Edition and Nightly as well
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2023 (C) krathalan, mortezadadgar; Licensed under GPLv3
@@ -15,18 +15,65 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   include <abstractions/base>
   include <abstractions/fonts>
   include <abstractions/krathalans-common-gui>
+  
+  # Sandboxing
+  capability sys_admin,
+  capability sys_chroot,
 
   # Hardware acceleration
   include <abstractions/krathalans-hwaccel>
   /etc/libva.conf r,
+  
+  /usr/lib/firefox*/glxtest rCx,
+  profile firefox-glxtest /usr/lib/firefox*/glxtest {
+    include <abstractions/base>
+    include <abstractions/krathalans-hwaccel>
+    
+    /tmp/firefox*/.parentlock w,
+    @{HOME}/.mozilla/firefox/*/.parentlock w,
+    
+    @{sys}/bus/pci/devices/ r,
+    @{sys}/devices/pci[0-9]*/**/{class,device,vendor} r,
+    
+    deny /etc/{nsswitch.conf,passwd} r,
+  }
+  
+  /usr/lib/firefox*/vaapitest rCx,
+  profile firefox-vaapitest /usr/lib/firefox*/vaapitest {
+    include <abstractions/base>
+    include <abstractions/krathalans-hwaccel>
+    
+    /etc/libva.conf r,
+    
+    @{sys}/devices/pci[0-9]*/[0-9]*/{irq,resource} r,
+    
+    @{HOME}/.cache/mozilla/firefox/*/startupCache/*.{bin,little} r,
+    @{HOME}/.mozilla/firefox/*/.parentlock w,
+    @{HOME}/.mozilla/firefox/*/gmp-gmpopenh264/{,**} r,
+    
+    deny /etc/igfx* w,
+    deny network netlink raw,
+  }
+  
+  # AMD
   @{system_share_dirs}/libdrm/amdgpu.ids r,
+
+  # Intel
+  /proc/sys/dev/i915/perf_stream_paranoid r,
+  /opt/intel/mediasdk/lib/libmfx.so.* mr,
+  
+  # Include user overrides for krathalans-hwaccel-nvidia
+  include if exists <local/firefox>
+  
+  # System device access
+  @{sys}/devices/pci[0-9]*/[0-9]*/ r,
   @{sys}/devices/pci[0-9]*/[0-9]*/**/[0-9]*/ r,
   @{sys}/devices/pci[0-9]*/**/drm/{,**} r,
   @{sys}/devices/pci[0-9]*/**/{irq,resource,revision,config,uevent} r,
-
-  # Include user overrides for krathalans-hwaccel-nvidia
-  include if exists <local/firefox>
-
+  @{sys}/devices/system/cpu/present r,
+  @{sys}/devices/system/cpu/cpufreq/policy[0-9]*/cpuinfo_max_freq r,
+  @{sys}/devices/system/cpu/cpu[0-9]*/cache/index[0-9]*/size r,
+  
   # Allow access for downloads and uploads
   include <abstractions/krathalans-downloads>
 
@@ -52,16 +99,11 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   # Use px instead of Px to avoid env scrubbing for LD_PRELOAD libEGL.so, libmozsandbox.so
   /{usr/bin,usr/lib/firefox*}/firefox* mrpx,
   owner /dev/shm/shmfd-* rw,
-  owner /dev/shm/org.{chromium,mozilla}.{,ipc.}* rw,
-
-  # Intel
-  /proc/sys/dev/i915/perf_stream_paranoid r,
-  /opt/intel/mediasdk/lib/libmfx.so.* mr,
+  owner /dev/shm/org.mozilla.{,ipc.}* rw,
 
   # System access
   /dev/ r,
   /etc/udev/udev.conf r,
-  /{,var/}run/udev/data/+pci:[0-9]* r,
   @{system_share_dirs}/ r,
   /usr/lib/firefox*/{,**} r,
 
@@ -82,36 +124,21 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   /{,var/}run/systemd/userdb/ r,
 
   # Needed to install addons, export files from addons
-  owner /tmp/{,**} rwkl,
-
-  # Don't allow launching other applications to open files
-  deny /usr/bin/gio-launch-desktop rx,
-  deny /etc/mailcap r,
-
-  # GVFS is unnecessary
-  deny @{system_share_dirs}/gvfs/remote-volume-monitors/ r,
-
-  # Deny unnecessary /proc
-  deny @{PROC}/@{pid}/{,**} rw,
-  deny @{PROC}/bus/pci/devices r,
+  /tmp/{,**} rwkl,
+  
+  # /proc sandboxing is better handled by bubblewrap
+  @{PROC}/@{pid}/{fd,task}/ r,
+  @{PROC}/@{pid}/{comm,cmdline,cgroup,environ,mountinfo,smaps,statm,stat} r,
+  @{PROC}/@{pid}/task/[0-9]*/{comm,stat} r,
+  @{PROC}/@{pid}/{oom_score_adj,setgroups,gid_map,uid_map} w,
+  
+  # Denied permissions
+  deny capability sys_ptrace,
+  deny /var/cache/ w,
   deny @{PROC}/sys/kernel/random/boot_id r,
-
-  # Deny /var and /tmp
-  deny /var/{,**} rw,
-
-  # Don't allow executable mapping of arbitrary files
-  deny @{HOME}/#* mrw,
-  deny @{HOME}/.gl* mrw,
-
-  # Silence denial logs about permissions we don't need
-  deny capability sys_admin,
-  deny /usr/lib/firefox*/{crashreporter,pingsender} rx,
-  deny @{sys}/bus/pci/devices/ r,
-  deny @{sys}/devices/system/cpu/** r,
-  deny /usr/bin/lsb_release rx,
-  deny /usr/lib/firefox*/{,**} w,
+  
+  # For opening files in other applications -- deny all
   deny @{system_share_dirs}/applications/{,**} r,
-  deny @{HOME}/Desktop/ w,
-  deny @{HOME}/.cache/thumbnails/{,**} rw,
-  deny @{HOME}/.local/{,**} rw,
+  deny @{user_share_dirs}/applications/ r,
+  deny /etc/mailcap r,
 }
