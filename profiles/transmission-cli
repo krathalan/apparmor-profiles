@@ -1,5 +1,5 @@
 # AppArmor profile for transmission-cli bittorrent client
-# Version of transmission-cli profiled: 3.00
+# Version of transmission-cli profiled: 4.0.3
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 

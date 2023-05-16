@@ -15,6 +15,7 @@ profile mpv /usr/bin/mpv {
   include <abstractions/krathalans-hwaccel>
   /etc/libva.conf r,
   /etc/igfx_* r,
+  @{system_share_dirs}/libdrm/* r,
   @{sys}/devices/pci[0-9]*/**/{config,irq,revision,resource} r,
   @{sys}/devices/pci[0-9]*/**/drm/{,**} r,
   @{sys}/devices/system/cpu/possible r,
