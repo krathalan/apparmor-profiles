@@ -7,14 +7,13 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile pash /usr/bin/pash {
+  include if exists <local/pash>
   include <abstractions/base>
 
   /usr/bin/pash r,
 
   # Default pash store location
   owner @{user_share_dirs}/pash/{,**} rw,
-  # Include user overrides for different password or GNUPG directories
-  include if exists <local/pash>
 
   # Various programs -- pash is a sh script
   # Used to list passwords
@@ -41,6 +40,7 @@ profile pash /usr/bin/pash {
   signal send set=term peer=pash//gpg,
 
   profile gpg /usr/bin/gpg {
+    include if exists <local/pash-gpg>
     include <abstractions/base>
     include <abstractions/gnupg>
 
@@ -55,8 +55,6 @@ profile pash /usr/bin/pash {
 
     # GPG needs access to the password store
     owner @{user_share_dirs}/pash/{,**} rw,
-    # Include user overrides for different password or GNUPG directories
-    include if exists <local/pash>
   }
 
   # Deny unnecessary permissions

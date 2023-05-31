@@ -7,6 +7,8 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile bluetoothd /usr/lib/bluetooth/bluetoothd {
+  include if exists <local/bluetoothd>
+
   include <abstractions/base>
   network unix stream,
   network unix dgram,

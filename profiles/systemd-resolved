@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile systemd-resolved /usr/lib/systemd/systemd-resolved {
+  include if exists <local/systemd-resolved>
   include <abstractions/base>
   include <abstractions/krathalans-nameservice>
   include <abstractions/p11-kit>

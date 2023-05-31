@@ -7,13 +7,11 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile micro /usr/bin/micro {
+  include if exists <local/micro>
   include <abstractions/base>
   include <abstractions/consoles>
 
   /usr/bin/micro mr,
-
-  # Include machine-specific overrides
-  include if exists <local/micro>
 
   # Config
   owner @{HOME}/.config/micro/{,**} rw,
@@ -48,6 +46,7 @@ profile micro /usr/bin/micro {
   /usr/bin/git rCx,
 
   profile git /usr/bin/git {
+    include if exists <local/micro-git>
     include <abstractions/base>
 
     /usr/bin/git mr,
@@ -62,8 +61,6 @@ profile micro /usr/bin/micro {
     owner @{HOME}/{G,g}it/{,**} rw,
     # Mutt
     owner /tmp/mutt-* rw,
-    # Include machine-specific overrides
-    include if exists <local/micro>
 
     # View files in pager with aurutils
     owner @{HOME}/.cache/aurutils/sync/{,**} rw,

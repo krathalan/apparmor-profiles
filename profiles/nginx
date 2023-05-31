@@ -7,10 +7,9 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile nginx /usr/bin/nginx {
+  include if exists <local/nginx>
   include <abstractions/base>
   include <abstractions/krathalans-nameservice>
-
-  include if exists <local/nginx>
 
   /usr/bin/nginx r,
   /usr/share/nginx/{,**} r,

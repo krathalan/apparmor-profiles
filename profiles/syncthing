@@ -7,13 +7,11 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile syncthing /usr/bin/syncthing {
+  include if exists <local/syncthing>
   include <abstractions/base>
   network unix stream,
 
   /usr/bin/syncthing rPx,
-
-  # Include user overrides for synced directories
-  include if exists <local/syncthing>
 
   # Networking
   include <abstractions/krathalans-networking>

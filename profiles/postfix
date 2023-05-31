@@ -3,13 +3,15 @@
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2021 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile postfix-master /usr/lib/postfix/bin/master {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-nameservice>
-  #include <abstractions/krathalans-hardening>
+  include if exists <local/postfix-master>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-nameservice>
+  include <abstractions/krathalans-hardening>
 
   capability kill,
 
@@ -57,9 +59,10 @@ profile postfix-master /usr/lib/postfix/bin/master {
 }
 
 profile postfix-anvil /usr/lib/postfix/bin/anvil {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-anvil>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-nameservice>
 
   /usr/lib/postfix/bin/anvil r,
   signal receive set=term peer=postfix,
@@ -69,9 +72,10 @@ profile postfix-anvil /usr/lib/postfix/bin/anvil {
 }
 
 profile postfix-bounce /usr/lib/postfix/bin/bounce {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-bounce>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-nameservice>
 
   /usr/lib/postfix/bin/bounce r,
   signal receive set=term peer=postfix,
@@ -85,9 +89,10 @@ profile postfix-bounce /usr/lib/postfix/bin/bounce {
 }
 
 profile postfix-cleanup /usr/lib/postfix/bin/cleanup {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-cleanup>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-nameservice>
 
   /usr/lib/postfix/bin/cleanup r,
 
@@ -100,9 +105,10 @@ profile postfix-cleanup /usr/lib/postfix/bin/cleanup {
 }
 
 profile postfix-error /usr/lib/postfix/bin/error {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-error>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-nameservice>
 
   /usr/lib/postfix/bin/error r,
 
@@ -114,9 +120,10 @@ profile postfix-error /usr/lib/postfix/bin/error {
 }
 
 profile postfix-local /usr/lib/postfix/bin/local {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-local>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-nameservice>
 
   /usr/lib/postfix/bin/local r,
   signal receive set=term peer=postfix,
@@ -133,9 +140,10 @@ profile postfix-local /usr/lib/postfix/bin/local {
 }
 
 profile postfix-pickup /usr/lib/postfix/bin/pickup {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-pickup>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-nameservice>
 
   /usr/lib/postfix/bin/pickup r,
   signal receive set=term peer=postfix,
@@ -148,9 +156,10 @@ profile postfix-pickup /usr/lib/postfix/bin/pickup {
 }
 
 profile postfix-pipe /usr/lib/postfix/bin/pipe {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-pipe>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-nameservice>
 
   /usr/lib/postfix/bin/pipe r,
 
@@ -165,10 +174,11 @@ profile postfix-pipe /usr/lib/postfix/bin/pipe {
 }
 
 profile postfix-postdrop /usr/bin/postdrop {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-hardening>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-postdrop>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-hardening>
+  include <abstractions/krathalans-nameservice>
 
   /usr/bin/postdrop r,
 
@@ -180,9 +190,10 @@ profile postfix-postdrop /usr/bin/postdrop {
 }
 
 profile postfix-proxymap /usr/lib/postfix/bin/proxymap {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-proxymap>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-nameservice>
 
   /usr/lib/postfix/bin/proxymap r,
   signal receive set=term peer=postfix,
@@ -192,9 +203,10 @@ profile postfix-proxymap /usr/lib/postfix/bin/proxymap {
 }
 
 profile postfix-qmgr /usr/lib/postfix/bin/qmgr {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-qmgr>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-nameservice>
 
   /usr/lib/postfix/bin/qmgr r,
   signal receive set=term peer=postfix,
@@ -210,10 +222,11 @@ profile postfix-qmgr /usr/lib/postfix/bin/qmgr {
 }
 
 profile postfix-sendmail /usr/bin/sendmail {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-hardening>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-sendmail>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-hardening>
+  include <abstractions/krathalans-nameservice>
 
   /usr/bin/sendmail r,
   /usr/bin/postdrop rPx,
@@ -223,17 +236,18 @@ profile postfix-sendmail /usr/bin/sendmail {
 }
 
 profile postfix-smtp /usr/lib/postfix/bin/smtp {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-smtp>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-nameservice>
 
   capability dac_read_search,
 
   /usr/lib/postfix/bin/smtp r,
 
   # Networking
-  #include <abstractions/krathalans-networking>
-  #include <abstractions/ssl_certs>
+  include <abstractions/krathalans-networking>
+  include <abstractions/ssl_certs>
 
   # Misc
   /etc/services r,
@@ -246,9 +260,10 @@ profile postfix-smtp /usr/lib/postfix/bin/smtp {
 }
 
 profile postfix-smtpd /usr/lib/postfix/bin/smtpd {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-smtpd>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-nameservice>
 
   capability dac_read_search,
 
@@ -256,9 +271,9 @@ profile postfix-smtpd /usr/lib/postfix/bin/smtpd {
   signal receive set=term peer=postfix,
 
   # Networking
-  #include <abstractions/krathalans-networking>
-  #include <abstractions/ssl_certs>
-  #include <abstractions/ssl_keys>
+  include <abstractions/krathalans-networking>
+  include <abstractions/ssl_certs>
+  include <abstractions/ssl_keys>
   # https://weakdh.org/sysadmin.html
   /etc/krathalan/dhparams.pem r,
 
@@ -271,9 +286,10 @@ profile postfix-smtpd /usr/lib/postfix/bin/smtpd {
 }
 
 profile postfix-tlsmgr /usr/lib/postfix/bin/tlsmgr {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-tlsmgr>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-nameservice>
 
   /usr/lib/postfix/bin/tlsmgr r,
   signal receive set=term peer=postfix,
@@ -288,9 +304,10 @@ profile postfix-tlsmgr /usr/lib/postfix/bin/tlsmgr {
 }
 
 profile postfix-trivial-rewrite /usr/lib/postfix/bin/trivial-rewrite {
-  #include <abstractions/base>
-  #include <abstractions/postfix-common>
-  #include <abstractions/krathalans-nameservice>
+  include if exists <local/postfix-trivial-rewrite>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-nameservice>
 
   /usr/lib/postfix/bin/trivial-rewrite r,
   signal receive set=term peer=postfix,

@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile ssh-agent /usr/bin/ssh-agent {
+  include if exists <local/ssh-agent>
   include <abstractions/base>
   include <abstractions/openssl>
   network unix stream,

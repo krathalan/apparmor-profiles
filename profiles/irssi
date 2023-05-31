@@ -7,14 +7,12 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile irssi /usr/bin/irssi {
+  include if exists <local/irssi>
   include <abstractions/base>
   include <abstractions/bash>
 
   # Irssi has perl scripting
   include <abstractions/perl>
-
-  # Include user overrides for possible symlinked config files
-  include if exists <local/irssi>
 
   # Networking
   include <abstractions/ssl_certs>

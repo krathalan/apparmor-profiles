@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
+  include if exists <local/chromium>
   include <abstractions/audio>
   include <abstractions/base>
   include <abstractions/fonts>
@@ -20,6 +21,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
 
   /usr/lib/chromium/chrome-sandbox rCx,
   profile chrome-sandbox /usr/lib/chromium/chrome-sandbox {
+    include if exists <local/chrome-sandbox>
     include <abstractions/base>
 
     capability dac_override,
@@ -65,9 +67,6 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   network inet stream,
   network inet6 dgram,
   network inet6 stream,
-
-  # Include local overrides for nvidia users and/or other reasons
-  include if exists <local/chromium>
 
   # Per-user files
   owner @{HOME}/.cache/chromium/{,**} rw,

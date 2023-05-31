@@ -7,5 +7,6 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile name path {
+  include if exists <local/template>
   include <abstractions/base>
 }

@@ -7,11 +7,9 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile swaybg /usr/bin/swaybg {
+  include if exists <local/swaybg>
   include <abstractions/base>
   network unix stream,
-
-  # Include user overrides for alternate wallpaper directories
-  include if exists <local/swaybg>
 
   # Needed to display wallpaper
   @{system_share_dirs}/mime/** r,

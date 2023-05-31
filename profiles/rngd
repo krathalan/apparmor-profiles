@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile rngd /usr/bin/rngd {
+  include if exists <local/rngd>
   include <abstractions/base>
   network unix stream,
 
