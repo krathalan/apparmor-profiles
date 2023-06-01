@@ -3,7 +3,7 @@
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2021 (C) krathalan; Licensed under GPLv3
 
-abi <abi/3.0>
+abi <abi/3.0>,
 include <tunables/global>
 
 profile nitter /usr/{bin/nitter,share/nitter/nitter} {

@@ -16,6 +16,13 @@ profile NetworkManager /usr/bin/NetworkManager {
   capability net_admin,
   capability net_bind_service,
   capability net_raw,
+  network netlink raw,
+  network packet dgram,
+  network inet dgram,
+  network inet stream,
+  network inet6 raw,
+  network inet6 dgram,
+  network inet6 stream,
 
   # Write to system log
   capability audit_write,
