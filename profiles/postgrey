@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile postgrey /usr/bin/postgrey {
+  include if exists <local/postgrey>
   include <abstractions/base>
   include <abstractions/krathalans-networking>
   include <abstractions/krathalans-nameservice>

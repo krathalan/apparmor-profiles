@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile mbsync /usr/bin/mbsync {
+  include if exists <local/mbsync>
   include <abstractions/base>
 
   # Networking
@@ -30,6 +31,7 @@ profile mbsync /usr/bin/mbsync {
   /usr/bin/gpg rCx,
 
   profile gpg /usr/bin/gpg {
+    include if exists <local/mbsync-gpg>
     include <abstractions/base>
     include <abstractions/gnupg>
     network inet stream,
@@ -41,14 +43,7 @@ profile mbsync /usr/bin/mbsync {
     owner @{HOME}/.gnupg/*lk* rwl,
     owner @{HOME}/.gnupg/random_seed k,
 
-    # Include user overrides for different GNUPG directories
-    include if exists <local/mbsync>
-
     # Deny unnecessary permissions
     deny network inet6 stream,
   }
-
-  # Include user overrides for possible symlinked config files and different
-  # mail storage locations
-  include if exists <local/mbsync>
 }

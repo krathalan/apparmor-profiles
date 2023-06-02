@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile imv /usr/bin/imv {
+  include if exists <local/imv>
   include <abstractions/base>
   include <abstractions/bash>
   include <abstractions/dri-common>
@@ -40,7 +41,6 @@ profile imv /usr/bin/imv {
   @{PROC}/sys/dev/i915/perf_stream_paranoid r,
 
   # Nvidia
-  include if exists <local/imv>
   deny /sys/bus/pci/devices/ r,
   deny /tmp/* w,
 

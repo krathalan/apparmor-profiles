@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile wob /usr/bin/wob {
+  include if exists <local/wob>
   include <abstractions/base>
   network unix stream,
 

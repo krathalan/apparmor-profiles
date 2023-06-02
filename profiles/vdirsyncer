@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile vdirsyncer /usr/bin/vdirsyncer {
+  include if exists <local/vdirsyncer>
   include <abstractions/base>
   include <abstractions/python>
 
@@ -33,9 +34,6 @@ profile vdirsyncer /usr/bin/vdirsyncer {
   owner @{HOME}/.local/share/tasks/{,**} rwl,
   # Calendar storage location
   owner @{HOME}/.local/share/calendar/{,**} rwl,
-  # Include user overrides for possible symlinked config
-  # files/different contact storage locations
-  include if exists <local/vdirsyncer>
 
   # Cache
   owner @{HOME}/.cache/vdirsyncer-status/{,**} rwk,

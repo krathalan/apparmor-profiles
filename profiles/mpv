@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile mpv /usr/bin/mpv {
+  include if exists <local/mpv>
   include <abstractions/base>
   include <abstractions/fonts>
   include <abstractions/krathalans-common-gui>
@@ -19,9 +20,6 @@ profile mpv /usr/bin/mpv {
   @{sys}/devices/pci[0-9]*/**/{config,irq,revision,resource} r,
   @{sys}/devices/pci[0-9]*/**/drm/{,**} r,
   @{sys}/devices/system/cpu/possible r,
-
-  # Include user overrides for krathalans-hwaccel-nvidia
-  include if exists <local/mpv>
 
   # Audio
   include <abstractions/audio>

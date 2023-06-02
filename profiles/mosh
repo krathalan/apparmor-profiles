@@ -7,7 +7,8 @@
 abi <abi/3.0>,
 include <tunables/global>
 
-profile mosh /usr/bin/mosh* {
+profile mosh /usr/bin/{mosh,mosh-client} {
+  include if exists <local/mosh-client>
   include <abstractions/base>
   include <abstractions/perl>
 

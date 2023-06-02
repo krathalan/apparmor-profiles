@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile waybar /usr/bin/waybar {
+  include if exists <local/waybar>
   include <abstractions/base>
   include <abstractions/fonts>
   include <abstractions/krathalans-common-gui>
@@ -19,9 +20,6 @@ profile waybar /usr/bin/waybar {
 
   # Graphics
   include <abstractions/wayland>
-
-  # Include user overrides for possible symlinked config files
-  include if exists <local/waybar>
 
   # Config
   owner @{HOME}/.config/waybar/** r,

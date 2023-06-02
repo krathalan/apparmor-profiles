@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile khard /usr/bin/khard {
+  include if exists <local/khard>
   include <abstractions/base>
   include <abstractions/python>
 
@@ -19,9 +20,6 @@ profile khard /usr/bin/khard {
 
   # Contact storage location
   owner @{HOME}/.local/share/contacts/{,**} rwl,
-  # Include user overrides for possible symlinked config
-  # files/different contact storage locations
-  include if exists <local/khard>
 
   # Mutt integration
   owner /tmp/mutt-* rw,
@@ -31,6 +29,7 @@ profile khard /usr/bin/khard {
   /usr/bin/nano rCx,
 
   profile nano /usr/bin/nano {
+    include if exists <local/khard-nano>
     include <abstractions/base>
     include <abstractions/bash>
 
@@ -40,8 +39,6 @@ profile khard /usr/bin/khard {
     /etc/nanorc r,
     owner @{HOME}/.nanorc r,
     owner @{HOME}/.config/nano/nanorc r,
-    # Include user overrides for possible symlinked config file
-    include if exists <local/khard-nano>
 
     owner /tmp/* rw,
 

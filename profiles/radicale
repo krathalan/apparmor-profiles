@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile radicale /usr/bin/radicale {
+  include if exists <local/radicale>
   include <abstractions/base>
   include <abstractions/krathalans-nameservice>
   include <abstractions/python>
@@ -27,10 +28,6 @@ profile radicale /usr/bin/radicale {
 
   # Storage
   /var/lib/radicale/{,**} rwk,
-
-  # Include user overrides for different
-  # config/storage/cert directories
-  include if exists <local/radicale>
 
   # Misc
   /etc/gai.conf r,

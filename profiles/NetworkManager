@@ -3,17 +3,26 @@
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2022 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile NetworkManager /usr/bin/NetworkManager {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-hardening>
+  include if exists <local/NetworkManager>
+  include <abstractions/base>
+  include <abstractions/krathalans-hardening>
 
   # Networking
-  #include <abstractions/krathalans-networking>
+  include <abstractions/krathalans-networking>
   capability net_admin,
   capability net_bind_service,
   capability net_raw,
+  network netlink raw,
+  network packet dgram,
+  network inet dgram,
+  network inet stream,
+  network inet6 raw,
+  network inet6 dgram,
+  network inet6 stream,
 
   # Write to system log
   capability audit_write,

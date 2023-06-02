@@ -2,14 +2,16 @@
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020 (C) krathalan; Licensed under GPLv3
 
-#include <tunables/global>
+abi <abi/3.0>,
+include <tunables/global>
 
 profile undervolt-py /usr/lib/undervolt/undervolt.py {
-  #include <abstractions/base>
-  #include <abstractions/krathalans-hardening>
+  include if exists <local/undervolt-py>
+  include <abstractions/base>
+  include <abstractions/krathalans-hardening>
 
   # Python
-  #include <abstractions/python>
+  include <abstractions/python>
   /usr/bin/python* rix,
 
   # System access
@@ -23,7 +25,8 @@ profile undervolt-py /usr/lib/undervolt/undervolt.py {
   # Get kernel module information
   /usr/bin/kmod rCx,
   profile kmod /usr/bin/kmod {
-    #include <abstractions/base>
+    include if exists <local/undervolt-py-kmod>
+    include <abstractions/base>
 
     owner /usr/bin/kmod r,
     capability sys_module,

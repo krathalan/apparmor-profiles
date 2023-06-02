@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile nitter /usr/{bin/nitter,share/nitter/nitter} {
+  include if exists <local/nitter>
   include <abstractions/base>
 
   # Networking

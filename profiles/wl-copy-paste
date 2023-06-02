@@ -7,6 +7,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile wl-copy-paste /usr/bin/wl-{copy,paste} {
+  include if exists <local/wl-copy-paste>
   include <abstractions/base>
   network unix stream,
 
@@ -24,6 +25,7 @@ profile wl-copy-paste /usr/bin/wl-{copy,paste} {
   /usr/bin/xdg-mime rCx,
 
   profile xdg-mime /usr/bin/xdg-mime {
+    include if exists <local/wl-copy-paste-xdg-mime>
     include <abstractions/base>
 
     /usr/bin/xdg-mime r,

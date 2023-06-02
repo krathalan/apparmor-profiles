@@ -10,6 +10,7 @@ abi <abi/3.0>,
 include <tunables/global>
 
 profile haveged /usr/bin/haveged {
+  include if exists <local/haveged>
   include <abstractions/base>
 
   # Required for ioctl RNDADDENTROPY
@@ -26,6 +27,4 @@ profile haveged /usr/bin/haveged {
   /sys/devices/system/cpu/cpu*/cache/ r,
   /sys/devices/system/cpu/cpu*/cache/index*/{type,size,level} r,
   /usr/bin/haveged mr,
-
-  include if exists <local/haveged>
 }
