@@ -14,7 +14,7 @@ profile ssh /usr/bin/ssh {
   # Executables
   /usr/bin/{bash,dash} mrix,
   /usr/bin/env r,
-  /usr/bin/ssh r,
+  /usr/bin/ssh rix,
 
   # Mosh
   /usr/bin/mosh rPx,
