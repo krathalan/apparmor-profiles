@@ -44,6 +44,11 @@ profile postfix-master /usr/lib/postfix/bin/master {
 
   # Networking
   capability net_bind_service,
+  network netlink raw,
+  network inet stream,
+  network inet dgram,
+  network inet6 stream,
+  network inet6 dgram,
 
   # Misc
   capability dac_read_search,
@@ -67,6 +72,11 @@ profile postfix-anvil /usr/lib/postfix/bin/anvil {
   /usr/lib/postfix/bin/anvil r,
   signal receive set=term peer=postfix,
 
+  # Networking
+  network netlink raw,
+  network inet stream,
+  network inet6 stream,
+
   # Misc
   /proc/sys/kernel/random/boot_id r,
 }
@@ -79,6 +89,11 @@ profile postfix-bounce /usr/lib/postfix/bin/bounce {
 
   /usr/lib/postfix/bin/bounce r,
   signal receive set=term peer=postfix,
+
+  # Networking
+  network netlink raw,
+  network inet stream,
+  network inet6 stream,
 
   # Misc
   /proc/sys/kernel/random/boot_id r,
@@ -95,6 +110,11 @@ profile postfix-cleanup /usr/lib/postfix/bin/cleanup {
   include <abstractions/krathalans-nameservice>
 
   /usr/lib/postfix/bin/cleanup r,
+
+  # Networking
+  network netlink raw,
+  network inet stream,
+  network inet6 stream,
 
   # Misc
   /var/spool/postfix/pid/unix.cleanup rwk,
@@ -130,6 +150,11 @@ profile postfix-local /usr/lib/postfix/bin/local {
 
   /usr/lib/dovecot/dovecot-lda rPx,
 
+  # Networking
+  network netlink raw,
+  network inet stream,
+  network inet6 stream,
+
   # Misc
   /etc/aliases.db rk,
   /proc/sys/kernel/random/boot_id r,
@@ -148,6 +173,11 @@ profile postfix-pickup /usr/lib/postfix/bin/pickup {
   /usr/lib/postfix/bin/pickup r,
   signal receive set=term peer=postfix,
 
+  # Networking
+  network netlink raw,
+  network inet stream,
+  network inet6 stream,
+
   # Misc
   /proc/sys/kernel/random/boot_id r,
 
@@ -164,6 +194,11 @@ profile postfix-pipe /usr/lib/postfix/bin/pipe {
   /usr/lib/postfix/bin/pipe r,
 
   /usr/bin/vendor_perl/spamc rPx,
+
+  # Networking
+  network netlink raw,
+  network inet stream,
+  network inet6 stream,
 
   # Misc
   /proc/sys/kernel/random/boot_id r,
@@ -182,6 +217,11 @@ profile postfix-postdrop /usr/bin/postdrop {
 
   /usr/bin/postdrop r,
 
+  # Networking
+  network netlink raw,
+  network inet stream,
+  network inet6 stream,
+
   # Misc
   /proc/sys/kernel/random/boot_id r,
 
@@ -198,6 +238,11 @@ profile postfix-proxymap /usr/lib/postfix/bin/proxymap {
   /usr/lib/postfix/bin/proxymap r,
   signal receive set=term peer=postfix,
 
+  # Networking
+  network netlink raw,
+  network inet stream,
+  network inet6 stream,
+
   # Misc
   /proc/sys/kernel/random/boot_id r,
 }
@@ -210,6 +255,11 @@ profile postfix-qmgr /usr/lib/postfix/bin/qmgr {
 
   /usr/lib/postfix/bin/qmgr r,
   signal receive set=term peer=postfix,
+
+  # Networking
+  network netlink raw,
+  network inet stream,
+  network inet6 stream,
 
   # Misc
   /proc/sys/kernel/random/boot_id r,
@@ -231,6 +281,11 @@ profile postfix-sendmail /usr/bin/sendmail {
   /usr/bin/sendmail r,
   /usr/bin/postdrop rPx,
 
+  # Networking
+  network netlink raw,
+  network inet stream,
+  network inet6 stream,
+
   # Misc
   /proc/sys/kernel/random/boot_id r,
 }
@@ -248,6 +303,11 @@ profile postfix-smtp /usr/lib/postfix/bin/smtp {
   # Networking
   include <abstractions/krathalans-networking>
   include <abstractions/ssl_certs>
+  network netlink raw,
+  network inet stream,
+  network inet dgram,
+  network inet6 stream,
+  network inet6 dgram,
 
   # Misc
   /etc/services r,
@@ -274,6 +334,11 @@ profile postfix-smtpd /usr/lib/postfix/bin/smtpd {
   include <abstractions/krathalans-networking>
   include <abstractions/ssl_certs>
   include <abstractions/ssl_keys>
+  network netlink raw,
+  network inet stream,
+  network inet dgram,
+  network inet6 stream,
+  network inet6 dgram,
   # https://weakdh.org/sysadmin.html
   /etc/krathalan/dhparams.pem r,
 
@@ -293,9 +358,12 @@ profile postfix-tlsmgr /usr/lib/postfix/bin/tlsmgr {
 
   /usr/lib/postfix/bin/tlsmgr r,
   signal receive set=term peer=postfix,
-  
+
   # Networking
   include <abstractions/openssl>
+  network netlink raw,
+  network inet stream,
+  network inet6 stream,
 
   # Misc
   /proc/sys/kernel/random/boot_id r,
@@ -311,6 +379,11 @@ profile postfix-trivial-rewrite /usr/lib/postfix/bin/trivial-rewrite {
 
   /usr/lib/postfix/bin/trivial-rewrite r,
   signal receive set=term peer=postfix,
+
+  # Networking
+  network netlink raw,
+  network inet stream,
+  network inet6 stream,
 
   # Misc
   /proc/sys/kernel/random/boot_id r,
