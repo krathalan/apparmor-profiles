@@ -1,5 +1,5 @@
 # AppArmor profile for ungoogled-chromium browser
-# Version of program profiled: 112.0.5615.165
+# Version of program profiled: 114.0.5735.133
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2023 (C) krathalan; Licensed under GPLv3
 
@@ -87,6 +87,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   @{PROC}/@{pid}/fd/ r,
   @{PROC}/@{pid}/{clear_refs,oom_score_adj} w,
   @{PROC}/sys/fs/inotify/max_user_watches r,
+  @{PROC}/sys/net/ipv6/conf/all/disable_ipv6 r,
   
   # Miscellaneous system
   @{sys}/devices/system/cpu/{kernel_max,present} r,

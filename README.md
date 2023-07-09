@@ -15,11 +15,11 @@ Table of contents:
 These AppArmor profiles are tested on the following hardware:
 
 - CPUs:
-    - Intel 4960K, 8250U
-    - AMD Ryzen 5600x, EPYC 7601
+    - Intel 8250U
+    - AMD Ryzen 5600x, 5800x3D, EPYC 7601
 - GPUs:
     - AMD 7900 XTX with amdgpu mesa/kernel driver
-    - Intel 620 UHD Graphics
+    - Intel 620 UHD Graphics with i915 mesa/kernel driver
 - Network adapters:
     - Intel Wireless-AC 9260, Wi-Fi 6 AX200
     - Realtek RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller
@@ -125,7 +125,7 @@ You can find more information for the specific profile by clicking on its name. 
 - [waybar](#waybar)
 
 ### chromium
-This profile has been tested with the `ungoogled-chromium` AUR package ONLY, on both Xorg and Sway (with `--enable-features=UseOzonePlatform --ozone-platform=wayland`).
+This profile has been tested with the `ungoogled-chromium` AUR package ONLY, on both Xorg and Sway (with `--ozone-platform-hint=auto`).
 
 ### evince
 You will need to [add local overrides](#adding-local-overrides) if you wish to view documents that are not in `~/{D,d}ocuments/` or `~/{D,d}ownloads/`. You will also need to add overrides if you wish to edit or save documents.
