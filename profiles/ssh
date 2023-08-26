@@ -1,5 +1,5 @@
 # AppArmor profile for openssh client (NOT SSHD!)
-# Version of ssh (openssh) profiled: 9.3
+# Version of ssh (openssh) profiled: 9.4
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
@@ -29,6 +29,7 @@ profile ssh /usr/bin/ssh {
   network inet6 stream,
   /etc/{passwd,protocols,services} r,
   /etc/ssh/ssh_config r,
+  /etc/ssh/ssh_config.d/{,**} r,
 
   # SSH keys
   owner @{HOME}/.ssh/ rw,

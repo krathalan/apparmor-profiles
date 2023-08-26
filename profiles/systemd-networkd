@@ -1,5 +1,5 @@
 # AppArmor profile for systemd-networkd network manager
-# Version of program profiled: 253.5
+# Version of program profiled: 254.1
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2023 (C) krathalan; Licensed under GPLv3
 
@@ -28,6 +28,7 @@ profile systemd-networkd /usr/lib/systemd/systemd-networkd {
 
   # Runtime dir
   /{,var/}run/systemd/netif/{,**} rw,
+  /{,var/}run/systemd/network/{,**} r,
   /{,var/}run/udev/data/n[0-9] r,
 
   # Config
@@ -49,4 +50,5 @@ profile systemd-networkd /usr/lib/systemd/systemd-networkd {
   @{sys}/devices/virtual/net/*/{dev_port,uevent} r,
   @{sys}/devices/virtual/dmi/id/{bios_vendor,board_vendor,product_name,product_version,sys_vendor} r,
   @{sys}/firmware/efi/efivars/SecureBoot-8be4df61-93ca-11d2-aa0d-00e098032b8c r,
+  owner @{sys}/fs/cgroup/system.slice/systemd-networkd.service/memory.pressure rw,
 }
