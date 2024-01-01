@@ -214,6 +214,7 @@ You may need to [add local overrides](#adding-local-overrides) to allow `waybar`
 - KeepassXC
 - Lollypop
 - mutt
+- nitter
 - pass
 - pipewire (until it is stable)
 - polybar
@@ -229,7 +230,8 @@ These are profiles which I used to keep updated with their packaged versions, bu
 
 1. They are only used on Xorg and I have moved all of my machines to Wayland, or
 2. I have found an alternative program (e.g. Hexchat -> irssi) that I have a new AppArmor profile for, or
-3. I find extremely cumbersome and difficult to maintain an AppArmor profile of, either because the program is extremely complex (e.g. cupsd), or because of other reasons (e.g. epiphany, because it cannot be AppArmor-ed with the WebKit sandbox enabled, and because it changes so frequently and so bizarrely that I find it difficult to keep up)
+3. I find extremely cumbersome and difficult to maintain an AppArmor profile of, either because the program is extremely complex (e.g. cupsd), or because of other reasons (e.g. epiphany, because it cannot be AppArmor-ed with the WebKit sandbox enabled, and because it changes so frequently and so bizarrely that I find it difficult to keep up), or
+4. I have stopped using the program for a different reason.
 
 If you wish to maintain one of these profiles please submit patches!
 
