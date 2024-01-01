@@ -1,5 +1,5 @@
 # AppArmor profile for bluetoothd
-# Version of bluetoothd (bluez) profiled: 5.66
+# Version of bluetoothd (bluez) profiled: 5.71
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2023 (C) krathalan; Licensed under GPLv3
 

@@ -1,5 +1,5 @@
 # AppArmor profile for micro text editor
-# Version of program profiled: 2.0.11
+# Version of program profiled: 2.0.13
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2021 (C) krathalan; Licensed under GPLv3
 

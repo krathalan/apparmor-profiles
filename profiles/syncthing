@@ -1,5 +1,5 @@
 # AppArmor profile for syncthing synchronization program
-# Version of syncthing profiled: 1.23.6
+# Version of syncthing profiled: 1.27.1
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2022 (C) krathalan; Licensed under GPLv3
 
