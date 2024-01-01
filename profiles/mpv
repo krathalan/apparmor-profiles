@@ -23,7 +23,7 @@ profile mpv /usr/bin/mpv {
 
   # Audio
   include <abstractions/audio>
-  @{system_share_dirs}/pipewire/client.conf r,
+  @{system_share_dirs}/pipewire/{,**} r,
   /etc/pipewire/{,**} r,
   /etc/alsa/conf.d/** r,
   /etc/asound.conf r,

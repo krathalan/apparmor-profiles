@@ -1,5 +1,5 @@
 # AppArmor profile for irssi IRC client
-# Version of irssi profiled: 1.4.4
+# Version of irssi profiled: 1.4.5
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2023 (C) krathalan; Licensed under GPLv3
 
@@ -26,8 +26,8 @@ profile irssi /usr/bin/irssi {
   @{system_share_dirs}/irssi/** r,
 
   # Config
-  owner @{HOME}/.irssi/* rw,
-  owner @{HOME}/.config/irssi/* rw,
+  owner @{HOME}/.irssi/{,**} rw,
+  owner @{HOME}/.config/irssi/{,**} rw,
 
   # Deny unnecessary permissions
   deny /etc/passwd r,
