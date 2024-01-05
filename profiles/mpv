@@ -36,7 +36,7 @@ profile mpv /usr/bin/mpv {
   # Needed to view media with an AppArmor-enforced streamlink
   signal receive set=term peer=streamlink,
 
-  # Needed to stream media with youtube-dl
+  # Needed to stream media with yt-dlp
   include <abstractions/krathalans-networking>
   signal send set=kill peer=yt-dlp,
   network netlink raw,
@@ -44,6 +44,7 @@ profile mpv /usr/bin/mpv {
   network inet stream,
   network inet6 dgram,
   network inet6 stream,
+  /etc/gnutls/config r,
   /usr/bin/yt-dlp rUx,
 
   # Needed to view media in home directory
@@ -58,7 +59,7 @@ profile mpv /usr/bin/mpv {
   deny owner @{HOME}/.mozilla/{,**} rw,
   deny owner @{HOME}/.ssh{,**} rw,
 
-  # If you want to save screenshots, uncomment this. There are other
+  # If you want to save screenshots, comment this. There are other
   # screenshot tools like grim and scrot
   deny @{HOME}/**/mpv-shot* w,
 

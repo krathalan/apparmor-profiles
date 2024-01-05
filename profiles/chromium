@@ -1,5 +1,5 @@
 # AppArmor profile for ungoogled-chromium browser
-# Version of program profiled: 114.0.5735.133
+# Version of program profiled: 120.0.6099.129
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2023 (C) krathalan; Licensed under GPLv3
 
@@ -51,6 +51,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   owner /dev/shm/shmfd-* rw,
   /etc/libva.conf r,
   @{system_share_dirs}/libdrm/* r,
+  @{system_share_dirs}/vulkan/icd.d/{,*.json} r,
   @{sys}/bus/pci/devices/ r,
   @{sys}/devices/pci[0-9]*/**/drm/{,**} r,
   @{sys}/devices/pci[0-9]*/**/{class,config,irq,resource,revision,vendor} r,
@@ -67,6 +68,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
   network inet stream,
   network inet6 dgram,
   network inet6 stream,
+  /etc/gnutls/config r,
 
   # Per-user files
   owner @{HOME}/.cache/chromium/{,**} rw,
@@ -84,7 +86,8 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
 
   # Proc
   @{PROC}/ r,
-  @{PROC}/@{pid}/fd/ r,
+  @{PROC}/@{pid}/{fd,task}/ r,
+  @{PROC}/@{pid}/task/@{pid}/status r,
   @{PROC}/@{pid}/{clear_refs,oom_score_adj} w,
   @{PROC}/sys/fs/inotify/max_user_watches r,
   @{PROC}/sys/net/ipv6/conf/all/disable_ipv6 r,

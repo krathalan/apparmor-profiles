@@ -1,5 +1,5 @@
 # AppArmor profile for NetworkManager
-# Version of NetworkManager profiled: 1.42.6
+# Version of NetworkManager profiled: 1.44.2
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2022 (C) krathalan; Licensed under GPLv3
 
@@ -23,6 +23,7 @@ profile NetworkManager /usr/bin/NetworkManager {
   network inet6 raw,
   network inet6 dgram,
   network inet6 stream,
+  owner /etc/gnutls/config r,
 
   # Write to system log
   capability audit_write,

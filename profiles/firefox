@@ -1,5 +1,5 @@
 # AppArmor profile for firefox browser
-# Version of firefox profiled: 114.0b4
+# Version of firefox profiled: 122.0b5
 # This profile should work on Developer Edition and Nightly as well
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2023 (C) krathalan, mortezadadgar; Licensed under GPLv3
@@ -51,6 +51,9 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
     
     /etc/libva.conf r,
     
+    # AMD
+    @{system_share_dirs}/libdrm/amdgpu.ids r,
+    
     @{sys}/devices/pci[0-9]*/[0-9]*/{irq,resource} r,
     
     /tmp/firefox*/.parentlock w,
@@ -58,8 +61,9 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
     @{HOME}/.mozilla/firefox/*/.parentlock w,
     @{HOME}/.mozilla/firefox/*/gmp-gmpopenh264/{,**} r,
     
-    deny /etc/igfx* w,
     deny network netlink raw,
+    deny /etc/igfx* w,
+    deny /etc/{nsswitch.conf,passwd} r,
   }
   
   # AMD
@@ -140,6 +144,11 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   deny capability sys_ptrace,
   deny /var/cache/ w,
   deny @{PROC}/sys/kernel/random/boot_id r,
+  deny @{sys}/**/cpu.max r,
+  deny @{user_share_dirs}/recently-used.xbel* rw,
+  
+  # Do not show GVFS volumes in file picker
+  deny @{system_share_dirs}/gvfs/{,**} r,
   
   # For opening files in other applications -- deny all
   deny @{system_share_dirs}/applications/{,**} r,

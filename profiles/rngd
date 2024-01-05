@@ -31,6 +31,8 @@ profile rngd /usr/bin/rngd {
   # Jitter support
   network netlink raw,
   /etc/ssl/openssl.cnf r,
+  # Jitter seems to work without this
+  deny capability net_admin,
 
   # Seems to be necessary for rtlsdr/smart cards,
   # I don't have any so I can't test this
