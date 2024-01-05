@@ -1,5 +1,5 @@
 # AppArmor profile for evince document viewer
-# Version of evince profiled: 44.3
+# Version of evince profiled: 45.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
 
