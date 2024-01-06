@@ -160,7 +160,7 @@ You may need to [add local overrides](#adding-local-overrides) to allow `nginx` 
 This profile assumes you are running `nginx` as an unprivileged user via systemd: https://wiki.archlinux.org/index.php/Nginx#Running_unprivileged_using_systemd
 
 ### pash
-You may need to [add local overrides](#adding-local-overrides) to allow `pash` to access your password files and GNUPG files if they're somehwere other than `~/.local/share/pash/` and `~/.gnupg/` respectively.
+You may need to [add local overrides](#adding-local-overrides) to allow `pash` to access your password files and GNUPG files if they're somewhere other than `~/.local/share/pash/` and `~/.gnupg/` respectively.
 
 ### postfix
 You may need to [add local overrides](#adding-local-overrides) to allow `postfix` to access your HTTPS certificates, if you keep them somewhere other than `/etc/letsencrypt/`.

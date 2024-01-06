@@ -101,6 +101,11 @@ check_profile()
       profile="wl-clipboard" ;;
   esac
 
+  # Check firefox-developer-edition if firefox is not installed
+  if [[ "${profile}" == "firefox" ]] && [[ -z "$(command -v "firefox")" ]]; then
+    profile="firefox-developer-edition"
+  fi
+
   local installedVersion
   installedVersion="$(pacman -Qi "${profile}" 2> /dev/null | grep Version | cut -d' ' -f11 || printf "not")"
 
