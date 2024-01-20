@@ -148,7 +148,9 @@ profile postfix-local /usr/lib/postfix/bin/local {
   /usr/lib/postfix/bin/local r,
   signal receive set=term peer=postfix,
 
-  /usr/lib/dovecot/dovecot-lda rPx,
+  # Has to be U for now instead of P due to default dovecot profile breakages
+  # Hopefully can change back to P soon if I can write a dovecot profile
+  /usr/lib/dovecot/dovecot-lda rUx,
 
   # Networking
   network netlink raw,

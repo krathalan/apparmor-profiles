@@ -40,16 +40,18 @@ set -Eeuo pipefail
 # -----------------------------------------
 
 # Colors
-readonly GREEN=$(tput setaf 10)
-readonly RED=$(tput bold && tput setaf 1)
-readonly NC=$(tput sgr0) # No color/turn off all tput attributes
+GREEN=$(tput setaf 10)
+RED=$(tput bold && tput setaf 1)
+NC=$(tput sgr0) # No color/turn off all tput attributes
 
 # For faster processing
-readonly SCRIPT_NAME=$(basename "$0")
-readonly TMPDIR="$(mktemp -d -t "${SCRIPT_NAME}_XXXXXXXX")"
+SCRIPT_NAME=$(basename "$0")
+TMPDIR="$(mktemp -d -t "${SCRIPT_NAME}_XXXXXXXX")"
 readonly OUTPUTFILEBAD="${TMPDIR}/version-check-bad.txt"
 readonly OUTPUTFILEGOOD="${TMPDIR}/version-check-good.txt"
 touch "${OUTPUTFILEBAD}" "${OUTPUTFILEGOOD}"
+
+readonly SCRIPT_NAME TMPDIR GREEN RED NC
 
 # -----------------------------------------
 # ------------- User variables ------------
