@@ -32,7 +32,7 @@ profile wl-copy-paste /usr/bin/wl-{copy,paste} {
     /usr/bin/{bash,dash} rix,
 
     # Helper programs
-    /usr/bin/{readlink,grep,file} rix,
+    /usr/bin/{readlink,realpath,grep,file} rix,
 
     # Misc
     /usr/share/file/misc/magic.mgc r,
