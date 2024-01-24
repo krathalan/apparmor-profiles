@@ -2,7 +2,7 @@
 # Only meant to be used on clients -- NOT SERVERS!
 # Version of mosh profiled: 1.4.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
-# Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
+# Copyright 2019-2024 (C) krathalan; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>

@@ -1,7 +1,7 @@
 # AppArmor profile for wl-copy/wl-paste wayland clipboard copy utility
 # Version of program profiled: 1:2.0.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
-# Copyright 2019-2021 (C) krathalan; Licensed under GPLv3
+# Copyright 2019-2024 (C) krathalan; Licensed under GPLv3
 
 abi <abi/3.0>,
 include <tunables/global>
