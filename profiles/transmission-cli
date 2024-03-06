@@ -21,6 +21,9 @@ profile transmission-cli /usr/bin/transmission* {
   # Allow access for writing downloaded files
   include <abstractions/krathalans-downloads>
 
+  # If ran as a system service
+  owner /var/lib/transmission/{,**} rw,
+
   # Config
   owner @{HOME}/.config/transmission*/ rw,
   owner @{HOME}/.config/transmission*/** rw,
