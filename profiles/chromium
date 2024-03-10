@@ -1,5 +1,5 @@
 # AppArmor profile for ungoogled-chromium browser
-# Version of program profiled: 120.0.6099.129
+# Version of program profiled: 122.0.6261.69
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2024 (C) krathalan; Licensed under GPLv3
 
@@ -79,6 +79,7 @@ profile ungoogled-chromium /usr/{bin/chromium,lib/chromium/chromium} {
 
   # Downloads
   include <abstractions/krathalans-downloads>
+  owner @{HOME}/.config/user-dirs.dirs r,
 
   # Tmp files
   owner /tmp/.org.chromium.Chromium.*/{,**} rw,

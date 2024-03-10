@@ -1,5 +1,5 @@
 # AppArmor profile for streamlink online video streamer
-# Version of streamlink profiled: 6.5.0
+# Version of streamlink profiled: 6.6.2
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2024 (C) krathalan; Licensed under GPLv3
 
@@ -33,6 +33,7 @@ profile streamlink /usr/bin/streamlink {
   include <abstractions/krathalans-networking>
   network inet dgram,
   network inet stream,
+  network inet6 dgram,
   network inet6 stream,
   network netlink raw,
 

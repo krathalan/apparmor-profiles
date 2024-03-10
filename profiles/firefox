@@ -1,5 +1,5 @@
 # AppArmor profile for firefox browser
-# Version of firefox profiled: 122.0b5
+# Version of firefox profiled: 124.0b9
 # This profile should work on Developer Edition and Nightly as well
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2024 (C) krathalan, mortezadadgar; Licensed under GPLv3
@@ -41,6 +41,7 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
     @{sys}/devices/pci[0-9]*/**/{class,device,vendor} r,
     
     deny /etc/{nsswitch.conf,passwd} r,
+    deny network netlink raw,
   }
   
   /usr/lib/firefox*/vaapitest rCx,
@@ -84,7 +85,8 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
   
   # Allow access for downloads and uploads
   include <abstractions/krathalans-downloads>
-
+  owner @{HOME}/.config/user-dirs.dirs r,
+  
   # Dconf
   owner /run/user/*/dconf/ w,
   owner /run/user/*/dconf/user rw,
@@ -123,6 +125,7 @@ profile firefox /{usr/bin,usr/lib/firefox*}/firefox* {
 
   # Wayland
   owner /dev/shm/wayland.mozilla.ipc.* rw,
+  owner /{,var/}run/user/*/wayland-proxy-[0-9]* rw,
 
   # Firefox profiles, cache
   owner @{HOME}/.mozilla/{,**} rwlk,
