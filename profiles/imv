@@ -1,5 +1,5 @@
 # AppArmor profile for imv image viewer
-# Version of imv profiled: 4.4.0
+# Version of imv profiled: 4.5.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2024 (C) krathalan; Licensed under GPLv3
 

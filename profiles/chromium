@@ -1,5 +1,5 @@
 # AppArmor profile for ungoogled-chromium browser
-# Version of program profiled: 122.0.6261.69
+# Version of program profiled: 122.0.6261.111
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2024 (C) krathalan; Licensed under GPLv3
 
