@@ -1,5 +1,5 @@
 # AppArmor profile for mpv media player
-# Version of mpv profiled: 1:0.36.0
+# Version of mpv profiled: 1:0.37.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2019-2024 (C) krathalan, mortezadadgar; Licensed under GPLv3
 
@@ -73,6 +73,7 @@ profile mpv /usr/bin/mpv {
 
   # Other
   /usr/bin/mpv r,
+  owner @{HOME}/.cache/mpv/{,**} rw,
 
   # Don't allow executable mapping of arbitrary files
   deny /tmp/** mrw,
