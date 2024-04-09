@@ -1,5 +1,5 @@
 # AppArmor profile for postfix mail transport agent
-# Version of program profiled: 3.8.6
+# Version of program profiled: 3.9.0
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2024 (C) krathalan; Licensed under GPLv3
 
@@ -78,6 +78,7 @@ profile postfix-anvil /usr/lib/postfix/bin/anvil {
   network inet6 stream,
 
   # Misc
+  /etc/postfix/dynamicmaps.cf.d/postfix-lmdb.cf r,
   /proc/sys/kernel/random/boot_id r,
 }
 
@@ -96,6 +97,7 @@ profile postfix-bounce /usr/lib/postfix/bin/bounce {
   network inet6 stream,
 
   # Misc
+  /etc/postfix/dynamicmaps.cf.d/postfix-lmdb.cf r,
   /proc/sys/kernel/random/boot_id r,
   /var/spool/postfix/pid/unix.{defer,bounce,trace} rwk,
 
@@ -121,6 +123,7 @@ profile postfix-cleanup /usr/lib/postfix/bin/cleanup {
   /proc/sys/kernel/random/boot_id r,
 
   # Mail data
+  /etc/postfix/dynamicmaps.cf.d/postfix-lmdb.cf r,
   /var/spool/postfix/incoming/{,**} rw,
 }
 
@@ -158,7 +161,8 @@ profile postfix-local /usr/lib/postfix/bin/local {
   network inet6 stream,
 
   # Misc
-  /etc/aliases.db rk,
+  /etc/aliases.* rk,
+  /etc/postfix/dynamicmaps.cf.d/postfix-lmdb.cf r,
   /proc/sys/kernel/random/boot_id r,
   /var/spool/postfix/pid/unix.local rwk,
 
@@ -181,6 +185,7 @@ profile postfix-pickup /usr/lib/postfix/bin/pickup {
   network inet6 stream,
 
   # Misc
+  /etc/postfix/dynamicmaps.cf.d/postfix-lmdb.cf r,
   /proc/sys/kernel/random/boot_id r,
 
   # Mail data
@@ -246,6 +251,7 @@ profile postfix-proxymap /usr/lib/postfix/bin/proxymap {
   network inet6 stream,
 
   # Misc
+  /etc/postfix/dynamicmaps.cf.d/postfix-lmdb.cf r,
   /proc/sys/kernel/random/boot_id r,
 }
 
@@ -264,6 +270,7 @@ profile postfix-qmgr /usr/lib/postfix/bin/qmgr {
   network inet6 stream,
 
   # Misc
+  /etc/postfix/dynamicmaps.cf.d/postfix-lmdb.cf r,
   /proc/sys/kernel/random/boot_id r,
 
   # Mail data
@@ -282,6 +289,7 @@ profile postfix-sendmail /usr/bin/sendmail {
 
   /usr/bin/sendmail r,
   /usr/bin/postdrop rPx,
+  /usr/bin/postalias rPx,
 
   # Networking
   network netlink raw,
@@ -289,6 +297,29 @@ profile postfix-sendmail /usr/bin/sendmail {
   network inet6 stream,
 
   # Misc
+  /etc/postfix/dynamicmaps.cf.d/postfix-lmdb.cf r,
+  /proc/sys/kernel/random/boot_id r,
+}
+
+profile postfix-postalias /usr/bin/postalias {
+  include if exists <local/postfix-sendmail>
+  include <abstractions/base>
+  include <abstractions/postfix-common>
+  include <abstractions/krathalans-hardening>
+  include <abstractions/krathalans-nameservice>
+
+  /usr/bin/postalias r,
+
+  # Necessary to update files
+  /etc/aliases{,*} rwk,
+
+  # Networking
+  network inet stream,
+  network netlink raw,
+
+  # Misc
+  /etc/machine-id r,
+  /etc/postfix/dynamicmaps.cf.d/postfix-lmdb.cf r,
   /proc/sys/kernel/random/boot_id r,
 }
 
@@ -313,6 +344,7 @@ profile postfix-smtp /usr/lib/postfix/bin/smtp {
 
   # Misc
   /etc/services r,
+  /etc/postfix/dynamicmaps.cf.d/postfix-lmdb.cf r,
   /proc/sys/kernel/random/boot_id r,
   /var/spool/postfix/pid/inet.smtp rwk,
   /var/spool/postfix/pid/unix.smtp rwk,
@@ -345,7 +377,8 @@ profile postfix-smtpd /usr/lib/postfix/bin/smtpd {
   /etc/krathalan/dhparams.pem r,
 
   # Misc
-  /etc/aliases.db rk,
+  /etc/aliases.* rk,
+  /etc/postfix/dynamicmaps.cf.d/postfix-lmdb.cf r,
   /proc/sys/kernel/random/boot_id r,
   /var/spool/postfix/pid/inet.submission rwk,
   /var/spool/postfix/pid/inet.smtp rwk,
@@ -368,9 +401,10 @@ profile postfix-tlsmgr /usr/lib/postfix/bin/tlsmgr {
   network inet6 stream,
 
   # Misc
+  /etc/postfix/dynamicmaps.cf.d/postfix-lmdb.cf r,
   /proc/sys/kernel/random/boot_id r,
   /var/lib/postfix/prng_exch rwk,
-  /var/lib/postfix/smtp{,d}_scache.db rwk,
+  /var/lib/postfix/smtp{,d}_scache.{db,lmdb} rwk,
 }
 
 profile postfix-trivial-rewrite /usr/lib/postfix/bin/trivial-rewrite {
@@ -388,5 +422,6 @@ profile postfix-trivial-rewrite /usr/lib/postfix/bin/trivial-rewrite {
   network inet6 stream,
 
   # Misc
+  /etc/postfix/dynamicmaps.cf.d/postfix-lmdb.cf r,
   /proc/sys/kernel/random/boot_id r,
 }
