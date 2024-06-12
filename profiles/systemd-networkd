@@ -1,5 +1,5 @@
 # AppArmor profile for systemd-networkd network manager
-# Version of program profiled: 255.5
+# Version of program profiled: 255.7
 # Homepage: https://github.com/krathalan/apparmor-profiles
 # Copyright 2020-2024 (C) krathalan; Licensed under GPLv3
 
