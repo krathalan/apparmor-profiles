@@ -1,0 +1,16 @@
+# Last Modified: Sat Sep  4 12:39:31 2021
+abi <abi/3.0>,
+
+include <tunables/global>
+
+/usr/bin/appimagelauncherd {
+  include <abstractions/base>
+
+  /usr/bin/ r,
+  /usr/bin/appimagelauncherd mr,
+  owner /home/*/ r,
+  owner /home/*/.config/appimagelauncher.cfg rw,
+  owner /home/*/.local/share/applications/ r,
+  owner /home/*/Applications/ rw,
+
+}
